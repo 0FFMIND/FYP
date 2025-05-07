@@ -1,0 +1,4 @@
+2025/5/6 - 防止忘了，用了DialogueModel存从文本.txt里面读到的话，中间一个方法LoadDialogue会通过LocalizationManager(用一个static存的当前语言)定位到具体路径/文本.txt
+
+通过dialoguectl控制dialoguemodel，直接通过new创建一个并获得控制权，太痛苦了写代码，暂时还没写按键适配，本来想dialogueView加一个渐变效果的，目前只做了一个启动功能
+
