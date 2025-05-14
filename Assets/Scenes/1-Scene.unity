@@ -220,8 +220,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   view: {fileID: 1196720874}
-  sprites:
-  - {fileID: 21300000, guid: ca6ef650a1adbdb42ae38e3662d5c007, type: 3}
+  dialogueTxt: 1-Scene-1.txt
+  mappings:
+  - lineIndex: 0
+    sprite: {fileID: 21300000, guid: ebf6d3a98e6b9b249b6a6d9993e3b5d5, type: 3}
+  typeSpeed: 0.06
 --- !u!4 &527947529
 Transform:
   m_ObjectHideFlags: 0
@@ -310,7 +313,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
