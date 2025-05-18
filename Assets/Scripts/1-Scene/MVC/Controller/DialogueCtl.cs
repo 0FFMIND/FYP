@@ -4,6 +4,7 @@ using UnityEngine;
 using MVC.View;
 using MVC.Model;
 using InputSystem;
+using AudioSystem;
 
 namespace MVC.Controller
 {
@@ -24,7 +25,7 @@ namespace MVC.Controller
         [SerializeField]
         private LineMapping[] mappings;
         [SerializeField]
-        private float typeSpeed = 0.06f;
+        private float typeSpeed;
         //
         private Sprite currentSprite;
         private int index;
@@ -40,6 +41,9 @@ namespace MVC.Controller
             index = 0;
             // 注册事件
             InputManager.Instance.OnAction += OnInputAction;
+            AudioManager.Instance.PlayBGM("1-bgm");
+            // 自动播放第一句话
+            NextLine();
         }
         private void OnInputAction(InputAction action)
         {
@@ -97,7 +101,8 @@ namespace MVC.Controller
             for(int i = 0; i < fullText.Length; i++)
             {
                 view.Render(currentSprite, fullText.Substring(0, i + 1));
-                // 放个声音
+                if(i < fullText.Length - 3)
+                    AudioManager.Instance.PlaySFX("typing");
                 yield return new WaitForSeconds(typeSpeed);
             }
             typingCoroutine = null;

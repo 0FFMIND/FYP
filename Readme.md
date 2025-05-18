@@ -6,10 +6,23 @@
 
 2025/5/13 - 之前写到DialogueCtl里面了，感觉实际上是PrologueDCtl，里面读取txt其实可以用一个string进行private赋值，但话又说回来了，我会用到这个Ctl很多次吗？不写死的话，我的感觉是我会写死，但是为了FYP要求放在一个字段里面了，还需要一个自定的字段，linemapping，就不需要写死了
 
-问题是感觉文本量有点小，需要多一点的
+2025/5/17 - 你能想象我又在日本人的网站上扒谱了吗，感觉我喜欢的音乐风格是八音盒，但是不搭。。和文字不搭
 
-TD:audiomanager，使用audiomixer
+炼狱网址：https://note.com/search?q=from%3A%40rengokuteien&context=note&sort=popular
+
+魔王：https://maou.audio/category/song/
+
+效果音：https://pixabay.com/zh/sound-effects/search/%e6%8c%89%e9%94%ae%e9%9f%b3/
+
+我其实挺想看诺艾尔的致谢名单，它用的曲是从哪里扒的，用网易云的听歌识曲能出来几首吗，感觉钢琴曲要多一些，找的曲子八音盒感觉不是很合适，诺艾尔很多曲子都很燃，主要是我一直觉得它的剧情本来就很燃（。我可能更需要静谧+平和但不需要太静谧的曲子，静谧会增加孤独感和神秘感，在我的理解里面
+
+StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
+
+已完成：TD:audiomanager，使用audiomixer
+
+
 
 TD:分支对话/能够跳过显示 <-
 
 TD:改键
+
