@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace MVC.Model
+namespace MVC
 {
     // 不继承mono，则可以通过new T()出来
     public class DialogueModel

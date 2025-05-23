@@ -2,7 +2,7 @@ using Utils.SingletonPattern;
 using System.IO;
 using UnityEngine;
 
-namespace MVC.Model
+namespace MVC
 {
     public class LocalizationMgr : SingletonMB<LocalizationMgr>
     {
