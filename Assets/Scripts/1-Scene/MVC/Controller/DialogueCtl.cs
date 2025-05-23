@@ -109,9 +109,9 @@ namespace MVC
 
         private IEnumerator TypeLines(string fullText)
         {
+            // 关闭显示
             arrow.gameObject.SetActive(false);
             view.Render(currentSprite, "");
-            // 声音
             for(int i = 0; i < fullText.Length; i++)
             {
                 view.Render(currentSprite, fullText.Substring(0, i + 1));
@@ -119,6 +119,7 @@ namespace MVC
                     AudioManager.Instance.PlaySFX("typing");
                 yield return new WaitForSeconds(typeSpeed);
             }
+            // 重新显示
             PositionArrowUnderText();
             typingCoroutine = null;
 
@@ -129,10 +130,9 @@ namespace MVC
             Bounds b = view.tmp.textBounds;
             Vector3 localBotCenter = new Vector3(b.center.x, b.min.y, 0);
             Vector3 worldBotCenter = view.tmp.transform.TransformPoint(localBotCenter);
-            // 加上向下的偏移量
             Vector3 downOffset = Vector3.down * arrowOffset;
             arrow.position = new Vector3(arrow.position.x, worldBotCenter.y + downOffset.y, arrow.position.z);
-            // 显示
+            // 显示，并向下偏移
             arrow.gameObject.SetActive(true);
             // 启动抖动
             if (arrowBounceCoroutine != null) StopCoroutine(arrowBounceCoroutine);
@@ -143,7 +143,6 @@ namespace MVC
             // 记录原始位置
             Vector3 original = arrow.position;
             Vector3 target = original + Vector3.down * downDistance;
-
             while (true)
             {
                 // 平滑下移

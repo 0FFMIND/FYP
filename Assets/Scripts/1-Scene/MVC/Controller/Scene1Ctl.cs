@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AudioSystem;
 
 namespace MVC
 {
@@ -36,6 +37,8 @@ namespace MVC
             dialogueCtl.view.Render(null, null);
             view.Render(null, string.Join("\n", model.Lines));
             viewGroup.alpha = 0f;
+            // º”‘ÿ“Ù–ß
+            AudioManager.Instance.PlaySFX("gear");
             // ≤•∑≈warning
             StartCoroutine(PlayWarning());
         }

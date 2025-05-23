@@ -22,7 +22,11 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/5/22 - TD:想了一下这个应该先做，事件系统，一种方法是用timeline k帧，在想自己写一个，最开始prologuectl，是在start()里面响应，把这里的start改成startdialogue，手动控制，在游戏控制前加一个warning的效果，加入一个Scene1Ctl，让播放顺序warning->序章（已完成）
 
-已完成：TD:每次对话下面有个小箭头，需要修改(让GPT先给我随便吧)：开头panel，背景
+已完成：TD:每次对话下面有个小箭头，需要修改(我也画不动但是GPT的也不好看)：开头panel，背景
+
+2025/5/23 - 已完成：TD: 加一个提示的声音，修改warning的UI panel
+
+
 
 
 
