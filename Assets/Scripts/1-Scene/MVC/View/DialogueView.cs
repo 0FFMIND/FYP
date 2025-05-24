@@ -2,6 +2,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.Events;
 
 namespace MVC
 {
@@ -14,9 +15,14 @@ namespace MVC
 
         // 内部用来追踪当前的淡入协程
         private Coroutine imageFadeCoroutine;
-
-        // 确保 CanvasGroup 在 img 上
+        // 用来调整alpha值
         private CanvasGroup imgGroup;
+
+        [Header("选项按钮容器")]
+        public RectTransform choicesContainer;   // 挂 VerticalLayoutGroup
+        public Button choiceButtonPrefab;        // 带 TMP Text 的按钮预制
+
+
         private void Awake()
         {
             if (img != null)
@@ -73,6 +79,27 @@ namespace MVC
             }
             tmp.text = text;
         }
+        public void ShowChoices(Choice[] choices, UnityAction<int> onChoiceSelected)
+        {
+            // 清空旧按钮
+            foreach (Transform t in choicesContainer)
+                Destroy(t.gameObject);
+
+            // 生成新按钮
+            foreach (var choice in choices)
+            {
+                var btn = Instantiate(choiceButtonPrefab, choicesContainer);
+                btn.GetComponentInChildren<TextMeshProUGUI>().text = choice.text;
+                Debug.Log(choice.targetNodeId);
+                btn.onClick.AddListener(() => onChoiceSelected(choice.targetNodeId));
+            }
+            choicesContainer.gameObject.SetActive(true);
+        }
+        public void HideChoices()
+        {
+            choicesContainer.gameObject.SetActive(false);
+        }
+
     }
 }
 

@@ -8,6 +8,8 @@ namespace MVC
     public class Scene1Ctl : MonoBehaviour
     {
         [SerializeField]
+        private Canvas choiceCanvas;
+        [SerializeField]
         private DialogueView view;
         // 1-Scene-warning.txt
         [SerializeField]
@@ -31,6 +33,7 @@ namespace MVC
         }
         void Start()
         {
+            choiceCanvas.gameObject.SetActive(false);
             // ∂¡»°text"1-Scene-warning.txt"
             model = new DialogueModel(dialogueTxt);
             dialogueCtl.arrow.gameObject.SetActive(false);

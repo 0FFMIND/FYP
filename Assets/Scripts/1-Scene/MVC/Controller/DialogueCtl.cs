@@ -25,27 +25,33 @@ namespace MVC
         [SerializeField] private float downDistance;   // 向下移动的世界/本地单位
         [SerializeField] private int upFrames;      // 向上移动时等待帧数
         // 对话
+        [Header("ScriptableObject 对话资源")]
+        [SerializeField] private ChoiceScript script;
         public DialogueView view;
-        [SerializeField]
-        private string dialogueTxt;
         [SerializeField]
         private LineMapping[] mappings;
         [SerializeField]
         private float typeSpeed;
         //
+        private ChoiceModel choiceModel;
+        private DialogueModel dialogueModel;
         private Sprite currentSprite;
+        private int currentNodeID;
         private int index;
-        private DialogueModel model;
         private Coroutine typingCoroutine;
         private Coroutine arrowBounceCoroutine;
+        private HashSet<int> visitedNodes = new HashSet<int>(); // 记录已访问的节点 ID
 
         public void StartDialogue()
         {
             // 清空现在有的内容
             arrow.gameObject.SetActive(false);
             view.Render(null, null);
-            // 读取text"1-Scene-1.txt"
-            model = new DialogueModel(dialogueTxt);
+            // 初始化 ChoiceModel
+            choiceModel = new ChoiceModel(script);
+            // 设定起始节点与对应 DialogueModel
+            currentNodeID = choiceModel.startNodeId;
+            dialogueModel = choiceModel.GetDialogueModel(currentNodeID);
             // 刷新index
             index = 0;
             // 注册事件
@@ -63,9 +69,9 @@ namespace MVC
                     // 先暂停
                     StopCoroutine(typingCoroutine);
                     typingCoroutine = null;
-                    if(index <= model.Lines.Length)
+                    if(index <= dialogueModel.Lines.Length)
                     {
-                        view.Render(currentSprite, model.Lines[index - 1]);
+                        view.Render(currentSprite, dialogueModel.Lines[index - 1]);
                         // 开启小箭头
                         PositionArrowUnderText();
                     }
@@ -85,11 +91,47 @@ namespace MVC
         }
         private void NextLine()
         {
-            // 如果读完，则清空
-            if(index == model.Lines.Length)
+            // 不然按钮点击会误认为nextline
+            if(index > dialogueModel.Lines.Length)
             {
-                view.Render(null, null);
-                InputManager.Instance.OnAction -= OnInputAction;
+                return;
+            }
+            // 如果读完
+            if(index == dialogueModel.Lines.Length)
+            {
+                // 关掉小箭头
+                arrow.gameObject.SetActive(false);
+                //view.Render(null, null);
+                //InputManager.Instance.OnAction -= OnInputAction;
+                // 如果存在显示选项
+                var node = choiceModel.GetNode(currentNodeID);
+                if (node.choices != null && node.choices.Length > 0)
+                {
+                    var available = new List<Choice>();
+                    foreach (var choice in node.choices)
+                    {
+                        bool unlocked = true;
+
+                        // 如果有 prereq，就检查每个 prereq 是否都在 visitedNodes 里
+                        if (choice.prereqNodeIds != null)
+                        {
+                            foreach (var req in choice.prereqNodeIds)
+                            {
+                                if (!visitedNodes.Contains(req))
+                                {
+                                    unlocked = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (unlocked)
+                            available.Add(choice);
+                    }
+                    view.ShowChoices(available.ToArray(), OnChoiceSelected);
+                }
+                // 自增，只响应一次
+                index++;
                 return;
             }
             foreach(var map in mappings)
@@ -100,11 +142,25 @@ namespace MVC
                     break;
                 }
             }
-            string text = model.Lines[index];
+            string text = dialogueModel.Lines[index];
             // 打字
             typingCoroutine = StartCoroutine(TypeLines(text));
             // 移动到下一个line
             index++;
+        }
+
+        private void OnChoiceSelected(int targetNodeId)
+        {
+            Debug.Log($"Choice clicked! Jumping to node {targetNodeId}");
+            // 切换节点，加载新的 txt
+            currentNodeID = targetNodeId;
+            dialogueModel = choiceModel.GetDialogueModel(currentNodeID);
+            index = 0;
+
+            view.HideChoices();
+            view.Render(null, null);
+
+            NextLine();
         }
 
         private IEnumerator TypeLines(string fullText)
