@@ -102,6 +102,33 @@ namespace MVC
                 }
             }
         }
+
+        private void ShowAvailableChoices(ChoiceNode node)
+        {
+            var available = new List<Choice>();
+            foreach (var choice in node.choices)
+            {
+                bool unlocked = true;
+
+                // 如果有 prereq，就检查每个 prereq 是否都在 visitedNodes 里
+                if (choice.prereqNodeIds != null)
+                {
+                    foreach (var req in choice.prereqNodeIds)
+                    {
+                        if (!visitedNodes.Contains(req))
+                        {
+                            unlocked = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (unlocked)
+                    available.Add(choice);
+            }
+            view.ShowChoices(visitedNodes ,node.choicesTxt, available.ToArray(), OnChoiceSelected);
+        }
+
         private void NextLine()
         {
             arrow.GetComponent<SpriteRenderer>().color = Color.white;
@@ -119,30 +146,23 @@ namespace MVC
                 //InputManager.Instance.OnAction -= OnInputAction;
                 // 如果存在显示选项
                 var node = choiceModel.GetNode(currentNodeID);
-                if (node.choices != null && node.choices.Length > 0)
+                if (node != null && node.postNodeId != -1)
                 {
-                    var available = new List<Choice>();
-                    foreach (var choice in node.choices)
+                    // 跳到上一级节点
+                    ChoiceNode parent = choiceModel.GetNode(node.postNodeId);
+                    // 更新 currentNodeID & model
+                    currentNodeID = parent.nodeId;
+                    dialogueModel = choiceModel.GetDialogueModel(currentNodeID);
+
+                    // 直接显示 parent 的分支选项，而不读它的对话
+                    ShowAvailableChoices(parent);
+                }
+                else
+                {
+                    if (node != null && node.choices != null && node.choices.Length > 0)
                     {
-                        bool unlocked = true;
-
-                        // 如果有 prereq，就检查每个 prereq 是否都在 visitedNodes 里
-                        if (choice.prereqNodeIds != null)
-                        {
-                            foreach (var req in choice.prereqNodeIds)
-                            {
-                                if (!visitedNodes.Contains(req))
-                                {
-                                    unlocked = false;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (unlocked)
-                            available.Add(choice);
+                        ShowAvailableChoices(node);
                     }
-                    view.ShowChoices(node.choicesTxt, available.ToArray(), OnChoiceSelected);
                 }
                 // 自增，只响应一次
                 index++;
@@ -186,6 +206,8 @@ namespace MVC
 
         private void OnChoiceSelected(int targetNodeId)
         {
+            // 添加到访问过的节点
+            visitedNodes.Add(targetNodeId);
             // 切换节点，加载新的 txt
             currentNodeID = targetNodeId;
             dialogueModel = choiceModel.GetDialogueModel(currentNodeID);

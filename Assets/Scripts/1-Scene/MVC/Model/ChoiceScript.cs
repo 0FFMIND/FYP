@@ -11,8 +11,6 @@ namespace MVC
         public int targetNodeId;
         [Tooltip("解锁此选项前必须访问过的节点 ID 列表；为空则无前置要求")]
         public int[] prereqNodeIds;
-        [HideInInspector]
-        public bool visited;    // 运行时：此分支对应的节点是否已被访问过
     }
 
     [System.Serializable]

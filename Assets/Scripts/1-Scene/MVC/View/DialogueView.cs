@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 namespace MVC
 {
@@ -31,6 +32,7 @@ namespace MVC
                 imgGroup = img.GetComponent<CanvasGroup>();
                 if (imgGroup == null)
                     imgGroup = img.gameObject.AddComponent<CanvasGroup>();
+                img.gameObject.SetActive(false);
             }
         }
 
@@ -59,17 +61,17 @@ namespace MVC
         {
             if(sprite == null)
             {
-                if (img != null && img.enabled)
+                if (img != null && img.gameObject.activeSelf)
                 {
-                    img.enabled = false;
+                    img.gameObject.SetActive(false);
                 }
             }
             else
             {
                 // disabled
-                if (img != null && !img.enabled)
+                if (img != null && !img.gameObject.activeSelf)
                 {
-                    img.enabled = true;
+                    img.gameObject.SetActive(true);
                     FadeIn();
                 }
                 if(img != null && img.sprite != sprite)
@@ -80,7 +82,7 @@ namespace MVC
             }
             tmp.text = text;
         }
-        public void ShowChoices(string choicesTxt, Choice[] choices, UnityAction<int> onChoiceSelected)
+        public void ShowChoices(HashSet<int> visited, string choicesTxt, Choice[] choices, UnityAction<int> onChoiceSelected)
         {
             // 清空旧按钮
             foreach (Transform t in choicesContainer)
@@ -95,8 +97,18 @@ namespace MVC
             foreach (var choice in choices)
             {
                 var btn = Instantiate(choiceButtonPrefab, choicesContainer);
+                // 拿到控制脚本
+                var ctl = btn.GetComponent<CornerButtonCtl>();
+
+                // 2) 如果已经 visited，就让它一上来就灰化并显示对勾
+                if (visited.Contains(choice.targetNodeId))
+                    ctl.SetVisited(true);
+                else
+                    ctl.SetVisited(false);
                 btn.GetComponentInChildren<TextMeshProUGUI>().text = choice.text;
-                btn.onClick.AddListener(() => onChoiceSelected(choice.targetNodeId));
+                btn.onClick.AddListener(() => {
+                    onChoiceSelected(choice.targetNodeId);
+                });
             }
             choicesContainer.gameObject.SetActive(true);
         }
