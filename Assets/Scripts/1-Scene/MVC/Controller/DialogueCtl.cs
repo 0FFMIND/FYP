@@ -7,13 +7,24 @@ using UnityEngine.UI;
 
 namespace MVC
 {
+    public enum Eact
+    {
+        none,
+        shake,
+        playBGM,
+        arrowRed,
+    }
     [System.Serializable]
     public struct LineMapping
     {
+        [Tooltip("当 nodeID 等于此值时")]
+        public int nodeID;
         [Tooltip("当 index 等于此值时，切换到对应的 sprite")]
         public int lineIndex;
         [Tooltip("切换时使用的 Sprite")]
         public Sprite sprite;
+        [Tooltip("触发行为")]
+        public Eact[] eacts;
     }
     public class DialogueCtl : MonoBehaviour
     {
@@ -32,6 +43,8 @@ namespace MVC
         private LineMapping[] mappings;
         [SerializeField]
         private float typeSpeed;
+        [SerializeField]
+        private CameraShake cameraShake;
         //
         private ChoiceModel choiceModel;
         private DialogueModel dialogueModel;
@@ -56,7 +69,6 @@ namespace MVC
             index = 0;
             // 注册事件
             InputManager.Instance.OnAction += OnInputAction;
-            AudioManager.Instance.PlayBGM("1-bgm");
             // 自动播放第一句话
             NextLine();
         }
@@ -81,6 +93,7 @@ namespace MVC
                         view.Render(null, null);
                         // 关掉小箭头
                         arrow.gameObject.SetActive(false);
+                        arrow.GetComponent<SpriteRenderer>().color = Color.white;
                     }
                 }
                 else
@@ -91,8 +104,9 @@ namespace MVC
         }
         private void NextLine()
         {
+            arrow.GetComponent<SpriteRenderer>().color = Color.white;
             // 不然按钮点击会误认为nextline
-            if(index > dialogueModel.Lines.Length)
+            if (index > dialogueModel.Lines.Length)
             {
                 return;
             }
@@ -128,7 +142,7 @@ namespace MVC
                         if (unlocked)
                             available.Add(choice);
                     }
-                    view.ShowChoices(available.ToArray(), OnChoiceSelected);
+                    view.ShowChoices(node.choicesTxt, available.ToArray(), OnChoiceSelected);
                 }
                 // 自增，只响应一次
                 index++;
@@ -136,9 +150,30 @@ namespace MVC
             }
             foreach(var map in mappings)
             {
-                if(index == map.lineIndex)
+                if(index == map.lineIndex && currentNodeID == map.nodeID)
                 {
                     currentSprite = map.sprite;
+                    foreach(Eact eact in map.eacts)
+                    {
+                        if (eact != Eact.none)
+                        {
+                            if (eact == Eact.shake)
+                            {
+                                // 调用camera shake并播放音效
+                                AudioManager.Instance.PlaySFX("shocked");
+                                cameraShake.Shake();
+                            }
+                            if (eact == Eact.playBGM)
+                            {
+                                AudioManager.Instance.PlayBGM("1-bgm");
+                            }
+                            if(eact == Eact.arrowRed)
+                            {
+                                arrow.GetComponent<SpriteRenderer>().color = Color.red;
+                            }
+                        }
+                    }
+
                     break;
                 }
             }
@@ -151,7 +186,6 @@ namespace MVC
 
         private void OnChoiceSelected(int targetNodeId)
         {
-            Debug.Log($"Choice clicked! Jumping to node {targetNodeId}");
             // 切换节点，加载新的 txt
             currentNodeID = targetNodeId;
             dialogueModel = choiceModel.GetDialogueModel(currentNodeID);
@@ -165,20 +199,47 @@ namespace MVC
 
         private IEnumerator TypeLines(string fullText)
         {
-            // 关闭显示
             arrow.gameObject.SetActive(false);
             view.Render(currentSprite, "");
-            for(int i = 0; i < fullText.Length; i++)
+
+            string displayed = "";  // 当前已经被渲染出来的文本
+
+            for (int i = 0; i < fullText.Length; i++)
             {
-                view.Render(currentSprite, fullText.Substring(0, i + 1));
-                if(i < fullText.Length - 3)
-                    AudioManager.Instance.PlaySFX("typing");
+                // 如果遇到标签的开头
+                if (fullText[i] == '<')
+                {
+                    // 找到这个标签的闭合位置
+                    int close = fullText.IndexOf('>', i);
+                    if (close != -1)
+                    {
+                        // 整个标签一次性拼上去
+                        string tag = fullText.Substring(i, close - i + 1);
+                        displayed += tag;
+                        // 跳过标签内部的所有字符
+                        i = close;
+                    }
+                    else
+                    {
+                        // 万一没找到闭合括号，就当普通字符处理
+                        displayed += fullText[i];
+                    }
+                }
+                else
+                {
+                    // 普通字符，逐个打字
+                    displayed += fullText[i];
+                    if (i < fullText.Length - 3)
+                        AudioManager.Instance.PlaySFX("typing");
+                }
+
+                view.Render(currentSprite, displayed);
                 yield return new WaitForSeconds(typeSpeed);
             }
-            // 重新显示
+
+            // 整段打完后再显示箭头
             PositionArrowUnderText();
             typingCoroutine = null;
-
         }
         private void PositionArrowUnderText()
         {

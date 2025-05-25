@@ -20,6 +20,7 @@ namespace MVC
 
         [Header("选项按钮容器")]
         public RectTransform choicesContainer;   // 挂 VerticalLayoutGroup
+        public GameObject choiceHeaderPrefab;    // 头顶提示
         public Button choiceButtonPrefab;        // 带 TMP Text 的按钮预制
 
 
@@ -79,18 +80,22 @@ namespace MVC
             }
             tmp.text = text;
         }
-        public void ShowChoices(Choice[] choices, UnityAction<int> onChoiceSelected)
+        public void ShowChoices(string choicesTxt, Choice[] choices, UnityAction<int> onChoiceSelected)
         {
             // 清空旧按钮
             foreach (Transform t in choicesContainer)
                 Destroy(t.gameObject);
-
+            // 生成header
+            if(choicesTxt.Length > 0)
+            {
+                var go = Instantiate(choiceHeaderPrefab, choicesContainer);
+                go.GetComponent<TextMeshProUGUI>().text = choicesTxt;
+            }
             // 生成新按钮
             foreach (var choice in choices)
             {
                 var btn = Instantiate(choiceButtonPrefab, choicesContainer);
                 btn.GetComponentInChildren<TextMeshProUGUI>().text = choice.text;
-                Debug.Log(choice.targetNodeId);
                 btn.onClick.AddListener(() => onChoiceSelected(choice.targetNodeId));
             }
             choicesContainer.gameObject.SetActive(true);

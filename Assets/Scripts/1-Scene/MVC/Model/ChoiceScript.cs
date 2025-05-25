@@ -24,6 +24,8 @@ namespace MVC
         public int postNodeId;
         [Tooltip("对话文本文件名（不含扩展名），由 DialogueModel 读取实际文本）")]
         public string dialogueTxt;
+        [Tooltip("Choice上的提示文字")]
+        public string choicesTxt;
         [Tooltip("可选分支；为空则本节点视为“叶子”，读取完毕后返回上级菜单")]
         public Choice[] choices;
     }
