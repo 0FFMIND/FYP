@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using AudioSystem;
 using TMPro;
+using System;
 
 namespace MVC
 {
@@ -26,12 +27,16 @@ namespace MVC
         public Color normalTextColor = Color.black;
         public Color hoverTextColor = Color.white;
         //
+        private Action<int> _onChoice;    // 存外部传入的回调
+        private int _choiceId;            // 存本按钮对应的 targetNodeId
+        private RectTransform rect;
         private Button btn;
         private ColorBlock defaultColors;
         private Sprite _originalSprite;
-        // 闪烁用
-        public float flashDuration = 0.2f;
-        public int flashCount = 3;
+        [Header("点击动画设置")]
+        public float clickAnimDuration;     // 总时长
+        public float shrinkFactor;         // 最小缩放
+        public float expandFactor;         // 最大缩放
 
         private void Awake()
         {
@@ -40,6 +45,11 @@ namespace MVC
                 _originalSprite = targetImage.sprite;
             btn = GetComponent<Button>();
             SetCorners(false);
+        }
+        public void SetupChoice(int choiceId, Action<int> onChoice)
+        {
+            _choiceId = choiceId;
+            _onChoice = onChoice;
         }
 
         // 鼠标移入：显示四角
@@ -69,13 +79,51 @@ namespace MVC
         public void OnPointerClick(PointerEventData eventData)
         {
             AudioManager.Instance.PlaySFX("click");
-            SetCorners(false);
+            // SetCorners(false);
             // 恢复背景 & 文字
             if (targetImage != null)
                 targetImage.sprite = normalSprite ? normalSprite : _originalSprite;
             if (targetText != null)
                 targetText.color = normalTextColor;
+            // 启动点击动画
+            btn.interactable = false;
+            StartCoroutine(ClickFeedbackCoroutine());
         }
+
+        private IEnumerator ClickFeedbackCoroutine()
+        {
+            rect = GetComponent<RectTransform>();
+            Vector3 original = rect.localScale;
+            float half = clickAnimDuration / 2;
+
+            // 第一半：缩到 shrinkFactor
+            for (float t = 0; t < half; t += Time.unscaledDeltaTime)
+            {
+                float p = t / half;
+                rect.localScale = Vector3.Lerp(original, original * shrinkFactor, p);
+                yield return null;
+            }
+            rect.localScale = original * shrinkFactor;
+
+            // 第二半：放到 expandFactor
+            for (float t = 0; t < half; t += Time.unscaledDeltaTime)
+            {
+                float p = t / half;
+                rect.localScale = Vector3.Lerp(original * shrinkFactor, original * expandFactor, p);
+                yield return null;
+            }
+            rect.localScale = original * expandFactor;
+
+            // 抖一下回到原始大小
+            rect.localScale = original;
+
+            // 动画结束后，触发存下来的回调
+            _onChoice?.Invoke(_choiceId);
+
+            SetCorners(false);
+            btn.interactable = true;
+        }
+
         public void SetVisited(bool visited)
         {
             // 如果 Button 在同一个 GameObject 上：

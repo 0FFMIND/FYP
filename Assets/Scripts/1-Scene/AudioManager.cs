@@ -62,6 +62,36 @@ namespace AudioSystem
             }
             _fadeCoroutine = StartCoroutine(FadeToNewBGM(clip, fadeTime));
         }
+        public void StopBGM(float fadeTime = 1f)
+        {
+            // 如果正有 FadeToNewBGM 在跑，先停了它
+            if (_fadeCoroutine != null)
+            {
+                StopCoroutine(_fadeCoroutine);
+            }
+            // 启动一个新的淡出协程
+            _fadeCoroutine = StartCoroutine(FadeOutAndStop(fadeTime));
+        }
+
+        private IEnumerator FadeOutAndStop(float duration)
+        {
+            // 读当前音量（分贝）并换成线性
+            _audioMixer.GetFloat(bgmVolumeParam, out var startDb);
+            float startVol = Mathf.Pow(10f, startDb / 20f);
+
+            float t = 0f;
+            while (t < duration)
+            {
+                t += Time.unscaledDeltaTime;
+                float v = Mathf.Lerp(startVol, 0f, t / duration);
+                _audioMixer.SetFloat(bgmVolumeParam, Mathf.Log10(Mathf.Max(v, 0.0001f)) * 20f);
+                yield return null;
+            }
+
+            // 真正停止
+            _bgmSource.Stop();
+            _fadeCoroutine = null;
+        }
         private IEnumerator FadeToNewBGM(AudioClip newClip, float duration)
         {
             // 先读当前音量（分贝）并换成线性

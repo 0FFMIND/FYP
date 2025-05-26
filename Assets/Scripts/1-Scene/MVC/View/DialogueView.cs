@@ -105,10 +105,8 @@ namespace MVC
                     ctl.SetVisited(true);
                 else
                     ctl.SetVisited(false);
+                ctl.SetupChoice(choice.targetNodeId, onChoiceSelected.Invoke);
                 btn.GetComponentInChildren<TextMeshProUGUI>().text = choice.text;
-                btn.onClick.AddListener(() => {
-                    onChoiceSelected(choice.targetNodeId);
-                });
             }
             choicesContainer.gameObject.SetActive(true);
         }

@@ -11,8 +11,11 @@ namespace MVC
     {
         none,
         shake,
+        playHeartBeat,
+        playHint,
         playBGM,
         arrowRed,
+        stopBGM,
     }
     [System.Serializable]
     public struct LineMapping
@@ -106,8 +109,13 @@ namespace MVC
         private void ShowAvailableChoices(ChoiceNode node)
         {
             var available = new List<Choice>();
+            bool allBranchesDone = true;
             foreach (var choice in node.choices)
             {
+                if (!visitedNodes.Contains(choice.targetNodeId))
+                {
+                    allBranchesDone = false;
+                }
                 bool unlocked = true;
 
                 // 如果有 prereq，就检查每个 prereq 是否都在 visitedNodes 里
@@ -126,14 +134,23 @@ namespace MVC
                 if (unlocked)
                     available.Add(choice);
             }
-            view.ShowChoices(visitedNodes ,node.choicesTxt, available.ToArray(), OnChoiceSelected);
+            if (allBranchesDone)
+            {
+                // 如果所有分支结束
+                // 进入下一个节点
+                OnChoiceSelected(node.nextNodeId);
+            }
+            else
+            {
+                view.ShowChoices(visitedNodes, node.choicesTxt, available.ToArray(), OnChoiceSelected);
+            }
         }
 
         private void NextLine()
         {
             arrow.GetComponent<SpriteRenderer>().color = Color.white;
             // 不然按钮点击会误认为nextline
-            if (index > dialogueModel.Lines.Length)
+            if (dialogueModel == null || index > dialogueModel.Lines.Length)
             {
                 return;
             }
@@ -152,7 +169,7 @@ namespace MVC
                     ChoiceNode parent = choiceModel.GetNode(node.postNodeId);
                     // 更新 currentNodeID & model
                     currentNodeID = parent.nodeId;
-                    dialogueModel = choiceModel.GetDialogueModel(currentNodeID);
+                    dialogueModel = null;
 
                     // 直接显示 parent 的分支选项，而不读它的对话
                     ShowAvailableChoices(parent);
@@ -191,6 +208,14 @@ namespace MVC
                             {
                                 arrow.GetComponent<SpriteRenderer>().color = Color.red;
                             }
+                            if(eact == Eact.playHeartBeat)
+                            {
+                                AudioManager.Instance.PlaySFX("heartbeat");
+                            }
+                            if(eact == Eact.stopBGM)
+                            {
+                                AudioManager.Instance.StopBGM();
+                            }
                         }
                     }
 
@@ -224,45 +249,89 @@ namespace MVC
             arrow.gameObject.SetActive(false);
             view.Render(currentSprite, "");
 
-            string displayed = "";  // 当前已经被渲染出来的文本
+            string displayed = "";
+            var openTags = new Stack<string>();
+            bool inHint = false;    // 标记当前是否在 hint 区域
 
             for (int i = 0; i < fullText.Length; i++)
             {
-                // 如果遇到标签的开头
                 if (fullText[i] == '<')
                 {
-                    // 找到这个标签的闭合位置
                     int close = fullText.IndexOf('>', i);
                     if (close != -1)
                     {
-                        // 整个标签一次性拼上去
-                        string tag = fullText.Substring(i, close - i + 1);
-                        displayed += tag;
-                        // 跳过标签内部的所有字符
+                        string rawTag = fullText.Substring(i, close - i + 1);
+                        bool isCloseTag = rawTag.StartsWith("</");
+                        string inner = rawTag.Trim('<', '/', '>');
+                        string tagName = inner.Split(new[] { ' ', '=' }, 2)[0];
+
+                        if (!isCloseTag && tagName == "hint")
+                        {
+                            // 进入 hint 区域
+                            inHint = true;
+                            AudioManager.Instance.PlaySFX("notice");
+                            displayed += "<color=#FF0000>";
+                            openTags.Push("color");
+                        }
+                        else if (isCloseTag && tagName == "hint")
+                        {
+                            // 离开 hint 区域
+                            inHint = false;
+                            displayed += "</color>";
+                            if (openTags.Count > 0) openTags.Pop();
+                        }
+                        else
+                        {
+                            // 普通标签处理
+                            displayed += rawTag;
+                            if (isCloseTag)
+                            {
+                                if (openTags.Count > 0) openTags.Pop();
+                            }
+                            else if (!rawTag.EndsWith("/>"))
+                            {
+                                int sep = rawTag.IndexOfAny(new[] { ' ', '=', '>' }, 1);
+                                string name = rawTag.Substring(1, (sep > 0 ? sep : rawTag.Length - 2) - 1);
+                                openTags.Push(name);
+                            }
+                        }
+
                         i = close;
                     }
                     else
                     {
-                        // 万一没找到闭合括号，就当普通字符处理
                         displayed += fullText[i];
                     }
+
+                    // 标签无需打字音效，立即渲染
+                    view.Render(currentSprite, displayed);
+                    yield return null;
                 }
                 else
                 {
-                    // 普通字符，逐个打字
+                    // 普通文字
                     displayed += fullText[i];
-                    if (i < fullText.Length - 3)
-                        AudioManager.Instance.PlaySFX("typing");
-                }
+                    AudioManager.Instance.PlaySFX("typing");
 
-                view.Render(currentSprite, displayed);
-                yield return new WaitForSeconds(typeSpeed);
+                    // 拼接闭合标签保证 TMP 正确渲染
+                    string temp = displayed;
+                    foreach (var name in openTags)
+                        temp += $"</{name}>";
+
+                    view.Render(currentSprite, temp);
+
+                    // 不同区域用不同速度
+                    float wait = inHint ? typeSpeed * 3f : typeSpeed;
+                    yield return new WaitForSeconds(wait);
+                }
             }
 
-            // 整段打完后再显示箭头
+            // 完成后显示箭头
             PositionArrowUnderText();
             typingCoroutine = null;
         }
+
+
         private void PositionArrowUnderText()
         {
             view.tmp.ForceMeshUpdate();

@@ -30,11 +30,17 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/5/24 - 已完成：背景和脚本重新修改，对话触发事件
 
-TD：背景的那个框，
+2025/5/25 - 修改一处input反复点击/文字显示错误的bug
+
+TD：使用Action处理回调，做按钮放大/放小的动画，在最开始的ShowChoice，由DialogCtl驱动，里面注册一个回调事件，OnChoiceSeleted，ShowChoice里面能拿到ctl，控制btn的脚本，再把OnChoiceSeleted传入，之前用的是一个btn.                btn.onClick.AddListener(() => {
+                    onChoiceSelected(choice.targetNodeId);
+                });注册回调事件，现在把onclick放在corner里面，这里使用ctl.SetupChoice(choice.targetNodeId, onChoiceSelected.Invoke);
+
+那么在ctl脚本里面声明private变量，先储存这两个，最后onclick的时候触发
+
+TD ：连接下一个问询系统，需要在<hint>这里
 
 
-
-TD:分支对话/能够跳过显示 <-这个也不难
 
 TD:改键
 

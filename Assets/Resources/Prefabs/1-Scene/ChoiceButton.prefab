@@ -704,5 +704,6 @@ MonoBehaviour:
   targetText: {fileID: 8620340215286405502}
   normalTextColor: {r: 0, g: 0, b: 0, a: 1}
   hoverTextColor: {r: 1, g: 1, b: 1, a: 1}
-  flashDuration: 0.2
-  flashCount: 3
+  clickAnimDuration: 0.1
+  shrinkFactor: 0.9
+  expandFactor: 1.1

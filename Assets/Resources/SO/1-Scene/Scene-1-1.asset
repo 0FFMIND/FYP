@@ -14,24 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - nodeId: 0
-    postNodeId: 0
+    postNodeId: -1
+    nextNodeId: 3
     dialogueTxt: 1-Scene-1.txt
     choicesTxt: "\uFF08\u773C\u524D\u7684\u4EBA\u5F71\u9759\u9759\u5730\u6CE8\u89C6\u7740\u6211\uFF0C\u73B0\u5728\u8981\u600E\u4E48\u505A\uFF1F\uFF09"
     choices:
     - text: "\u4F60\u662F\u8C01...?"
       targetNodeId: 1
       prereqNodeIds: 
-      visited: 0
     - text: "\u6211\u5728\u54EA\u91CC...?"
       targetNodeId: 2
       prereqNodeIds: 
-      visited: 0
-    - text: "\u6211\u5E94\u8BE5\u505A\u4EC0\u4E48...?"
-      targetNodeId: 0
-      prereqNodeIds: 0100000002000000
-      visited: 0
   - nodeId: 1
     postNodeId: 0
+    nextNodeId: -1
     dialogueTxt: 1-Scene-1-1.txt
+    choicesTxt: 
+    choices: []
+  - nodeId: 2
+    postNodeId: 0
+    nextNodeId: -1
+    dialogueTxt: 1-Scene-1-2.txt
+    choicesTxt: 
+    choices: []
+  - nodeId: 3
+    postNodeId: -1
+    nextNodeId: -1
+    dialogueTxt: 1-Scene-1-3.txt
     choicesTxt: 
     choices: []

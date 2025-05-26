@@ -18,8 +18,10 @@ namespace MVC
     {
         [Tooltip("节点的 ID，需唯一")]
         public int nodeId;
-        [Tooltip("此选项播放完毕后要跳转到的节点 ID；留 -1 则结束对话")]
+        [Tooltip("此选项播放完毕后要跳转到的之前的节点 ID，留-1表示invalid")]
         public int postNodeId;
+        [Tooltip("此选项播放完毕后要跳转到的之后的节点 ID，留-1表示invalid")]
+        public int nextNodeId;
         [Tooltip("对话文本文件名（不含扩展名），由 DialogueModel 读取实际文本）")]
         public string dialogueTxt;
         [Tooltip("Choice上的提示文字")]

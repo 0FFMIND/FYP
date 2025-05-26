@@ -366,23 +366,31 @@ MonoBehaviour:
   - nodeID: 0
     lineIndex: 0
     sprite: {fileID: 0}
-    eacts: 0100000003000000
+    eacts: 0100000005000000
   - nodeID: 0
     lineIndex: 1
     sprite: {fileID: 0}
-    eacts: 0100000003000000
+    eacts: 0100000005000000
   - nodeID: 0
     lineIndex: 2
     sprite: {fileID: 0}
-    eacts: 0100000003000000
+    eacts: 0100000005000000
   - nodeID: 0
     lineIndex: 6
     sprite: {fileID: 21300000, guid: d9099f664cee3bc4e95603c07bee8994, type: 3}
-    eacts: 02000000
+    eacts: 04000000
   - nodeID: 0
     lineIndex: 13
     sprite: {fileID: 21300000, guid: d816a6575859bbe4eb62b9546c502d58, type: 3}
     eacts: 
+  - nodeID: 3
+    lineIndex: 0
+    sprite: {fileID: 21300000, guid: d816a6575859bbe4eb62b9546c502d58, type: 3}
+    eacts: 0000000006000000
+  - nodeID: 3
+    lineIndex: 4
+    sprite: {fileID: 21300000, guid: d816a6575859bbe4eb62b9546c502d58, type: 3}
+    eacts: 04000000
   typeSpeed: 0.08
   cameraShake: {fileID: 1186905180}
 --- !u!4 &527947529
