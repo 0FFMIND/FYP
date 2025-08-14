@@ -14,7 +14,7 @@ namespace MVC
         private string warningTxt;
         // 对话控制器
         [SerializeField]
-        private DialogueCtl dialogueCtl;
+        private Scene1DialogueCtl dialogueCtl;
         // 这里canvasgroup用来调整不透明度
         private CanvasGroup viewGroup;
         [SerializeField]
@@ -29,6 +29,8 @@ namespace MVC
         }
         private IEnumerator Start()
         {
+            // 关闭dialogCtl
+            dialogueCtl.HideDialogue();
             // 将"1-Scene-warning.txt"放到warningView中
             warningView.Render(null, string.Join("\n", new DialogueModel(warningTxt).Lines));
             // 整体wanringView的淡入淡出
