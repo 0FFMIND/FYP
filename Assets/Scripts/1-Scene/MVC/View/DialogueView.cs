@@ -9,21 +9,15 @@ namespace MVC
 {
     public class DialogueView : MonoBehaviour
     {
+        [Tooltip("用于显示对话人物立绘的 Image 组件")]
         public Image img;
+        [Tooltip("用于显示对话内容的 TextMeshProUGUI 组件")]
         public TextMeshProUGUI tmp;
-        [SerializeField, Tooltip("淡入时长（秒）")]
-        private float imageFadeDuration = 0.3f;
+        [SerializeField, Tooltip("图片淡入时长（秒），0 表示直接显示，无过渡效果")]
+        private float imageFadeDuration;
 
-        // 内部用来追踪当前的淡入协程
         private Coroutine imageFadeCoroutine;
-        // 用来调整alpha值
         private CanvasGroup imgGroup;
-
-        [Header("选项按钮容器")]
-        public RectTransform choicesContainer;   // 挂 VerticalLayoutGroup
-        public GameObject choiceHeaderPrefab;    // 头顶提示
-        public Button choiceButtonPrefab;        // 带 TMP Text 的按钮预制
-
 
         private void Awake()
         {
@@ -38,6 +32,13 @@ namespace MVC
 
         private void FadeIn()
         {
+            // 如果淡入时间 <= 0，直接显示，不做动画
+            if (imageFadeDuration <= 0f)
+            {
+                imgGroup.alpha = 1f;
+                imageFadeCoroutine = null;
+                return;
+            }
             if (imageFadeCoroutine != null)
                 StopCoroutine(imageFadeCoroutine);
             imgGroup.alpha = 0f;
@@ -68,7 +69,6 @@ namespace MVC
             }
             else
             {
-                // disabled
                 if (img != null && !img.gameObject.activeSelf)
                 {
                     img.gameObject.SetActive(true);
@@ -82,39 +82,6 @@ namespace MVC
             }
             tmp.text = text;
         }
-        public void ShowChoices(HashSet<int> visited, string choicesTxt, Choice[] choices, UnityAction<int> onChoiceSelected)
-        {
-            // 清空旧按钮
-            foreach (Transform t in choicesContainer)
-                Destroy(t.gameObject);
-            // 生成header
-            if(choicesTxt.Length > 0)
-            {
-                var go = Instantiate(choiceHeaderPrefab, choicesContainer);
-                go.GetComponent<TextMeshProUGUI>().text = choicesTxt;
-            }
-            // 生成新按钮
-            foreach (var choice in choices)
-            {
-                var btn = Instantiate(choiceButtonPrefab, choicesContainer);
-                // 拿到控制脚本
-                var ctl = btn.GetComponent<CornerButtonCtl>();
-
-                // 2) 如果已经 visited，就让它一上来就灰化并显示对勾
-                if (visited.Contains(choice.targetNodeId))
-                    ctl.SetVisited(true);
-                else
-                    ctl.SetVisited(false);
-                ctl.SetupChoice(choice.targetNodeId, onChoiceSelected.Invoke);
-                btn.GetComponentInChildren<TextMeshProUGUI>().text = choice.text;
-            }
-            choicesContainer.gameObject.SetActive(true);
-        }
-        public void HideChoices()
-        {
-            choicesContainer.gameObject.SetActive(false);
-        }
-
     }
 }
 

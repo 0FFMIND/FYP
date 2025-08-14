@@ -8,17 +8,13 @@ namespace MVC
     public class Scene1Ctl : MonoBehaviour
     {
         [SerializeField]
-        private Canvas choiceCanvas;
-        [SerializeField]
-        private DialogueView view;
+        private DialogueView warningView;
         // 1-Scene-warning.txt
         [SerializeField]
-        private string dialogueTxt;
-        // 对话控制器，warning播放完进入
+        private string warningTxt;
+        // 对话控制器
         [SerializeField]
         private DialogueCtl dialogueCtl;
-        //
-        private DialogueModel model;
         // 这里canvasgroup用来调整不透明度
         private CanvasGroup viewGroup;
         [SerializeField]
@@ -29,21 +25,19 @@ namespace MVC
         private float holdDuration;
         private void Awake()
         {
-            viewGroup = view.GetComponent<CanvasGroup>();
+            viewGroup = warningView.GetComponent<CanvasGroup>();
         }
-        void Start()
+        private IEnumerator Start()
         {
-            choiceCanvas.gameObject.SetActive(false);
-            // 读取text"1-Scene-warning.txt"
-            model = new DialogueModel(dialogueTxt);
-            dialogueCtl.arrow.gameObject.SetActive(false);
-            dialogueCtl.view.Render(null, null);
-            view.Render(null, string.Join("\n", model.Lines));
+            // 将"1-Scene-warning.txt"放到warningView中
+            warningView.Render(null, string.Join("\n", new DialogueModel(warningTxt).Lines));
+            // 整体wanringView的淡入淡出
             viewGroup.alpha = 0f;
             // 加载音效
             AudioManager.Instance.PlaySFX("gear");
             // 播放warning
-            StartCoroutine(PlayWarning());
+            yield return StartCoroutine(PlayWarning());
+            // 进入对话控制器
         }
 
         private IEnumerator PlayWarning()
@@ -51,9 +45,8 @@ namespace MVC
             yield return StartCoroutine(Fade(0f, 1f, fadeInDuration));
             yield return new WaitForSeconds(holdDuration);
             yield return StartCoroutine(Fade(1f, 0f, fadeOutDuration));
-            // 隐藏 view，并启动正式对话
-            view.Render(null, null);
-            dialogueCtl.StartDialogue();
+            // 隐藏warningView
+            warningView.Render(null, null);
         }
         private IEnumerator Fade(float from, float to, float duration)
         {

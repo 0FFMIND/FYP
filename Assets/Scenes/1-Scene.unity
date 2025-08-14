@@ -134,8 +134,8 @@ GameObject:
   - component: {fileID: 179257642}
   - component: {fileID: 179257641}
   - component: {fileID: 179257640}
-  - component: {fileID: 179257639}
   - component: {fileID: 179257638}
+  - component: {fileID: 179257644}
   m_Layer: 5
   m_Name: WarningCanvas
   m_TagString: Untagged
@@ -155,24 +155,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &179257639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179257637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6609aa9d313c244aacb935d28ea2a14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  img: {fileID: 0}
-  tmp: {fileID: 1465048979}
-  imageFadeDuration: 0.3
-  choicesContainer: {fileID: 0}
-  choiceHeaderPrefab: {fileID: 0}
-  choiceButtonPrefab: {fileID: 0}
 --- !u!114 &179257640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +239,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920.0001, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &179257644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179257637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca8389f684446e4abb4f7e405755567, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  img: {fileID: 0}
+  tmp: {fileID: 1465048979}
+  imageFadeDuration: 0.3
 --- !u!1 &184551999
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +334,7 @@ GameObject:
   - component: {fileID: 527947528}
   - component: {fileID: 527947530}
   m_Layer: 0
-  m_Name: PrologDialogCtl
+  m_Name: Scene1Ctl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,7 +358,7 @@ MonoBehaviour:
   downDistance: 0.07
   upFrames: 100
   script: {fileID: 11400000, guid: 250c86421ad884344b70fd1cf4517e88, type: 2}
-  view: {fileID: 1196720874}
+  view: {fileID: 0}
   mappings:
   - nodeID: 0
     lineIndex: 0
@@ -420,9 +417,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440cd5bc5dae3a54f8ee904c875db3dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choiceCanvas: {fileID: 1098785558}
-  view: {fileID: 179257639}
-  dialogueTxt: 1-Scene-warning.txt
+  warningView: {fileID: 179257644}
+  warningTxt: 1-Scene-warning.txt
   dialogueCtl: {fileID: 527947528}
   fadeInDuration: 3
   fadeOutDuration: 1
@@ -596,7 +592,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 520, y: -110.10999}
+  m_AnchoredPosition: {x: 561.2, y: -119.8}
   m_SizeDelta: {x: 40.31, y: 40.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &746286371
@@ -693,7 +689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270, y: -110.11}
+  m_AnchoredPosition: {x: -309.1, y: -119.8}
   m_SizeDelta: {x: 40.31, y: 40.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &761200587
@@ -1420,7 +1416,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\u672C\u4F5C\u6240\u6709\u5267\u60C5\u4E0E\u89D2\u8272\u5747\u4E3A<color=#FF0000>\u865A\u6784</color>\uFF0C\u5982\u6709\u96F7\u540C\uFF0C\u5B9E\u5C5E\u5DE7\u5408\r\n\u672C\u4F5C\u542B\u6709<color=#FF0000>\u8F7B\u5FAE\u66B4\u529B\u53CA\u7D27\u5F20</color>\u573A\u9762\uFF0C\u5EFA\u8BAE
-    12 \u5C81\u4EE5\u4E0A\u73A9\u5BB6\u6E38\u73A9\r\n\n<color=#FFCC00>\u6E38\u620F\u63D0\u793A\uFF1A\u6309\u7A7A\u683C\u6216\u70B9\u51FB\u7EE7\u7EED\u5BF9\u8BDD"
+    12 \u5C81\u4EE5\u4E0A\u73A9\u5BB6\u6E38\u73A9\r\n\n<color=#FFCC00>\u6E38\u620F\u63D0\u793A\uFF1A\u6309\u7A7A\u683C\u6216\u70B9\u51FB\u9F20\u6807\u8FDB\u884C\u5BF9\u8BDD"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 191f0ec47b3e41a47888ff76a930236e, type: 2}
   m_sharedMaterial: {fileID: -6841853373592332112, guid: 191f0ec47b3e41a47888ff76a930236e, type: 2}
@@ -1513,7 +1509,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 159, y: 0}
+  m_AnchoredPosition: {x: 162, y: -9}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1522422079

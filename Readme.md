@@ -1,6 +1,6 @@
 致谢名单：GPTo4-mini Audacity(变调/调整音量) Procreate
 
-2025/5/6 - 防止忘了，用了DialogueModel存从文本.txt里面读到的话，中间一个方法LoadDialogue会通过LocalizationManager(用一个static存的当前语言)定位到具体路径/文本.txt
+2025/5/6 - 用了DialogueModel存从文本.txt里面读到的话，中间一个方法LoadDialogue会通过LocalizationManager(用一个static存的当前语言)定位到具体路径/文本.txt
 
 通过dialoguectl控制dialoguemodel，直接通过new创建一个并获得控制权，太痛苦了写代码，暂时还没写按键适配，本来想dialogueView加一个渐变效果的，目前只做了一个启动功能
 
@@ -38,11 +38,9 @@ TD：使用Action处理回调，做按钮放大/放小的动画，在最开始�
 
 那么在ctl脚本里面声明private变量，先储存这两个，最后onclick的时候触发
 
-TD ：连接下一个问询系统，需要在<hint>这里
+2025/5/26 - 本地化系统，打算用excel配表
 
 
 
-TD:改键
-
-TD:暂停菜单
+2025/8/13 - 
 

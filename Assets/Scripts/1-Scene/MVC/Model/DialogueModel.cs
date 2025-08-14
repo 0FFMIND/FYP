@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using System.IO;
-using UnityEngine;
+using System.Linq;
 
 namespace MVC
 {
@@ -17,8 +16,18 @@ namespace MVC
         // 读取对话文本
         private void LoadDialogue(string fileName)
         {
-            string path = LocalizationMgr.Instance.GetDialoguePath(fileName);
-            Lines = File.ReadAllLines(path);
+            // 拿到当前场景名
+            string sceneName = SceneManager.GetActiveScene().name;
+            string path = LocalizationMgr.Instance.GetDialoguePath(sceneName, fileName);
+            // 先把文件的每一行都当作一个 key 读进来
+            string[] keys = File.ReadAllLines(path);
+            // 再把每个 key 传给 LocalizationMgr，返回当前语言对应的文本
+            Lines = keys
+                .Select(k => {
+                    string txt = LocalizationMgr.Instance.GetText(k.Trim());
+                    return txt;
+                })
+                .ToArray();
         }
     }
 
