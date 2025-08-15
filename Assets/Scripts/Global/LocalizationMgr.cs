@@ -1,9 +1,9 @@
-using Utils.SingletonPattern;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using System;
+using Utils.SingletonPattern;
 
 namespace MVC
 {
@@ -13,6 +13,7 @@ namespace MVC
         public string zh;
         public string en;
     }
+
     public static class JsonHelper
     {
         [Serializable]
@@ -20,6 +21,7 @@ namespace MVC
         {
             public T[] array;
         }
+
         public static T[] FromJsonArray<T>(string json)
         {
             // 在前后补上 {"array": …}
@@ -27,21 +29,27 @@ namespace MVC
             return JsonUtility.FromJson<Wrapper<T>>(wrapped).array;
         }
     }
+
     public class LocalizationTableWrapper
     {
         public LocalizationEntry[] entries;
     }
+
     public class LocalizationMgr : SingletonMB<LocalizationMgr>
     {
         public string CurrentLanguage = "zh";
+
         // 加载后存储 key -> [zh,en,ja]
         private Dictionary<string, string[]> table;
+
         // 上次加载时的场景名 & 语言，用来跳过重复加载
         private string lastSceneName;
         private string lastLanguage;
+
         public void SetLanguage(string lanCode)
         {
-            if (lanCode == CurrentLanguage) return;
+            if (lanCode == CurrentLanguage)
+                return;
             CurrentLanguage = lanCode;
             // 强制下次重新加载
             table = null;
@@ -49,8 +57,14 @@ namespace MVC
 
         public string GetDialoguePath(string sceneName, string filename)
         {
-            return Path.Combine(Application.streamingAssetsPath, "Localization", sceneName, filename);
+            return Path.Combine(
+                Application.streamingAssetsPath,
+                "Localization",
+                sceneName,
+                filename
+            );
         }
+
         public string GetText(string key)
         {
             if (string.IsNullOrWhiteSpace(key))
@@ -62,9 +76,7 @@ namespace MVC
             string sceneName = SceneManager.GetActiveScene().name;
 
             // 如果还没加载，或场景／语言换了，就重载
-            if (table == null ||
-                sceneName != lastSceneName ||
-                CurrentLanguage != lastLanguage)
+            if (table == null || sceneName != lastSceneName || CurrentLanguage != lastLanguage)
             {
                 LoadTableForScene(sceneName);
                 lastSceneName = sceneName;
@@ -78,37 +90,50 @@ namespace MVC
                 return values[langIndex];
             }
 
-            // 未找到时Error
-            return "未找到对应文本";
+            // 未找到时
+            return key;
         }
 
         // 从 StreamingAssets/Localization/{sceneName}/strings.json 读取表格
         private void LoadTableForScene(string sceneName)
         {
             table = new Dictionary<string, string[]>();
-            string folder = Path.Combine(Application.streamingAssetsPath,
-                                        "Localization", sceneName);
+            string folder = Path.Combine(
+                Application.streamingAssetsPath,
+                "Localization",
+                sceneName
+            );
             string jsonPath = Path.Combine(folder, "strings.json");
 
             string json = File.ReadAllText(jsonPath);
-           // 反序列化顶层数组
+            // 反序列化顶层数组
             var entries = JsonHelper.FromJsonArray<LocalizationEntry>(json);
-            if (entries == null) return;
+            if (entries == null)
+                return;
             // 按 {zh, en, ja} 顺序填入字典
             foreach (var e in entries)
-             {
-                table[e.zh] = new string[] { e.zh, e.en /*, e.ja */ };
+            {
+                table[e.zh] = new string[]
+                {
+                    e.zh,
+                    e.en, /*, e.ja */
+                };
             }
         }
+
         private int LanguageIndex(string langCode, int maxLength)
         {
             switch (langCode.ToLower())
             {
-                case "zh": return 0;
-                case "en": return 1;
-                case "ja": return 2;
+                case "zh":
+                    return 0;
+                case "en":
+                    return 1;
+                case "ja":
+                    return 2;
                 // 加其他语言时在这里扩展
-                default: return 0;
+                default:
+                    return 0;
             }
         }
     }

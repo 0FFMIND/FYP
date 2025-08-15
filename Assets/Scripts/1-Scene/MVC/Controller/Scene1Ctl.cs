@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using AudioSystem;
+using UnityEngine;
 
 namespace MVC
 {
@@ -9,24 +9,32 @@ namespace MVC
     {
         [SerializeField]
         private DialogueView warningView;
+
         // 1-Scene-warning.txt
         [SerializeField]
         private string warningTxt;
+
         // 对话控制器
         [SerializeField]
         private Scene1DialogueCtl dialogueCtl;
+
         // 这里canvasgroup用来调整不透明度
         private CanvasGroup viewGroup;
+
         [SerializeField]
         private float fadeInDuration;
+
         [SerializeField]
         private float fadeOutDuration;
+
         [SerializeField, Tooltip("停留时长（秒）")]
         private float holdDuration;
+
         private void Awake()
         {
             viewGroup = warningView.GetComponent<CanvasGroup>();
         }
+
         private IEnumerator Start()
         {
             // 关闭dialogCtl
@@ -39,7 +47,10 @@ namespace MVC
             AudioManager.Instance.PlaySFX("gear");
             // 播放warning
             yield return StartCoroutine(PlayWarning());
+            // 隐藏warningView
+            warningView.Render(null, null);
             // 进入对话控制器
+            dialogueCtl.StartDialogue();
         }
 
         private IEnumerator PlayWarning()
@@ -47,9 +58,8 @@ namespace MVC
             yield return StartCoroutine(Fade(0f, 1f, fadeInDuration));
             yield return new WaitForSeconds(holdDuration);
             yield return StartCoroutine(Fade(1f, 0f, fadeOutDuration));
-            // 隐藏warningView
-            warningView.Render(null, null);
         }
+
         private IEnumerator Fade(float from, float to, float duration)
         {
             float t = 0f;
@@ -63,5 +73,3 @@ namespace MVC
         }
     }
 }
-
-

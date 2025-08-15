@@ -80,7 +80,10 @@ namespace MVC
                     FadeIn();
                 }
             }
-            tmp.text = text;
+            if (tmp != null)
+            {
+                tmp.text = text;
+            }
         }
     }
 }

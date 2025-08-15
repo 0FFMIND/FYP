@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using InputSystem;
 using AudioSystem;
+using InputSystem;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace MVC
@@ -17,54 +17,85 @@ namespace MVC
         arrowRed,
         stopBGM,
     }
+
     [System.Serializable]
     public struct LineMapping
     {
-        [Tooltip("当 nodeID 等于此值时")]
-        public int nodeID;
         [Tooltip("当 index 等于此值时，切换到对应的 sprite")]
         public int lineIndex;
+
         [Tooltip("切换时使用的 Sprite")]
         public Sprite sprite;
+
         [Tooltip("触发行为")]
         public Eact[] eacts;
     }
+
     public class Scene1DialogueCtl : MonoBehaviour
     {
-
         [Header("翻页箭头位移")]
+        [SerializeField]
         private Transform arrow;
-        [SerializeField] private float arrowOffset;      // 首次定位的像素偏移
-        [SerializeField] private int downFrames;      // 向下移动时等待帧数
-        [SerializeField] private float downDistance;   // 向下移动的世界/本地单位
-        [SerializeField] private int upFrames;      // 向上移动时等待帧数
+
+        [SerializeField]
+        private float arrowOffset; // 首次定位的像素偏移
+
+        [SerializeField]
+        private int downFrames; // 向下移动时等待帧数
+
+        [SerializeField]
+        private float downDistance; // 向下移动的世界/本地单位
+
+        [SerializeField]
+        private int upFrames; // 向上移动时等待帧数
+
         // 对话
         [Header("ScriptableObject 对话资源")]
-        private DialogueView view;
+        // 1-Scene-1.txt
+        [SerializeField]
+        private string prologueTxt;
+
+        [SerializeField]
+        private DialogueView bgView;
+
+        [SerializeField]
+        private DialogueView dialogueView;
+
         [SerializeField]
         private LineMapping[] mappings;
+
         [SerializeField]
         private float typeSpeed;
+
         [SerializeField]
         private CameraShake cameraShake;
+
         //
         private DialogueModel dialogueModel;
         private Sprite currentSprite;
         private int index;
         private Coroutine typingCoroutine;
         private Coroutine arrowBounceCoroutine;
+
         public void HideDialogue()
         {
             // 隐藏内容
             arrow.gameObject.SetActive(false);
-            view.Render(null, null);
+            RenderViews(null, null);
+        }
+
+        public void RenderViews(Sprite sprite, string text)
+        {
+            bgView.Render(sprite, null);
+            dialogueView.Render(null, text);
         }
 
         public void StartDialogue()
         {
-            // 清空现在有的内容
-            arrow.gameObject.SetActive(false);
-            view.Render(null, null);
+            // bgm
+            AudioManager.Instance.PlayBGM("1-bgm", 0f);
+            // 载入对话
+            dialogueModel = new DialogueModel(prologueTxt);
             // 刷新index
             index = 0;
             // 注册事件
@@ -72,25 +103,26 @@ namespace MVC
             // 自动播放第一句话
             NextLine();
         }
+
         private void OnInputAction(InputAction action)
         {
-            if(action == InputAction.DialogueClick)
+            if (action == InputAction.DialogueClick)
             {
                 if (typingCoroutine != null)
                 {
                     // 先暂停
                     StopCoroutine(typingCoroutine);
                     typingCoroutine = null;
-                    if(index <= dialogueModel.Lines.Length)
+                    if (index <= dialogueModel.Lines.Length)
                     {
-                        view.Render(currentSprite, dialogueModel.Lines[index - 1]);
+                        RenderViews(currentSprite, dialogueModel.Lines[index - 1]);
                         // 开启小箭头
                         PositionArrowUnderText();
                     }
                     else
                     {
                         // 结束的时候清空
-                        view.Render(null, null);
+                        RenderViews(null, null);
                         // 关掉小箭头
                         arrow.gameObject.SetActive(false);
                         arrow.GetComponent<SpriteRenderer>().color = Color.white;
@@ -102,29 +134,29 @@ namespace MVC
                 }
             }
         }
-     
+
         private void NextLine()
         {
             arrow.GetComponent<SpriteRenderer>().color = Color.white;
+            // 如果读完
+            if (index == dialogueModel.Lines.Length)
+            {
+                // 进入1-Scene-Main
+                SceneMgr.Instance.LoadScenesAdditive("1-Scene-Main");
+
+                SceneMgr.Instance.DisableScene("1-Scene-UI");
+            }
             // 不然按钮点击会误认为nextline
-            if (dialogueModel == null || index > dialogueModel.Lines.Length)
+            if (dialogueModel == null || index >= dialogueModel.Lines.Length)
             {
                 return;
             }
-            // 如果读完
-            if(index == dialogueModel.Lines.Length)
+            foreach (var map in mappings)
             {
-                // 关掉小箭头
-                arrow.gameObject.SetActive(false);
-                //view.Render(null, null);
-                //InputManager.Instance.OnAction -= OnInputAction;
-            }
-            foreach(var map in mappings)
-            {
-                if(index == map.lineIndex)
+                if (index == map.lineIndex)
                 {
                     currentSprite = map.sprite;
-                    foreach(Eact eact in map.eacts)
+                    foreach (Eact eact in map.eacts)
                     {
                         if (eact != Eact.none)
                         {
@@ -138,15 +170,15 @@ namespace MVC
                             {
                                 AudioManager.Instance.PlayBGM("1-bgm");
                             }
-                            if(eact == Eact.arrowRed)
+                            if (eact == Eact.arrowRed)
                             {
                                 arrow.GetComponent<SpriteRenderer>().color = Color.red;
                             }
-                            if(eact == Eact.playHeartBeat)
+                            if (eact == Eact.playHeartBeat)
                             {
                                 AudioManager.Instance.PlaySFX("heartbeat");
                             }
-                            if(eact == Eact.stopBGM)
+                            if (eact == Eact.stopBGM)
                             {
                                 AudioManager.Instance.StopBGM();
                             }
@@ -166,11 +198,11 @@ namespace MVC
         private IEnumerator TypeLines(string fullText)
         {
             arrow.gameObject.SetActive(false);
-            view.Render(currentSprite, "");
+            RenderViews(currentSprite, "");
 
             string displayed = "";
             var openTags = new Stack<string>();
-            bool inHint = false;    // 标记当前是否在 hint 区域
+            bool inHint = false; // 标记当前是否在 hint 区域
 
             for (int i = 0; i < fullText.Length; i++)
             {
@@ -188,7 +220,7 @@ namespace MVC
                         {
                             // 进入 hint 区域
                             inHint = true;
-                            AudioManager.Instance.PlaySFX("notice");
+                            AudioManager.Instance.PlaySFX("shocked");
                             displayed += "<color=#FF0000>";
                             openTags.Push("color");
                         }
@@ -197,7 +229,8 @@ namespace MVC
                             // 离开 hint 区域
                             inHint = false;
                             displayed += "</color>";
-                            if (openTags.Count > 0) openTags.Pop();
+                            if (openTags.Count > 0)
+                                openTags.Pop();
                         }
                         else
                         {
@@ -205,12 +238,16 @@ namespace MVC
                             displayed += rawTag;
                             if (isCloseTag)
                             {
-                                if (openTags.Count > 0) openTags.Pop();
+                                if (openTags.Count > 0)
+                                    openTags.Pop();
                             }
                             else if (!rawTag.EndsWith("/>"))
                             {
                                 int sep = rawTag.IndexOfAny(new[] { ' ', '=', '>' }, 1);
-                                string name = rawTag.Substring(1, (sep > 0 ? sep : rawTag.Length - 2) - 1);
+                                string name = rawTag.Substring(
+                                    1,
+                                    (sep > 0 ? sep : rawTag.Length - 2) - 1
+                                );
                                 openTags.Push(name);
                             }
                         }
@@ -223,7 +260,7 @@ namespace MVC
                     }
 
                     // 标签无需打字音效，立即渲染
-                    view.Render(currentSprite, displayed);
+                    RenderViews(currentSprite, displayed);
                     yield return null;
                 }
                 else
@@ -237,9 +274,8 @@ namespace MVC
                     foreach (var name in openTags)
                         temp += $"</{name}>";
 
-                    view.Render(currentSprite, temp);
+                    RenderViews(currentSprite, temp);
 
-                    // 不同区域用不同速度
                     // 不同文本用不同速度
                     float wait = inHint ? typeSpeed * 3f : typeSpeed;
                     if (LocalizationMgr.Instance.CurrentLanguage == "en")
@@ -256,21 +292,26 @@ namespace MVC
             typingCoroutine = null;
         }
 
-
         private void PositionArrowUnderText()
         {
-            view.tmp.ForceMeshUpdate();
-            Bounds b = view.tmp.textBounds;
+            dialogueView.tmp.ForceMeshUpdate();
+            Bounds b = dialogueView.tmp.textBounds;
             Vector3 localBotCenter = new Vector3(b.center.x, b.min.y, 0);
-            Vector3 worldBotCenter = view.tmp.transform.TransformPoint(localBotCenter);
+            Vector3 worldBotCenter = dialogueView.tmp.transform.TransformPoint(localBotCenter);
             Vector3 downOffset = Vector3.down * arrowOffset;
-            arrow.position = new Vector3(arrow.position.x, worldBotCenter.y + downOffset.y, arrow.position.z);
+            arrow.position = new Vector3(
+                arrow.position.x,
+                worldBotCenter.y + downOffset.y,
+                arrow.position.z
+            );
             // 显示，并向下偏移
             arrow.gameObject.SetActive(true);
             // 启动抖动
-            if (arrowBounceCoroutine != null) StopCoroutine(arrowBounceCoroutine);
+            if (arrowBounceCoroutine != null)
+                StopCoroutine(arrowBounceCoroutine);
             arrowBounceCoroutine = StartCoroutine(ArrowBounce());
         }
+
         private IEnumerator ArrowBounce()
         {
             // 记录原始位置
@@ -281,7 +322,7 @@ namespace MVC
                 // 平滑下移
                 for (int i = 0; i <= downFrames; i++)
                 {
-                    float t = i / (float)downFrames;  // 从 0 到 1
+                    float t = i / (float)downFrames; // 从 0 到 1
                     arrow.position = Vector3.Lerp(original, target, t);
                     yield return null;
                 }
@@ -304,4 +345,3 @@ namespace MVC
         }
     }
 }
-
