@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Utils.SingletonPattern;
 
-namespace AudioSystem
+namespace Manager
 {
     public class AudioManager : SingletonMB<AudioManager>
     {

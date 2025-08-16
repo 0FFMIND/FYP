@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils.SingletonPattern;
 
-namespace InputSystem
+namespace Manager
 {
     public enum InputAction
     {
         DialogueClick,
         PlayerSprint,
+        PauseGame,
     }
 
     public class InputManager : SingletonMB<InputManager>
@@ -17,34 +18,47 @@ namespace InputSystem
         // PC按键映射
         public List<PCMapping> defaultMappings = new List<PCMapping>
         {
-            new PCMapping
-            {
-                action = InputAction.DialogueClick,
-                keys = new KeyCode[] { KeyCode.Return },
-            },
-            new PCMapping
-            {
-                action = InputAction.PlayerSprint,
-                keys = new KeyCode[] { KeyCode.LeftShift },
-            },
+            new PCMapping { action = InputAction.DialogueClick, key = KeyCode.Return },
+            new PCMapping { action = InputAction.PlayerSprint, key = KeyCode.LeftShift },
+            new PCMapping { action = InputAction.PauseGame, key = KeyCode.Escape },
         };
         public event Action<InputAction> OnAction;
+        private Dictionary<InputAction, Action> actionEvents = new();
+
+        public void Subscribe(InputAction action, Action callback)
+        {
+            if (!actionEvents.ContainsKey(action))
+                actionEvents[action] = () => { };
+            actionEvents[action] += callback;
+        }
+
+        public void Unsubscribe(InputAction action, Action callback)
+        {
+            if (actionEvents.ContainsKey(action))
+                actionEvents[action] -= callback;
+        }
 
         private void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
+        {   
+            // 花括号避免handler同作用域
             {
-                OnAction?.Invoke(InputAction.DialogueClick);
+                if (
+                    Input.GetMouseButtonDown(0)
+                    && actionEvents.TryGetValue(InputAction.DialogueClick, out var handler)
+                )
+                {
+                    handler?.Invoke();
+                }
             }
             foreach (var map in defaultMappings)
             {
-                foreach (var key in map.keys)
+                if (
+                    Input.GetKeyDown(map.key)
+                    && actionEvents.TryGetValue(map.action, out var handler)
+                )
                 {
-                    if (Input.GetKeyDown(key))
-                    {
-                        OnAction?.Invoke(map.action);
-                        break;
-                    }
+                    handler?.Invoke();
+                    break;
                 }
             }
         }
@@ -54,6 +68,6 @@ namespace InputSystem
     public struct PCMapping
     {
         public InputAction action;
-        public KeyCode[] keys;
+        public KeyCode key;
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine.SceneManagement;
 using System.IO;
 using System.Linq;
+using Manager;
 
 namespace MVC
 {

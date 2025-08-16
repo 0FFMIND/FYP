@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utils.SingletonPattern;
 
-namespace MVC
+namespace Manager
 {
     [Serializable]
     public class LocalizationEntry

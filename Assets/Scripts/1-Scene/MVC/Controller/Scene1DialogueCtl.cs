@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using AudioSystem;
-using InputSystem;
+using Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -99,39 +98,36 @@ namespace MVC
             // 刷新index
             index = 0;
             // 注册事件
-            InputManager.Instance.OnAction += OnInputAction;
+            InputManager.Instance.Subscribe(InputAction.DialogueClick, OnDialogueClick);
             // 自动播放第一句话
             NextLine();
         }
 
-        private void OnInputAction(InputAction action)
+        private void OnDialogueClick()
         {
-            if (action == InputAction.DialogueClick)
+            if (typingCoroutine != null)
             {
-                if (typingCoroutine != null)
+                // 先暂停
+                StopCoroutine(typingCoroutine);
+                typingCoroutine = null;
+                if (index <= dialogueModel.Lines.Length)
                 {
-                    // 先暂停
-                    StopCoroutine(typingCoroutine);
-                    typingCoroutine = null;
-                    if (index <= dialogueModel.Lines.Length)
-                    {
-                        RenderViews(currentSprite, dialogueModel.Lines[index - 1]);
-                        // 开启小箭头
-                        PositionArrowUnderText();
-                    }
-                    else
-                    {
-                        // 结束的时候清空
-                        RenderViews(null, null);
-                        // 关掉小箭头
-                        arrow.gameObject.SetActive(false);
-                        arrow.GetComponent<SpriteRenderer>().color = Color.white;
-                    }
+                    RenderViews(currentSprite, dialogueModel.Lines[index - 1]);
+                    // 开启小箭头
+                    PositionArrowUnderText();
                 }
                 else
                 {
-                    NextLine();
+                    // 结束的时候清空
+                    RenderViews(null, null);
+                    // 关掉小箭头
+                    arrow.gameObject.SetActive(false);
+                    arrow.GetComponent<SpriteRenderer>().color = Color.white;
                 }
+            }
+            else
+            {
+                NextLine();
             }
         }
 
@@ -341,7 +337,7 @@ namespace MVC
         {
             if (arrowBounceCoroutine != null)
                 StopCoroutine(arrowBounceCoroutine);
-            InputManager.Instance.OnAction -= OnInputAction;
+            InputManager.Instance.Unsubscribe(InputAction.DialogueClick, OnDialogueClick);
         }
     }
 }

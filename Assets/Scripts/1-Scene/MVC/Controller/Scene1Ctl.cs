@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using AudioSystem;
+using Manager;
 using UnityEngine;
 
 namespace MVC
@@ -37,6 +37,8 @@ namespace MVC
 
         private IEnumerator Start()
         {
+            // 关闭暂停菜单
+            PauseMgr.Instance.SetPauseEnabled(false);
             // 关闭dialogCtl
             dialogueCtl.HideDialogue();
             // 将"1-Scene-warning.txt"放到warningView中
