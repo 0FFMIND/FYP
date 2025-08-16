@@ -11,13 +11,13 @@ namespace MVC
         [SerializeField] private Scrollbar bgmScrollBar;
         private void OnEnable()
         {
-            float value = AudioManager.Instance.GetBGMVolume();
+            float value = AudioManager.Instance.GetBGMVolumeNormalized();
             bgmScrollBar.SetValueWithoutNotify(value);
         }
         public void HandleBGMVolumeChange()
         {
             float value = bgmScrollBar.value;
-            AudioManager.Instance.SetBGMVolume(value);
+            AudioManager.Instance.SetBGMVolumeNormalized(value);
         }
     }
 }

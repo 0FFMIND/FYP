@@ -6,11 +6,19 @@ using Utils.SingletonPattern;
 
 namespace Manager
 {
+    [Serializable]
     public enum InputAction
     {
         DialogueClick,
         PlayerSprint,
         PauseGame,
+    }
+
+    [Serializable]
+    public struct PCMapping
+    {
+        public InputAction action;
+        public KeyCode key;
     }
 
     public class InputManager : SingletonMB<InputManager>
@@ -39,7 +47,7 @@ namespace Manager
         }
 
         private void Update()
-        {   
+        {
             // 花括号避免handler同作用域
             {
                 if (
@@ -62,12 +70,5 @@ namespace Manager
                 }
             }
         }
-    }
-
-    [Serializable]
-    public struct PCMapping
-    {
-        public InputAction action;
-        public KeyCode key;
     }
 }

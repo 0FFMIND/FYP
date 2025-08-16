@@ -29,6 +29,13 @@ namespace Manager
         // 全局listener挂在audioManager下
         private AudioListener _listener;
 
+        // AutoSingletonMB
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void Bootstrap()
+        {
+            EnsureCreated();
+        }
+
         private void Awake()
         {
             // 添加listener
@@ -150,8 +157,24 @@ namespace Manager
             _sfxSource.PlayOneShot(clip, volumeScale);
         }
 
-        // 设置音量
-        public void SetBGMVolume(float normalized)
+        // 设置标量化音量
+        public void SetBGMVolume(float db)
+        {
+            _audioMixer.SetFloat(bgmVolumeParam, db);
+        }
+
+        public void SetSFXVolume(float db)
+        {
+            _audioMixer.SetFloat(sfxVolumeParam, db);
+        }
+
+        public void SetMixerVolume(float db)
+        {
+            _audioMixer.SetFloat(mixerVolumeParam, db);
+        }
+
+        // 设置标量化音量
+        public void SetBGMVolumeNormalized(float normalized)
         {
             float db;
             if (normalized <= 0f)
@@ -165,7 +188,7 @@ namespace Manager
             _audioMixer.SetFloat(bgmVolumeParam, db);
         }
 
-        public void SetSFXVolume(float normalized)
+        public void SetSFXVolumeNormalized(float normalized)
         {
             float db;
             if (normalized <= 0f)
@@ -179,7 +202,7 @@ namespace Manager
             _audioMixer.SetFloat(sfxVolumeParam, db);
         }
 
-        public void SetMixerVolume(float normalized)
+        public void SetMixerVolumeNormalized(float normalized)
         {
             float db;
             if (normalized <= 0f)
@@ -198,6 +221,34 @@ namespace Manager
         {
             if (_audioMixer.GetFloat(bgmVolumeParam, out float db))
             {
+                return db;
+            }
+            return 0f;
+        }
+
+        public float GetSFXVolume()
+        {
+            if (_audioMixer.GetFloat(sfxVolumeParam, out float db))
+            {
+                return db;
+            }
+            return 0f;
+        }
+
+        public float GetMixerVolume()
+        {
+            if (_audioMixer.GetFloat(mixerVolumeParam, out float db))
+            {
+                return db;
+            }
+            return 0f;
+        }
+
+        // 获取标量化音量
+        public float GetBGMVolumeNormalized()
+        {
+            if (_audioMixer.GetFloat(bgmVolumeParam, out float db))
+            {
                 if (db <= -80f)
                 {
                     return 0f;
@@ -207,7 +258,7 @@ namespace Manager
             return 1f;
         }
 
-        public float GetSFXVolume()
+        public float GetSFXVolumeNormalized()
         {
             if (_audioMixer.GetFloat(sfxVolumeParam, out float db))
             {
@@ -220,7 +271,7 @@ namespace Manager
             return 1f;
         }
 
-        public float GetMixerVolume()
+        public float GetMixerVolumeNormalized()
         {
             if (_audioMixer.GetFloat(mixerVolumeParam, out float db))
             {
