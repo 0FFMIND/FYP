@@ -1,0 +1,116 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace MVC
+{
+    public enum Direction
+    {
+        Down,
+        Left,
+        Right,
+        Up,
+    }
+
+    public class SpriteAnimCtl : MonoBehaviour
+    {
+        [SerializeField]
+        private float frameRate; // 每帧间隔
+
+        [SerializeField]
+        private Sprite[] downSprites;
+
+        [SerializeField]
+        private Sprite[] leftSprites;
+
+        [SerializeField]
+        private Sprite[] rightSprites;
+
+        [SerializeField]
+        private Sprite[] upSprites;
+
+        private SpriteRenderer sr;
+        private float timer;
+        private int frameIndex;
+        private Sprite[] currentAnim;
+
+        // 初始化
+        private Direction currentDir = (Direction)(-1);
+        private bool wasMoving;
+        private bool isMoving;
+
+        private void Awake()
+        {
+            sr = GetComponent<SpriteRenderer>();
+            // 默认不移动
+            wasMoving = false;
+            isMoving = false;
+            // 默认向下
+            SetDirection(Direction.Down);
+        }
+
+        private void Update()
+        {
+            // 如果被暂停
+            if(Time.timeScale == 0)
+            {
+                return;
+            }
+            if (!isMoving)
+            {
+                // Idle 时显示第零帧
+                sr.sprite = currentAnim[0];
+                wasMoving = false;
+                return;
+            }
+            // 播放第一帧
+            if (!wasMoving && isMoving)
+            {
+                // 保险，避免只有一帧，第一帧为空
+                frameIndex = Mathf.Min(1, currentAnim.Length - 1);
+                sr.sprite = currentAnim[frameIndex];
+                wasMoving = true;
+                return;
+            }
+
+            // 播放帧动画
+            timer += Time.deltaTime;
+            if (timer >= frameRate)
+            {
+                timer = 0f;
+                frameIndex = (frameIndex + 1) % currentAnim.Length;
+                sr.sprite = currentAnim[frameIndex];
+            }
+        }
+
+        public void SetDirection(Direction dir)
+        {
+            if (currentDir == dir)
+                return;
+            currentDir = dir;
+            frameIndex = 0;
+            timer = 0f;
+
+            switch (dir)
+            {
+                case Direction.Down:
+                    currentAnim = downSprites;
+                    break;
+                case Direction.Left:
+                    currentAnim = leftSprites;
+                    break;
+                case Direction.Right:
+                    currentAnim = rightSprites;
+                    break;
+                case Direction.Up:
+                    currentAnim = upSprites;
+                    break;
+            }
+        }
+
+        public void SetMoving(bool moving)
+        {
+            isMoving = moving;
+        }
+    }
+}

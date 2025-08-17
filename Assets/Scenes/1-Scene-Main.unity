@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 2111873691}
   - component: {fileID: 2111873690}
   - component: {fileID: 2111873692}
+  - component: {fileID: 2111873693}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -563,8 +564,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -190086407, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -584,7 +585,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.5414722, y: 0.040572625, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -602,6 +603,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+--- !u!114 &2111873693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111873689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fade91b868662c4eaecb5f1d203f135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameRate: 0.1
+  downSprites:
+  - {fileID: -190086407, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: 502683355, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: -248249613, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: 1139274678, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  leftSprites:
+  - {fileID: -42303674, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: -369861741, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: 1713398128, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: -1132963148, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  rightSprites:
+  - {fileID: 449114666, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: 477585696, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: 800525487, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: -1217667533, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  upSprites:
+  - {fileID: -361589465, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: -919692162, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: -1766463267, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
+  - {fileID: -1850513388, guid: c36786ff6937b3c469caa1fbb8c73702, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

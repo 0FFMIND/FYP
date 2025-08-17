@@ -16,7 +16,7 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/5/22 - 在游戏控制前加一个warning的效果，加入一个Scene1Ctl，让播放顺序warning->序章
 
-2025/5/23 - 已完成：TD: 加一个提示的声音，修改warning的UI panel
+2025/5/23 - 已完成：加一个提示的声音，修改warning的UI panel
 
 2025/5/26 - 本地化系统，暂时用excel配表
 
@@ -24,5 +24,11 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 找到了更方便搜索的音乐库：https://www.aigei.com/music/class
 
-TODO: 主场景，timeline，人物移动，人物交互
+2025/8/15 - 稍微搭了下主场景，在写暂停菜单，需要加入数据持久化
+
+2025/8/16 - 加入了简单的人物移动逻辑，用的代码控制动画机，感觉要方便一点，等待加入跑步逻辑
+
+事件分发有点繁琐，打算加一个事件中心管理事件分发，其实写的Singleton基本上没用到
+
+TODO: 主场景(美术)，timeline(还没写)，人物移动(待完善)，人物交互(还没写，主要是与物体)
 
