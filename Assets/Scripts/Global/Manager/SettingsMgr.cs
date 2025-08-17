@@ -4,36 +4,36 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
-using Utils.SingletonPattern;
+using Utils;
 
 namespace Manager
 {
+    // 可被序列化
+    [Serializable]
+    // 默认值
+    public class SettingsDTO
+    {
+        // 用的分贝(db)表示
+        public float bgmVolume = 0f;
+        public float sfxVolume = 0f;
+        public float mixerVolume = 0f;
+        public string language = "en";
+
+        // 用dictionary方便查找
+        public Dictionary<InputAction, KeyCode> keyBindings = new()
+        {
+            { InputAction.DialogueClick, KeyCode.Return },
+            { InputAction.PlayerSprint, KeyCode.LeftShift },
+            { InputAction.PauseGame, KeyCode.Escape },
+        };
+    }
+
     public class SettingsMgr : SingletonMB<SettingsMgr>
     {
-        // 可被序列化
-        [Serializable]
-        // 默认值
-        public class SettingsDTO
-        {
-            // 用的分贝(db)表示
-            public float bgmVolume = 0f;
-            public float sfxVolume = 0f;
-            public string language = "en";
-
-            // 用dictionary方便查找
-            public Dictionary<InputAction, KeyCode> keyBindings = new()
-            {
-                { InputAction.DialogueClick, KeyCode.Return },
-                { InputAction.PlayerSprint, KeyCode.LeftShift },
-                { InputAction.PauseGame, KeyCode.Escape },
-            };
-        }
-
         // 默认保存路径，明文保存
         private static string SettingsFilePath =>
             Path.Combine(Application.persistentDataPath, "settings.json");
-        // 外部订阅事件(当有设置被载入的时候应用修改)
-        public event Action<SettingsDTO> SettingsChanged;
+
         private SettingsDTO Data;
 
         // AutoSingletonMB
@@ -42,6 +42,7 @@ namespace Manager
         {
             EnsureCreated();
         }
+
         private void Awake()
         {
             Load();
@@ -84,11 +85,31 @@ namespace Manager
                 Save(); // 初次写入
             }
             // 广播变动
-            Broadcast();
+            Broadcast(Data);
         }
-        private void Broadcast()
+
+        private void Broadcast(SettingsDTO data)
         {
-            SettingsChanged?.Invoke(Data);
+            EventBus.Publish(new ESettingsChanged(data));
+        }
+
+        // 暴露修改Data成员的方法
+        public void SetBGMVolume(float bgm)
+        {
+            Data.bgmVolume = bgm;
+            Save();
+        }
+
+        public void SetSFXVolume(float sfx)
+        {
+            Data.sfxVolume = sfx;
+            Save();
+        }
+
+        public void SetMixerVolume(float mixer)
+        {
+            Data.mixerVolume = mixer;
+            Save();
         }
 
         /// <summary>

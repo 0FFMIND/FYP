@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 namespace MVC
 {
@@ -38,6 +39,8 @@ namespace MVC
         private Direction currentDir = (Direction)(-1);
         private bool wasMoving;
         private bool isMoving;
+        private bool isPaused = false;
+
 
         private void Awake()
         {
@@ -49,13 +52,26 @@ namespace MVC
             SetDirection(Direction.Down);
         }
 
+        private void OnEnable()
+        {
+            EventBus.Subscribe<EPauseChanged>(OnPauseChanged);
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<EPauseChanged>(OnPauseChanged);
+        }
+
+        private void OnPauseChanged(EPauseChanged e)
+        {
+            isPaused = e.IsPaused;
+        }
+
         private void Update()
         {
-            // 如果被暂停
-            if(Time.timeScale == 0)
-            {
+            // 如果被暂停（来自事件）
+            if (isPaused)
                 return;
-            }
             if (!isMoving)
             {
                 // Idle 时显示第零帧

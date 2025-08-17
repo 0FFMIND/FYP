@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Utils.SingletonPattern
+namespace Utils
 {
     // 这里加上泛型约束，T必须是MonoBehaviour或者是子类
     public abstract class SingletonMB<T> : MonoBehaviour

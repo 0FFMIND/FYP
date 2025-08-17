@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using Utils.SingletonPattern;
+using Utils;
 
 namespace Manager
 {
@@ -66,6 +66,24 @@ namespace Manager
             {
                 _sfxSource.outputAudioMixerGroup = groups[0];
             }
+        }
+
+        // 订阅全局事件
+        private void OnEnable()
+        {
+            EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged);
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
+        }
+
+        private void OnSettingsChanged(ESettingsChanged e)
+        {
+            SetBGMVolume(e.Settings.bgmVolume);
+            SetSFXVolume(e.Settings.sfxVolume);
+            SetMixerVolume(e.Settings.mixerVolume);
         }
 
         public void PlayBGM(string name, float fadeTime = 1f)
@@ -186,6 +204,8 @@ namespace Manager
                 db = Mathf.Lerp(-10f, 5f, Mathf.Clamp01(normalized));
             }
             _audioMixer.SetFloat(bgmVolumeParam, db);
+            // 写入
+            SettingsMgr.Instance.SetBGMVolume(db);
         }
 
         public void SetSFXVolumeNormalized(float normalized)
@@ -200,6 +220,8 @@ namespace Manager
                 db = Mathf.Lerp(-10f, 5f, Mathf.Clamp01(normalized));
             }
             _audioMixer.SetFloat(sfxVolumeParam, db);
+            // 写入
+            SettingsMgr.Instance.SetSFXVolume(db);
         }
 
         public void SetMixerVolumeNormalized(float normalized)
@@ -214,6 +236,8 @@ namespace Manager
                 db = Mathf.Lerp(-10f, 5f, Mathf.Clamp01(normalized));
             }
             _audioMixer.SetFloat(mixerVolumeParam, db);
+            // 写入
+            SettingsMgr.Instance.SetMixerVolume(db);
         }
 
         // 获取音量

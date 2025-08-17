@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MVC;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Utils.SingletonPattern;
+using Utils;
 
 namespace Manager
 {
@@ -56,8 +56,10 @@ namespace Manager
             }
             EnsurePauseView();
             bool newState = !pauseModel.IsPaused;
+            // 设置暂停状态
             pauseModel.SetPaused(newState);
-
+            // 发布暂停事件
+            EventBus.Publish(new EPauseChanged(newState));
             if (newState)
             {
                 // 暂停时显示UI

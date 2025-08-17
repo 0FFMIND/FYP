@@ -1,6 +1,6 @@
 using System;
 
-namespace Utils.SingletonPattern
+namespace Utils
 {
     // abstract为抽象类，不能被实例化，只能被子类继承后使用
     // where进行泛型约束，class限制了只能是引用类型，new()约束了必须具有public或者internal的无参构造

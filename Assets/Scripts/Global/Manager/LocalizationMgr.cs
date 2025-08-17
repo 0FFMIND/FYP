@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Utils.SingletonPattern;
+using Utils;
 
 namespace Manager
 {
@@ -53,6 +53,8 @@ namespace Manager
             CurrentLanguage = lanCode;
             // 强制下次重新加载
             table = null;
+            // 发布事件
+            EventBus.Publish(new ELanguageChanged(CurrentLanguage));
         }
 
         public string GetDialoguePath(string sceneName, string filename)
@@ -78,7 +80,9 @@ namespace Manager
             // 如果还没加载，或场景／语言换了，就重载
             if (table == null || sceneName != lastSceneName || CurrentLanguage != lastLanguage)
             {
+                // 载入当前场景的string.json
                 LoadTableForScene(sceneName);
+                // 载入全局UI的string.json
                 lastSceneName = sceneName;
                 lastLanguage = CurrentLanguage;
             }
@@ -98,11 +102,15 @@ namespace Manager
         private void LoadTableForScene(string sceneName)
         {
             table = new Dictionary<string, string[]>();
-            string folder = Path.Combine(
-                Application.streamingAssetsPath,
-                "Localization",
-                sceneName
-            );
+            string folder;
+            if (string.IsNullOrEmpty(sceneName))
+            {
+                folder = Path.Combine(Application.streamingAssetsPath, "Localization");
+            }
+            else
+            {
+                folder = Path.Combine(Application.streamingAssetsPath, "Localization", sceneName);
+            }
             string jsonPath = Path.Combine(folder, "strings.json");
 
             string json = File.ReadAllText(jsonPath);

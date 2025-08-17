@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Utils.SingletonPattern;
+using Utils;
 
 namespace MVC
 {

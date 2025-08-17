@@ -30,5 +30,7 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 事件分发有点繁琐，打算加一个事件中心管理事件分发，其实写的Singleton基本上没用到
 
+2025/8/17 - 事件由EventBus分发，目前Volume写好了，需要写Language switch/Keycode change，待写UI
+
 TODO: 主场景(美术)，timeline(还没写)，人物移动(待完善)，人物交互(还没写，主要是与物体)
 
