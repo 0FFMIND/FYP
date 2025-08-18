@@ -43,7 +43,7 @@ namespace Manager
             EnsureCreated();
         }
 
-        private void Awake()
+        private void Start()
         {
             Load();
         }
@@ -70,6 +70,7 @@ namespace Manager
                 {
                     var json = File.ReadAllText(SettingsFilePath);
                     Data = JsonConvert.DeserializeObject<SettingsDTO>(json);
+                    Debug.Log("bgm: " + Data.bgmVolume);
                     Debug.Log($"[SettingsMgr] 加载成功: {SettingsFilePath}");
                 }
                 catch (Exception e)
@@ -112,9 +113,13 @@ namespace Manager
             Save();
         }
 
-        /// <summary>
-        /// Unity 应用退出时自动调用
-        /// </summary>
+        public void SetLanguage(string lang)
+        {
+            Data.language = lang;
+            Save();
+        }
+
+        // Unity 应用退出时自动调用
         private void OnApplicationQuit()
         {
             Save();

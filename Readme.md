@@ -28,9 +28,15 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/8/16 - 加入了简单的人物移动逻辑，用的代码控制动画机，感觉要方便一点，等待加入跑步逻辑
 
-事件分发有点繁琐，打算加一个事件中心管理事件分发，其实写的Singleton基本上没用到
+2025/8/17 - 事件由EventBus分发，目前Volume，Language写好了，写了UIText本地化逻辑
 
-2025/8/17 - 事件由EventBus分发，目前Volume写好了，需要写Language switch/Keycode change，待写UI
+【代码比较难想】
+
+TODO: 需要写Keycode change
+
+TODO: inputmanager还没集成到EventBus，写了input的keydown方法
+
+【还没写】
 
 TODO: 主场景(美术)，timeline(还没写)，人物移动(待完善)，人物交互(还没写，主要是与物体)
 

@@ -50,10 +50,13 @@ namespace Manager
         {
             if (lanCode == CurrentLanguage)
                 return;
+            // 更新当前语言
             CurrentLanguage = lanCode;
             // 强制下次重新加载
             table = null;
-            // 发布事件
+            // 持久化到 settings.json（写入 SettingsMgr）
+            SettingsMgr.Instance.SetLanguage(lanCode);
+            // 广播语言变更事件，驱动 UI/文本组件刷新
             EventBus.Publish(new ELanguageChanged(CurrentLanguage));
         }
 
@@ -102,30 +105,29 @@ namespace Manager
         private void LoadTableForScene(string sceneName)
         {
             table = new Dictionary<string, string[]>();
-            string folder;
-            if (string.IsNullOrEmpty(sceneName))
+            string[] folders =
             {
-                folder = Path.Combine(Application.streamingAssetsPath, "Localization");
-            }
-            else
+                Path.Combine(Application.streamingAssetsPath, "Localization", sceneName),
+                Path.Combine(Application.streamingAssetsPath, "Localization"),
+            };
+            foreach (var folder in folders)
             {
-                folder = Path.Combine(Application.streamingAssetsPath, "Localization", sceneName);
-            }
-            string jsonPath = Path.Combine(folder, "strings.json");
+                string jsonPath = Path.Combine(folder, "strings.json");
 
-            string json = File.ReadAllText(jsonPath);
-            // 反序列化顶层数组
-            var entries = JsonHelper.FromJsonArray<LocalizationEntry>(json);
-            if (entries == null)
-                return;
-            // 按 {zh, en, ja} 顺序填入字典
-            foreach (var e in entries)
-            {
-                table[e.zh] = new string[]
+                string json = File.ReadAllText(jsonPath);
+                // 反序列化顶层数组
+                var entries = JsonHelper.FromJsonArray<LocalizationEntry>(json);
+                if (entries == null)
+                    return;
+                // 按 {zh, en, ja} 顺序填入字典
+                foreach (var e in entries)
                 {
-                    e.zh,
-                    e.en, /*, e.ja */
-                };
+                    table[e.zh] = new string[]
+                    {
+                        e.zh,
+                        e.en, /*, e.ja */
+                    };
+                }
             }
         }
 

@@ -114,53 +114,56 @@ namespace Manager
 
         private IEnumerator FadeOutAndStop(float duration)
         {
-            // 读当前音量（分贝）并换成线性
-            _audioMixer.GetFloat(bgmVolumeParam, out var startDb);
-            float startVol = Mathf.Pow(10f, startDb / 20f);
-
+            float start = _bgmSource.volume;
             float t = 0f;
             while (t < duration)
             {
                 t += Time.unscaledDeltaTime;
-                float v = Mathf.Lerp(startVol, 0f, t / duration);
-                _audioMixer.SetFloat(bgmVolumeParam, Mathf.Log10(Mathf.Max(v, 0.0001f)) * 20f);
+                _bgmSource.volume = Mathf.Lerp(start, 0f, t / duration);
                 yield return null;
             }
 
             // 真正停止
             _bgmSource.Stop();
+            _bgmSource.volume = 1f;
+
             _fadeCoroutine = null;
         }
 
         private IEnumerator FadeToNewBGM(AudioClip newClip, float duration)
         {
-            // 先读当前音量（分贝）并换成线性
-            _audioMixer.GetFloat(bgmVolumeParam, out var startDb);
-            float startVol = Mathf.Pow(10f, startDb / 20f);
-
-            float t = 0f;
-            // 淡出
-            while (t < duration)
+            float startVol = _bgmSource.volume;
+            // 若当前正在播放旧曲且需要过渡，则先淡出到 0
+            if (_bgmSource.isPlaying && duration > 0f)
             {
-                t += Time.unscaledDeltaTime;
-                float v = Mathf.Lerp(startVol, 0f, t / duration);
-                _audioMixer.SetFloat(bgmVolumeParam, Mathf.Log10(Mathf.Max(v, 0.0001f)) * 20f);
-                yield return null;
+                float t = 0f;
+                while (t < duration)
+                {
+                    t += Time.unscaledDeltaTime;
+                    _bgmSource.volume = Mathf.Lerp(startVol, 0f, t / duration);
+                    yield return null;
+                }
+            }
+            else
+            {
+                // 设置为0f，避免爆音
+                _bgmSource.volume = 0f;
             }
 
-            // 切换并播放新曲
+            // 切换并开始播放新曲
             _bgmSource.clip = newClip;
             _bgmSource.Play();
 
-            // 淡入
-            t = 0f;
-            while (t < duration)
+            // 从 0 淡入到1
+            float target = 1f;
+            float t2 = 0f;
+            while (t2 < duration)
             {
-                t += Time.unscaledDeltaTime;
-                float v = Mathf.Lerp(0f, 1f, t / duration);
-                _audioMixer.SetFloat(bgmVolumeParam, Mathf.Log10(Mathf.Max(v, 0.0001f)) * 20f);
+                t2 += Time.unscaledDeltaTime;
+                _bgmSource.volume = Mathf.Lerp(0f, target, t2 / duration);
                 yield return null;
             }
+            _bgmSource.volume = target;
 
             _fadeCoroutine = null;
         }

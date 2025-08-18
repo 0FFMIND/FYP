@@ -30,7 +30,6 @@ namespace Manager
             new PCMapping { action = InputAction.PlayerSprint, key = KeyCode.LeftShift },
             new PCMapping { action = InputAction.PauseGame, key = KeyCode.Escape },
         };
-        public event Action<InputAction> OnAction;
         private Dictionary<InputAction, Action> actionEvents = new();
 
         public void Subscribe(InputAction action, Action callback)
