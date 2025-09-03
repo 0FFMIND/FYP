@@ -68,7 +68,7 @@ namespace Manager
             }
         }
 
-        // 订阅全局事件
+        // 监听全局设置变更
         private void OnEnable()
         {
             EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged);

@@ -46,10 +46,38 @@ namespace Manager
         private string lastSceneName;
         private string lastLanguage;
 
+        // 监听全局设置变更
+        private void OnEnable()
+        {
+            EventBus.Subscribe<ESettingsChanged>(SetLanguage);
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<ESettingsChanged>(SetLanguage);
+        }
+
+        // 重载
+        public void SetLanguage(ESettingsChanged e)
+        {
+            if(e.Settings.language == CurrentLanguage)
+            {
+                return;
+            }
+            ApplyLanguage(e.Settings.language);
+        }
+
         public void SetLanguage(string lanCode)
         {
             if (lanCode == CurrentLanguage)
+            {
                 return;
+            }
+            ApplyLanguage(lanCode);
+        }
+
+        private void ApplyLanguage(string lanCode)
+        {
             // 更新当前语言
             CurrentLanguage = lanCode;
             // 强制下次重新加载

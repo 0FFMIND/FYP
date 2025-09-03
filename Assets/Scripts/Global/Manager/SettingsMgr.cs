@@ -70,8 +70,6 @@ namespace Manager
                 {
                     var json = File.ReadAllText(SettingsFilePath);
                     Data = JsonConvert.DeserializeObject<SettingsDTO>(json);
-                    Debug.Log("bgm: " + Data.bgmVolume);
-                    Debug.Log($"[SettingsMgr] 加载成功: {SettingsFilePath}");
                 }
                 catch (Exception e)
                 {
@@ -117,6 +115,11 @@ namespace Manager
         {
             Data.language = lang;
             Save();
+        }
+
+        public void ChangeKeyBinding(InputAction action, KeyCode newKey)
+        {
+
         }
 
         // Unity 应用退出时自动调用

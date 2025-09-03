@@ -28,12 +28,12 @@ namespace Manager
 
         private void OnEnable()
         {
-            InputManager.Instance.Subscribe(InputAction.PauseGame, TogglePause);
+            EventBus.Subscribe<EInputPressed, InputAction>(InputAction.PauseGame, TogglePause);
         }
 
         private void OnDisable()
         {
-            InputManager.Instance.Unsubscribe(InputAction.PauseGame, TogglePause);
+            EventBus.Unsubscribe<EInputPressed, InputAction>(InputAction.PauseGame, TogglePause);
         }
 
         // 外部接口

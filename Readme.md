@@ -1,3 +1,9 @@
+EventSystem：
+
+在`GameEvents`里面定义每种事件 `Event`，由一个全局静态的 `EventBus` 用 `Dictionary<Event, Delegate> table_` 把`T(Event)`映射到 `Delegate`上，订阅者用 `Subscribe<T>(callback)` 把回调加入该`table_ [T]`，发布者用 `Publish<T>(data)` 从`table_[T]`里 `Invoke(all callback and pass data)`
+
+
+
 使用过的软件：GPTo5 Audacity(变调/调整音量) Procreate
 
 2025/5/6 - 用了DialogueModel存从文本.txt里面读到的话，中间一个方法LoadDialogue会通过LocalizationManager(用一个static存的当前语言)定位到具体路径/文本.txt
@@ -30,13 +36,11 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/8/17 - 事件由EventBus分发，目前Volume，Language写好了，写了UIText本地化逻辑
 
-【代码比较难想】
+2025/9/2 - Fixed，之前没有应用保存的setting修改language，集成了inputManager到EventBus，新加了EventBus按key唤醒重载，无参Action重载
+
+
 
 TODO: 需要写Keycode change
-
-TODO: inputmanager还没集成到EventBus，写了input的keydown方法
-
-【还没写】
 
 TODO: 主场景(美术)，timeline(还没写)，人物移动(待完善)，人物交互(还没写，主要是与物体)
 

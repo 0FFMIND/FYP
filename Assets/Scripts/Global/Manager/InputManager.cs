@@ -23,48 +23,78 @@ namespace Manager
 
     public class InputManager : SingletonMB<InputManager>
     {
-        // PC按键映射
-        public List<PCMapping> defaultMappings = new List<PCMapping>
-        {
-            new PCMapping { action = InputAction.DialogueClick, key = KeyCode.Return },
-            new PCMapping { action = InputAction.PlayerSprint, key = KeyCode.LeftShift },
-            new PCMapping { action = InputAction.PauseGame, key = KeyCode.Escape },
-        };
-        private Dictionary<InputAction, Action> actionEvents = new();
+        private readonly Dictionary<InputAction, KeyCode> _bindings = new();
 
-        public void Subscribe(InputAction action, Action callback)
+        // AutoSingletonMB
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void Bootstrap()
         {
-            if (!actionEvents.ContainsKey(action))
-                actionEvents[action] = () => { };
-            actionEvents[action] += callback;
+            EnsureCreated();
         }
 
-        public void Unsubscribe(InputAction action, Action callback)
+        private void OnEnable()
         {
-            if (actionEvents.ContainsKey(action))
-                actionEvents[action] -= callback;
+            EventBus.Subscribe<ESettingsChanged>(OnBindingsChanged);
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<ESettingsChanged>(OnBindingsChanged);
+        }
+
+        // 当 SettingsMgr 广播 Settings 改变时会调用此方法（e.Settings 包含新的 keyBindings）
+        private void OnBindingsChanged(ESettingsChanged e)
+        {
+            var newMap = e.Settings.keyBindings;
+            if (newMap == null) return;
+            ApplyBindings(newMap);
+        }
+
+        private void ApplyBindings(Dictionary<InputAction, KeyCode> newMap)
+        {
+            if (newMap == null) return;
+
+            // 如果与当前 _bindings 完全一致，则跳过
+            if (MappingsEqual(_bindings, newMap)) return;
+
+            // 更新内部字典
+            _bindings.Clear();
+            foreach (var kv in newMap) _bindings[kv.Key] = kv.Value;
+        }
+
+        // 比较两个字典是否相同
+        private bool MappingsEqual(Dictionary<InputAction, KeyCode> a, Dictionary<InputAction, KeyCode> b)
+        {
+            if (ReferenceEquals(a, b)) return true;
+            if (a == null || b == null) return false;
+            if (a.Count != b.Count) return false;
+            foreach (var kv in a)
+            {
+                if (!b.TryGetValue(kv.Key, out var v) || v != kv.Value) return false;
+            }
+            return true;
         }
 
         private void Update()
         {
-            // 花括号避免handler同作用域
+            // 特例：鼠标左键当作对话推进（按需保留）
+            if (Input.GetMouseButtonDown(0))
             {
-                if (
-                    Input.GetMouseButtonDown(0)
-                    && actionEvents.TryGetValue(InputAction.DialogueClick, out var handler)
-                )
-                {
-                    handler?.Invoke();
-                }
+                EventBus.Publish(
+                    InputAction.DialogueClick,
+                    new EInputPressed(InputAction.DialogueClick)
+                );
+                return;
             }
-            foreach (var map in defaultMappings)
+
+            foreach (var kv in _bindings)
             {
-                if (
-                    Input.GetKeyDown(map.key)
-                    && actionEvents.TryGetValue(map.action, out var handler)
-                )
+                var action = kv.Key;
+                var key = kv.Value;
+                if (key == KeyCode.None) continue;
+                if (Input.GetKeyDown(key))
                 {
-                    handler?.Invoke();
+                    EventBus.Publish(action, new EInputPressed(action));
                     break;
                 }
             }

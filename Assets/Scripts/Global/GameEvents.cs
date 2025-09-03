@@ -5,11 +5,12 @@ using UnityEngine;
 
 namespace Utils
 {
-    public readonly struct EKeyRebindRequested
+    public readonly struct EKeyRebind
     {
-        public readonly InputAction TargetAction;
-        public EKeyRebindRequested(InputAction action) { TargetAction = action; }
+        public readonly InputAction Action;
+        public EKeyRebind(InputAction action) { Action = action; }
     }
+
     public readonly struct EInputPressed
     {
         public readonly InputAction Action;
@@ -17,10 +18,9 @@ namespace Utils
         public EInputPressed(InputAction action) => Action = action;
     }
 
-
-    public struct ELanguageChanged
+    public readonly struct ELanguageChanged
     {
-        public string Language;
+        public readonly string Language;
 
         public ELanguageChanged(string lang) => Language = lang;
     }

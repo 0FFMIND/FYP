@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace MVC
 {
@@ -98,8 +99,7 @@ namespace MVC
             // 刷新index
             index = 0;
             // 注册事件
-            InputManager.Instance.Subscribe(InputAction.DialogueClick, OnDialogueClick);
-            // 自动播放第一句话
+            EventBus.Subscribe<EInputPressed, InputAction>(InputAction.DialogueClick, OnDialogueClick);
             NextLine();
         }
 
@@ -332,12 +332,16 @@ namespace MVC
             }
         }
 
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<EInputPressed, InputAction>(InputAction.DialogueClick, OnDialogueClick);
+        }
+
         // 取消订阅
         private void OnDestroy()
         {
             if (arrowBounceCoroutine != null)
                 StopCoroutine(arrowBounceCoroutine);
-            InputManager.Instance.Unsubscribe(InputAction.DialogueClick, OnDialogueClick);
         }
     }
 }
