@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 
@@ -8,7 +6,13 @@ namespace Utils
     public readonly struct EKeyRebind
     {
         public readonly InputAction Action;
-        public EKeyRebind(InputAction action) { Action = action; }
+        public readonly KeyCode Key;
+
+        public EKeyRebind(InputAction action, KeyCode key)
+        {
+            Action = action;
+            Key = key;
+        }
     }
 
     public readonly struct EInputPressed

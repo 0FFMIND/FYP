@@ -38,9 +38,10 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/9/2 - Fixed，之前没有应用保存的setting修改language，集成了inputManager到EventBus，新加了EventBus按key唤醒重载，无参Action重载
 
+2025/9/4 - 已完成：keycode change改键，菜单暂时写完
 
+TODO: 人物疾跑（持续按键逻辑
 
-TODO: 需要写Keycode change
+TODO: 主场景(美术)，timeline(还没写)，人物交互(还没写，主要是与物体)
 
-TODO: 主场景(美术)，timeline(还没写)，人物移动(待完善)，人物交互(还没写，主要是与物体)
-
+TODO: 人物移速，跑步速度写到settings里面修改

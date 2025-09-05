@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Manager;
 using UnityEngine;
+using Utils;
 
 namespace MVC
 {
@@ -10,22 +11,46 @@ namespace MVC
         [SerializeField]
         private float moveSpeed;
 
-        //
+        [SerializeField]
+        // 疾跑倍率
+        private float sprintMultiplier;
+
         private Vector2 moveInput;
         private SpriteAnimCtl animator;
+        private bool isSprint = false;
 
         private void Awake()
         {
             animator = GetComponent<SpriteAnimCtl>();
         }
 
+        private void OnEnable()
+        {
+            EventBus.Subscribe<EInputPressed, InputAction>(InputAction.PlayerSprint, OnPlayerSprint);
+        }
+
+        private void OnPlayerSprint() => isSprint = true;
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<EInputPressed, InputAction>(InputAction.PlayerSprint, OnPlayerSprint);
+        }
+
         private void Update()
         {
+            float speed = moveSpeed;
+            // 如果疾跑
+            if (isSprint)
+            {
+                speed *= sprintMultiplier;
+                isSprint = false;
+            }
+
             moveInput.x = Input.GetAxisRaw("Horizontal");
             moveInput.y = Input.GetAxisRaw("Vertical");
             // 保证斜向速度一致
             moveInput.Normalize();
-            transform.position += (Vector3)moveInput * moveSpeed * Time.deltaTime;
+            transform.position += (Vector3)moveInput * speed * Time.deltaTime;
             // 动画控制
             if (moveInput != Vector2.zero)
             {

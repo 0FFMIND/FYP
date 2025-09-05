@@ -23,7 +23,7 @@ namespace Manager
         public Dictionary<InputAction, KeyCode> keyBindings = new()
         {
             { InputAction.DialogueClick, KeyCode.Return },
-            { InputAction.PlayerSprint, KeyCode.LeftShift },
+            { InputAction.PlayerSprint, KeyCode.RightShift },
             { InputAction.PauseGame, KeyCode.Escape },
         };
     }
@@ -43,7 +43,7 @@ namespace Manager
             EnsureCreated();
         }
 
-        private void Start()
+        private void Awake()
         {
             Load();
         }
@@ -92,6 +92,12 @@ namespace Manager
             EventBus.Publish(new ESettingsChanged(data));
         }
 
+        // 暴露获取Data成员的方法
+        public Dictionary<InputAction, KeyCode> GetKeyBindings()
+        {
+            return Data.keyBindings;
+        }
+
         // 暴露修改Data成员的方法
         public void SetBGMVolume(float bgm)
         {
@@ -119,7 +125,8 @@ namespace Manager
 
         public void ChangeKeyBinding(InputAction action, KeyCode newKey)
         {
-
+            Data.keyBindings[action] = newKey;
+            Save();
         }
 
         // Unity 应用退出时自动调用

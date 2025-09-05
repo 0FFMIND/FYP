@@ -54,5 +54,9 @@ namespace MVC
                 tmpText = GetComponent<TMP_Text>();
             }
         }
+        public void SetKey(string key)
+        {
+            this.key = key;
+        }
     }
 }
