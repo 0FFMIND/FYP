@@ -14,43 +14,48 @@ namespace MVC
         [SerializeField]
         // 疾跑倍率
         private float sprintMultiplier;
-
+  
         private Vector2 moveInput;
         private SpriteAnimCtl animator;
         private bool isSprint = false;
+        Rigidbody2D rb;
+        private float speed = 0f;
 
         private void Awake()
         {
             animator = GetComponent<SpriteAnimCtl>();
+            rb = GetComponent<Rigidbody2D>();
         }
 
         private void OnEnable()
         {
             EventBus.Subscribe<EInputPressed, InputAction>(InputAction.PlayerSprint, OnPlayerSprint);
+            EventBus.Subscribe<EInputUnPressed, InputAction>(InputAction.PlayerSprint, OnPlayerUnSprint);
         }
 
         private void OnPlayerSprint() => isSprint = true;
 
+        private void OnPlayerUnSprint() => isSprint = false;
+
+
         private void OnDisable()
         {
             EventBus.Unsubscribe<EInputPressed, InputAction>(InputAction.PlayerSprint, OnPlayerSprint);
+            EventBus.Unsubscribe<EInputUnPressed, InputAction>(InputAction.PlayerSprint, OnPlayerUnSprint);
         }
 
         private void Update()
         {
-            float speed = moveSpeed;
+            speed = moveSpeed;
             // 如果疾跑
             if (isSprint)
             {
                 speed *= sprintMultiplier;
-                isSprint = false;
             }
-
             moveInput.x = Input.GetAxisRaw("Horizontal");
             moveInput.y = Input.GetAxisRaw("Vertical");
             // 保证斜向速度一致
             moveInput.Normalize();
-            transform.position += (Vector3)moveInput * speed * Time.deltaTime;
             // 动画控制
             if (moveInput != Vector2.zero)
             {
@@ -69,6 +74,11 @@ namespace MVC
             {
                 animator.SetMoving(false);
             }
+        }
+
+        private void FixedUpdate()
+        {
+            rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
         }
     }
 }

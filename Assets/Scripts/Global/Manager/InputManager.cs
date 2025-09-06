@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
@@ -12,6 +11,7 @@ namespace Manager
         DialogueClick,
         PlayerSprint,
         PauseGame,
+        Interact,
     }
 
     [Serializable]
@@ -42,7 +42,6 @@ namespace Manager
         {
             EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
             EventBus.Unsubscribe<EKeyRebind>(OnBindingsChanged);
-
         }
 
         private void OnBindingsChanged(EKeyRebind e)
@@ -50,6 +49,10 @@ namespace Manager
             _bindings[e.Action] = e.Key;
         }
 
+        public KeyCode GetBindings(InputAction action)
+        {
+            return _bindings[action];
+        }
 
         // 当 SettingsMgr 广播 Settings 改变时会调用此方法（e.Settings 包含新的 keyBindings）
         private void OnSettingsChanged(ESettingsChanged e)
@@ -116,6 +119,11 @@ namespace Manager
                 if (Input.GetKeyDown(key))
                 {
                     EventBus.Publish(action, new EInputPressed(action));
+                    break;
+                }
+                if (Input.GetKeyUp(key))
+                {
+                    EventBus.Publish(action, new EInputUnPressed(action));
                     break;
                 }
             }

@@ -25,6 +25,7 @@ namespace Manager
             { InputAction.DialogueClick, KeyCode.Return },
             { InputAction.PlayerSprint, KeyCode.RightShift },
             { InputAction.PauseGame, KeyCode.Escape },
+            { InputAction.Interact, KeyCode.E},
         };
     }
 

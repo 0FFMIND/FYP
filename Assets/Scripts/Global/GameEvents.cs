@@ -22,6 +22,13 @@ namespace Utils
         public EInputPressed(InputAction action) => Action = action;
     }
 
+    public readonly struct EInputUnPressed
+    {
+        public readonly InputAction Action;
+
+        public EInputUnPressed(InputAction action) => Action = action;
+    }
+
     public readonly struct ELanguageChanged
     {
         public readonly string Language;
