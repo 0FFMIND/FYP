@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using MVC;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utils;
@@ -37,53 +38,41 @@ namespace Manager
 
     public class LocalizationMgr : SingletonMB<LocalizationMgr>
     {
-        public string CurrentLanguage = "zh";
+        private LanguageCode CurrentLanguage = LanguageCode.zh;
 
         // 加载后存储 key -> [zh,en,ja]
         private Dictionary<string, string[]> table;
 
         // 上次加载时的场景名 & 语言，用来跳过重复加载
         private string lastSceneName;
-        private string lastLanguage;
+        private LanguageCode lastLanguage;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void Bootstrap()
+        {
+            EnsureCreated();
+        }
 
         // 监听全局设置变更
         private void OnEnable()
         {
-            EventBus.Subscribe<ESettingsChanged>(SetLanguage);
+            EventBus.Subscribe<ESettingsChanged>(ApplyLanguage);
         }
 
         private void OnDisable()
         {
-            EventBus.Unsubscribe<ESettingsChanged>(SetLanguage);
+            EventBus.Unsubscribe<ESettingsChanged>(ApplyLanguage);
         }
 
-        // 重载
-        public void SetLanguage(ESettingsChanged e)
+        private void ApplyLanguage(ESettingsChanged e)
         {
-            if(e.Settings.language == CurrentLanguage)
+            if (e.Settings.language == CurrentLanguage)
             {
                 return;
             }
-            ApplyLanguage(e.Settings.language);
-        }
-
-        public void SetLanguage(string lanCode)
-        {
-            if (lanCode == CurrentLanguage)
-            {
-                return;
-            }
-            ApplyLanguage(lanCode);
-        }
-
-        private void ApplyLanguage(string lanCode)
-        {
-            // 更新当前语言
-            CurrentLanguage = lanCode;
+            CurrentLanguage = e.Settings.language;
             // 强制下次重新加载
             table = null;
-            // 持久化到 settings.json（写入 SettingsMgr）
-            SettingsMgr.Instance.SetLanguage(lanCode);
             // 广播语言变更事件，驱动 UI/文本组件刷新
             EventBus.Publish(new ELanguageChanged(CurrentLanguage));
         }
@@ -121,7 +110,7 @@ namespace Manager
             if (table != null && table.TryGetValue(key, out var values))
             {
                 // 找到 key，取对应语言栏位
-                int langIndex = LanguageIndex(CurrentLanguage, values.Length);
+                int langIndex = (int)CurrentLanguage;
                 return values[langIndex];
             }
 
@@ -156,22 +145,6 @@ namespace Manager
                         e.en, /*, e.ja */
                     };
                 }
-            }
-        }
-
-        private int LanguageIndex(string langCode, int maxLength)
-        {
-            switch (langCode.ToLower())
-            {
-                case "zh":
-                    return 0;
-                case "en":
-                    return 1;
-                case "ja":
-                    return 2;
-                // 加其他语言时在这里扩展
-                default:
-                    return 0;
             }
         }
     }

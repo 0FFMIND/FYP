@@ -274,7 +274,7 @@ namespace MVC
 
                     // 不同文本用不同速度
                     float wait = inHint ? typeSpeed * 3f : typeSpeed;
-                    if (LocalizationMgr.Instance.CurrentLanguage == "en")
+                    if (SettingsMgr.Instance.GetLanguage() == LanguageCode.en)
                     {
                         // 英文要快一点
                         wait = wait / 2;

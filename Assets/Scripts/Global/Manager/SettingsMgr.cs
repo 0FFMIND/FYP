@@ -2,40 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using MVC;
 using Newtonsoft.Json;
 using UnityEngine;
 using Utils;
 
 namespace Manager
 {
-    // 可被序列化
-    [Serializable]
-    // 默认值
-    public class SettingsDTO
-    {
-        // 用的分贝(db)表示
-        public float bgmVolume = 0f;
-        public float sfxVolume = 0f;
-        public float mixerVolume = 0f;
-        public string language = "en";
-
-        // 用dictionary方便查找
-        public Dictionary<InputAction, KeyCode> keyBindings = new()
-        {
-            { InputAction.DialogueClick, KeyCode.Return },
-            { InputAction.PlayerSprint, KeyCode.RightShift },
-            { InputAction.PauseGame, KeyCode.Escape },
-            { InputAction.Interact, KeyCode.E},
-        };
-    }
-
     public class SettingsMgr : SingletonMB<SettingsMgr>
     {
         // 默认保存路径，明文保存
         private static string SettingsFilePath =>
             Path.Combine(Application.persistentDataPath, "settings.json");
 
-        private SettingsDTO Data;
+        private SettingsData _data;
 
         // AutoSingletonMB
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -49,11 +29,30 @@ namespace Manager
             Load();
         }
 
+        private void OnEnable()
+        {
+            EventBus.Subscribe<ELanguageSet>(SetLanguage);
+            EventBus.Subscribe<EVolumeSet>(SetVolume);
+            EventBus.Subscribe<EKeySet>(SetKey);
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<ELanguageSet>(SetLanguage);
+            EventBus.Unsubscribe<EVolumeSet>(SetVolume);
+            EventBus.Unsubscribe<EKeySet>(SetKey);
+        }
+
+        // 返回副本给外部
+        public SettingsData Snapshot() => _data.DeepCopy();
+
         public void Save()
         {
             try
             {
-                var json = JsonConvert.SerializeObject(Data, Formatting.Indented);
+                // 获取模型快照
+                var snapshot = _data.DeepCopy();
+                var json = JsonConvert.SerializeObject(snapshot, Formatting.Indented);
                 File.WriteAllText(SettingsFilePath, json);
                 Debug.Log($"[SettingsMgr] 保存成功: {SettingsFilePath}");
             }
@@ -61,6 +60,7 @@ namespace Manager
             {
                 Debug.LogError($"[SettingsMgr] 保存失败: {e}");
             }
+            Broadcast(Snapshot());
         }
 
         public void Load()
@@ -70,25 +70,24 @@ namespace Manager
                 try
                 {
                     var json = File.ReadAllText(SettingsFilePath);
-                    Data = JsonConvert.DeserializeObject<SettingsDTO>(json);
+                    _data = JsonConvert.DeserializeObject<SettingsData>(json);
                 }
                 catch (Exception e)
                 {
                     Debug.LogError($"[SettingsMgr] 加载失败，使用默认值: {e}");
-                    Data = new SettingsDTO();
+                    _data = new SettingsData();
                 }
             }
             else
             {
                 Debug.Log("[SettingsMgr] 未找到配置文件，使用默认设置");
-                Data = new SettingsDTO();
-                Save(); // 初次写入
+                _data = new SettingsData();
             }
             // 广播变动
-            Broadcast(Data);
+            Broadcast(Snapshot());
         }
 
-        private void Broadcast(SettingsDTO data)
+        private void Broadcast(SettingsData data)
         {
             EventBus.Publish(new ESettingsChanged(data));
         }
@@ -96,37 +95,78 @@ namespace Manager
         // 暴露获取Data成员的方法
         public Dictionary<InputAction, KeyCode> GetKeyBindings()
         {
-            return Data.keyBindings;
+            return _data.keyBindings;
         }
 
         // 暴露修改Data成员的方法
-        public void SetBGMVolume(float bgm)
+        public void SetVolume(EVolumeSet e)
         {
-            Data.bgmVolume = bgm;
+            if (e.Type == VolumeType.bgm)
+            {
+                if (e.Db == _data.bgmVolume)
+                {
+                    return;
+                }
+                _data.bgmVolume = e.Db;
+            }
+            else if (e.Type == VolumeType.sfx)
+            {
+                if (e.Db == _data.sfxVolume)
+                {
+                    return;
+                }
+                _data.sfxVolume = e.Db;
+            }
+            else if (e.Type == VolumeType.mixer)
+            {
+                if (e.Db == _data.mixerVolume)
+                {
+                    return;
+                }
+                _data.mixerVolume = e.Db;
+            }
             Save();
         }
 
-        public void SetSFXVolume(float sfx)
+        public void SetLanguage(ELanguageSet e)
         {
-            Data.sfxVolume = sfx;
+            var lang = e.Language;
+            if (lang == _data.language)
+            {
+                return;
+            }
+            _data.language = lang;
             Save();
         }
 
-        public void SetMixerVolume(float mixer)
+        public LanguageCode GetLanguage()
         {
-            Data.mixerVolume = mixer;
-            Save();
+            return _data.language;
         }
 
-        public void SetLanguage(string lang)
+        // 获取音量
+        public float GetBGMVolume()
         {
-            Data.language = lang;
-            Save();
+            return _data.bgmVolume;
         }
 
-        public void ChangeKeyBinding(InputAction action, KeyCode newKey)
+        public float GetSFXVolume()
         {
-            Data.keyBindings[action] = newKey;
+            return _data.sfxVolume;
+        }
+
+        public float GetMixerVolume()
+        {
+            return _data.mixerVolume;
+        }
+
+        public void SetKey(EKeySet e)
+        {
+            if(_data.keyBindings[e.Action] == e.Key)
+            {
+                return;
+            }
+            _data.keyBindings[e.Action] = e.Key;
             Save();
         }
 

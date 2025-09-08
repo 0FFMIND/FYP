@@ -2,7 +2,9 @@ EventSystem：
 
 在`GameEvents`里面定义每种事件 `Event`，由一个全局静态的 `EventBus` 用 `Dictionary<Event, Delegate> table_` 把`T(Event)`映射到 `Delegate`上，订阅者用 `Subscribe<T>(callback)` 把回调加入该`table_ [T]`，发布者用 `Publish<T>(data)` 从`table_[T]`里 `Invoke(all callback and pass data)`
 
+SettingsMgr:
 
+存入SettingsData，在游戏一开始的时候调用Load()，然后通过EventBus broadcast ESettingsChanged事件，InputMgr, LocalizationMgr, AudioMgr接收，并且修改自己的private副本，方便Mgr内部访问而不用每次需要数据的时候都query SettingsMgr，之后若外部想要修改SettingsData的数据，则会发送请求给SettingsMgr，它接受请求后修改SettingsData并且Save()，Save后broadcast一次，让其他mgr的副本得到更新
 
 使用过的软件：GPTo5 Audacity(变调/调整音量) Procreate
 
@@ -38,10 +40,14 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/9/2 - Fixed，之前没有应用保存的setting修改language，集成了inputManager到EventBus，新加了EventBus按key唤醒重载，无参Action重载
 
-2025/9/4 - 已完成：keycode change改键，菜单暂时写完
+2025/9/4 - keycode change改键，菜单暂时写完
 
-TODO: 人物疾跑（持续按键逻辑
+2025/9/5 - 完成人物疾跑（用keyup和keydown事件，通过eventbus publish实现，keyup加速，keydown元素，加了碰撞体后将人物移动放到fixedUpdate
 
-TODO: 主场景(美术)，timeline(还没写)，人物交互(还没写，主要是与物体)
+2025/9/8 - 加入了SettingsData的model层，并且统一通过ESettingsChanged事件通知其他Mgr修改本地副本
+
+
+
+TODO: timeline(还没写)，人物交互(还没写，主要是与物体)
 
 TODO: 人物移速，跑步速度写到settings里面修改

@@ -6,6 +6,13 @@ using Utils;
 
 namespace Manager
 {
+    public enum VolumeType
+    {
+        bgm,
+        sfx,
+        mixer,
+    }
+
     public class AudioManager : SingletonMB<AudioManager>
     {
         private string bgmVolumeParam = "BGMVolume";
@@ -206,9 +213,7 @@ namespace Manager
             {
                 db = Mathf.Lerp(-10f, 5f, Mathf.Clamp01(normalized));
             }
-            _audioMixer.SetFloat(bgmVolumeParam, db);
-            // 写入
-            SettingsMgr.Instance.SetBGMVolume(db);
+            EventBus.Publish(new EVolumeSet(db, VolumeType.bgm));
         }
 
         public void SetSFXVolumeNormalized(float normalized)
@@ -222,9 +227,7 @@ namespace Manager
             {
                 db = Mathf.Lerp(-10f, 5f, Mathf.Clamp01(normalized));
             }
-            _audioMixer.SetFloat(sfxVolumeParam, db);
-            // 写入
-            SettingsMgr.Instance.SetSFXVolume(db);
+            EventBus.Publish(new EVolumeSet(db, VolumeType.sfx));
         }
 
         public void SetMixerVolumeNormalized(float normalized)
@@ -238,77 +241,38 @@ namespace Manager
             {
                 db = Mathf.Lerp(-10f, 5f, Mathf.Clamp01(normalized));
             }
-            _audioMixer.SetFloat(mixerVolumeParam, db);
-            // 写入
-            SettingsMgr.Instance.SetMixerVolume(db);
-        }
-
-        // 获取音量
-        public float GetBGMVolume()
-        {
-            if (_audioMixer.GetFloat(bgmVolumeParam, out float db))
-            {
-                return db;
-            }
-            return 0f;
-        }
-
-        public float GetSFXVolume()
-        {
-            if (_audioMixer.GetFloat(sfxVolumeParam, out float db))
-            {
-                return db;
-            }
-            return 0f;
-        }
-
-        public float GetMixerVolume()
-        {
-            if (_audioMixer.GetFloat(mixerVolumeParam, out float db))
-            {
-                return db;
-            }
-            return 0f;
+            EventBus.Publish(new EVolumeSet(db, VolumeType.mixer));
         }
 
         // 获取标量化音量
         public float GetBGMVolumeNormalized()
         {
-            if (_audioMixer.GetFloat(bgmVolumeParam, out float db))
+            var db = SettingsMgr.Instance.GetBGMVolume();
+            if (db <= -80f)
             {
-                if (db <= -80f)
-                {
-                    return 0f;
-                }
-                return Mathf.InverseLerp(-10f, 5f, db);
+                return 0f;
             }
-            return 1f;
+            return Mathf.InverseLerp(-10f, 5f, db);
         }
 
         public float GetSFXVolumeNormalized()
         {
-            if (_audioMixer.GetFloat(sfxVolumeParam, out float db))
+            var db = SettingsMgr.Instance.GetSFXVolume();
+            if (db <= -80f)
             {
-                if (db <= -80f)
-                {
-                    return 0f;
-                }
-                return Mathf.InverseLerp(-10f, 5f, db);
+                return 0f;
             }
-            return 1f;
+            return Mathf.InverseLerp(-10f, 5f, db);
         }
 
         public float GetMixerVolumeNormalized()
         {
-            if (_audioMixer.GetFloat(mixerVolumeParam, out float db))
+            var db = SettingsMgr.Instance.GetMixerVolume();
+            if (db <= -80f)
             {
-                if (db <= -80f)
-                {
-                    return 0f;
-                }
-                return Mathf.InverseLerp(-10f, 5f, db);
+                return 0f;
             }
-            return 1f;
+            return Mathf.InverseLerp(-10f, 5f, db);
         }
     }
 }

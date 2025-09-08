@@ -35,23 +35,11 @@ namespace Manager
         private void OnEnable()
         {
             EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged);
-            EventBus.Subscribe<EKeyRebind>(OnBindingsChanged);
         }
 
         private void OnDisable()
         {
             EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
-            EventBus.Unsubscribe<EKeyRebind>(OnBindingsChanged);
-        }
-
-        private void OnBindingsChanged(EKeyRebind e)
-        {
-            _bindings[e.Action] = e.Key;
-        }
-
-        public KeyCode GetBindings(InputAction action)
-        {
-            return _bindings[action];
         }
 
         // 当 SettingsMgr 广播 Settings 改变时会调用此方法（e.Settings 包含新的 keyBindings）
@@ -59,14 +47,18 @@ namespace Manager
         {
             var newMap = e.Settings.keyBindings;
             if (newMap == null)
+            {
                 return;
+            }
             ApplyBindings(newMap);
         }
 
         private void ApplyBindings(Dictionary<InputAction, KeyCode> newMap)
         {
             if (newMap == null)
+            {
                 return;
+            }
 
             // 如果与当前 _bindings 完全一致，则跳过
             if (MappingsEqual(_bindings, newMap))

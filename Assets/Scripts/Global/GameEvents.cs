@@ -1,17 +1,30 @@
 using Manager;
+using MVC;
 using UnityEngine;
 
 namespace Utils
 {
-    public readonly struct EKeyRebind
+    public readonly struct EKeySet
     {
         public readonly InputAction Action;
         public readonly KeyCode Key;
 
-        public EKeyRebind(InputAction action, KeyCode key)
+        public EKeySet(InputAction action, KeyCode key)
         {
             Action = action;
             Key = key;
+        }
+    }
+
+    public readonly struct EVolumeSet
+    {
+        public readonly float Db;
+        public readonly VolumeType Type;
+
+        public EVolumeSet(float db, VolumeType type)
+        {
+            Type = type;
+            Db = db;
         }
     }
 
@@ -29,11 +42,18 @@ namespace Utils
         public EInputUnPressed(InputAction action) => Action = action;
     }
 
+    public readonly struct ELanguageSet
+    {
+        public readonly LanguageCode Language;
+
+        public ELanguageSet(LanguageCode lang) => Language = lang;
+    }
+
     public readonly struct ELanguageChanged
     {
-        public readonly string Language;
+        public readonly LanguageCode Language;
 
-        public ELanguageChanged(string lang) => Language = lang;
+        public ELanguageChanged(LanguageCode lang) => Language = lang;
     }
 
     public readonly struct EPauseChanged
@@ -45,8 +65,8 @@ namespace Utils
 
     public readonly struct ESettingsChanged
     {
-        public readonly SettingsDTO Settings;
+        public readonly SettingsData Settings;
 
-        public ESettingsChanged(SettingsDTO settings) => Settings = settings;
+        public ESettingsChanged(SettingsData settings) => Settings = settings;
     }
 }

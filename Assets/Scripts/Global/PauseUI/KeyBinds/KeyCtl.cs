@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Manager;
 using TMPro;
 using UnityEngine;
@@ -39,13 +37,6 @@ namespace MVC
         {
             // 填充列表（从 SettingsMgr 读取）
             RefreshAllViewsFromSettings();
-
-            // EventBus.Subscribe<EKeyRebind>(OnRebindRequest);
-        }
-
-        private void OnDisable()
-        {
-            // EventBus.Unsubscribe<EKeyRebind>(OnRebindRequest);
         }
 
         private void EnsureDefaultViews()
@@ -143,8 +134,7 @@ namespace MVC
                 }
             }
             // 通知更改
-            EventBus.Publish(new EKeyRebind(action, newKey));
-            SettingsMgr.Instance.ChangeKeyBinding(action, newKey);
+            EventBus.Publish(new EKeySet(action, newKey));
             // UI更新
             _appliedBindings[action] = newKey;
             _views[action].SetKeyCode(newKey);
@@ -177,7 +167,7 @@ namespace MVC
             a switch
             {
                 InputAction.DialogueClick => "对话推进",
-                InputAction.PlayerSprint => "玩家冲刺",
+                InputAction.PlayerSprint => "玩家疾跑",
                 InputAction.PauseGame => "暂停/返回",
                 _ => a.ToString(),
             };

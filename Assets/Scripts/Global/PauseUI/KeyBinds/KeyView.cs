@@ -37,6 +37,11 @@ namespace MVC
             keyButton.onClick.AddListener(() => OnRequestRebind?.Invoke(_action));
         }
 
+        public KeyCode GetKeyCode()
+        {
+            return keyCode;
+        }
+
         public void SetKeyCode(KeyCode key)
         {
             keyCode = key;
