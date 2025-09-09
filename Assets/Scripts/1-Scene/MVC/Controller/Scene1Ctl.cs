@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 
@@ -8,7 +7,11 @@ namespace MVC
     public class Scene1Ctl : MonoBehaviour
     {
         [SerializeField]
-        private DialogueView warningView;
+        private GameObject warningViewCH;
+        [SerializeField]
+        private GameObject warningViewEN;
+
+        private GameObject warningView;
 
         // 1-Scene-warning.txt
         [SerializeField]
@@ -30,19 +33,22 @@ namespace MVC
         [SerializeField, Tooltip("停留时长（秒）")]
         private float holdDuration;
 
-        private void Awake()
-        {
-            viewGroup = warningView.GetComponent<CanvasGroup>();
-        }
-
         private IEnumerator Start()
         {
+            if(SettingsMgr.Instance.GetLanguage() == LanguageCode.zh)
+            {
+                warningView = warningViewCH;
+            }else if(SettingsMgr.Instance.GetLanguage() == LanguageCode.en)
+            {
+                warningView = warningViewEN;
+            }
+            viewGroup = warningView.GetComponent<CanvasGroup>();
             // 关闭暂停菜单
             PauseMgr.Instance.SetPauseEnabled(false);
             // 关闭dialogCtl
             dialogueCtl.HideDialogue();
-            // 将"1-Scene-warning.txt"放到warningView中
-            warningView.Render(null, string.Join("\n", new DialogueModel(warningTxt).Lines));
+            // warningView
+            warningView.SetActive(true);
             // 整体wanringView的淡入淡出
             viewGroup.alpha = 0f;
             // 加载音效
@@ -50,7 +56,7 @@ namespace MVC
             // 播放warning
             yield return StartCoroutine(PlayWarning());
             // 隐藏warningView
-            warningView.Render(null, null);
+            warningView.SetActive(false);
             // 进入对话控制器
             dialogueCtl.StartDialogue();
         }

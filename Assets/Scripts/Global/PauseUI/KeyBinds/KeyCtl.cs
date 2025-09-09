@@ -106,7 +106,7 @@ namespace MVC
             // 取当前键
             KeyCode currentKey = _appliedBindings[action];
             // 取当前文本
-            string keyText = _views[action].GetKeyText();
+            string keyText = Pretty(action);
             // 打开弹窗并开始监听一次键入
             ShowModal(action, keyText, currentKey, ApplyRebind);
         }
@@ -169,6 +169,7 @@ namespace MVC
                 InputAction.DialogueClick => "对话推进",
                 InputAction.PlayerSprint => "玩家疾跑",
                 InputAction.PauseGame => "暂停/返回",
+                InputAction.Interact => "物体交互",
                 _ => a.ToString(),
             };
     }

@@ -160,6 +160,36 @@ namespace Manager
             return _data.mixerVolume;
         }
 
+        public float GetPlayerSpeed()
+        {
+            return _data.playerSpeed;
+        }
+
+        public float GetSprintMultiplier()
+        {
+            return _data.sprintMultiplier;
+        }
+
+        public void SetPlayerSpeed(float speed)
+        {
+            if(speed == _data.playerSpeed)
+            {
+                return;
+            }
+            _data.playerSpeed = speed;
+            Save();
+        }
+
+        public void SetSprintMultiplier(float speed)
+        {
+            if (speed == _data.sprintMultiplier)
+            {
+                return;
+            }
+            _data.sprintMultiplier = speed;
+            Save();
+        }
+
         public void SetKey(EKeySet e)
         {
             if(_data.keyBindings[e.Action] == e.Key)

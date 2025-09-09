@@ -1,18 +1,54 @@
 [
-  {
-    "zh": "主音量",
-    "en": "Mixer"
-  },
-  {
-    "zh": "背景音",
-    "en": "BGM"
-  },
-  {
-    "zh": "音效",
-    "en": "SFX"
-  },
-  {
-    "zh": "当前语言",
-    "en": "Language"
-  }
+    {
+        "zh": "主音量",
+        "en": "Mixer"
+    },
+    {
+        "zh": "背景音",
+        "en": "BGM"
+    },
+    {
+        "zh": "音效",
+        "en": "SFX"
+    },
+    {
+        "zh": "当前语言",
+        "en": "Language"
+    },
+    {
+        "zh": "玩家疾跑",
+        "en": "Sprint"
+    },
+    {
+        "zh": "暂停/返回",
+        "en": "Pause"
+    },
+    {
+        "zh": "物体交互",
+        "en": "Interact"
+    },
+    {
+        "zh": "对话推进",
+        "en": "Dialogue"
+    },
+    {
+        "zh": "移动速度",
+        "en": "Move Speed"
+    },
+    {
+        "zh": "疾跑速度",
+        "en": "Sprint Speed"
+    },
+    {
+        "zh": "人物设定",
+        "en": "Player Settings"
+    },
+    {
+        "zh": "按键设定",
+        "en": "Key Bindings"
+    },
+    {
+        "zh": "正在为<color=#FFC600> {action} </color>重新绑定，当前按键：<color=#FFC600>{key}</color>\\n请按任意键设置新按键\\n提示：如果 {key} 已被其他操作使用，此次更改将不会应用",
+        "en": "Rebinding <color=#FFC600> {action} </color> Current key: <color=#FFC600>{key}</color>\\nPress any key to assign a new binding.\\nNote: if {key} is already assigned to another action, this change will not be applied."
+    }
 ]

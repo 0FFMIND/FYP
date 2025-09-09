@@ -1,7 +1,7 @@
-using Manager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 
 namespace MVC
@@ -10,7 +10,6 @@ namespace MVC
     /// 纯数据载体（Data-Only）：保存游戏设置的当前值，用于序列化/反序列化与快照传递
     /// 任何业务逻辑（校验/冲突检测）存在 SettingsModel 中
     /// </summary>
-
     // 可被序列化
     [Serializable]
     public class SettingsData
@@ -19,6 +18,8 @@ namespace MVC
         public float bgmVolume = 0f;
         public float sfxVolume = 0f;
         public float mixerVolume = 0f;
+        public float playerSpeed = 3f;
+        public float sprintMultiplier = 2.5f;
         public LanguageCode language = LanguageCode.zh;
 
         // 用dictionary方便查找
@@ -42,9 +43,10 @@ namespace MVC
                 sfxVolume = sfxVolume,
                 mixerVolume = mixerVolume,
                 language = language,
-                keyBindings = new Dictionary<InputAction, KeyCode>(keyBindings)
+                playerSpeed = playerSpeed,
+                sprintMultiplier = sprintMultiplier,
+                keyBindings = new Dictionary<InputAction, KeyCode>(keyBindings),
             };
         }
-
     }
 }

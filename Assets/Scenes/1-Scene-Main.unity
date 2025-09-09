@@ -942,6 +942,22 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0.513
       objectReference: {fileID: 0}
+    - target: {fileID: 3168192269483311498, guid: 5b354b0f96cecfd47b2c7c1a41af8d1d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168192269483311498, guid: 5b354b0f96cecfd47b2c7c1a41af8d1d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168192269483311498, guid: 5b354b0f96cecfd47b2c7c1a41af8d1d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168192269483311498, guid: 5b354b0f96cecfd47b2c7c1a41af8d1d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3195565016375214934, guid: 5b354b0f96cecfd47b2c7c1a41af8d1d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1283,8 +1299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecb297ca3ff7de47b5845664dcd96fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  sprintMultiplier: 2.5
 --- !u!114 &2111873693
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,90 +1,34 @@
 [
     {
-        "zh": "本作所有剧情与角色均为<color=#FF0000>虚构</color>，如有雷同，实属巧合",
-        "en": "All storylines and characters in this work are <color=#FF0000>fictional</color>; any resemblance to actual persons or events is purely coincidental.\n"
+        "zh": "这个点……应该没人吧？",
+        "en": "This time of day... nobody should be around, yeah?"
     },
     {
-        "zh": "本作含有<color=#FF0000>轻微暴力及紧张</color>场面，建议 12 岁以上玩家游玩",
-        "en": "This work contains <color=#FF0000>mild violence and tense</color> scenes, and is recommended for players aged 12 and up."
+        "zh": "可千万别有人……总算溜上来了",
+        "en": "Please let no one be here... finally snuck up."
     },
     {
-        "zh": "<color=#FFCC00>游戏提示：按空格或点击继续对话",
-        "en": "<color=#FFCC00>Game Tip: Press Space or click to continue the dialogue</color>"
+        "zh": "<color=#FF0000>逃课上来要是被抓，那可就不是写检讨那么简单了</color>",
+        "en": "<color=#FF0000>If I get busted for ditching up here, it’s way more than writing a reflection.</color>"
     },
     {
-        "zh": "<color=#FF0000>你说什么啊......！？</color>",
-        "en": "<color=#FF0000>What are you saying……!?</color>"
+        "zh": "学校纪律处的那帮人，一张处分单下来，这学期直接就完蛋了",
+        "en": "One ticket from Discipline and my semester’s done."
     },
     {
-        "zh": "<color=#FF0000>我有每一小时就会失忆的失忆症！？只有23个小时了</color>",
-        "en": "<color=#FF0000>I have amnesia that makes me forget every hour!? I only have 23 hours left</color>"
+        "zh": "刚才在五楼楼梯口，差点跟教务主任对脸撞上",
+        "en": "I nearly ran face-first into the dean at the fifth-floor stairwell just now."
     },
     {
-        "zh": "<color=#FF0000>有人在追杀我？？？</color>",
-        "en": "<color=#FF0000>Someone is hunting me???</color>"
+        "zh": "他正盯着文件往楼下走，我贴在冰凉的墙面上，呼吸都快停了",
+        "en": "He was fixed on his documents as he descended; I pressed to the frigid wall, breath all but stilled."
     },
     {
-        "zh": "......",
-        "en": "……"
+        "zh": "幸好他突然拐进办公室了……吓死我了",
+        "en": "Thankfully, he veered into his office... I was terrified."
     },
     {
-        "zh": "............",
-        "en": "…………"
-    },
-    {
-        "zh": "（五分钟前）",
-        "en": "(Five minutes ago)"
-    },
-    {
-        "zh": "你好......",
-        "en": "Hello……"
-    },
-    {
-        "zh": "我目前还搞不清我是谁",
-        "en": "I still can’t figure out who I am"
-    },
-    {
-        "zh": "当睡意彻底散去后，如你所见，我正站在一块漂浮的岩石上面",
-        "en": "After the drowsiness fully wore off, as you can see, I was standing on a floating rock"
-    },
-    {
-        "zh": "四周是一片无边无际的深渊，身边可及之处只有断裂的岩块和漂浮的尘埃",
-        "en": "All around was an endless abyss, with only fractured rocks and drifting dust within reach"
-    },
-    {
-        "zh": "（这是哪里...?）",
-        "en": "(Where is this…?)"
-    },
-    {
-        "zh": "（我要怎么做才能出去）",
-        "en": "(What do I need to do to get out?)"
-    },
-    {
-        "zh": "（在这样想着的时候，身前的岩块上不知道什么时候站着和我身形一样的人影）",
-        "en": "(As I was thinking this, a figure exactly like mine was standing on the rock in front of me without my noticing)"
-    },
-    {
-        "zh": "............",
-        "en": "…………"
-    },
-    {
-        "zh": "你好……又见面了……",
-        "en": "Hello… we meet again…"
-    },
-    {
-        "zh": "（等一下啊...他在说什么）",
-        "en": "(Wait… what is he saying?)"
-    },
-    {
-        "zh": "（他又是谁，他在跟我说话吗）",
-        "en": "(Who is he, and is he talking to me?)"
-    },
-    {
-        "zh": "（我要怎么开口...）",
-        "en": "(How should I start speaking…)"
-    },
-    {
-        "zh": "（我...我...我要怎么做？）",
-        "en": "(I… I… what should I do?)"
+        "zh": "终于到学校天台了！反正这节课我是不会回去了",
+        "en": "Finally made it to the rooftop! I’m not going back to class this period anyway."
     }
 ]

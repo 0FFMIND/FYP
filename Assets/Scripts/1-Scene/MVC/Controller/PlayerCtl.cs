@@ -8,10 +8,7 @@ namespace MVC
 {
     public class PlayerCtl : MonoBehaviour
     {
-        [SerializeField]
         private float moveSpeed;
-
-        [SerializeField]
         // ¼²ÅÜ±¶ÂÊ
         private float sprintMultiplier;
   
@@ -29,8 +26,13 @@ namespace MVC
 
         private void OnEnable()
         {
+            moveSpeed = SettingsMgr.Instance.GetPlayerSpeed();
+            sprintMultiplier = SettingsMgr.Instance.GetSprintMultiplier();
+
             EventBus.Subscribe<EInputPressed, InputAction>(InputAction.PlayerSprint, OnPlayerSprint);
             EventBus.Subscribe<EInputUnPressed, InputAction>(InputAction.PlayerSprint, OnPlayerUnSprint);
+
+            EventBus.Subscribe<ESettingsChanged>(SetSpeed);
         }
 
         private void OnPlayerSprint() => isSprint = true;
@@ -42,6 +44,12 @@ namespace MVC
         {
             EventBus.Unsubscribe<EInputPressed, InputAction>(InputAction.PlayerSprint, OnPlayerSprint);
             EventBus.Unsubscribe<EInputUnPressed, InputAction>(InputAction.PlayerSprint, OnPlayerUnSprint);
+        }
+
+        private void SetSpeed(ESettingsChanged e)
+        {
+            moveSpeed = e.Settings.playerSpeed;
+            sprintMultiplier = e.Settings.sprintMultiplier;
         }
 
         private void Update()

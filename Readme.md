@@ -44,10 +44,11 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/9/5 - 完成人物疾跑（用keyup和keydown事件，通过eventbus publish实现，keyup加速，keydown元素，加了碰撞体后将人物移动放到fixedUpdate
 
-2025/9/8 - 加入了SettingsData的model层，并且统一通过ESettingsChanged事件通知其他Mgr修改本地副本
+2025/9/8 - 加入了SettingsData的model层，并且统一通过ESettingsChanged事件通知其他Mgr修改本地副本，完成人物移速，跑步速度写到settings里面修改
+
+2025/9/9 - 给localizationTxt加入key，支持{key}的替换，加入了一个-+的UI表示增减，写了warningPanel的双语，好用的bgm素材网站：https://musmus.main.jp/music_img1_06.html
 
 
 
 TODO: timeline(还没写)，人物交互(还没写，主要是与物体)
 
-TODO: 人物移速，跑步速度写到settings里面修改

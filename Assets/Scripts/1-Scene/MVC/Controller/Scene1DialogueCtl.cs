@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using Manager;
 using UnityEngine;
-using UnityEngine.UI;
 using Utils;
 
 namespace MVC
@@ -103,6 +101,20 @@ namespace MVC
             NextLine();
         }
 
+        private void RevealAllNow()
+        {
+            var tmp = dialogueView.tmp;
+            if (!tmp) return;
+
+            // 直接拉满可见字符，避免依赖 textInfo 的计数时机
+            tmp.maxVisibleCharacters = int.MaxValue;
+
+            // 可选：如果你需要用到 characterCount，再强制刷新一次
+            tmp.ForceMeshUpdate();
+
+            PositionArrowUnderText();
+        }
+
         private void OnDialogueClick()
         {
             if (typingCoroutine != null)
@@ -112,7 +124,7 @@ namespace MVC
                 typingCoroutine = null;
                 if (index <= dialogueModel.Lines.Length)
                 {
-                    RenderViews(currentSprite, dialogueModel.Lines[index - 1]);
+                    RevealAllNow();
                     // 开启小箭头
                     PositionArrowUnderText();
                 }
@@ -141,6 +153,9 @@ namespace MVC
                 SceneMgr.Instance.LoadScenesAdditive("1-Scene-Main");
 
                 SceneMgr.Instance.DisableScene("1-Scene-UI");
+                // 可以暂停
+                PauseMgr.Instance.SetPauseEnabled(true);
+
             }
             // 不然按钮点击会误认为nextline
             if (dialogueModel == null || index >= dialogueModel.Lines.Length)
@@ -191,96 +206,31 @@ namespace MVC
             index++;
         }
 
-        private IEnumerator TypeLines(string fullText)
+        private IEnumerator TypeLines(string fullRaw)
         {
             arrow.gameObject.SetActive(false);
-            RenderViews(currentSprite, "");
 
-            string displayed = "";
-            var openTags = new Stack<string>();
-            bool inHint = false; // 标记当前是否在 hint 区域
+            // 一次性设置完整文本，然后用 maxVisibleCharacters 揭示
+            RenderViews(currentSprite, fullRaw);
+            var tmp = dialogueView.tmp;
+            tmp.ForceMeshUpdate();                 // 让 TMP 生成 textInfo
+            tmp.maxVisibleCharacters = 0;          // 从 0 开始揭示
 
-            for (int i = 0; i < fullText.Length; i++)
+            int total = tmp.textInfo.characterCount; // 不包含富文本标签字符
+            int cnt = 0;                             // 控制英文每两个字符播一次音效
+
+            for (int vis = 1; vis <= total; vis++)
             {
-                if (fullText[i] == '<')
-                {
-                    int close = fullText.IndexOf('>', i);
-                    if (close != -1)
-                    {
-                        string rawTag = fullText.Substring(i, close - i + 1);
-                        bool isCloseTag = rawTag.StartsWith("</");
-                        string inner = rawTag.Trim('<', '/', '>');
-                        string tagName = inner.Split(new[] { ' ', '=' }, 2)[0];
+                tmp.maxVisibleCharacters = vis;
 
-                        if (!isCloseTag && tagName == "hint")
-                        {
-                            // 进入 hint 区域
-                            inHint = true;
-                            AudioManager.Instance.PlaySFX("shocked");
-                            displayed += "<color=#FF0000>";
-                            openTags.Push("color");
-                        }
-                        else if (isCloseTag && tagName == "hint")
-                        {
-                            // 离开 hint 区域
-                            inHint = false;
-                            displayed += "</color>";
-                            if (openTags.Count > 0)
-                                openTags.Pop();
-                        }
-                        else
-                        {
-                            // 普通标签处理
-                            displayed += rawTag;
-                            if (isCloseTag)
-                            {
-                                if (openTags.Count > 0)
-                                    openTags.Pop();
-                            }
-                            else if (!rawTag.EndsWith("/>"))
-                            {
-                                int sep = rawTag.IndexOfAny(new[] { ' ', '=', '>' }, 1);
-                                string name = rawTag.Substring(
-                                    1,
-                                    (sep > 0 ? sep : rawTag.Length - 2) - 1
-                                );
-                                openTags.Push(name);
-                            }
-                        }
+                // 英文两字符一个音效；中文每个字符一个音效
+                bool isEn = SettingsMgr.Instance.GetLanguage() == LanguageCode.en;
+                if (isEn) { cnt++; if (cnt >= 2) { cnt = 0; AudioManager.Instance.PlaySFX("typing"); } }
+                else { AudioManager.Instance.PlaySFX("typing"); }
 
-                        i = close;
-                    }
-                    else
-                    {
-                        displayed += fullText[i];
-                    }
-
-                    // 标签无需打字音效，立即渲染
-                    RenderViews(currentSprite, displayed);
-                    yield return null;
-                }
-                else
-                {
-                    // 普通文字
-                    displayed += fullText[i];
-                    AudioManager.Instance.PlaySFX("typing");
-
-                    // 拼接闭合标签保证 TMP 正确渲染
-                    string temp = displayed;
-                    foreach (var name in openTags)
-                        temp += $"</{name}>";
-
-                    RenderViews(currentSprite, temp);
-
-                    // 不同文本用不同速度
-                    float wait = inHint ? typeSpeed * 3f : typeSpeed;
-                    if (SettingsMgr.Instance.GetLanguage() == LanguageCode.en)
-                    {
-                        // 英文要快一点
-                        wait = wait / 2;
-                    }
-                    yield return new WaitForSeconds(wait);
-                }
+                float wait = typeSpeed;
+                if (isEn) wait *= 0.5f;            // 英文更快
+                yield return new WaitForSeconds(wait);
             }
 
             // 完成后显示箭头

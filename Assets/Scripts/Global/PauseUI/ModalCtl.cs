@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Manager;
 using TMPro;
@@ -71,12 +70,16 @@ namespace MVC
             gameObject.SetActive(true);
         }
 
-        private void SetTip(string keyText, KeyCode key)
+        private void SetTip(string action, KeyCode key)
         {
             tipText
                 .GetComponent<LocalizedText>()
-                .SetKey(
-                    $"正在为{keyText}重新绑定，当前按键：{key.ToString()}\n请按任意键设置新按键\n提示：如果 {key.ToString()} 已被其他操作使用，此次更改将不会应用"
+                .SetParams(
+                    new Dictionary<string, string>
+                    {
+                        { "action", action },
+                        { "key", key.ToString() },
+                    }
                 );
         }
 

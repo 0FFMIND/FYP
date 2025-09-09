@@ -111,11 +111,26 @@ namespace Manager
             {
                 // 找到 key，取对应语言栏位
                 int langIndex = (int)CurrentLanguage;
-                return values[langIndex];
+                return UnescapeCommon(values[langIndex]);
             }
 
             // 未找到时
             return key;
+        }
+
+        private string UnescapeCommon(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return s;
+
+            // 先处理 \r\n 组合，再处理单个
+            s = s.Replace("\\r\\n", "\n");
+            s = s.Replace("\\n", "\n");
+            s = s.Replace("\\t", "\t");
+            s = s.Replace("\\r", "\r");
+
+            // 如确有需要再还原双反斜杠到单反斜杠（可选）
+            // s = s.Replace("\\\\", "\\");
+            return s;
         }
 
         // 从 StreamingAssets/Localization/{sceneName}/strings.json 读取表格
