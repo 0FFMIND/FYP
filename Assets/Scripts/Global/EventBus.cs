@@ -14,6 +14,9 @@ namespace Utils
         // 只有订阅了相同 key 的回调会被唤醒
         private static readonly Dictionary<Type, Dictionary<object, Delegate>> _keyedTable = new();
 
+        // 每个事件类型的最后一条消息（用于粘性重放）
+        private static readonly Dictionary<Type, object> _last = new();
+
         // 无参包装器缓存
         private static readonly Dictionary<
             (Delegate original, Type eventType, object key),
@@ -21,7 +24,7 @@ namespace Utils
         > _noArgWrappers = new Dictionary<(Delegate, Type, object), Delegate>();
 
         // 订阅事件
-        public static void Subscribe<T>(Action<T> handler)
+        public static void Subscribe<T>(Action<T> handler, bool replayLast = true)
         {
             if (handler == null)
             {
@@ -38,6 +41,16 @@ namespace Utils
             else
             {
                 _typedTable[t] = handler;
+            }
+
+            // 粘性重放（若有历史事件）
+            if (replayLast && _last.TryGetValue(t, out var last))
+            {
+                try { handler((T)last); }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[EventBus] 重放 {typeof(T).Name} 出错：{ex}");
+                }
             }
         }
 
@@ -69,7 +82,9 @@ namespace Utils
         // 发布事件
         public static void Publish<T>(T evt)
         {
-            if (_typedTable.TryGetValue(typeof(T), out var del) && del is Action<T> cb)
+            var t = typeof(T);
+            _last[t] = evt!;
+            if (_typedTable.TryGetValue(t, out var del) && del is Action<T> cb)
             {
                 cb.Invoke(evt);
             }
@@ -135,12 +150,12 @@ namespace Utils
                 _noArgWrappers[mapKey] = w;
 
                 // 复用已有的带参子键订阅实现
-                Subscribe<T, TKey>(key, w);
+                Subscribe(key, w);
             }
             else
             {
                 // 已存在包装器时重复订阅
-                Subscribe<T, TKey>(key, (Action<T>)wrapper);
+                Subscribe(key, (Action<T>)wrapper);
             }
         }
 

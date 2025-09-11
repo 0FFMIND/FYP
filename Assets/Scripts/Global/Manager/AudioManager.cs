@@ -78,7 +78,9 @@ namespace Manager
         // 监听全局设置变更
         private void OnEnable()
         {
-            EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged);
+            // 不在onEnable这里黏性重放，见官方API
+            // https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Audio.AudioMixer.SetFloat.html
+            EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged, false);
         }
 
         private void OnDisable()
@@ -86,11 +88,20 @@ namespace Manager
             EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
         }
 
+        private void Start()
+        {
+            // setFloat方法需要放在Start里
+            SetBGMVolume(SettingsMgr.Instance.GetBGMVolume());
+            SetSFXVolume(SettingsMgr.Instance.GetSFXVolume());
+            SetMixerVolume(SettingsMgr.Instance.GetMixerVolume());
+        }
+
         private void OnSettingsChanged(ESettingsChanged e)
         {
             SetBGMVolume(e.Settings.bgmVolume);
             SetSFXVolume(e.Settings.sfxVolume);
             SetMixerVolume(e.Settings.mixerVolume);
+            _audioMixer.GetFloat(bgmVolumeParam, out var db);
         }
 
         public void PlayBGM(string name, float fadeTime = 1f)

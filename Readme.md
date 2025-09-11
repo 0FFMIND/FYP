@@ -46,9 +46,13 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/9/8 - 加入了SettingsData的model层，并且统一通过ESettingsChanged事件通知其他Mgr修改本地副本，完成人物移速，跑步速度写到settings里面修改
 
-2025/9/9 - 给localizationTxt加入key，支持{key}的替换，加入了一个-+的UI表示增减，写了warningPanel的双语，好用的bgm素材网站：https://musmus.main.jp/music_img1_06.html
+2025/9/9 - 给localizationTxt加入key，支持{key}的替换，加入了一个-+的UI表示增减，写了warningPanel的双语，好用的bgm素材网站：https://musmus.main.jp/music_img1_06.html, 把抖动的打字机展示改了实现
 
+2025/9/10 - Fixed: 因为SettingsMgr在Awake里面就Publish过一次事件了，其他订阅者在OnEnable里面订阅，Publish的时间早于订阅的时间，需要添加粘性重放，Fixed 奔跑速度scrollbar绑定错，Fixed BGM问题，需要将audioMixer的方法放到Start
 
+TODO: 打算加一个文字出来的时候稍微抖一下的效果，出现暂停菜单的时候需要阻止鼠标onDialogClick，出现暂停菜单的时候需要允许语言刷新，还有一种是禁止在对话的时候打开菜单
+
+TODO: 还注意到有时候场景切换会显示没有照相机？是加载问题吗，不确定
 
 TODO: timeline(还没写)，人物交互(还没写，主要是与物体)
 

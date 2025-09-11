@@ -47,12 +47,6 @@ namespace Manager
         private string lastSceneName;
         private LanguageCode lastLanguage;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Bootstrap()
-        {
-            EnsureCreated();
-        }
-
         // 监听全局设置变更
         private void OnEnable()
         {
@@ -64,6 +58,7 @@ namespace Manager
             EventBus.Unsubscribe<ESettingsChanged>(ApplyLanguage);
         }
 
+        // 重载
         private void ApplyLanguage(ESettingsChanged e)
         {
             if (e.Settings.language == CurrentLanguage)

@@ -36,7 +36,7 @@ namespace MVC
             float moveSpeed = SettingsMgr.Instance.GetPlayerSpeed();
             moveScrollBar.SetValueWithoutNotify(NormalizedMoveSpeed(moveSpeed));
             float sprintMultiplier = SettingsMgr.Instance.GetSprintMultiplier();
-            moveScrollBar.SetValueWithoutNotify(NormalizedSprintMultiplier(sprintMultiplier));
+            sprintScrollBar.SetValueWithoutNotify(NormalizedSprintMultiplier(sprintMultiplier));
         }
 
         public void HandleMoveSpeedChange()

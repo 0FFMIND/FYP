@@ -92,7 +92,7 @@ namespace Manager
 
         private void Update()
         {
-            // 特例：鼠标左键当作对话推进（按需保留）
+            // 特例：鼠标左键当作对话推进
             if (Input.GetMouseButtonDown(0))
             {
                 EventBus.Publish(

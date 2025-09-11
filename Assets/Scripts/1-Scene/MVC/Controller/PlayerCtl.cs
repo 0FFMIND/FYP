@@ -26,9 +26,6 @@ namespace MVC
 
         private void OnEnable()
         {
-            moveSpeed = SettingsMgr.Instance.GetPlayerSpeed();
-            sprintMultiplier = SettingsMgr.Instance.GetSprintMultiplier();
-
             EventBus.Subscribe<EInputPressed, InputAction>(InputAction.PlayerSprint, OnPlayerSprint);
             EventBus.Subscribe<EInputUnPressed, InputAction>(InputAction.PlayerSprint, OnPlayerUnSprint);
 
