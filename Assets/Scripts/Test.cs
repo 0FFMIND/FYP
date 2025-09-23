@@ -8,6 +8,6 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.Instance.PlayBGM("1-bgm", 1);
+        AudioManager.Instance.PlayBGM("1-bgm-1", 1);
     }
 }

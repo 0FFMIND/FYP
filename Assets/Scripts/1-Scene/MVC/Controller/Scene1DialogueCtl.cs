@@ -8,12 +8,8 @@ namespace MVC
     public enum Eact
     {
         none,
-        shake,
-        playHeartBeat,
-        playHint,
         playBGM,
         arrowRed,
-        stopBGM,
     }
 
     [System.Serializable]
@@ -90,8 +86,6 @@ namespace MVC
 
         public void StartDialogue()
         {
-            // bgm
-            AudioManager.Instance.PlayBGM("1-bgm", 0f);
             // 载入对话
             dialogueModel = new DialogueModel(prologueTxt);
             // 刷新index
@@ -150,9 +144,12 @@ namespace MVC
             if (index == dialogueModel.Lines.Length)
             {
                 // 进入1-Scene-Main
-                SceneMgr.Instance.LoadScenesAdditive("1-Scene-Main");
-
-                SceneMgr.Instance.DisableScene("1-Scene-UI");
+                EventBus.Publish(new ESceneFadeAdditiveDisable(
+                    fromScene: "1-Scene-UI",
+                    toScene: "1-Scene-Main",
+                    fadeOutDuration: 0.5f,
+                    fadeInDuration: 1f
+                ));                
                 // 可以暂停
                 PauseMgr.Instance.SetPauseEnabled(true);
 
@@ -171,12 +168,6 @@ namespace MVC
                     {
                         if (eact != Eact.none)
                         {
-                            if (eact == Eact.shake)
-                            {
-                                // 调用camera shake并播放音效
-                                AudioManager.Instance.PlaySFX("shocked");
-                                cameraShake.Shake();
-                            }
                             if (eact == Eact.playBGM)
                             {
                                 AudioManager.Instance.PlayBGM("1-bgm");
@@ -184,14 +175,6 @@ namespace MVC
                             if (eact == Eact.arrowRed)
                             {
                                 arrow.GetComponent<SpriteRenderer>().color = Color.red;
-                            }
-                            if (eact == Eact.playHeartBeat)
-                            {
-                                AudioManager.Instance.PlaySFX("heartbeat");
-                            }
-                            if (eact == Eact.stopBGM)
-                            {
-                                AudioManager.Instance.StopBGM();
                             }
                         }
                     }
@@ -213,11 +196,11 @@ namespace MVC
             // 一次性设置完整文本，然后用 maxVisibleCharacters 揭示
             RenderViews(currentSprite, fullRaw);
             var tmp = dialogueView.tmp;
-            tmp.ForceMeshUpdate();                 // 让 TMP 生成 textInfo
-            tmp.maxVisibleCharacters = 0;          // 从 0 开始揭示
+            tmp.ForceMeshUpdate();
+            tmp.maxVisibleCharacters = 0;
 
-            int total = tmp.textInfo.characterCount; // 不包含富文本标签字符
-            int cnt = 0;                             // 控制英文每两个字符播一次音效
+            int total = tmp.textInfo.characterCount;
+            int cnt = 0;
 
             for (int vis = 1; vis <= total; vis++)
             {
@@ -229,7 +212,7 @@ namespace MVC
                 else { AudioManager.Instance.PlaySFX("typing"); }
 
                 float wait = typeSpeed;
-                if (isEn) wait *= 0.5f;            // 英文更快
+                if (isEn) wait *= 0.5f;
                 yield return new WaitForSeconds(wait);
             }
 

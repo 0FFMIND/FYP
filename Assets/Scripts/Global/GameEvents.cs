@@ -28,6 +28,27 @@ namespace Utils
         }
     }
 
+    public readonly struct ESceneFadeAdditiveDisable
+    {
+        public readonly string FromScene;
+        public readonly string ToScene;
+        public readonly float FadeOutDuration;
+        public readonly float FadeInDuration;
+
+        public ESceneFadeAdditiveDisable(
+            string fromScene,
+            string toScene,
+            float fadeOutDuration,
+            float fadeInDuration
+        ) =>
+            (FromScene, ToScene, FadeOutDuration, FadeInDuration) = (
+                fromScene,
+                toScene,
+                fadeOutDuration,
+                fadeInDuration
+            );
+    }
+
     public readonly struct EInputPressed
     {
         public readonly InputAction Action;

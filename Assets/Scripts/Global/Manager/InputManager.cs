@@ -24,12 +24,13 @@ namespace Manager
     public class InputManager : SingletonMB<InputManager>
     {
         private readonly Dictionary<InputAction, KeyCode> _bindings = new();
+        private EventSystemHost host;
 
-        // AutoSingletonMB
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Bootstrap()
+        private void Awake()
         {
-            EnsureCreated();
+            host ??= GetComponent<EventSystemHost>() ?? gameObject.AddComponent<EventSystemHost>();
+            // π“‘ÿeventSystem
+            host.Init(transform);
         }
 
         private void OnEnable()

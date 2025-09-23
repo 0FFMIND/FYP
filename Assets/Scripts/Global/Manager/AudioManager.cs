@@ -36,13 +36,6 @@ namespace Manager
         // 全局listener挂在audioManager下
         private AudioListener _listener;
 
-        // AutoSingletonMB
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Bootstrap()
-        {
-            EnsureCreated();
-        }
-
         private void Awake()
         {
             // 添加listener

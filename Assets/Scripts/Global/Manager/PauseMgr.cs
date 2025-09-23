@@ -14,13 +14,6 @@ namespace Manager
         private const string PauseMenuPath = "Prefabs/1-Scene/PauseMenu";
         private bool canPause = true;
 
-        // AutoSingletonMB
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Bootstrap()
-        {
-            EnsureCreated();
-        }
-
         private void Awake()
         {
             pauseModel = new PauseModel();

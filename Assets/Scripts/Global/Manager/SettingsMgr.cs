@@ -17,13 +17,6 @@ namespace Manager
 
         private SettingsData _data;
 
-        // AutoSingletonMB
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Bootstrap()
-        {
-            EnsureCreated();
-        }
-
         private void Awake()
         {
             Load();
