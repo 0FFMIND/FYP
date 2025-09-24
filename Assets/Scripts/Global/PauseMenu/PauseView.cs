@@ -8,6 +8,8 @@ namespace MVC
     {
         [SerializeField]
         private GameObject[] pages;
+
+        [SerializeField]
         private GameObject pauseMenuRoot;
         public int PageCount => pages?.Length ?? 0;
 
@@ -17,13 +19,17 @@ namespace MVC
             {
                 pauseMenuRoot = this.gameObject;
             }
-
             // ³õÊ¼Òþ²Ø
             pauseMenuRoot.SetActive(false);
         }
 
         public void Show()
         {
+            if (!pauseMenuRoot)
+            {
+                Debug.LogError("[PauseView] Show() Ê§°Ü£ºpauseMenuRoot Îª null¡£", this);
+                return;
+            }
             pauseMenuRoot.SetActive(true);
         }
 

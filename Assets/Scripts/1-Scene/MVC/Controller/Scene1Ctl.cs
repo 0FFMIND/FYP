@@ -57,6 +57,8 @@ namespace MVC
             yield return StartCoroutine(PlayWarning());
             // 隐藏warningView
             warningView.SetActive(false);
+            // FadeIn
+            TransitionMgr.Instance.FadeIn(0.5f);
             // 进入对话控制器
             dialogueCtl.StartDialogue();
         }

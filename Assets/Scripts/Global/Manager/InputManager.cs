@@ -11,7 +11,6 @@ namespace Manager
         DialogueClick,
         PlayerSprint,
         PauseGame,
-        Interact,
     }
 
     [Serializable]

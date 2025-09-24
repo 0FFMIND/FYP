@@ -4,6 +4,15 @@ using UnityEngine;
 
 namespace Utils
 {
+    public readonly struct EInteract
+    {
+        public readonly InteractModel Model;
+
+        public EInteract(InteractModel model) => Model = model;
+    }
+
+    public readonly struct EInteractEnd { }
+
     public readonly struct EKeySet
     {
         public readonly InputAction Action;

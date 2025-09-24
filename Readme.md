@@ -54,7 +54,11 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/9/26 - 在扩展Mgr的时候发现，继承Mono的单例类需要手动在子类中调用一次父类的ensureCreated函数，在singletonMB里面加入了一个启动器，确保饿汉式加载，从而不需要在子类中手动调用一次父类的函数，同时Fix了EventSystem的问题，删掉场景中的，挂在InputManger上
 
+2025/9/27 - Fixed: keyRebind的时候禁止修改方向键，需要加入人物交互的逻辑，同时在交互的过程中人物禁止移动，需要重构原来的代码，用一个playerState管理，解耦出playerModel
+
+TODO: 交互时出现光标
+
 TODO: 打算加一个文字出来的时候稍微抖一下的效果，出现暂停菜单的时候需要阻止鼠标onDialogClick，出现暂停菜单的时候需要允许语言刷新，还有一种是禁止在对话的时候打开菜单
 
-TODO: timeline(还没写)，人物交互(还没写，主要是与物体)
+TODO: timeline(还没写)，任务系统
 

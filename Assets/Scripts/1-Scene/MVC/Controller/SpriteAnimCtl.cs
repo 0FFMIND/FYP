@@ -5,13 +5,6 @@ using Utils;
 
 namespace MVC
 {
-    public enum Direction
-    {
-        Down,
-        Left,
-        Right,
-        Up,
-    }
 
     public class SpriteAnimCtl : MonoBehaviour
     {
@@ -34,9 +27,10 @@ namespace MVC
         private float timer;
         private int frameIndex;
         private Sprite[] currentAnim;
+        private PlayerModel playerModel;
 
         // 初始化
-        private Direction currentDir = (Direction)(-1);
+        private Direction currentDir;
         private bool wasMoving;
         private bool isMoving;
         private bool isPaused = false;
@@ -45,9 +39,11 @@ namespace MVC
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
+            playerModel = GetComponent<PlayerCtl>().model;
             // 默认不移动
             wasMoving = false;
             isMoving = false;
+            currentDir = playerModel.Direction;
             // 默认向下
             SetDirection(Direction.Down);
         }

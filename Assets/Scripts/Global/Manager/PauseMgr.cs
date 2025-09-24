@@ -10,7 +10,7 @@ namespace Manager
     public class PauseMgr : SingletonMB<PauseMgr>
     {
         private PauseModel pauseModel;
-        private PauseView pauseView;
+        private GameObject pausePanel;
         private const string PauseMenuPath = "Prefabs/1-Scene/PauseMenu";
         private bool canPause = true;
 
@@ -47,7 +47,7 @@ namespace Manager
             {
                 return;
             }
-            EnsurePauseView();
+            EnsurePausePanel();
             bool newState = !pauseModel.IsPaused;
             // …Ë÷√‘›Õ£◊¥Ã¨
             pauseModel.SetPaused(newState);
@@ -56,26 +56,26 @@ namespace Manager
             if (newState)
             {
                 // ‘›Õ£ ±œ‘ æUI
-                if (pauseView != null)
-                    pauseView.Show();
+                if (pausePanel != null)
+                    pausePanel.GetComponent<PauseView>().Show();
             }
             else
             {
                 // ª÷∏¥ ±“˛≤ÿUI
-                if (pauseView != null)
-                    pauseView.Hide();
+                if (pausePanel != null)
+                    pausePanel.GetComponent<PauseView>().Hide();
             }
         }
 
-        private void EnsurePauseView()
+        private void EnsurePausePanel()
         {
-            if (pauseView == null)
+            if (pausePanel == null)
             {
                 // ¥” Resources º”‘ÿ
-                var prefab = Resources.Load<PauseView>(PauseMenuPath);
+                var prefab = Resources.Load<GameObject>(PauseMenuPath);
                 if (prefab != null)
                 {
-                    pauseView = Instantiate(prefab);
+                    pausePanel = Instantiate(prefab);
                 }
             }
         }

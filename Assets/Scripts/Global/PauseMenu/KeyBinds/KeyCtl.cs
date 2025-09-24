@@ -27,6 +27,21 @@ namespace MVC
         // 记录当前已应用到 UI 上的键位（用于快速比较）
         private readonly Dictionary<InputAction, KeyCode> _appliedBindings = new();
 
+        // 禁止修改方向键
+        private readonly HashSet<KeyCode> _disallowedRebindKeys = new()
+        {
+            KeyCode.W,
+            KeyCode.A,
+            KeyCode.S,
+            KeyCode.D,
+            KeyCode.UpArrow,
+            KeyCode.DownArrow,
+            KeyCode.LeftArrow,
+            KeyCode.RightArrow,
+        };
+
+        private bool IsDisallowedRebindKey(KeyCode key) => _disallowedRebindKeys.Contains(key);
+
         private void Awake()
         {
             // 第一次创建一次所有行
@@ -119,6 +134,12 @@ namespace MVC
                 HideModal();
                 return;
             }
+            if (IsDisallowedRebindKey(newKey))
+            {
+                // 禁止修改方向键
+                HideModal();
+                return;
+            }
             // 用枚举顺序遍历所有已缓存行
             foreach (InputAction _action in Enum.GetValues(typeof(InputAction)))
             {
@@ -169,7 +190,6 @@ namespace MVC
                 InputAction.DialogueClick => "对话推进",
                 InputAction.PlayerSprint => "玩家疾跑",
                 InputAction.PauseGame => "暂停/返回",
-                InputAction.Interact => "物体交互",
                 _ => a.ToString(),
             };
     }
