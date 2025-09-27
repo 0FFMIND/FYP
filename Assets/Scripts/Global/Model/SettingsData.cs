@@ -6,6 +6,18 @@ using UnityEngine;
 
 namespace MVC
 {
+    public enum SettingField
+    {
+        BgmVolume,
+        SfxVolume,
+        MixerVolume,
+        PlayerSpeed,
+        TypeSpeed,
+        SprintMultiplier,
+        Language,
+        KeyBindings,
+    }
+
     /// <summary>
     /// 纯数据载体（Data-Only）：保存游戏设置的当前值，用于序列化/反序列化与快照传递
     /// 任何业务逻辑（校验/冲突检测）存在 SettingsModel 中
@@ -19,6 +31,7 @@ namespace MVC
         public float sfxVolume = 0f;
         public float mixerVolume = 0f;
         public float playerSpeed = 3f;
+        public float typeSpeed = 0.08f;
         public float sprintMultiplier = 2.5f;
         public LanguageCode language = LanguageCode.zh;
 
@@ -44,6 +57,7 @@ namespace MVC
                 language = language,
                 playerSpeed = playerSpeed,
                 sprintMultiplier = sprintMultiplier,
+                typeSpeed = typeSpeed,
                 keyBindings = new Dictionary<InputAction, KeyCode>(keyBindings),
             };
         }

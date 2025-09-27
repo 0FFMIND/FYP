@@ -50,15 +50,21 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/9/10 - Fixed: 因为SettingsMgr在Awake里面就Publish过一次事件了，其他订阅者在OnEnable里面订阅，Publish的时间早于订阅的时间，需要添加粘性重放，Fixed 奔跑速度scrollbar绑定错，Fixed BGM问题，需要将audioMixer的方法放到Start
 
-2025/9/25 - 之前两个场景切换的时候会出现Display 1 No camera rendering，因为场景1直接unload了而出来场景2，中间出现短暂的时间场景2还没有加载出来，场景中没有有效帧，需要写TransitionMgr，现在的逻辑是先进入黑屏，在纯黑屏的时候load新场景，等待新场景加载好后disable掉旧场景，会带来问题在黑屏的时候新场景和旧场景同时存在，场景出现了多个EventSystem
+2025/9/21 - 之前两个场景切换的时候会出现Display 1 No camera rendering，因为场景1直接unload了而出来场景2，中间出现短暂的时间场景2还没有加载出来，场景中没有有效帧，需要写TransitionMgr，现在的逻辑是先进入黑屏，在纯黑屏的时候load新场景，等待新场景加载好后disable掉旧场景，会带来问题在黑屏的时候新场景和旧场景同时存在，场景出现了多个EventSystem
 
-2025/9/26 - 在扩展Mgr的时候发现，继承Mono的单例类需要手动在子类中调用一次父类的ensureCreated函数，在singletonMB里面加入了一个启动器，确保饿汉式加载，从而不需要在子类中手动调用一次父类的函数，同时Fix了EventSystem的问题，删掉场景中的，挂在InputManger上
+2025/9/22 - 在扩展Mgr的时候发现，继承Mono的单例类需要手动在子类中调用一次父类的ensureCreated函数，在singletonMB里面加入了一个启动器，确保饿汉式加载，从而不需要在子类中手动调用一次父类的函数，同时Fix了EventSystem的问题，删掉场景中的，挂在InputManger上
 
-2025/9/27 - Fixed: keyRebind的时候禁止修改方向键，需要加入人物交互的逻辑，同时在交互的过程中人物禁止移动，需要重构原来的代码，用一个playerState管理，解耦出playerModel
+2025/9/23 - Fixed: keyRebind的时候禁止修改方向键，需要加入人物交互的逻辑，同时在交互的过程中人物禁止移动，需要重构原来的代码，用一个playerState管理，解耦出playerModel
+
+2025/9/25 - Fixed: 更新playerCtl时中间的一个object null bug，Fixed：之前Mgr重写过带来PauseMenu的一点问题，正在写timeline，并且原来的dialog部分可以解耦，打算写一个Base类，估计要写几天了，还要在改键中能改TypeSpeed
+
+2025/9/26 - dialogCtlBase类写好了，加了一个每次开始的时候dialog从下方浮上来的动画，加了typeSpeed可以修改的功能，给菜单加了个恢复默认，还没写完
 
 TODO: 交互时出现光标
 
 TODO: 打算加一个文字出来的时候稍微抖一下的效果，出现暂停菜单的时候需要阻止鼠标onDialogClick，出现暂停菜单的时候需要允许语言刷新，还有一种是禁止在对话的时候打开菜单
 
-TODO: timeline(还没写)，任务系统
+TODO: timeline(还没写)，任务系统(还没写)
+
+
 

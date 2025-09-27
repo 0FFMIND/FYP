@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MVC
 {
-    public class Scene1Ctl : MonoBehaviour
+    public class Scene1PreArrivalCtl : MonoBehaviour
     {
         [SerializeField]
         private GameObject warningViewCH;

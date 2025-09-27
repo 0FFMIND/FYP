@@ -80,6 +80,47 @@ namespace Manager
             Broadcast(Snapshot());
         }
 
+        public void ResetToDefaults(SettingField[] fields)
+        {
+            foreach (var field in fields)
+            {
+                if (field == SettingField.BgmVolume)
+                {
+                    _data.bgmVolume = 0f;
+                }
+                if (field == SettingField.SfxVolume)
+                {
+                    _data.sfxVolume = 0f;
+                }
+                if (field == SettingField.MixerVolume)
+                {
+                    _data.mixerVolume = 0f;
+                }
+                if (field == SettingField.PlayerSpeed)
+                {
+                    _data.playerSpeed = 3f;
+                }
+                if (field == SettingField.TypeSpeed)
+                {
+                    _data.typeSpeed = 0.08f;
+                }
+                if (field == SettingField.SprintMultiplier)
+                {
+                    _data.sprintMultiplier = 2.5f;
+                }
+                if (field == SettingField.KeyBindings)
+                {
+                    _data.keyBindings = new Dictionary<InputAction, KeyCode>
+                    {
+                        { InputAction.DialogueClick, KeyCode.Return },
+                        { InputAction.PlayerSprint, KeyCode.RightShift },
+                        { InputAction.PauseGame, KeyCode.Escape },
+                    };
+                }
+            }
+            Save();
+        }
+
         private void Broadcast(SettingsData data)
         {
             EventBus.Publish(new ESettingsChanged(data));
@@ -158,6 +199,11 @@ namespace Manager
             return _data.playerSpeed;
         }
 
+        public float GetTypeSpeed()
+        {
+            return _data.typeSpeed;
+        }
+
         public float GetSprintMultiplier()
         {
             return _data.sprintMultiplier;
@@ -165,11 +211,21 @@ namespace Manager
 
         public void SetPlayerSpeed(float speed)
         {
-            if(speed == _data.playerSpeed)
+            if (speed == _data.playerSpeed)
             {
                 return;
             }
             _data.playerSpeed = speed;
+            Save();
+        }
+
+        public void SetTypeSpeed(float speed)
+        {
+            if (speed == _data.typeSpeed)
+            {
+                return;
+            }
+            _data.typeSpeed = speed;
             Save();
         }
 
@@ -185,7 +241,7 @@ namespace Manager
 
         public void SetKey(EKeySet e)
         {
-            if(_data.keyBindings[e.Action] == e.Key)
+            if (_data.keyBindings[e.Action] == e.Key)
             {
                 return;
             }

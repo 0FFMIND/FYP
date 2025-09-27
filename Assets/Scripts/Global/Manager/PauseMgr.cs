@@ -78,6 +78,7 @@ namespace Manager
                     pausePanel = Instantiate(prefab);
                 }
             }
+            pausePanel.SetActive(false);
         }
     }
 }

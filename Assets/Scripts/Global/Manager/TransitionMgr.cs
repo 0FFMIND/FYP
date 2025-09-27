@@ -69,10 +69,6 @@ namespace Manager
 
         private IEnumerator Co_FadeAdditiveDisable(ESceneFadeAdditiveDisable e)
         {
-            if (!canvas || !black || !cg)
-            {
-                BuildOverlay();
-            }
             // 渐入进黑屏
             yield return FadeRoutine(cg.alpha, 1f, e.FadeOutDuration);
 
@@ -113,6 +109,11 @@ namespace Manager
         // 实际执行淡变的协程
         private IEnumerator FadeRoutine(float from, float to, float duration)
         {
+            // 确保一次性构建
+            if (canvas == null || black == null || cg == null)
+            {
+                BuildOverlay();
+            }
             float t = 0f;
             cg.alpha = from;
             // 淡变期屏蔽输入

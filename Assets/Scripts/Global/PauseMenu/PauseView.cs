@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MVC
@@ -19,8 +17,6 @@ namespace MVC
             {
                 pauseMenuRoot = this.gameObject;
             }
-            // ³õÊ¼Òþ²Ø
-            pauseMenuRoot.SetActive(false);
         }
 
         public void Show()

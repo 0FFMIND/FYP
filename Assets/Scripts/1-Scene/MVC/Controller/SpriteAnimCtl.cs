@@ -30,7 +30,7 @@ namespace MVC
         private PlayerModel playerModel;
 
         // 初始化
-        private Direction currentDir;
+        private Direction currentDir = (Direction)(-1);
         private bool wasMoving;
         private bool isMoving;
         private bool isPaused = false;
@@ -43,9 +43,10 @@ namespace MVC
             // 默认不移动
             wasMoving = false;
             isMoving = false;
-            currentDir = playerModel.Direction;
             // 默认向下
             SetDirection(Direction.Down);
+            currentDir = playerModel.Direction;
+
         }
 
         private void OnEnable()
