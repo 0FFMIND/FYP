@@ -18,12 +18,30 @@ namespace MVC
         private void OnEnable()
         {
             // 初始化音量滑条为当前音量值
+            SetScrollBar();
+        }
+
+        private void SetScrollBar()
+        {
             float bgmValue = AudioManager.Instance.GetBGMVolumeNormalized();
             bgmScrollBar.SetValueWithoutNotify(bgmValue);
             float sfxValue = AudioManager.Instance.GetSFXVolumeNormalized();
             sfxScrollBar.SetValueWithoutNotify(sfxValue);
             float mixerValue = AudioManager.Instance.GetMixerVolumeNormalized();
             mixerScrollBar.SetValueWithoutNotify(mixerValue);
+        }
+
+        public void HandleResetDefaults()
+        {
+            var fields = new[]
+            {
+                SettingField.BgmVolume,
+                SettingField.SfxVolume,
+                SettingField.MixerVolume,
+            };
+
+            SettingsMgr.Instance.ResetToDefaults(fields);
+            SetScrollBar();
         }
 
         public void HandleBGMVolumeChange()

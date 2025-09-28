@@ -5,7 +5,7 @@ using Utils;
 
 namespace MVC
 {
-    public class Scene1DialogueCtl : DialogCtlBase
+    public class Scene1PreArrivalDialogCtl : DialogCtlBase
     {
         public void HideDialogue()
         {
@@ -52,7 +52,7 @@ namespace MVC
                         fromScene: "1-Scene-UI",
                         toScene: "1-Scene-Main",
                         fadeOutDuration: 0.5f,
-                        fadeInDuration: 1f
+                        fadeInDuration: 2f
                     )
                 );
                 // ø…“‘‘›Õ£

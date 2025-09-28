@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 using Utils;
@@ -12,8 +10,8 @@ namespace MVC
         private PlayerModel model;
         private Rigidbody2D rb;
         private SpriteAnimCtl animator;
+        private PlayerScriptMoveCtl scriptMover;
 
-        private float moveSpeed;
         private float sprintMultiplier;
 
         private float speed;
@@ -40,6 +38,7 @@ namespace MVC
 
             EventBus.Subscribe<ESettingsChanged>(SetSpeed);
         }
+
         private void OnPlayerSprint() => model.SetSprinting(true);
 
         private void OnPlayerUnSprint() => model.SetSprinting(false);
@@ -59,18 +58,19 @@ namespace MVC
 
         private void SetSpeed(ESettingsChanged e)
         {
-            moveSpeed = e.Settings.playerSpeed;
+            model.SetMoveSpeed(e.Settings.playerSpeed);
             sprintMultiplier = e.Settings.sprintMultiplier;
         }
 
         private void Update()
         {
-            speed = moveSpeed;
+            speed = model.MoveSpeed;
             // Èç¹û¼²ÅÜ
             if (model.IsSprinting)
             {
                 speed *= sprintMultiplier;
             }
+
             Vector2 input;
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
@@ -89,6 +89,10 @@ namespace MVC
 
         private void FixedUpdate()
         {
+            if(model.State == PlayerState.Disabled)
+            {
+                return;
+            }
             rb.MovePosition(rb.position + model.MoveInput * speed * Time.fixedDeltaTime);
         }
     }

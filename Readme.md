@@ -60,11 +60,15 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/9/26 - dialogCtlBase类写好了，加了一个每次开始的时候dialog从下方浮上来的动画，加了typeSpeed可以修改的功能，给菜单加了个恢复默认，还没写完
 
+2025/9/27 - 写了菜单的恢复默认，感觉还是需要用虚拟相机控制，下载了cinemachine插件，修改了人物移动的bug，把rb的插值设为None了，正在写timeline，加了signal，每次发signal切换动画/行为/打字，人物和Anim加了可以用代码控制，从而做过场动画
+
 TODO: 交互时出现光标
 
 TODO: 打算加一个文字出来的时候稍微抖一下的效果，出现暂停菜单的时候需要阻止鼠标onDialogClick，出现暂停菜单的时候需要允许语言刷新，还有一种是禁止在对话的时候打开菜单
 
 TODO: timeline(还没写)，任务系统(还没写)
+
+TODO: 人物移动，交互，动画的时候均要禁止Pause和其他行为
 
 
 

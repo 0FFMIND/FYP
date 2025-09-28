@@ -29,6 +29,8 @@ namespace MVC
         public bool CanMove => State == PlayerState.Idle || State == PlayerState.Moving;
         public bool IsLocked => State == PlayerState.Interacting || State == PlayerState.Disabled;
         public Direction Direction { get; private set; } = Direction.Down;
+        public float MoveSpeed { get; private set; }
+
         public Vector2 FacingDir
         {
             get
@@ -89,6 +91,11 @@ namespace MVC
         public void SetSprinting(bool v)
         {
             IsSprinting = v && CanMove;
+        }
+
+        public void SetMoveSpeed(float s)
+        {
+            MoveSpeed = s;
         }
 
         public bool TryBeginInteract()

@@ -5,9 +5,11 @@ using Utils;
 
 namespace MVC
 {
-
     public class SpriteAnimCtl : MonoBehaviour
     {
+        [SerializeField]
+        private Direction defaultDir;
+
         [SerializeField]
         private float frameRate; // 每帧间隔
 
@@ -35,7 +37,6 @@ namespace MVC
         private bool isMoving;
         private bool isPaused = false;
 
-
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
@@ -44,9 +45,8 @@ namespace MVC
             wasMoving = false;
             isMoving = false;
             // 默认向下
-            SetDirection(Direction.Down);
+            SetDirection(defaultDir);
             currentDir = playerModel.Direction;
-
         }
 
         private void OnEnable()

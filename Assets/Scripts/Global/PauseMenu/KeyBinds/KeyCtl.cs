@@ -53,6 +53,16 @@ namespace MVC
             // 填充列表（从 SettingsMgr 读取）
             RefreshAllViewsFromSettings();
         }
+        public void HandleResetDefaults()
+        {
+            var fields = new[]
+            {
+                SettingField.KeyBindings,
+            };
+
+            SettingsMgr.Instance.ResetToDefaults(fields);
+            RefreshAllViewsFromSettings();
+        }
 
         private void EnsureDefaultViews()
         {

@@ -19,7 +19,7 @@ namespace MVC
 
         // 对话控制器
         [SerializeField]
-        private Scene1DialogueCtl dialogueCtl;
+        private Scene1PreArrivalDialogCtl dialogueCtl;
 
         // 这里canvasgroup用来调整不透明度
         private CanvasGroup viewGroup;

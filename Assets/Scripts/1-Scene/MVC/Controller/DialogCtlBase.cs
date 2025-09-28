@@ -42,6 +42,19 @@ namespace MVC
         [SerializeField]
         protected AnimationCurve panelEnterCurve = null; // 可选缓动
 
+        [Header("BG 面板入场")]
+        [SerializeField]
+        protected float bgEnterDuration; // 入场时长(秒)
+
+        [SerializeField]
+        protected float bgEnterOffsetY;
+
+        [SerializeField]
+        protected float bgEnterOffsetX;
+
+        [SerializeField]
+        protected AnimationCurve bgEnterCurve = null; // 可选缓动
+
         [Header("翻页箭头位移")]
         [SerializeField]
         protected float arrowOffset; // 首次定位的像素偏移
@@ -75,10 +88,8 @@ namespace MVC
         protected Sprite currentSprite;
         protected Coroutine typingCoroutine;
 
-        private Image panelImage; // 指向 dialogueView 下的 Panel 的 Image
         private float typeSpeed;
         private Coroutine arrowBounceCoroutine;
-        private float _alphaTarget;
 
         public virtual void StartDialogue()
         {
@@ -96,11 +107,38 @@ namespace MVC
             NextLine();
         }
 
+        protected IEnumerator SlideInBGView()
+        {
+            var bgImage = bgView.GetComponentInChildren<Image>(true);
+            var c = bgImage.color;
+            var target = c.a;
+            c.a = 0f;
+            bgImage.color = c;
+            if (!bgView)
+            {
+                yield break;
+            }
+            var go = bgView.gameObject;
+            if (!go.activeSelf)
+            {
+                go.SetActive(true);
+            }
+            yield return SlideIn(
+                go,
+                bgImage,
+                target,
+                bgEnterDuration,
+                bgEnterCurve,
+                bgEnterOffsetX,
+                bgEnterOffsetY
+            );
+        }
+
         protected IEnumerator SlideInDialogueView()
         {
-            panelImage = dialogueView.GetComponentInChildren<Image>(true);
+            var panelImage = dialogueView.GetComponentInChildren<Image>(true);
             var c = panelImage.color;
-            _alphaTarget = c.a;
+            var target = c.a;
             c.a = 0f;
             panelImage.color = c;
             if (!dialogueView)
@@ -117,27 +155,47 @@ namespace MVC
             {
                 arrow.gameObject.SetActive(false);
             }
+            yield return SlideIn(
+                go,
+                panelImage,
+                target,
+                panelEnterDuration,
+                panelEnterCurve,
+                panelEnterOffsetX,
+                panelEnterOffsetY
+            );
+        }
 
-            float dur = Mathf.Max(0.0001f, panelEnterDuration);
+        private IEnumerator SlideIn(
+            GameObject go,
+            Image img,
+            float alphaTarget,
+            float duration,
+            AnimationCurve curve,
+            float offsetX,
+            float offsetY
+        )
+        {
+            float dur = Mathf.Max(0.0001f, duration);
             float t = 0f;
             // 使用 RectTransform 优先（UI），否则走 Transform.localPosition（世界/局部物体）
             var rt = go.transform as RectTransform;
-            if (panelEnterCurve == null)
-                panelEnterCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); // 默认S型缓入缓出
+            if (curve == null)
+                curve = AnimationCurve.EaseInOut(0, 0, 1, 1); // 默认S型缓入缓出
 
             if (rt != null)
             {
                 Vector2 target = rt.anchoredPosition;
-                Vector2 start = target + new Vector2(panelEnterOffsetX, -panelEnterOffsetY);
+                Vector2 start = target + new Vector2(offsetX, -offsetY);
                 rt.anchoredPosition = start;
                 while (t < dur)
                 {
                     t += Time.unscaledDeltaTime;
-                    float u = panelEnterCurve.Evaluate(Mathf.Clamp01(t / dur)); // 由曲线决定进度
+                    float u = curve.Evaluate(Mathf.Clamp01(t / dur)); // 由曲线决定进度
                     rt.anchoredPosition = Vector2.LerpUnclamped(start, target, u); // 允许曲线>1产生回弹
-                    c = panelImage.color;
-                    c.a = Mathf.LerpUnclamped(0f, _alphaTarget, u);
-                    panelImage.color = c;
+                    var c = img.color;
+                    c.a = Mathf.LerpUnclamped(0f, alphaTarget, u);
+                    img.color = c;
                     yield return null;
                 }
                 rt.anchoredPosition = target;
@@ -145,12 +203,12 @@ namespace MVC
             else
             {
                 Vector3 target = go.transform.localPosition;
-                Vector3 start = target + new Vector3(panelEnterOffsetX, -panelEnterOffsetY, 0f);
+                Vector3 start = target + new Vector3(offsetX, -offsetY, 0f);
                 go.transform.localPosition = start;
                 while (t < dur)
                 {
                     t += Time.unscaledDeltaTime;
-                    float u = panelEnterCurve.Evaluate(Mathf.Clamp01(t / dur));
+                    float u = curve.Evaluate(Mathf.Clamp01(t / dur));
                     go.transform.localPosition = Vector3.LerpUnclamped(start, target, u);
                     yield return null;
                 }
