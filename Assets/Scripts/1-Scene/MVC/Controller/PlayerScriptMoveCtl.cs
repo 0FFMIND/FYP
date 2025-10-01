@@ -5,7 +5,7 @@ namespace MVC
 {
     public class PlayerScriptMoveCtl : MonoBehaviour
     {
-        private float arriveEps = 0.01f;
+        private float arriveEps = 0.1f;
         private PlayerCtl player;
         private Rigidbody2D rb;
         private SpriteAnimCtl anim;

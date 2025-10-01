@@ -11,8 +11,13 @@ namespace MVC
         [SerializeField]
         private InteractModel _model;
         private PlayerCtl _player;
+
         // 是否处于对话中
-        private bool isInteracting; 
+        private bool isInteracting;
+
+        // 提供只读访问，供 PlayerInteractCtl 判定
+        public bool IsImportant => _model != null && _model.isImportant;
+        public bool IsTalked => _model != null && _model.isTalked;
 
         private void OnEnable()
         {
@@ -32,8 +37,19 @@ namespace MVC
 
         public bool BeginInteract(PlayerCtl player)
         {
-            if (isInteracting || player == null || _model == null)
+            if (isInteracting)
             {
+                Debug.Log($"[InteractCtl] BeginInteract -> FALSE (already interacting).");
+                return false;
+            }
+            if (player == null)
+            {
+                Debug.LogWarning($"[InteractCtl] BeginInteract -> FALSE (player is null).");
+                return false;
+            }
+            if (_model == null)
+            {
+                Debug.LogWarning($"[InteractCtl] BeginInteract -> FALSE (_model is null).");
                 return false;
             }
             _player = player;
@@ -54,7 +70,11 @@ namespace MVC
                 return;
             }
             isInteracting = false;
-
+            // 更新标志位
+            if (_model != null)
+            {
+                _model.isTalked = true;
+            }
             // 广播结束
             EventBus.Publish(new EInteractEnd());
 

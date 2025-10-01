@@ -31,6 +31,7 @@ namespace MVC
             if (tmp)
             {
                 tmp.text = string.Empty;
+                tmp.gameObject.SetActive(false);
             }
             if (panel)
             {
@@ -52,6 +53,9 @@ namespace MVC
                 Hide();
                 return;
             }
+            // …Ë÷√ø…º˚
+            tmp.text = "";
+            tmp.gameObject.SetActive(true);
             panel.SetActive(true);
             Render();
         }

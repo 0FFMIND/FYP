@@ -32,9 +32,11 @@ namespace MVC
             // 如果是第一句
             if (index == 0)
             {
+                _isEntering = true;
                 RenderViews(currentSprite, null);
                 // 先做文本框上浮
                 yield return SlideInDialogueView();
+                _isEntering = false;
             }
             yield return base.TypeLines(fullRaw);
         }
@@ -55,8 +57,6 @@ namespace MVC
                         fadeInDuration: 2f
                     )
                 );
-                // 可以暂停
-                PauseMgr.Instance.SetPauseEnabled(true);
             }
             // 不然按钮点击会误认为nextline
             if (dialogueModel == null || index >= dialogueModel.Lines.Length)

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Manager;
 using UnityEngine;
@@ -9,27 +9,35 @@ namespace MVC
     public class PlayerInteractCtl : MonoBehaviour
     {
         private PlayerCtl root;
+        private PlayerEmoteCtl emote;
         private PlayerModel playerModel;
-        private IInteractable current; // µ±Ç°ÕıÔÚ½»»¥µÄ¶ÔÏóÒıÓÃ
+        private IInteractable current; // å½“å‰æ­£åœ¨äº¤äº’çš„å¯¹è±¡å¼•ç”¨
+        private EmoteType _lastEmote = (EmoteType)(-1); // ä¸Šæ¬¡å·²æ˜¾ç¤ºçš„ç±»å‹
+        private GameObject _lastGo;
 
         [SerializeField]
         private LayerMask interactMask;
-        private float rayLength = 0.8f; // ³¯ÏòÉäÏß³¤¶È
-        private float rayRadius = 0.5f; // ÉäÏßºñ¶È
 
-        // ½áÊøºóÍÌµôÏÂÒ»´Î Interact °´¼ü (ÊÕµ½½áÊøÊÂ¼şºó£¬ÏÂÒ»´Î°´¼ü±»ºöÂÔ)
+        [SerializeField]
+        private float rayLength = 0.8f; // æœå‘å°„çº¿é•¿åº¦
+
+        [SerializeField]
+        private float rayRadius = 0.5f; // å°„çº¿åšåº¦
+
+        // ç»“æŸååæ‰ä¸‹ä¸€æ¬¡ Interact æŒ‰é”® (æ”¶åˆ°ç»“æŸäº‹ä»¶åï¼Œä¸‹ä¸€æ¬¡æŒ‰é”®è¢«å¿½ç•¥)
         private bool _consumeNextInteractPress = false;
 
-        // ÍÌ¼üµÄ×Ô¶¯Ê§Ğ§Ê±¼äµã£¨Time.time£©£¬<0 ±íÊ¾ÎŞĞ§
+        // åé”®çš„è‡ªåŠ¨å¤±æ•ˆæ—¶é—´ç‚¹ï¼ˆTime.timeï¼‰ï¼Œ<0 è¡¨ç¤ºæ— æ•ˆ
         private float _consumeDeadline = -1f;
 
-        // »º³åÊ±³¤£¨µ¥Î»£ºÃë£©
+        // ç¼“å†²æ—¶é•¿ï¼ˆå•ä½ï¼šç§’ï¼‰
         private const float ConsumeBufferSeconds = 0.2f;
 
         private void Awake()
         {
             root = GetComponent<PlayerCtl>();
-            // »ñµÃÒıÓÃ
+            emote = GetComponent<PlayerEmoteCtl>();
+            // è·å¾—å¼•ç”¨
             playerModel = root.model;
         }
 
@@ -53,27 +61,84 @@ namespace MVC
 
         private void OnInteractEnd(EInteractEnd _)
         {
-            // Í¨Öª Player ½áÊø½»»¥£¨ÊÍ·ÅÒÆ¶¯/ÊäÈëµÈ£©
+            // é€šçŸ¥ Player ç»“æŸäº¤äº’ï¼ˆé‡Šæ”¾ç§»åŠ¨/è¾“å…¥ç­‰ï¼‰
             playerModel.EndInteract();
-            // ÔÚ¶Ô»°½áÊøµÄÊ±ºò±ê¼Ç£¬Ê¹ÏÂ´Î½»»¥°´¼üÖ±½ÓÍÌµô£¬±ÜÃâ¡°½áÊøË²¼äÓÖ¿ªÊ¼¡±
+            // åœ¨å¯¹è¯ç»“æŸçš„æ—¶å€™æ ‡è®°ï¼Œä½¿ä¸‹æ¬¡äº¤äº’æŒ‰é”®ç›´æ¥åæ‰ï¼Œé¿å…â€œç»“æŸç¬é—´åˆå¼€å§‹â€
             _consumeNextInteractPress = true;
-            // ÉèÖÃ 0.2s ×Ô¶¯Ê§Ğ§
+            // è®¾ç½® 0.2s è‡ªåŠ¨å¤±æ•ˆ
             _consumeDeadline = Time.time + ConsumeBufferSeconds;
         }
 
         private void Update()
         {
-            // ×Ô¶¯Çå³ı£º³¬¹ı»º³åÊ±¼ä»¹Ã»±»Ïû·Ñ£¬¾ÍÈ¡ÏûÍÌ¼ü
+            // è‡ªåŠ¨æ¸…é™¤ï¼šè¶…è¿‡ç¼“å†²æ—¶é—´è¿˜æ²¡è¢«æ¶ˆè´¹ï¼Œå°±å–æ¶ˆåé”®
             if (_consumeNextInteractPress && _consumeDeadline > 0f && Time.time >= _consumeDeadline)
             {
                 _consumeNextInteractPress = false;
                 _consumeDeadline = -1f;
             }
+            // æ¯å¸§åšä¸€æ¬¡â€œæ‚¬åœæ°”æ³¡â€åˆ·æ–°
+            RefreshHoverEmote();
+        }
+
+        private void RefreshHoverEmote()
+        {
+            if (!emote)
+                return;
+
+            // æ‰¾æœ€è¿‘å¯äº¤äº’å¯¹è±¡ï¼ˆä½ å·²æœ‰çš„æ–¹æ³•ï¼‰
+            var target = FindInteractable();
+
+            if (target == null)
+            {
+                if (_lastEmote != (EmoteType)(-1))
+                {
+                    emote.Stop(); // ç¦»å¼€å¯äº¤äº’èŒƒå›´ â†’ æ”¶èµ·æ°”æ³¡
+                    _lastEmote = (EmoteType)(-1);
+                    _lastGo = null;
+                }
+                return;
+            }
+            var go = (target as Component)?.gameObject;
+            var _last = _lastGo;
+            // ä»…åœ¨ç›®æ ‡å˜äº†æ—¶å¼ºåˆ¶é‡ç®—
+            if (!ReferenceEquals(go, _lastGo))
+            {
+                _lastGo = go;
+                _lastEmote = (EmoteType)(-1);
+            }
+            // æ‹¿åˆ° InteractCtlï¼ˆå« isImportant/isTalkedï¼‰
+            var ic = (target as Component)?.GetComponent<InteractCtl>();
+            // è§„åˆ™ï¼šisImportant && !isTalked â†’ Thinkingï¼Œå¦åˆ™ Eyes
+            var next =
+                (ic != null && ic.IsImportant)
+                    ? EmoteType.Thinking
+                    : EmoteType.Eyes;
+            if (ic.IsTalked)
+            {
+                next = EmoteType.Checked;
+            }
+            // é˜²æŠ–ï¼šåªæœ‰å˜åŒ–æ—¶æ‰æ’­æ”¾ï¼Œé¿å…åå¤é‡ç½®åŠ¨ç”»
+            if (next != _lastEmote)
+            {
+                _lastEmote = next;
+                if (next == EmoteType.Checked /*&& ReferenceEquals(go, _last)*/)
+                {
+                    emote.Play(next, 1f, true);
+                }else if (next == EmoteType.Checked)
+                {
+                    emote.Play(next, -1f, true);
+                }
+                else
+                {
+                    emote.Play(next, -1f);
+                }
+            }
         }
 
         private void OnInteractPressed()
         {
-            // Èô´¦ÓÚÍÌ¼ü×´Ì¬£º±¾´Î°´¼ü±»ºöÂÔ£¬²¢Çå³ı±ê¼ÇÓë¼ÆÊ±
+            // è‹¥å¤„äºåé”®çŠ¶æ€ï¼šæœ¬æ¬¡æŒ‰é”®è¢«å¿½ç•¥ï¼Œå¹¶æ¸…é™¤æ ‡è®°ä¸è®¡æ—¶
             if (_consumeNextInteractPress)
             {
                 _consumeNextInteractPress = false;
@@ -81,29 +146,33 @@ namespace MVC
                 return;
             }
 
-            // Èç¹ûplayer´¦ÓÚ²»ÄÜ½»»¥µÄ×´Ì¬
+            // å¦‚æœplayerå¤„äºä¸èƒ½äº¤äº’çš„çŠ¶æ€
             if (!playerModel.TryBeginInteract())
             {
                 return;
             }
 
-            // ÔÚ·¶Î§ÄÚ²éÕÒ×î½üµÄ¿É½»»¥¶ÔÏó
+            // åœ¨èŒƒå›´å†…æŸ¥æ‰¾æœ€è¿‘çš„å¯äº¤äº’å¯¹è±¡
             current = FindInteractable();
             if (current == null || !current.BeginInteract(root))
             {
-                // ÕÒ²»µ½»ò±»¾Ü¾ø£¬ÔòÁ¢¿Ì½áÊø½»»¥²¢»Ö¸´
+                // æ‰¾ä¸åˆ°æˆ–è¢«æ‹’ç»ï¼Œåˆ™ç«‹åˆ»ç»“æŸäº¤äº’å¹¶æ¢å¤
                 current = null;
                 playerModel.EndInteract();
+            }
+            else
+            {
+                emote.Stop();
             }
         }
 
         private IInteractable FindInteractable()
         {
             Vector2 origin = transform.position;
-            // ´Ó PlayerModel ¶ÁÈ¡ÃæÏòµ¥Î»ÏòÁ¿
+            // ä» PlayerModel è¯»å–é¢å‘å•ä½å‘é‡
             Vector2 dir = playerModel != null ? playerModel.FacingDir : Vector2.right;
 
-            // 1) ³¯Ïò´ÖÉäÏß
+            // æœå‘ç²—å°„çº¿
             var rayHits = Physics2D.CircleCastAll(origin, rayRadius, dir, rayLength, interactMask);
             IInteractable best = null;
             float bestDist = float.MaxValue;
@@ -117,7 +186,7 @@ namespace MVC
                 if (it == null)
                     continue;
 
-                // CircleCastHit2D.distance£ºÃüÖĞµãÑØÉäÏß·½ÏòµÄ¾àÀë£¬Ô½Ğ¡Ô½½ü
+                // CircleCastHit2D.distanceï¼šå‘½ä¸­ç‚¹æ²¿å°„çº¿æ–¹å‘çš„è·ç¦»ï¼Œè¶Šå°è¶Šè¿‘
                 if (h.distance < bestDist)
                 {
                     bestDist = h.distance;
@@ -128,27 +197,27 @@ namespace MVC
         }
 
 #if UNITY_EDITOR
-        // ×ÜÊÇÏÔÊ¾
+        // æ€»æ˜¯æ˜¾ç¤º
         private void OnDrawGizmos()
         {
-            // ÉäÏßÆğµãÓë·½Ïò
+            // å°„çº¿èµ·ç‚¹ä¸æ–¹å‘
             Vector2 origin = transform.position;
             Vector2 dir = Vector2.right;
             if (Application.isPlaying && playerModel != null)
                 dir = playerModel.FacingDir;
             dir = dir.sqrMagnitude > 0f ? dir.normalized : Vector2.right;
 
-            // Ä©¶Ëµã
-            Vector2 end = origin + dir * rayLength; // ÖÕµã = Æğµã + ·½Ïò*³¤¶È
+            // æœ«ç«¯ç‚¹
+            Vector2 end = origin + dir * rayLength; // ç»ˆç‚¹ = èµ·ç‚¹ + æ–¹å‘*é•¿åº¦
 
-            // Ö÷Ïß + Á½¶ËÔ²Ã±£¨ÓÃÁ½¸öÔ²±íÊ¾ºñ¶È£©
+            // ä¸»çº¿ + ä¸¤ç«¯åœ†å¸½ï¼ˆç”¨ä¸¤ä¸ªåœ†è¡¨ç¤ºåšåº¦ï¼‰
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(origin, end);
             Gizmos.DrawWireSphere(origin, rayRadius);
             Gizmos.DrawWireSphere(end, rayRadius);
 
-            // ÃüÖĞµãÓë·¨Ïß
-            if (Application.isPlaying) // ½öÔËĞĞÊ±»æÖÆÃüÖĞÏ¸½Ú
+            // å‘½ä¸­ç‚¹ä¸æ³•çº¿
+            if (Application.isPlaying) // ä»…è¿è¡Œæ—¶ç»˜åˆ¶å‘½ä¸­ç»†èŠ‚
             {
                 var hits = Physics2D.CircleCastAll(origin, rayRadius, dir, rayLength, interactMask);
                 for (int i = 0; i < hits.Length; i++)

@@ -30,6 +30,10 @@
     {
         "zh": "对话推进",
         "en": "Dialogue"
+    },    
+    {
+        "zh": "恢复默认",
+        "en": "Default"
     },
     {
         "zh": "移动速度",
@@ -40,8 +44,20 @@
         "en": "Sprint Speed"
     },
     {
+        "zh": "文本速率",
+        "en": "Text Speed"
+    },
+    {
         "zh": "人物设定",
         "en": "Player Settings"
+    },
+    {
+        "zh": "系统设定",
+        "en": "System Settings"
+    },
+    {
+        "zh": "音量设定",
+        "en": "Audio Settings"
     },
     {
         "zh": "按键设定",

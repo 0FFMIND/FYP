@@ -79,7 +79,7 @@ namespace Manager
                 // 等待真正 loaded（容错：即便 SceneMgr 内部是异步，这里也会等到）
                 yield return new WaitUntil(() => SceneManager.GetSceneByName(e.ToScene).isLoaded);
             }
-
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(e.ToScene));
             // Disable FromScene
             if (!string.IsNullOrEmpty(e.FromScene))
             {

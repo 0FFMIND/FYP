@@ -16,6 +16,13 @@ namespace MVC
     {
         [SerializeField]
         public List<Line> lines = new();
+
+        [Header("标记")]
+        [SerializeField]
+        public bool isImportant = false; // 重要交互（主线/关键）
+
+        [NonSerialized]
+        public bool isTalked = false; // 是否已完整聊过（运行时置位）
         private int _idx = 0;
 
         public string Current => (_idx >= 0 && _idx < lines.Count) ? lines[_idx].content : null;

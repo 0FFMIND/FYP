@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Manager;
 using UnityEngine;
@@ -17,21 +17,22 @@ namespace MVC
     [System.Serializable]
     public struct LineMapping
     {
-        [Tooltip("µ± index µÈÓÚ´ËÖµÊ±£¬ÇĞ»»µ½¶ÔÓ¦µÄ sprite")]
+        [Tooltip("å½“ index ç­‰äºæ­¤å€¼æ—¶ï¼Œåˆ‡æ¢åˆ°å¯¹åº”çš„ sprite")]
         public int lineIndex;
 
-        [Tooltip("ÇĞ»»Ê±Ê¹ÓÃµÄ Sprite")]
+        [Tooltip("åˆ‡æ¢æ—¶ä½¿ç”¨çš„ Sprite")]
         public Sprite sprite;
 
-        [Tooltip("´¥·¢ĞĞÎª")]
+        [Tooltip("è§¦å‘è¡Œä¸º")]
         public Eact[] eacts;
     }
 
     public abstract class DialogCtlBase : MonoBehaviour
     {
-        [Header("Dialogue Ãæ°åÈë³¡")]
+        protected bool _isEntering;
+        [Header("Dialogue é¢æ¿å…¥åœº")]
         [SerializeField]
-        protected float panelEnterDuration; // Èë³¡Ê±³¤(Ãë)
+        protected float panelEnterDuration; // å…¥åœºæ—¶é•¿(ç§’)
 
         [SerializeField]
         protected float panelEnterOffsetY;
@@ -40,11 +41,11 @@ namespace MVC
         protected float panelEnterOffsetX;
 
         [SerializeField]
-        protected AnimationCurve panelEnterCurve = null; // ¿ÉÑ¡»º¶¯
+        protected AnimationCurve panelEnterCurve = null; // å¯é€‰ç¼“åŠ¨
 
-        [Header("BG Ãæ°åÈë³¡")]
+        [Header("BG é¢æ¿å…¥åœº")]
         [SerializeField]
-        protected float bgEnterDuration; // Èë³¡Ê±³¤(Ãë)
+        protected float bgEnterDuration; // å…¥åœºæ—¶é•¿(ç§’)
 
         [SerializeField]
         protected float bgEnterOffsetY;
@@ -53,29 +54,31 @@ namespace MVC
         protected float bgEnterOffsetX;
 
         [SerializeField]
-        protected AnimationCurve bgEnterCurve = null; // ¿ÉÑ¡»º¶¯
+        protected AnimationCurve bgEnterCurve = null; // å¯é€‰ç¼“åŠ¨
 
-        [Header("·­Ò³¼ıÍ·Î»ÒÆ")]
+        [Header("ç¿»é¡µç®­å¤´ä½ç§»")]
         [SerializeField]
-        protected float arrowOffset; // Ê×´Î¶¨Î»µÄÏñËØÆ«ÒÆ
-
+        protected float arrowX = -1000f;
         [SerializeField]
-        protected int downFrames; // ÏòÏÂÒÆ¶¯Ê±µÈ´ıÖ¡Êı
-
-        [SerializeField]
-        protected float downDistance; // ÏòÏÂÒÆ¶¯µÄÊÀ½ç/±¾µØµ¥Î»
+        protected float arrowOffset; // é¦–æ¬¡å®šä½çš„åƒç´ åç§»
 
         [SerializeField]
-        protected int upFrames; // ÏòÉÏÒÆ¶¯Ê±µÈ´ıÖ¡Êı
+        protected int downFrames; // å‘ä¸‹ç§»åŠ¨æ—¶ç­‰å¾…å¸§æ•°
 
-        [Header("ScriptableObject ¶Ô»°×ÊÔ´")]
+        [SerializeField]
+        protected float downDistance; // å‘ä¸‹ç§»åŠ¨çš„ä¸–ç•Œ/æœ¬åœ°å•ä½
+
+        [SerializeField]
+        protected int upFrames; // å‘ä¸Šç§»åŠ¨æ—¶ç­‰å¾…å¸§æ•°
+
+        [Header("ScriptableObject å¯¹è¯èµ„æº")]
         [SerializeField]
         protected string modelText;
 
         [SerializeField]
         protected LineMapping[] mappings;
 
-        [Header("ÊÓÍ¼ÒıÓÃ")]
+        [Header("è§†å›¾å¼•ç”¨")]
         [SerializeField]
         protected DialogueView bgView;
 
@@ -87,23 +90,24 @@ namespace MVC
         protected DialogueModel dialogueModel;
         protected Sprite currentSprite;
         protected Coroutine typingCoroutine;
-
+        private bool _subscribed = false;
         private float typeSpeed;
         private Coroutine arrowBounceCoroutine;
 
         public virtual void StartDialogue()
         {
-            // ´´½¨down arrow
+            // åˆ›å»ºdown arrow
             CreateArrow();
-            // ÔØÈë¶Ô»°
+            // è½½å…¥å¯¹è¯
             dialogueModel = new DialogueModel(modelText);
-            // Ë¢ĞÂindex
+            // åˆ·æ–°index
             index = 0;
-            // ×¢²áÊÂ¼ş
-            EventBus.Subscribe<EInputPressed, InputAction>(
-                InputAction.DialogueClick,
-                OnDialogueClick
-            );
+            // æ³¨å†Œäº‹ä»¶
+            if (!_subscribed)                  // ğŸ‘ˆ é˜²æ­¢é‡å¤è®¢é˜…
+            {
+                EventBus.Subscribe<EInputPressed, InputAction>(InputAction.DialogueClick, OnDialogueClick);
+                _subscribed = true;
+            }
             NextLine();
         }
 
@@ -146,7 +150,7 @@ namespace MVC
                 yield break;
             }
             var go = dialogueView.gameObject;
-            // Èë³¡Ç°ÏÈÈ·±£Ãæ°å¿É¼û£¬¼ıÍ·Òş²Ø
+            // å…¥åœºå‰å…ˆç¡®ä¿é¢æ¿å¯è§ï¼Œç®­å¤´éšè—
             if (!go.activeSelf)
             {
                 go.SetActive(true);
@@ -178,10 +182,10 @@ namespace MVC
         {
             float dur = Mathf.Max(0.0001f, duration);
             float t = 0f;
-            // Ê¹ÓÃ RectTransform ÓÅÏÈ£¨UI£©£¬·ñÔò×ß Transform.localPosition£¨ÊÀ½ç/¾Ö²¿ÎïÌå£©
+            // ä½¿ç”¨ RectTransform ä¼˜å…ˆï¼ˆUIï¼‰ï¼Œå¦åˆ™èµ° Transform.localPositionï¼ˆä¸–ç•Œ/å±€éƒ¨ç‰©ä½“ï¼‰
             var rt = go.transform as RectTransform;
             if (curve == null)
-                curve = AnimationCurve.EaseInOut(0, 0, 1, 1); // Ä¬ÈÏSĞÍ»ºÈë»º³ö
+                curve = AnimationCurve.EaseInOut(0, 0, 1, 1); // é»˜è®¤Så‹ç¼“å…¥ç¼“å‡º
 
             if (rt != null)
             {
@@ -191,8 +195,8 @@ namespace MVC
                 while (t < dur)
                 {
                     t += Time.unscaledDeltaTime;
-                    float u = curve.Evaluate(Mathf.Clamp01(t / dur)); // ÓÉÇúÏß¾ö¶¨½ø¶È
-                    rt.anchoredPosition = Vector2.LerpUnclamped(start, target, u); // ÔÊĞíÇúÏß>1²úÉú»Øµ¯
+                    float u = curve.Evaluate(Mathf.Clamp01(t / dur)); // ç”±æ›²çº¿å†³å®šè¿›åº¦
+                    rt.anchoredPosition = Vector2.LerpUnclamped(start, target, u); // å…è®¸æ›²çº¿>1äº§ç”Ÿå›å¼¹
                     var c = img.color;
                     c.a = Mathf.LerpUnclamped(0f, alphaTarget, u);
                     img.color = c;
@@ -225,21 +229,21 @@ namespace MVC
             var prefab = Resources.Load<GameObject>("Prefabs/1-Scene/DownRow");
             if (!prefab)
             {
-                Debug.LogError($"[DialogCtlBase] Resources.Load Ê§°Ü");
+                Debug.LogError($"[DialogCtlBase] Resources.Load å¤±è´¥");
                 return;
             }
 
-            // ÊµÀı»¯²¢¹Òµ½dialogÉÏ
+            // å®ä¾‹åŒ–å¹¶æŒ‚åˆ°dialogä¸Š
             var go = Instantiate(prefab, transform);
 
-            // ¼ÇÂ¼ Transform
+            // è®°å½• Transform
             arrow = go.transform;
             arrow.gameObject.SetActive(false);
         }
 
         protected virtual void OnDialogueFinished() { }
 
-        // »ùÀàÌá¹©Í³Ò»äÖÈ¾·½·¨£¬×ÓÀà¿ÉÖ±½Óµ÷ÓÃ
+        // åŸºç±»æä¾›ç»Ÿä¸€æ¸²æŸ“æ–¹æ³•ï¼Œå­ç±»å¯ç›´æ¥è°ƒç”¨
         protected void RenderViews(Sprite sprite, string text)
         {
             if (bgView)
@@ -269,10 +273,10 @@ namespace MVC
             if (!tmp)
                 return;
 
-            // Ö±½ÓÀ­Âú¿É¼û×Ö·û£¬±ÜÃâÒÀÀµ textInfo µÄ¼ÆÊıÊ±»ú
+            // ç›´æ¥æ‹‰æ»¡å¯è§å­—ç¬¦ï¼Œé¿å…ä¾èµ– textInfo çš„è®¡æ•°æ—¶æœº
             tmp.maxVisibleCharacters = int.MaxValue;
 
-            // ¿ÉÑ¡£ºÈç¹ûÄãĞèÒªÓÃµ½ characterCount£¬ÔÙÇ¿ÖÆË¢ĞÂÒ»´Î
+            // å¯é€‰ï¼šå¦‚æœä½ éœ€è¦ç”¨åˆ° characterCountï¼Œå†å¼ºåˆ¶åˆ·æ–°ä¸€æ¬¡
             tmp.ForceMeshUpdate();
 
             PositionArrowUnderText();
@@ -280,7 +284,7 @@ namespace MVC
 
         protected virtual IEnumerator TypeLines(string fullRaw)
         {
-            // Ò»´ÎĞÔÉèÖÃÍêÕûÎÄ±¾£¬È»ºóÓÃ maxVisibleCharacters ½ÒÊ¾
+            // ä¸€æ¬¡æ€§è®¾ç½®å®Œæ•´æ–‡æœ¬ï¼Œç„¶åç”¨ maxVisibleCharacters æ­ç¤º
             RenderViews(currentSprite, fullRaw);
             var tmp = dialogueView.tmp;
             tmp.ForceMeshUpdate();
@@ -293,7 +297,7 @@ namespace MVC
             {
                 tmp.maxVisibleCharacters = vis;
 
-                // Ó¢ÎÄÁ½×Ö·ûÒ»¸öÒôĞ§£»ÖĞÎÄÃ¿¸ö×Ö·ûÒ»¸öÒôĞ§
+                // è‹±æ–‡ä¸¤å­—ç¬¦ä¸€ä¸ªéŸ³æ•ˆï¼›ä¸­æ–‡æ¯ä¸ªå­—ç¬¦ä¸€ä¸ªéŸ³æ•ˆ
                 bool isEn = SettingsMgr.Instance.GetLanguage() == LanguageCode.en;
                 if (isEn)
                 {
@@ -314,29 +318,34 @@ namespace MVC
                 yield return new WaitForSeconds(wait);
             }
 
-            // Íê³ÉºóÏÔÊ¾¼ıÍ·
+            // å®Œæˆåæ˜¾ç¤ºç®­å¤´
             PositionArrowUnderText();
             typingCoroutine = null;
         }
 
         private void OnDialogueClick()
         {
+            // å¦‚æœæ­£åœ¨åŠ è½½panel
+            if (_isEntering)
+            {
+                return;
+            }
             if (typingCoroutine != null)
             {
-                // ÏÈÔİÍ£
+                // å…ˆæš‚åœ
                 StopCoroutine(typingCoroutine);
                 typingCoroutine = null;
                 if (index <= dialogueModel.Lines.Length)
                 {
                     RevealAllNow();
-                    // ¿ªÆôĞ¡¼ıÍ·
+                    // å¼€å¯å°ç®­å¤´
                     PositionArrowUnderText();
                 }
                 else
                 {
-                    // ½áÊøµÄÊ±ºòÇå¿Õ
+                    // ç»“æŸçš„æ—¶å€™æ¸…ç©º
                     RenderViews(null, null);
-                    // ¹ØµôĞ¡¼ıÍ·
+                    // å…³æ‰å°ç®­å¤´
                     arrow.gameObject.SetActive(false);
                     arrow.GetComponent<SpriteRenderer>().color = Color.white;
                 }
@@ -347,7 +356,7 @@ namespace MVC
             }
         }
 
-        // ÓÉ×ÓÀàÊµÏÖ£ºÍÆ½øµ½ÏÂÒ»ĞĞ
+        // ç”±å­ç±»å®ç°ï¼šæ¨è¿›åˆ°ä¸‹ä¸€è¡Œ
         protected abstract void NextLine();
 
         private void PositionArrowUnderText()
@@ -362,9 +371,17 @@ namespace MVC
                 worldBotCenter.y + downOffset.y,
                 arrow.position.z
             );
-            // ÏÔÊ¾£¬²¢ÏòÏÂÆ«ÒÆ
+            if (arrowX != -1000f)
+            {
+                arrow.position = new Vector3(
+                    arrowX,
+                    worldBotCenter.y + downOffset.y,
+                    arrow.position.z
+                );
+            }
+            // æ˜¾ç¤ºï¼Œå¹¶å‘ä¸‹åç§»
             arrow.gameObject.SetActive(true);
-            // Æô¶¯¶¶¶¯
+            // å¯åŠ¨æŠ–åŠ¨
             if (arrowBounceCoroutine != null)
             {
                 StopCoroutine(arrowBounceCoroutine);
@@ -374,19 +391,19 @@ namespace MVC
 
         private IEnumerator ArrowBounce()
         {
-            // ¼ÇÂ¼Ô­Ê¼Î»ÖÃ
+            // è®°å½•åŸå§‹ä½ç½®
             Vector3 original = arrow.position;
             Vector3 target = original + Vector3.down * downDistance;
             while (true)
             {
-                // Æ½»¬ÏÂÒÆ
+                // å¹³æ»‘ä¸‹ç§»
                 for (int i = 0; i <= downFrames; i++)
                 {
-                    float t = i / (float)downFrames; // ´Ó 0 µ½ 1
+                    float t = i / (float)downFrames; // ä» 0 åˆ° 1
                     arrow.position = Vector3.Lerp(original, target, t);
                     yield return null;
                 }
-                // Æ½»¬ÉÏÒÆ
+                // å¹³æ»‘ä¸Šç§»
                 for (int i = 0; i <= upFrames; i++)
                 {
                     float t = i / (float)upFrames;

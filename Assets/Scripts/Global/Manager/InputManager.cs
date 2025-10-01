@@ -23,6 +23,8 @@ namespace Manager
     public class InputManager : SingletonMB<InputManager>
     {
         private readonly Dictionary<InputAction, KeyCode> _bindings = new();
+        private bool isPaused = false;
+
         private EventSystemHost host;
 
         private void Awake()
@@ -35,11 +37,26 @@ namespace Manager
         private void OnEnable()
         {
             EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged);
+            EventBus.Subscribe<EPauseChanged>(OnPauseChanged);
         }
 
         private void OnDisable()
         {
             EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
+            EventBus.Unsubscribe<EPauseChanged>(OnPauseChanged);
+        }
+
+        private void OnPauseChanged(EPauseChanged e)
+        {
+            isPaused = e.IsPaused;
+
+            // 进入暂停时清理“按住”类状态，防止恢复后残留
+            foreach (var kv in _bindings)
+            {
+                if (kv.Key == InputAction.PauseGame)
+                    continue;
+                EventBus.Publish(kv.Key, new EInputUnPressed(kv.Key));
+            }
         }
 
         // 当 SettingsMgr 广播 Settings 改变时会调用此方法（e.Settings 包含新的 keyBindings）
@@ -92,6 +109,30 @@ namespace Manager
 
         private void Update()
         {
+            // 永远先处理 PauseGame，使得暂停中也能解锁
+            if (_bindings.TryGetValue(InputAction.PauseGame, out var pauseKey))
+            {
+                if (Input.GetKeyDown(pauseKey))
+                {
+                    EventBus.Publish(
+                        InputAction.PauseGame,
+                        new EInputPressed(InputAction.PauseGame)
+                    );
+                }
+                if (Input.GetKeyUp(pauseKey))
+                {
+                    EventBus.Publish(
+                        InputAction.PauseGame,
+                        new EInputUnPressed(InputAction.PauseGame)
+                    );
+                }
+            }
+
+            // 暂停时拦截其余所有自定义输入（UI EventSystem 不受影响）
+            if (isPaused)
+            {
+                return;
+            }
             // 特例：鼠标左键当作对话推进
             if (Input.GetMouseButtonDown(0))
             {
@@ -107,6 +148,8 @@ namespace Manager
                 var action = kv.Key;
                 var key = kv.Value;
                 if (key == KeyCode.None)
+                    continue;
+                if (action == InputAction.PauseGame)
                     continue;
                 if (Input.GetKeyDown(key))
                 {

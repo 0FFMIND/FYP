@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,14 @@ namespace MVC
 {
     public class TimelineDialogCtl : DialogCtlBase
     {
+        [SerializeField]
+        private LineMapping[] firstMappings;
+
+        [SerializeField]
+        private LineMapping[] secondMappings;
+
+        private Action finished;
+
         public void HideDialogue()
         {
             // 隐藏内容
@@ -22,8 +31,18 @@ namespace MVC
             base.OnDisable();
         }
 
-        public void StartFirstDialogue()
+        public void StartSecondDialogue(Action onFinished)
         {
+            mappings = secondMappings;
+            finished = onFinished;
+            modelText = "1-Scene-2.txt";
+            base.StartDialogue();
+        }
+
+        public void StartFirstDialogue(Action onFinished)
+        {
+            mappings = firstMappings;
+            finished = onFinished;
             modelText = "1-Scene-1.txt";
             base.StartDialogue();
         }
@@ -63,7 +82,12 @@ namespace MVC
         {
             arrow.GetComponent<SpriteRenderer>().color = Color.white;
             // 如果读完
-            if (index == dialogueModel.Lines.Length) { }
+            if (index == dialogueModel.Lines.Length)
+            {
+                dialogueView.tmp.text = "";
+                HideDialogue();
+                finished?.Invoke();
+            }
             // 不然按钮点击会误认为nextline
             if (dialogueModel == null || index >= dialogueModel.Lines.Length)
             {

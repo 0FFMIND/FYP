@@ -23,6 +23,23 @@ namespace Utils
             Delegate
         > _noArgWrappers = new Dictionary<(Delegate, Type, object), Delegate>();
 
+        private static Delegate CombineDistinct(Delegate existing, Delegate added)
+        {
+            if (existing == null)
+            {
+                return added;
+            }
+            foreach (var d in existing.GetInvocationList())
+            { 
+                // 已存在则不重复合并
+                if (d == added)
+                {
+                    return existing;
+                }
+            }
+            return Delegate.Combine(existing, added);
+        }
+
         // 订阅事件
         public static void Subscribe<T>(Action<T> handler, bool replayLast = true)
         {
@@ -35,8 +52,8 @@ namespace Utils
             var t = typeof(T);
             if (_typedTable.TryGetValue(t, out var del))
             {
-                // 合并委托
-                _typedTable[t] = Delegate.Combine(del, handler);
+                // 去重式合并委托
+                _typedTable[t] = CombineDistinct(del, handler);
             }
             else
             {
@@ -46,7 +63,10 @@ namespace Utils
             // 粘性重放（若有历史事件）
             if (replayLast && _last.TryGetValue(t, out var last))
             {
-                try { handler((T)last); }
+                try
+                {
+                    handler((T)last);
+                }
                 catch (Exception ex)
                 {
                     Debug.LogError($"[EventBus] 重放 {typeof(T).Name} 出错：{ex}");
@@ -116,7 +136,7 @@ namespace Utils
             if (map.TryGetValue(k, out var del))
             {
                 // 合并成多播委托：后续 Publish 会依次调用所有订阅者
-                map[k] = Delegate.Combine(del, handler);
+                map[k] = CombineDistinct(del, handler);
             }
             else
             {
@@ -201,7 +221,9 @@ namespace Utils
         {
             if (handler == null)
             {
-                Debug.Log($"[EventBus] Unsubscribe<{typeof(T).Name},{typeof(TKey).Name}> (no-arg) 失败：handler 为 null");
+                Debug.Log(
+                    $"[EventBus] Unsubscribe<{typeof(T).Name},{typeof(TKey).Name}> (no-arg) 失败：handler 为 null"
+                );
                 return;
             }
 

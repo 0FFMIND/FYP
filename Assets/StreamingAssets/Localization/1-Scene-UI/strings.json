@@ -1,34 +1,46 @@
 [
-    {
-        "zh": "这个点……应该没人吧？",
-        "en": "This time of day... nobody should be around, yeah?"
-    },
-    {
-        "zh": "可千万别有人……总算溜上来了",
-        "en": "Please let no one be here... finally snuck up."
-    },
-    {
-        "zh": "<color=#FF0000>逃课上来要是被抓，那可就不是写检讨那么简单了</color>",
-        "en": "<color=#FF0000>If I get busted for ditching up here, it’s way more than writing a reflection.</color>"
-    },
-    {
-        "zh": "学校纪律处的那帮人，一张处分单下来，这学期直接就完蛋了",
-        "en": "One ticket from Discipline and my semester’s done."
-    },
-    {
-        "zh": "刚才在五楼楼梯口，差点跟教务主任对脸撞上",
-        "en": "I nearly ran face-first into the dean at the fifth-floor stairwell just now."
-    },
-    {
-        "zh": "他正盯着文件往楼下走，我贴在冰凉的墙面上，呼吸都快停了",
-        "en": "He was fixed on his documents as he descended; I pressed to the frigid wall, breath all but stilled."
-    },
-    {
-        "zh": "幸好他突然拐进办公室了……吓死我了",
-        "en": "Thankfully, he veered into his office... I was terrified."
-    },
-    {
-        "zh": "终于到学校天台了！反正这节课我是不会回去了",
-        "en": "Finally made it to the rooftop! I’m not going back to class this period anyway."
-    }
-]
+        {
+            "zh": "哈……哈……这鬼楼梯……总算……上来了……",
+            "en": "Ha... ha... this damned staircase... finally... made it up…"
+        },
+        {
+            "zh": "我侧身挤进铁门，整个人几乎虚脱，靠在门板上大口喘气",
+            "en": "I squeezed sideways through the iron door, utterly spent, leaning against the door and gulping for air."
+        },
+        {
+            "zh": "缺乏锻炼的下场就是，爬这六层楼简直要了半条命，我像条脱水的鱼一样大口喘气",
+            "en": "This is what a lack of exercise gets you—climbing six floors almost cost me half my life. I’m gasping like a fish out of water."
+        },
+        {
+            "zh": "这个点……学校天台应该没人吧？",
+            "en": "At this hour... there shouldn’t be anyone on the school rooftop, right?"
+        },
+        {
+            "zh": "可千万别有人……好不容易才溜上来",
+            "en": "Please let there be no one... it took so much effort to sneak up here."
+        },
+        {
+            "zh": "<color=#FF0000>逃课上来要是被抓，那可就不是写检讨那么简单了</color>",
+            "en": "<color=#FF0000>If I get caught cutting class to come up here, it won’t just be writing a self-criticism.</color>"
+        },
+        {
+            "zh": "学校纪律处的那帮人，一张处分单下来，这学期直接就完蛋了",
+            "en": "Those people in the discipline office—one disciplinary notice and this semester is basically over."
+        },
+        {
+            "zh": "刚才在五楼楼梯口，差点就跟下楼的教务主任对脸撞上",
+            "en": "Back at the fifth-floor landing, I almost smashed face-first into the academic dean coming down."
+        },
+        {
+            "zh": "他正盯着文件往楼下走，我贴在冰凉的侧墙上，呼吸都快停了",
+            "en": "He was staring at his documents as he walked downstairs; I pressed against the cold side wall, barely breathing."
+        },
+        {
+            "zh": "幸好他突然拐进办公室了……吓死我了",
+            "en": "Luckily he suddenly turned into an office... scared me to death."
+        },
+        {
+            "zh": "终于到学校天台了！反正这节课我是绝对不会回去了",
+            "en": "Finally made it to the school rooftop! Anyway, I’m definitely not going back to class this period."
+        }
+    ]
