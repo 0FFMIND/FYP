@@ -11,7 +11,9 @@ namespace MVC
         private PlayerCtl root;
         private PlayerEmoteCtl emote;
         private PlayerModel playerModel;
-        private IInteractable current; // 当前正在交互的对象引用
+        public IInteractable current; // 当前正在交互的对象引用
+        public IInteractable target; // 想要交互的对象引用
+
         private EmoteType _lastEmote = (EmoteType)(-1); // 上次已显示的类型
         private GameObject _lastGo;
 
@@ -69,6 +71,13 @@ namespace MVC
             _consumeDeadline = Time.time + ConsumeBufferSeconds;
         }
 
+        public void Refresh()
+        {
+            target = null;
+            current = null;
+            _lastGo = null;
+        }
+
         private void Update()
         {
             // 自动清除：超过缓冲时间还没被消费，就取消吞键
@@ -87,7 +96,7 @@ namespace MVC
                 return;
 
             // 找最近可交互对象（你已有的方法）
-            var target = FindInteractable();
+            target = FindInteractable();
 
             if (target == null)
             {
@@ -100,7 +109,7 @@ namespace MVC
                 return;
             }
             var go = (target as Component)?.gameObject;
-            var _last = _lastGo;
+            // var _last = _lastGo;
             // 仅在目标变了时强制重算
             if (!ReferenceEquals(go, _lastGo))
             {
@@ -110,10 +119,7 @@ namespace MVC
             // 拿到 InteractCtl（含 isImportant/isTalked）
             var ic = (target as Component)?.GetComponent<InteractCtl>();
             // 规则：isImportant && !isTalked → Thinking，否则 Eyes
-            var next =
-                (ic != null && ic.IsImportant)
-                    ? EmoteType.Thinking
-                    : EmoteType.Eyes;
+            var next = (ic != null && ic.IsImportant) ? EmoteType.Warning : EmoteType.Eyes;
             if (ic.IsTalked)
             {
                 next = EmoteType.Checked;
@@ -122,10 +128,13 @@ namespace MVC
             if (next != _lastEmote)
             {
                 _lastEmote = next;
-                if (next == EmoteType.Checked /*&& ReferenceEquals(go, _last)*/)
+                if (
+                    next == EmoteType.Checked /*&& ReferenceEquals(go, _last)*/
+                )
                 {
                     emote.Play(next, 1f, true);
-                }else if (next == EmoteType.Checked)
+                }
+                else if (next == EmoteType.Checked)
                 {
                     emote.Play(next, -1f, true);
                 }

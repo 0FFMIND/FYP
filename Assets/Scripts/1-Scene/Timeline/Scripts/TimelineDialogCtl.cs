@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MVC
@@ -13,12 +12,22 @@ namespace MVC
         [SerializeField]
         private LineMapping[] secondMappings;
 
+        [SerializeField]
+        private GameObject dialogPanel;
+
         private Action finished;
 
-        public void HideDialogue()
+        private void Start()
+        {
+            // 隐藏dialog
+            HideDialogue();
+        }
+
+        private void HideDialogue()
         {
             // 隐藏内容
             RenderViews(null, null);
+            dialogPanel.gameObject.SetActive(false);
         }
 
         protected override void OnEnable()
@@ -31,12 +40,17 @@ namespace MVC
             base.OnDisable();
         }
 
+        public override void StartDialogue()
+        {
+            base.StartDialogue();
+        }
+
         public void StartSecondDialogue(Action onFinished)
         {
             mappings = secondMappings;
             finished = onFinished;
             modelText = "1-Scene-2.txt";
-            base.StartDialogue();
+            StartDialogue();
         }
 
         public void StartFirstDialogue(Action onFinished)
@@ -54,9 +68,11 @@ namespace MVC
             // 如果是第一句
             if (index == 0)
             {
+                _isEntering = true;
                 RenderViews(currentSprite, null);
                 bool donePanel = false,
                     doneBG = false;
+                dialogPanel.gameObject.SetActive(true);
 
                 // 先做文本框上浮
                 IEnumerator RunPanel()
@@ -74,6 +90,7 @@ namespace MVC
                 StartCoroutine(RunPanel());
                 StartCoroutine(RunBG());
                 yield return new WaitUntil(() => donePanel && doneBG);
+                _isEntering = false;
             }
             yield return base.TypeLines(fullRaw);
         }
@@ -84,8 +101,15 @@ namespace MVC
             // 如果读完
             if (index == dialogueModel.Lines.Length)
             {
+                End();
+                // 清空文本
                 dialogueView.tmp.text = "";
+                // 隐藏对话与背景
                 HideDialogue();
+                dialogPanel.gameObject.SetActive(false);
+                // 关掉向下小箭头
+                arrow.gameObject.SetActive(false);
+                // 触发对话结束回调
                 finished?.Invoke();
             }
             // 不然按钮点击会误认为nextline

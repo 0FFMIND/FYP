@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using Utils;
@@ -13,17 +14,20 @@ namespace MVC
         private GameObject panel;
         private InteractModel _model;
 
+        [SerializeField]
+        private Animator interactAnim;
+
         private void OnEnable()
         {
-            EventBus.Subscribe<EInteract>(OnStart);
-            EventBus.Subscribe<EInteractEnd>(OnEnd);
+            EventBus.Subscribe<EInteract>(EnterStart);
+            EventBus.Subscribe<EInteractEnd>(EnterEnd);
             Hide();
         }
 
         private void OnDisable()
         {
-            EventBus.Unsubscribe<EInteract>(OnStart);
-            EventBus.Unsubscribe<EInteractEnd>(OnEnd);
+            EventBus.Unsubscribe<EInteract>(EnterStart);
+            EventBus.Unsubscribe<EInteractEnd>(EnterEnd);
         }
 
         private void Hide()
@@ -40,12 +44,21 @@ namespace MVC
             _model = null;
         }
 
-        private void OnEnd(EInteractEnd e)
+        private void EnterEnd(EInteractEnd e)
         {
+            StartCoroutine(OnEnd());
+        }
+        private IEnumerator OnEnd()
+        {
+            int interactLayer = 0;
+            string interactAnimName = "InteractPanelExit";
+            interactAnim.Play(interactAnimName, interactLayer, 0f);
+            yield return new WaitForSeconds(0.1f);
             Hide();
         }
 
-        private void OnStart(EInteract e)
+
+        private void EnterStart(EInteract e)
         {
             _model = e.Model;
             if (_model == null || _model.IsFinished)
@@ -57,6 +70,20 @@ namespace MVC
             tmp.text = "";
             tmp.gameObject.SetActive(true);
             panel.SetActive(true);
+            StartCoroutine(OnStart());
+        }
+
+        private IEnumerator OnStart()
+        {
+            if (_model.index == 0)
+            {
+                _model.IsEntering = true;
+                int interactLayer = 0;
+                string interactAnimName = "InteractPanelEnter";
+                interactAnim.Play(interactAnimName, interactLayer, 0f);
+                yield return new WaitForSeconds(0.1f);
+                _model.IsEntering = false;
+            }
             Render();
         }
 

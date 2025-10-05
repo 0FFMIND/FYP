@@ -4,6 +4,13 @@ using UnityEngine;
 
 namespace Utils
 {
+    public readonly struct EScene1ArrivalStateChange
+    {
+        public readonly Scene1State State;
+
+        public EScene1ArrivalStateChange(Scene1State state) => State = state;
+    }
+
     public readonly struct EInteract
     {
         public readonly InteractModel Model;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace Utils
@@ -17,12 +18,15 @@ namespace Utils
         // 每个事件类型的最后一条消息（用于粘性重放）
         private static readonly Dictionary<Type, object> _last = new();
 
-        // 无参包装器缓存
+        // 无参包装器字典
+        // 如果每次订阅都 new 一个包装器，会造成重复订阅去重失败（不同实例）与退订失败（找不到原实例）。
+        // 缓存字典稳定地把“同一个无参回调”映射为“同一个包装器实例”。
         private static readonly Dictionary<
-            (Delegate original, Type eventType, object key),
+            (MethodInfo method, object target, Type eventType, object key),
             Delegate
-        > _noArgWrappers = new Dictionary<(Delegate, Type, object), Delegate>();
+        > _noArgWrappers = new();
 
+        // 合并多播委托时做“去重”：若已有相同目标/方法的委托，则不再合并
         private static Delegate CombineDistinct(Delegate existing, Delegate added)
         {
             if (existing == null)
@@ -30,7 +34,7 @@ namespace Utils
                 return added;
             }
             foreach (var d in existing.GetInvocationList())
-            { 
+            {
                 // 已存在则不重复合并
                 if (d == added)
                 {
@@ -161,7 +165,7 @@ namespace Utils
             var k = (object)key;
 
             // 复合键：用原始无参 handler + 事件类型 + 规范化子键 来唯一标识包装器
-            var mapKey = ((Delegate)handler, t, k);
+            var mapKey = (handler.Method, handler.Target, t, k);
 
             if (!_noArgWrappers.TryGetValue(mapKey, out var wrapper))
             {
@@ -229,7 +233,7 @@ namespace Utils
 
             var t = typeof(T);
             var k = (object)key;
-            var mapKey = ((Delegate)handler, t, k);
+            var mapKey = (handler.Method, handler.Target, t, k);
 
             if (_noArgWrappers.TryGetValue(mapKey, out var wrapper))
             {

@@ -30,6 +30,7 @@ namespace MVC
     public abstract class DialogCtlBase : MonoBehaviour
     {
         protected bool _isEntering;
+
         [Header("Dialogue 面板入场")]
         [SerializeField]
         protected float panelEnterDuration; // 入场时长(秒)
@@ -57,8 +58,7 @@ namespace MVC
         protected AnimationCurve bgEnterCurve = null; // 可选缓动
 
         [Header("翻页箭头位移")]
-        [SerializeField]
-        protected float arrowX = -1000f;
+
         [SerializeField]
         protected float arrowOffset; // 首次定位的像素偏移
 
@@ -90,7 +90,6 @@ namespace MVC
         protected DialogueModel dialogueModel;
         protected Sprite currentSprite;
         protected Coroutine typingCoroutine;
-        private bool _subscribed = false;
         private float typeSpeed;
         private Coroutine arrowBounceCoroutine;
 
@@ -103,11 +102,11 @@ namespace MVC
             // 刷新index
             index = 0;
             // 注册事件
-            if (!_subscribed)                  // 👈 防止重复订阅
-            {
-                EventBus.Subscribe<EInputPressed, InputAction>(InputAction.DialogueClick, OnDialogueClick);
-                _subscribed = true;
-            }
+            EventBus.Subscribe<EInputPressed, InputAction>(
+                InputAction.DialogueClick,
+                OnDialogueClick
+            );
+
             NextLine();
         }
 
@@ -241,8 +240,6 @@ namespace MVC
             arrow.gameObject.SetActive(false);
         }
 
-        protected virtual void OnDialogueFinished() { }
-
         // 基类提供统一渲染方法，子类可直接调用
         protected void RenderViews(Sprite sprite, string text)
         {
@@ -367,18 +364,10 @@ namespace MVC
             Vector3 worldBotCenter = dialogueView.tmp.transform.TransformPoint(localBotCenter);
             Vector3 downOffset = Vector3.down * arrowOffset;
             arrow.position = new Vector3(
-                arrow.position.x,
+                worldBotCenter.x,
                 worldBotCenter.y + downOffset.y,
                 arrow.position.z
             );
-            if (arrowX != -1000f)
-            {
-                arrow.position = new Vector3(
-                    arrowX,
-                    worldBotCenter.y + downOffset.y,
-                    arrow.position.z
-                );
-            }
             // 显示，并向下偏移
             arrow.gameObject.SetActive(true);
             // 启动抖动
@@ -423,7 +412,21 @@ namespace MVC
             typeSpeed = e.Settings.typeSpeed;
         }
 
+        protected void End()
+        {
+            EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
+            EventBus.Unsubscribe<EInputPressed, InputAction>(
+                InputAction.DialogueClick,
+                OnDialogueClick
+            );
+        }
+
         protected virtual void OnDisable()
+        {
+            Unsubscribe();
+        }
+
+        protected void Unsubscribe()
         {
             EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
             EventBus.Unsubscribe<EInputPressed, InputAction>(
