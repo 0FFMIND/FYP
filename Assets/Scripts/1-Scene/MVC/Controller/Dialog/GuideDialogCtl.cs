@@ -6,21 +6,15 @@ namespace MVC
 {
     public class GuideDialogCtl : DialogCtlBase
     {
-        [SerializeField] Animator guideAnim;
-
-        [SerializeField]
-        private GameObject root;
+        [SerializeField] EnterAnim enterAnim;
 
         private Action finished;
 
-        private bool startOnce = false;
-
-        private string guideAnimName;
+        private bool startOnce = true;
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            root.gameObject.SetActive(false);
         }
 
         protected override void OnDisable()
@@ -37,7 +31,6 @@ namespace MVC
         {
             finished = onFinished;
             modelText = "1-Scene-3.txt";
-            guideAnimName = "GuidePanelEnter";
             StartDialogue();
         }
 
@@ -45,7 +38,6 @@ namespace MVC
         {
             finished = onFinished;
             modelText = "1-Scene-4.txt";
-            guideAnimName = "GuidePanelSecondEnter";
             StartDialogue();
         }
 
@@ -54,25 +46,17 @@ namespace MVC
             arrow.gameObject.SetActive(false);
 
             // 如果是第一句
-            if (index == 0 && guideAnimName == "GuidePanelEnter")
+            if (index == 0 && startOnce)
             {
                 _isEntering = true;
-                root.gameObject.SetActive(true);
-                int guideLayer = 0;
-                guideAnim.gameObject.SetActive(true);
-                guideAnim.Play(guideAnimName, guideLayer, 0f);
-                yield return new WaitForSeconds(0.5f);
+                yield return enterAnim.PlayEnterAnim("GuidePanelEnter", 0.5f);
+                startOnce = false;
                 _isEntering = false;
             }
-            else if(index == 0 && !startOnce && guideAnimName == "GuidePanelSecondEnter")
+            else if(index == 0 && !startOnce)
             {
-                startOnce = true;
                 _isEntering = true;
-                root.gameObject.SetActive(true);
-                int guideLayer = 0;
-                guideAnim.gameObject.SetActive(true);
-                guideAnim.Play(guideAnimName, guideLayer, 0f);
-                yield return new WaitForSeconds(0.18f);
+                yield return enterAnim.PlayEnterAnim();
                 _isEntering = false;
             }
             yield return base.TypeLines(fullRaw);
@@ -80,11 +64,7 @@ namespace MVC
 
         private IEnumerator PlayClosed()
         {
-            string guideAnimName = "GuidePanelExit";
-            int guideLayer = 0;
-            guideAnim.Play(guideAnimName, guideLayer, 0f);
-            yield return new WaitForSeconds(0.2f);
-            root.gameObject.SetActive(false);
+            yield return enterAnim.PlayExit();
             // 触发对话结束回调
             finished?.Invoke();
         }

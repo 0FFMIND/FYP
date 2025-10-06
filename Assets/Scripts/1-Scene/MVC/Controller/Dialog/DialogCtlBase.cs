@@ -31,45 +31,18 @@ namespace MVC
     {
         protected bool _isEntering;
 
-        [Header("Dialogue 面板入场")]
-        [SerializeField]
-        protected float panelEnterDuration; // 入场时长(秒)
-
-        [SerializeField]
-        protected float panelEnterOffsetY;
-
-        [SerializeField]
-        protected float panelEnterOffsetX;
-
-        [SerializeField]
-        protected AnimationCurve panelEnterCurve = null; // 可选缓动
-
-        [Header("BG 面板入场")]
-        [SerializeField]
-        protected float bgEnterDuration; // 入场时长(秒)
-
-        [SerializeField]
-        protected float bgEnterOffsetY;
-
-        [SerializeField]
-        protected float bgEnterOffsetX;
-
-        [SerializeField]
-        protected AnimationCurve bgEnterCurve = null; // 可选缓动
-
         [Header("翻页箭头位移")]
+        [SerializeField]
+        protected float arrowOffset = 0.4f; // 首次定位的像素偏移
 
         [SerializeField]
-        protected float arrowOffset; // 首次定位的像素偏移
+        protected int downFrames = 100; // 向下移动时等待帧数
 
         [SerializeField]
-        protected int downFrames; // 向下移动时等待帧数
+        protected float downDistance = 0.07f; // 向下移动的世界/本地单位
 
         [SerializeField]
-        protected float downDistance; // 向下移动的世界/本地单位
-
-        [SerializeField]
-        protected int upFrames; // 向上移动时等待帧数
+        protected int upFrames = 100; // 向上移动时等待帧数
 
         [Header("ScriptableObject 对话资源")]
         [SerializeField]
@@ -77,6 +50,13 @@ namespace MVC
 
         [SerializeField]
         protected LineMapping[] mappings;
+
+        [Header("Typing")]
+        [SerializeField]
+        private bool enableTypingSfx = true;
+
+        [SerializeField, Min(0.01f)]
+        private float typingRate = 1f;
 
         [Header("视图引用")]
         [SerializeField]
@@ -97,8 +77,11 @@ namespace MVC
         {
             // 创建down arrow
             CreateArrow();
-            // 载入对话
-            dialogueModel = new DialogueModel(modelText);
+            if (modelText != null && modelText.Length > 0)
+            {
+                // 载入对话
+                dialogueModel = new DialogueModel(modelText);
+            }
             // 刷新index
             index = 0;
             // 注册事件
@@ -108,115 +91,6 @@ namespace MVC
             );
 
             NextLine();
-        }
-
-        protected IEnumerator SlideInBGView()
-        {
-            var bgImage = bgView.GetComponentInChildren<Image>(true);
-            var c = bgImage.color;
-            var target = c.a;
-            c.a = 0f;
-            bgImage.color = c;
-            if (!bgView)
-            {
-                yield break;
-            }
-            var go = bgView.gameObject;
-            if (!go.activeSelf)
-            {
-                go.SetActive(true);
-            }
-            yield return SlideIn(
-                go,
-                bgImage,
-                target,
-                bgEnterDuration,
-                bgEnterCurve,
-                bgEnterOffsetX,
-                bgEnterOffsetY
-            );
-        }
-
-        protected IEnumerator SlideInDialogueView()
-        {
-            var panelImage = dialogueView.GetComponentInChildren<Image>(true);
-            var c = panelImage.color;
-            var target = c.a;
-            c.a = 0f;
-            panelImage.color = c;
-            if (!dialogueView)
-            {
-                yield break;
-            }
-            var go = dialogueView.gameObject;
-            // 入场前先确保面板可见，箭头隐藏
-            if (!go.activeSelf)
-            {
-                go.SetActive(true);
-            }
-            if (arrow)
-            {
-                arrow.gameObject.SetActive(false);
-            }
-            yield return SlideIn(
-                go,
-                panelImage,
-                target,
-                panelEnterDuration,
-                panelEnterCurve,
-                panelEnterOffsetX,
-                panelEnterOffsetY
-            );
-        }
-
-        private IEnumerator SlideIn(
-            GameObject go,
-            Image img,
-            float alphaTarget,
-            float duration,
-            AnimationCurve curve,
-            float offsetX,
-            float offsetY
-        )
-        {
-            float dur = Mathf.Max(0.0001f, duration);
-            float t = 0f;
-            // 使用 RectTransform 优先（UI），否则走 Transform.localPosition（世界/局部物体）
-            var rt = go.transform as RectTransform;
-            if (curve == null)
-                curve = AnimationCurve.EaseInOut(0, 0, 1, 1); // 默认S型缓入缓出
-
-            if (rt != null)
-            {
-                Vector2 target = rt.anchoredPosition;
-                Vector2 start = target + new Vector2(offsetX, -offsetY);
-                rt.anchoredPosition = start;
-                while (t < dur)
-                {
-                    t += Time.unscaledDeltaTime;
-                    float u = curve.Evaluate(Mathf.Clamp01(t / dur)); // 由曲线决定进度
-                    rt.anchoredPosition = Vector2.LerpUnclamped(start, target, u); // 允许曲线>1产生回弹
-                    var c = img.color;
-                    c.a = Mathf.LerpUnclamped(0f, alphaTarget, u);
-                    img.color = c;
-                    yield return null;
-                }
-                rt.anchoredPosition = target;
-            }
-            else
-            {
-                Vector3 target = go.transform.localPosition;
-                Vector3 start = target + new Vector3(offsetX, -offsetY, 0f);
-                go.transform.localPosition = start;
-                while (t < dur)
-                {
-                    t += Time.unscaledDeltaTime;
-                    float u = curve.Evaluate(Mathf.Clamp01(t / dur));
-                    go.transform.localPosition = Vector3.LerpUnclamped(start, target, u);
-                    yield return null;
-                }
-                go.transform.localPosition = target;
-            }
         }
 
         private void CreateArrow()
@@ -283,6 +157,16 @@ namespace MVC
         {
             // 一次性设置完整文本，然后用 maxVisibleCharacters 揭示
             RenderViews(currentSprite, fullRaw);
+            if (dialogueView == null)
+            {
+                Debug.LogError($"[DialogCtlBase] TypeLines: {nameof(dialogueView)} == null (index={index}, model='{modelText}')");
+                yield break;
+            }
+            if (dialogueView.tmp == null)
+            {
+                Debug.LogError($"[DialogCtlBase] TypeLines: {nameof(dialogueView)}.tmp == null (dialogueView='{dialogueView.name}', index={index}, model='{modelText}')");
+                yield break;
+            }
             var tmp = dialogueView.tmp;
             tmp.ForceMeshUpdate();
             tmp.maxVisibleCharacters = 0;
@@ -302,14 +186,20 @@ namespace MVC
                     if (cnt >= 2)
                     {
                         cnt = 0;
-                        AudioManager.Instance.PlaySFX("typing");
+                        if (enableTypingSfx)
+                        {
+                            AudioManager.Instance.PlaySFX("typing");
+                        }
                     }
                 }
                 else
                 {
-                    AudioManager.Instance.PlaySFX("typing");
+                    if (enableTypingSfx)
+                    {
+                        AudioManager.Instance.PlaySFX("typing");
+                    }
                 }
-                float wait = typeSpeed;
+                float wait = typeSpeed / typingRate;
                 if (isEn)
                     wait *= 0.5f;
                 yield return new WaitForSeconds(wait);

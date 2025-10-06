@@ -7,6 +7,8 @@ namespace MVC
 {
     public class Scene1PreArrivalDialogCtl : DialogCtlBase
     {
+        [SerializeField] EnterAnim enterAnim;
+
         public void HideDialogue()
         {
             // 隐藏内容
@@ -35,7 +37,7 @@ namespace MVC
                 _isEntering = true;
                 RenderViews(currentSprite, null);
                 // 先做文本框上浮
-                yield return SlideInDialogueView();
+                yield return enterAnim.PlayEnterCode(dialogueView, false);
                 _isEntering = false;
             }
             yield return base.TypeLines(fullRaw);

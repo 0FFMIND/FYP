@@ -6,6 +6,8 @@ namespace MVC
 {
     public class TimelineDialogCtl : DialogCtlBase
     {
+        [SerializeField] EnterAnim enterAnim;
+
         [SerializeField]
         private LineMapping[] firstMappings;
 
@@ -45,6 +47,14 @@ namespace MVC
             base.StartDialogue();
         }
 
+        public void StartInteractDialogue(Action onFinished)
+        {
+            mappings = secondMappings;
+            finished = onFinished;
+            modelText = "1-Scene-2.txt";
+            StartDialogue();
+        }
+
         public void StartSecondDialogue(Action onFinished)
         {
             mappings = secondMappings;
@@ -69,6 +79,7 @@ namespace MVC
             if (index == 0)
             {
                 _isEntering = true;
+                arrow.gameObject.SetActive(false);
                 RenderViews(currentSprite, null);
                 bool donePanel = false,
                     doneBG = false;
@@ -77,12 +88,12 @@ namespace MVC
                 // 先做文本框上浮
                 IEnumerator RunPanel()
                 {
-                    yield return SlideInDialogueView();
+                    yield return enterAnim.PlayEnterCode(dialogueView, false);
                     donePanel = true;
                 }
                 IEnumerator RunBG()
                 {
-                    yield return SlideInBGView();
+                    yield return enterAnim.PlayEnterCode(bgView, true);
                     doneBG = true;
                 }
 
