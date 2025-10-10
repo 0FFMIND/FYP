@@ -13,7 +13,10 @@ namespace MVC
         private PlayerCtl _player;
 
         [SerializeField]
-        private InteractDialogCtl dialogCtl;
+        private InteractDialogCtl interactCtl;
+
+        [SerializeField]
+        private TimelineDialogCtl dialogCtl;
 
         // 是否处于对话中
         private bool isInteracting;
@@ -43,12 +46,29 @@ namespace MVC
 
             isInteracting = true;
 
-            // 正在交互
-            dialogCtl.StartDialogue(
+            bool hasMapping = _model.mappings != null && _model.mappings.Length > 0;
+
+            // 先走交互对话（带 linemapping）
+            interactCtl.StartDialogue(
                 _model.lines,
                 () =>
                 {
-                    EndInteract(_player);
+                    // 回调
+                    if (hasMapping)
+                    {
+                        dialogCtl.StartInteractDialogue(
+                            _model.mappings,
+                            _model.secondLines,
+                            () =>
+                            {
+                                EndInteract(_player);
+                            }
+                        );
+                    }
+                    else
+                    {
+                        EndInteract(_player);
+                    }
                 }
             );
             return true;

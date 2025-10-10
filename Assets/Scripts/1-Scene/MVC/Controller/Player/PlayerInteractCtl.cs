@@ -21,10 +21,15 @@ namespace MVC
         private LayerMask interactMask;
 
         [SerializeField]
+        private float yOriginOffset = 0.15f; // 射线的基础上移量
+
+        [SerializeField]
         private float rayLength = 0.8f; // 朝向射线长度
 
         [SerializeField]
         private float rayRadius = 0.5f; // 射线厚度
+
+        // 交互结束后短暂“吞掉”下一次交互按键，防止结束瞬间又触发
 
         // 结束后吞掉下一次 Interact 按键 (收到结束事件后，下一次按键被忽略)
         private bool _consumeNextInteractPress = false;
@@ -34,6 +39,14 @@ namespace MVC
 
         // 缓冲时长（单位：秒）
         private const float ConsumeBufferSeconds = 0.2f;
+
+        // 当前高亮的 SpritesOutline 与其 GameObject
+        private SpritesOutline _hoverOutline;
+        private GameObject _hoverOutlineGO;
+
+        // 是否在“悬停可交互目标”时高亮
+        [SerializeField]
+        private bool highlightOnHover = true;
 
         private void Awake()
         {
@@ -59,6 +72,8 @@ namespace MVC
                 OnInteractPressed
             );
             EventBus.Unsubscribe<EInteractEnd>(OnInteractEnd);
+            // 组件禁用时，确保把悬停高亮关掉
+            SetHoverOutline(null);
         }
 
         private void OnInteractEnd(EInteractEnd _)
@@ -86,6 +101,7 @@ namespace MVC
                 _consumeNextInteractPress = false;
                 _consumeDeadline = -1f;
             }
+
             // 每帧做一次“悬停气泡”刷新
             RefreshHoverEmote();
         }
@@ -95,11 +111,32 @@ namespace MVC
             if (!emote)
                 return;
 
-            // 找最近可交互对象（你已有的方法）
+            // 寻找最近可交互对象
             target = FindInteractable();
+
+            // SpritesOutline 高亮切换
+            if (highlightOnHover)
+            {
+                // 当玩家被禁用（对话/剧情等）时，不允许悬停高亮
+                bool shouldHighlight =
+                    playerModel.State != PlayerState.Disabled
+                    && playerModel.State != PlayerState.Interacting;
+
+                if (!shouldHighlight)
+                {
+                    SetHoverOutline(null); // 立刻熄灭
+                }
+                else
+                {
+                    // 把 Component 传进去，内部会找它自己/子物体/父物体上的 SpritesOutline
+                    var comp = (target as Component);
+                    SetHoverOutline(comp);
+                }
+            }
 
             if (target == null)
             {
+                SetHoverOutline(null);
                 if (_lastEmote != (EmoteType)(-1))
                 {
                     emote.Stop(); // 离开可交互范围 → 收起气泡
@@ -108,6 +145,7 @@ namespace MVC
                 }
                 return;
             }
+
             var go = (target as Component)?.gameObject;
             // var _last = _lastGo;
             // 仅在目标变了时强制重算
@@ -172,7 +210,54 @@ namespace MVC
             else
             {
                 emote.Stop();
+                SetHoverOutline(null);
             }
+        }
+
+        /// <summary>
+        /// 切换“当前悬停高亮”的对象。传 null 表示关闭当前高亮。
+        /// </summary>
+        public void SetHoverOutline(Component targetComp)
+        {
+            // 若目标没变，直接返回
+            var newGO = targetComp ? targetComp.gameObject : null;
+            if (ReferenceEquals(newGO, _hoverOutlineGO))
+                return;
+
+            // 1) 关闭旧对象的高亮
+            if (_hoverOutline)
+            {
+                _hoverOutline.SetOutlineVisible(false);
+                _hoverOutline = null;
+            }
+            _hoverOutlineGO = null;
+
+            // 开启新对象的高亮
+            if (targetComp)
+            {
+                var so = FindOutlineOn(targetComp);
+                if (so)
+                {
+                    so.SetOutlineVisible(true); // 内部会 EnsureBuilt()
+                    _hoverOutline = so;
+                    _hoverOutlineGO = so.gameObject;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 在自身/子物体/父物体上寻找 SpritesOutline（尽量宽松兼容你的层级）。
+        /// </summary>
+        private static SpritesOutline FindOutlineOn(Component c)
+        {
+            if (!c)
+                return null;
+            var so = c.GetComponent<SpritesOutline>();
+            if (!so)
+                so = c.GetComponentInChildren<SpritesOutline>(true);
+            if (!so)
+                so = c.GetComponentInParent<SpritesOutline>();
+            return so;
         }
 
         private IInteractable FindInteractable()
@@ -180,7 +265,7 @@ namespace MVC
             Vector2 origin = transform.position;
             // 从 PlayerModel 读取面向单位向量
             Vector2 dir = playerModel != null ? playerModel.FacingDir : Vector2.right;
-
+            origin.y += Mathf.Sign(dir.y) * yOriginOffset;
             // 朝向粗射线
             var rayHits = Physics2D.CircleCastAll(origin, rayRadius, dir, rayLength, interactMask);
             IInteractable best = null;
@@ -215,7 +300,7 @@ namespace MVC
             if (Application.isPlaying && playerModel != null)
                 dir = playerModel.FacingDir;
             dir = dir.sqrMagnitude > 0f ? dir.normalized : Vector2.right;
-
+            origin.y += Mathf.Sign(dir.y) * yOriginOffset;
             // 末端点
             Vector2 end = origin + dir * rayLength; // 终点 = 起点 + 方向*长度
 

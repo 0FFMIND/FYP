@@ -37,6 +37,9 @@ namespace MVC
         private bool isMoving;
         private bool isPaused = false;
 
+        private bool overrideLock = false;
+
+
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
@@ -67,7 +70,7 @@ namespace MVC
         private void Update()
         {
             // 如果被暂停（来自事件）
-            if (isPaused)
+            if (isPaused || overrideLock)
                 return;
             if (!isMoving)
             {
@@ -94,6 +97,16 @@ namespace MVC
                 frameIndex = (frameIndex + 1) % currentAnim.Length;
                 sr.sprite = currentAnim[frameIndex];
             }
+        }
+
+        public void SetLock(bool shouldOverride)
+        {
+            overrideLock = shouldOverride;
+        }
+
+        public void SetSprite(Sprite sprite)
+        {
+            sr.sprite = sprite;
         }
 
         public void SetDirection(Direction dir)

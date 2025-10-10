@@ -49,7 +49,7 @@ namespace MVC
             if (index == 0 && startOnce)
             {
                 _isEntering = true;
-                yield return enterAnim.PlayEnterAnim("GuidePanelEnter", 0.5f);
+                yield return enterAnim.PlayEnterAnim("GuidePanelEnter", 1.1f);
                 startOnce = false;
                 _isEntering = false;
             }

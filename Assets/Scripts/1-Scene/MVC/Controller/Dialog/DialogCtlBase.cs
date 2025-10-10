@@ -72,7 +72,6 @@ namespace MVC
         protected Coroutine typingCoroutine;
         private float typeSpeed;
         private Coroutine arrowBounceCoroutine;
-
         public virtual void StartDialogue()
         {
             // 创建down arrow

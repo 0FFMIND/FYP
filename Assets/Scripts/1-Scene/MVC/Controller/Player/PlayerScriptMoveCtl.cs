@@ -24,6 +24,7 @@ namespace MVC
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<SpriteAnimCtl>();
         }
+
         public void StartMove(
             Vector3 worldPos,
             float? speed = -1,
@@ -48,6 +49,17 @@ namespace MVC
             }
             _onArrive = onArrive;
             _active = true;
+        }
+
+        // 强制更新贴图
+        public void SetSprite(Sprite sprite)
+        {
+            anim.SetSprite(sprite);
+        }
+
+        public void SetLock(bool shouldLock)
+        {
+            anim.SetLock(shouldLock);
         }
 
         // 仅设置面朝方向（不移动），并立即生效

@@ -38,7 +38,7 @@ namespace MVC
         private Animator animator;
 
         [SerializeField]
-        private GameObject target;
+        public GameObject target;
 
         private int animLayer = 0;
 

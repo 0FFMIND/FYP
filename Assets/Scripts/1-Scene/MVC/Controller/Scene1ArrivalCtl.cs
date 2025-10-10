@@ -31,6 +31,9 @@ namespace MVC
         [SerializeField]
         private GameObject guideSteps;
 
+        [SerializeField]
+        private Vector3 initPos;
+
         private PlayerCtl player;
 
         private bool interactOnce = false;
@@ -66,6 +69,9 @@ namespace MVC
         {
             switch (state)
             {
+                case Scene1State.None:
+                    EnterNone();
+                    break;
                 case Scene1State.Timeline:
                     EnterTimeline();
                     break;
@@ -81,8 +87,19 @@ namespace MVC
         }
 
         // —— 各状态入口逻辑 ——
+
+        private void EnterNone()
+        {
+            // 测试用
+            player.model.SetDisabled(false);
+        }
+
         private void EnterTimeline()
         {
+            // 设置人物位置
+            var player = GameObject.FindGameObjectWithTag("Player");
+            player.transform.position = initPos;
+            // 启动timeline
             if (director != null)
             {
                 director.time = 0;
@@ -113,6 +130,8 @@ namespace MVC
 
         private IEnumerator InteractBoard()
         {
+            // 显示物体高亮
+
             // 禁止玩家移动
             player.model.SetDisabled(true);
             // 播放人物思考
@@ -137,9 +156,15 @@ namespace MVC
         {
             var current = GameObject
                 .FindGameObjectWithTag("Player")
-                .GetComponent<PlayerInteractCtl>().target;
+                .GetComponent<PlayerInteractCtl>()
+                .target;
             var target = (current as Component)?.gameObject;
-            if (target != null && target.gameObject.name == "metalSign" && !interactOnce && state == Scene1State.GoToBoard)
+            if (
+                target != null
+                && target.gameObject.name == "metalSign"
+                && !interactOnce
+                && state == Scene1State.GoToBoard
+            )
             {
                 state = Scene1State.InteractBoard;
                 interactOnce = true;

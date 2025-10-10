@@ -46,12 +46,13 @@ namespace MVC
         {
             base.StartDialogue();
         }
-
-        public void StartInteractDialogue(Action onFinished)
+        // 专门给interact的方法
+        public void StartInteractDialogue(LineMapping[] mappings, string[] lines, Action onFinished)
         {
-            mappings = secondMappings;
+            this.mappings = mappings;
             finished = onFinished;
-            modelText = "1-Scene-2.txt";
+            modelText = "";
+            dialogueModel = new DialogueModel(lines);
             StartDialogue();
         }
 

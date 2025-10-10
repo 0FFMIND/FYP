@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using UnityEngine.Playables;
 using Utils;
@@ -17,10 +19,33 @@ namespace MVC
         [SerializeField]
         private TimelineDialogCtl dialogCtl;
 
+        [SerializeField]
+        private List<Sprite> closeDoor;
+
         private void Start()
         {
             mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScriptMoveCtl>();
             emoteCtl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEmoteCtl>();
+        }
+
+        public void CloseDoor()
+        {
+            StartCoroutine(PlayerCloseDoor());
+        }
+
+        private IEnumerator PlayerCloseDoor()
+        {
+            mover.SetLock(true);
+            AudioManager.Instance.PlaySFX("dooropen");
+            mover.SetSprite(closeDoor[0]);
+            yield return new WaitForSecondsRealtime(0.15f);
+            mover.SetSprite(closeDoor[1]);
+            yield return new WaitForSecondsRealtime(0.15f);
+            mover.SetSprite(closeDoor[0]);
+            yield return new WaitForSecondsRealtime(0.15f);
+            mover.SetSprite(closeDoor[2]);
+            yield return new WaitForSecondsRealtime(0.15f);
+            mover.SetLock(false);
         }
 
         public void MoveBack()
@@ -46,7 +71,7 @@ namespace MVC
         private IEnumerator SecondMoveThenChat()
         {
             mover.SetFace(Direction.Down);
-            yield return new WaitForSecondsRealtime(0.2f);
+            yield return new WaitForSecondsRealtime(0.4f);
             PlayerSecondTurn();
             yield return new WaitForSecondsRealtime(1f);
             mover.SetFace(Direction.Right);
@@ -56,7 +81,7 @@ namespace MVC
             mover.SetFace(Direction.Down);
             yield return new WaitForSecondsRealtime(1f);
             emoteCtl.Play(EmoteType.Thinking, 1f);
-            yield return new WaitForSecondsRealtime(1.5f);
+            yield return new WaitForSecondsRealtime(1.7f);
             // ÔÝÍ£director
             director.Pause();
             dialogCtl.StartSecondDialogue(PlayerSecondMoveEnd);

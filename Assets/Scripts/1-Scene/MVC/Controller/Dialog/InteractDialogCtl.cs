@@ -9,8 +9,13 @@ namespace MVC
         [SerializeField]
         Animator interactAnim;
 
-        [SerializeField] EnterAnim enterAnim;
+        [SerializeField]
+        EnterAnim enterAnim;
+
         private Action finished;
+
+        // 表示后续没有对话/分支选项
+        private bool isSimple = true;
 
         protected override void OnEnable()
         {
@@ -50,7 +55,15 @@ namespace MVC
 
         private IEnumerator PlayClosed()
         {
-            yield return enterAnim.PlayExit();
+            if (isSimple)
+            {
+                yield return enterAnim.PlayExit();
+            }
+            else
+            {
+                // 还没考虑如果有分支情况，先简单关闭
+                enterAnim.target.SetActive(false);
+            }
             // 触发对话结束回调
             finished?.Invoke();
         }
@@ -74,6 +87,19 @@ namespace MVC
             if (dialogueModel == null || index >= dialogueModel.Lines.Length)
             {
                 return;
+            }
+            foreach (var map in mappings)
+            {
+                if (index == map.lineIndex)
+                {
+                    currentSprite = map.sprite;
+                    foreach (Eact eact in map.eacts)
+                    {
+                        if (eact != Eact.none) { }
+                    }
+
+                    break;
+                }
             }
             string text = dialogueModel.Lines[index];
             // 打字
