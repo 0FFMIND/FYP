@@ -22,9 +22,9 @@ namespace MVC
             return Mathf.Clamp01(Mathf.InverseLerp(1f, 5f, moveSpeed));
         }
 
-        private float NormalizedTypeSpeed(float typeSpeed)
+        private float NormalizedTypeSpeed(float typeWait)
         {
-            typeSpeed = 0.08f * 2 - typeSpeed;
+            float typeSpeed = 0.08f * 2 - typeWait;
             return Mathf.Clamp01(Mathf.InverseLerp(0.05f, 0.12f, typeSpeed));
         }
 
@@ -40,7 +40,9 @@ namespace MVC
 
         private float UnnormalizedTypeSpeed(float normalized)
         {
-            return Mathf.Lerp(0.05f, 0.12f, Mathf.Clamp01(normalized));
+            float typeSpeed = Mathf.Lerp(0.05f, 0.12f, Mathf.Clamp01(normalized));
+            float typeWait = 0.08f * 2 - typeSpeed;
+            return typeWait;
         }
 
         private float UnnormalizedSprintMultiplier(float normalized)
@@ -59,8 +61,8 @@ namespace MVC
             moveScrollBar.SetValueWithoutNotify(NormalizedMoveSpeed(moveSpeed));
             float sprintMultiplier = SettingsMgr.Instance.GetSprintMultiplier();
             sprintScrollBar.SetValueWithoutNotify(NormalizedSprintMultiplier(sprintMultiplier));
-            float typeSpeed = SettingsMgr.Instance.GetTypeSpeed();
-            typeScrollBar.SetValueWithoutNotify(NormalizedTypeSpeed(typeSpeed));
+            float typeWait = SettingsMgr.Instance.GetTypeSpeed();
+            typeScrollBar.SetValueWithoutNotify(NormalizedTypeSpeed(typeWait));
         }
 
         public void HandleResetDefaults()
@@ -87,7 +89,6 @@ namespace MVC
         {
             // 当打字速度滑条数值改变时，把最新值写回SettingsMgr
             float value = typeScrollBar.value;
-            value = 2 * 0.08f - value;
             SettingsMgr.Instance.SetTypeSpeed(UnnormalizedTypeSpeed(value));
         }
 

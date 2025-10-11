@@ -86,6 +86,10 @@ namespace MVC
             _consumeDeadline = Time.time + ConsumeBufferSeconds;
         }
 
+        public void SetHoverOutline(bool shouldOutline)
+        {
+            highlightOnHover = shouldOutline;
+        }
         public void Refresh()
         {
             target = null;
@@ -115,23 +119,15 @@ namespace MVC
             target = FindInteractable();
 
             // SpritesOutline 高亮切换
-            if (highlightOnHover)
+            if (highlightOnHover && playerModel.State != PlayerState.Interacting)
             {
-                // 当玩家被禁用（对话/剧情等）时，不允许悬停高亮
-                bool shouldHighlight =
-                    playerModel.State != PlayerState.Disabled
-                    && playerModel.State != PlayerState.Interacting;
-
-                if (!shouldHighlight)
-                {
-                    SetHoverOutline(null); // 立刻熄灭
-                }
-                else
-                {
-                    // 把 Component 传进去，内部会找它自己/子物体/父物体上的 SpritesOutline
-                    var comp = (target as Component);
-                    SetHoverOutline(comp);
-                }
+                // 把 Component 传进去，内部会找它自己/子物体/父物体上的 SpritesOutline
+                var comp = (target as Component);
+                SetHoverOutline(comp);
+            }
+            else
+            {
+                SetHoverOutline(null); // 立刻熄灭
             }
 
             if (target == null)

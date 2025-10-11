@@ -13,7 +13,7 @@ namespace MVC
         GoToBoard,
         InteractBoard,
         OpenMenu,
-        Finished,
+        CloseMenu,
     }
 
     public class Scene1ArrivalCtl : MonoBehaviour
@@ -35,6 +35,9 @@ namespace MVC
         private Vector3 initPos;
 
         private PlayerCtl player;
+
+        [SerializeField]
+        private GameObject metalSign;
 
         private bool interactOnce = false;
 
@@ -81,6 +84,9 @@ namespace MVC
                 case Scene1State.InteractBoard:
                     EnterInteractBoard();
                     break;
+                case Scene1State.OpenMenu:
+                    EnterOpenMenu();
+                    break;
                 default:
                     break;
             }
@@ -107,11 +113,25 @@ namespace MVC
             }
         }
 
+        private void EnterOpenMenu()
+        {
+            if (guideCtl != null)
+            {
+                // 禁止玩家移动
+                player.model.SetDisabled(true);
+                guideCtl.StartDialogue("1-Scene-5.txt", EndOpenMenu);
+            }
+        }
+
+        private void EndOpenMenu() {
+            player.model.SetDisabled(false);
+        }
+
         private void EnterGoToBoard()
         {
             if (guideCtl != null)
             {
-                guideCtl.StartFirstDialogue(EndGoToBoard);
+                guideCtl.StartDialogue("1-Scene-3.txt", EndGoToBoard);
             }
         }
 
@@ -131,7 +151,8 @@ namespace MVC
         private IEnumerator InteractBoard()
         {
             // 显示物体高亮
-
+            var outline = metalSign.GetComponentInParent<SpritesOutline>();
+            outline.SetOutlineVisible(true);
             // 禁止玩家移动
             player.model.SetDisabled(true);
             // 播放人物思考
@@ -139,7 +160,7 @@ namespace MVC
             emoteCtl.Play(EmoteType.Thinking, 1f);
             yield return new WaitForSecondsRealtime(1.5f);
             // 播放guide
-            guideCtl.StartSecondDialogue(EndSteps);
+            guideCtl.StartDialogue("1-Scene-4.txt", EndSteps);
         }
 
         private void EndSteps()
@@ -150,6 +171,15 @@ namespace MVC
             player.model.SetDisabled(false);
             // 重新显示交互图标
             player.gameObject.GetComponent<PlayerInteractCtl>().Refresh();
+        }
+
+        public void EndInteractBoard()
+        {
+            if (state == Scene1State.InteractBoard)
+            {
+                state = Scene1State.OpenMenu;
+                EvaluateState();
+            }
         }
 
         private void Update()
@@ -166,6 +196,7 @@ namespace MVC
                 && state == Scene1State.GoToBoard
             )
             {
+                metalSign = target;
                 state = Scene1State.InteractBoard;
                 interactOnce = true;
                 EvaluateState();

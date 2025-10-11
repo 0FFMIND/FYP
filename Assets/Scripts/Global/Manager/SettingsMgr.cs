@@ -76,8 +76,16 @@ namespace Manager
                 Debug.Log("[SettingsMgr] 未找到配置文件，使用默认设置");
                 _data = new SettingsData();
             }
+            // 应用系统设置
+            ApplyDisplaySettings();
             // 广播变动
             Broadcast(Snapshot());
+        }
+
+        public void ApplyDisplaySettings()
+        {
+            Screen.fullScreenMode = _data.screenMode;
+            Screen.SetResolution(_data.screenWidth, _data.screenHeight, _data.screenMode);
         }
 
         public void ResetToDefaults(SettingField[] fields)
@@ -171,6 +179,40 @@ namespace Manager
             }
             _data.language = lang;
             Save();
+        }
+
+        public void SetResolution(int width, int height)
+        {
+            if (width == _data.screenWidth && height == _data.screenHeight)
+            {
+                return;
+            }
+            _data.screenWidth = width;
+            _data.screenHeight = height;
+            ApplyDisplaySettings();
+            Save();
+        }
+
+        public void SetScreenMode(FullScreenMode mode)
+        {
+            if (mode == _data.screenMode)
+            {
+                return;
+            }
+            _data.screenMode = mode;
+            ApplyDisplaySettings();
+
+            Save();
+        }
+
+        public (int w, int h) GetResolution()
+        {
+            return (_data.screenWidth, _data.screenHeight);
+        }
+
+        public FullScreenMode GetScreenMode()
+        {
+            return _data.screenMode;
         }
 
         public LanguageCode GetLanguage()

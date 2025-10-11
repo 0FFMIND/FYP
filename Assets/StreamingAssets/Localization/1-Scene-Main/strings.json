@@ -46,5 +46,69 @@
     {
         "zh": "不过费了这么大劲才上来，反正来都来了，先四处逛逛吧",
         "en": "But since it took so much effort to get up here—well, I’m here anyway—let’s look around a bit first."
+    },
+    {
+        "zh": "现在你可以按下WASD和方向键来移动人物",
+        "en": "You can now move the character with WASD and the arrow keys."
+    },
+    {
+        "zh": "在移动的过程中按下右Shift键可以快速移动",
+        "en": "While moving, press Right Shift to move faster."
+    },
+    {
+        "zh": "顺着地上的脚印移动到身后的告示牌上吧",
+        "en": "Follow the footprints on the ground to the notice board behind you."
+    },
+    {
+        "zh": "靠近可交互的物体时，人物上方将显示交互图标",
+        "en": "When you approach an interactive object, an interaction icon will appear above the character."
+    },
+    {
+        "zh": "同时系统会高亮该物体，使其呈现黄色外发光",
+        "en": "At the same time, the system will highlight that object with a yellow outer glow."
+    },
+    {
+        "zh": "[!] 表示重要物品，请务必探索，它影响着剧情的推动",
+        "en": "[!] indicates an important item—be sure to investigate it, as it affects story progression."
+    },
+    {
+        "zh": "[眼睛] 表示普通物体，是否探索并不影响关键剧情",
+        "en": "[Eye] indicates a regular object; investigating it does not affect the main story."
+    },
+    {
+        "zh": "[√] 表示已完成探索",
+        "en": "[√] indicates that exploration is complete."
+    },
+    {
+        "zh": "每当交互图标出现，你可以<color=#FFC600>按下对话键</color>或<color=#FFC600>点击鼠标</color>执行交互操作",
+        "en": "Whenever the interaction icon appears, you can <color=#FFC600>press the Talk key</color> or <color=#FFC600>click the mouse</color> to interact."
+    },
+    {
+        "zh": "<color=#FFC600>面前的告示牌</color>似乎写着什么，请试着与其交互看看",
+        "en": "The <color=#FFC600>notice board in front of you</color> seems to have something written on it—try interacting with it."
+    },
+    {
+        "zh": "看来你已经熟悉了如何与场景中的物品互动",
+        "en": "Looks like you’re already familiar with interacting with objects in the scene."
+    },
+    {
+        "zh": "现在是时候去确认一下系统菜单了，它提供了许多有用的功能：",
+        "en": "Now it’s time to check the system menu; it offers many useful functions:"
+    },
+    {
+        "zh": "[设置] 你可以根据个人喜好，随时调整游戏的按键、画面和声音效果",
+        "en": "[Settings] Adjust controls, graphics, and audio to your preference at any time."
+    },
+    {
+        "zh": "[背包] 用于查看、使用或整理你收集到的所有任务物品和资源",
+        "en": "[Inventory] View, use, or organize all the quest items and resources you’ve collected."
+    },
+    {
+        "zh": "[日记] 提供实时任务提示，当你不确定下一步该做什么时，请随时查阅",
+        "en": "[Journal] Provides real-time quest hints; check it whenever you’re unsure what to do next."
+    },
+    {
+        "zh": "现在请尝试按下ESC键，打开系统的主菜单吧",
+        "en": "Now try pressing ESC to open the main system menu."
     }
 ]

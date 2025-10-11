@@ -48,23 +48,43 @@ namespace Manager
                 return;
             }
             EnsurePausePanel();
+
+            // 如果正在播放动画，则return
+            var view = pausePanel ? pausePanel.GetComponent<PauseView>() : null;
+            if (view != null && view.IsTransitioning)
+            {
+                return;
+            }
+            // 修改当前暂停状态
             bool newState = !pauseModel.IsPaused;
-            // 设置暂停状态
-            pauseModel.SetPaused(newState);
             // 发布暂停事件
-            EventBus.Publish(new EPauseChanged(newState));
             if (newState)
             {
+                // 暂停时间
+                pauseModel.SetPaused(newState);
                 // 暂停时显示UI
                 if (pausePanel != null)
-                    pausePanel.GetComponent<PauseView>().Show();
+                {
+                    pausePanel.SetActive(true);
+                    pausePanel.GetComponent<PauseCtl>().Show();
+                }
+                EventBus.Publish(new EPauseChanged(newState));
             }
             else
             {
                 // 恢复时隐藏UI
                 if (pausePanel != null)
-                    pausePanel.GetComponent<PauseView>().Hide();
+                {
+                    pausePanel.GetComponent<PauseCtl>().Hide(ClosePausePanel);
+                }
             }
+        }
+
+        private void ClosePausePanel()
+        {
+            pausePanel.SetActive(false);
+            pauseModel.SetPaused(false);
+            EventBus.Publish(new EPauseChanged(false));
         }
 
         private void EnsurePausePanel()
@@ -77,8 +97,8 @@ namespace Manager
                 {
                     pausePanel = Instantiate(prefab);
                 }
+                pausePanel.SetActive(false);
             }
-            pausePanel.SetActive(false);
         }
     }
 }

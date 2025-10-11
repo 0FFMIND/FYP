@@ -30,10 +30,15 @@ namespace MVC
         public float bgmVolume = 0f;
         public float sfxVolume = 0f;
         public float mixerVolume = 0f;
+
         public float playerSpeed = 3f;
         public float typeSpeed = 0.08f;
         public float sprintMultiplier = 2.5f;
         public LanguageCode language = LanguageCode.zh;
+
+        public int screenWidth = 1920;
+        public int screenHeight = 1080;
+        public FullScreenMode screenMode = FullScreenMode.FullScreenWindow;
 
         // ”√dictionary∑Ω±„≤È’“
         public Dictionary<InputAction, KeyCode> keyBindings = new()
@@ -58,6 +63,9 @@ namespace MVC
                 playerSpeed = playerSpeed,
                 sprintMultiplier = sprintMultiplier,
                 typeSpeed = typeSpeed,
+                screenHeight = screenHeight,
+                screenWidth = screenWidth,
+                screenMode = screenMode,
                 keyBindings = new Dictionary<InputAction, KeyCode>(keyBindings),
             };
         }

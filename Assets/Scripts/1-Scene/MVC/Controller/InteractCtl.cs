@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Manager;
 using UnityEngine;
+using UnityEngine.Events;
 using Utils;
 
 namespace MVC
@@ -24,6 +25,9 @@ namespace MVC
         // 提供只读访问，供 PlayerInteractCtl 判定
         public bool IsImportant => _model != null && _model.isImportant;
         public bool IsTalked => _model != null && _model.isTalked;
+
+        [SerializeField]
+        private UnityEvent onInteractEnd;
 
         public bool BeginInteract(PlayerCtl player)
         {
@@ -86,6 +90,7 @@ namespace MVC
             {
                 _model.isTalked = true;
             }
+            onInteractEnd?.Invoke();
             // 广播结束
             EventBus.Publish(new EInteractEnd());
 

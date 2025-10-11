@@ -6,7 +6,8 @@ namespace MVC
 {
     public class GuideDialogCtl : DialogCtlBase
     {
-        [SerializeField] EnterAnim enterAnim;
+        [SerializeField]
+        EnterAnim enterAnim;
 
         private Action finished;
 
@@ -27,17 +28,10 @@ namespace MVC
             base.StartDialogue();
         }
 
-        public void StartFirstDialogue(Action onFinished)
+        public void StartDialogue(string modelText, Action onFinished)
         {
             finished = onFinished;
-            modelText = "1-Scene-3.txt";
-            StartDialogue();
-        }
-
-        public void StartSecondDialogue(Action onFinished)
-        {
-            finished = onFinished;
-            modelText = "1-Scene-4.txt";
+            this.modelText = modelText;
             StartDialogue();
         }
 
@@ -53,7 +47,7 @@ namespace MVC
                 startOnce = false;
                 _isEntering = false;
             }
-            else if(index == 0 && !startOnce)
+            else if (index == 0 && !startOnce)
             {
                 _isEntering = true;
                 yield return enterAnim.PlayEnterAnim();
