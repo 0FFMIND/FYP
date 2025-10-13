@@ -84,6 +84,7 @@ namespace MVC
             _consumeNextInteractPress = true;
             // 设置 0.2s 自动失效
             _consumeDeadline = Time.time + ConsumeBufferSeconds;
+            Refresh();
         }
 
         public void SetHoverOutline(bool shouldOutline)
@@ -143,7 +144,6 @@ namespace MVC
             }
 
             var go = (target as Component)?.gameObject;
-            // var _last = _lastGo;
             // 仅在目标变了时强制重算
             if (!ReferenceEquals(go, _lastGo))
             {
@@ -166,11 +166,11 @@ namespace MVC
                     next == EmoteType.Checked /*&& ReferenceEquals(go, _last)*/
                 )
                 {
-                    emote.Play(next, 1f, true);
+                    emote.Play(next, 1f, false);
                 }
                 else if (next == EmoteType.Checked)
                 {
-                    emote.Play(next, -1f, true);
+                    emote.Play(next, -1f, false);
                 }
                 else
                 {
@@ -242,7 +242,7 @@ namespace MVC
         }
 
         /// <summary>
-        /// 在自身/子物体/父物体上寻找 SpritesOutline（尽量宽松兼容你的层级）。
+        /// 在自身/子物体/父物体上寻找 SpritesOutline
         /// </summary>
         private static SpritesOutline FindOutlineOn(Component c)
         {

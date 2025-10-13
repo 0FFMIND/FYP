@@ -205,6 +205,28 @@ namespace Manager
             Save();
         }
 
+        public void SetInventorySnapshot(InventorySaveData snap, bool saveNow = false)
+        {
+            if (snap == null)
+            {
+                return;
+            }
+            if (InventoryEquals(_data.inventory, snap))
+            {
+                return;
+            }
+            _data.inventory = snap;
+            if (saveNow)
+            {
+                Save();
+            }
+        }
+
+        public InventorySaveData GetInventorySnapshot()
+        {
+            return _data.inventory;
+        }
+
         public (int w, int h) GetResolution()
         {
             return (_data.screenWidth, _data.screenHeight);
@@ -289,6 +311,28 @@ namespace Manager
             }
             _data.keyBindings[e.Action] = e.Key;
             Save();
+        }
+
+        private bool InventoryEquals(InventorySaveData a, InventorySaveData b)
+        {
+            if (ReferenceEquals(a, b))
+                return true;
+            if (a == null || b == null)
+                return false;
+            if (a.capacity != b.capacity)
+                return false;
+            if (a.itemIds == null || b.itemIds == null || a.counts == null || b.counts == null)
+                return false;
+            if (a.itemIds.Count != b.itemIds.Count || a.counts.Count != b.counts.Count)
+                return false;
+            for (int i = 0; i < a.itemIds.Count; i++)
+            {
+                if (!string.Equals(a.itemIds[i], b.itemIds[i], StringComparison.Ordinal))
+                    return false;
+                if (a.counts[i] != b.counts[i])
+                    return false;
+            }
+            return true;
         }
 
         // Unity 应用退出时自动调用

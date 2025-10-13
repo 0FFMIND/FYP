@@ -4,15 +4,12 @@ using UnityEngine;
 
 namespace MVC
 {
-    public class InteractDialogCtl : DialogCtlBase
+    public class InventoryDialogCtl : DialogCtlBase
     {
         [SerializeField]
         EnterAnim enterAnim;
 
         private Action finished;
-
-        // 表示后续没有对话/分支选项
-        private bool isSimple = true;
 
         protected override void OnEnable()
         {
@@ -52,15 +49,7 @@ namespace MVC
 
         private IEnumerator PlayClosed()
         {
-            if (isSimple)
-            {
-                yield return enterAnim.PlayExit();
-            }
-            else
-            {
-                // 还没考虑如果有分支情况，先简单关闭
-                enterAnim.target.SetActive(false);
-            }
+            yield return enterAnim.PlayExit();
             // 触发对话结束回调
             finished?.Invoke();
         }

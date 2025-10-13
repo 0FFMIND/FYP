@@ -30,26 +30,34 @@
     {
         "zh": "对话推进",
         "en": "Dialogue"
-    },    
-    {
-        "zh": "恢复默认",
-        "en": "Default"
     },
     {
         "zh": "移动速度",
-        "en": "Move Speed"
+        "en": "Speed"
     },
     {
         "zh": "疾跑速度",
-        "en": "Sprint Speed"
+        "en": "Sprint"
+    },
+    {
+        "zh": "人物设定",
+        "en": "Player Settings"
+    },
+    {
+        "zh": "按键设定",
+        "en": "Key Bindings"
+    },
+    {
+        "zh": "正在为<color=#FFC600>{action}</color>重新绑定，当前按键：<color=#FFC600>{key}</color>\\n请按任意键设置新按键\\n提示：如果 {key} 已被其他操作使用，此次更改将不会应用",
+        "en": "Rebinding <color=#FFC600>{action}</color> Current key: <color=#FFC600>{key}</color>\\nPress any key to assign a new binding.\\nNote: if {key} is already assigned to another action, this change will not be applied."
     },
     {
         "zh": "文本速率",
         "en": "Text Speed"
     },
     {
-        "zh": "人物设定",
-        "en": "Player Settings"
+        "zh": "恢复默认",
+        "en": "Default"
     },
     {
         "zh": "系统设定",
@@ -60,11 +68,39 @@
         "en": "Audio Settings"
     },
     {
-        "zh": "按键设定",
-        "en": "Key Bindings"
+        "zh": "分辨率",
+        "en": "Resolution"
     },
     {
-        "zh": "正在为<color=#FFC600> {action} </color>重新绑定，当前按键：<color=#FFC600>{key}</color>\\n请按任意键设置新按键\\n提示：如果 {key} 已被其他操作使用，此次更改将不会应用",
-        "en": "Rebinding <color=#FFC600> {action} </color> Current key: <color=#FFC600>{key}</color>\\nPress any key to assign a new binding.\\nNote: if {key} is already assigned to another action, this change will not be applied."
+        "zh": "显示模式",
+        "en": "Display Mode"
+    },
+    {
+        "zh": "窗口化",
+        "en": "Windowed"
+    },
+    {
+        "zh": "全屏",
+        "en": "Full Screen"
+    },
+    {
+        "zh": "设置",
+        "en": "Settings"
+    },
+    {
+        "zh": "背包",
+        "en": "Inventory"
+    },
+    {
+        "zh": "物品列表",
+        "en": "Item List"
+    },
+    {
+        "zh": "硬币",
+        "en": "Coin"
+    },
+    {
+        "zh": "日记",
+        "en": "Journal"
     }
 ]

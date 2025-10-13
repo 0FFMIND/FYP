@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using MVC;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +9,7 @@ namespace Manager
     {
         private PauseModel pauseModel;
         private GameObject pausePanel;
-        private const string PauseMenuPath = "Prefabs/1-Scene/PauseMenu";
+        private const string PauseMenuPath = "Prefabs/Global/PauseMenu";
         private bool canPause = true;
 
         private void Awake()
@@ -51,10 +49,12 @@ namespace Manager
 
             // 如果正在播放动画，则return
             var view = pausePanel ? pausePanel.GetComponent<PauseView>() : null;
+            // 动画过渡中不重复触发
             if (view != null && view.IsTransitioning)
             {
                 return;
             }
+
             // 修改当前暂停状态
             bool newState = !pauseModel.IsPaused;
             // 发布暂停事件
@@ -75,18 +75,21 @@ namespace Manager
                 // 恢复时隐藏UI
                 if (pausePanel != null)
                 {
+                    // 播放收起动画，动画结束回调ClosePausePanel
                     pausePanel.GetComponent<PauseCtl>().Hide(ClosePausePanel);
                 }
             }
         }
 
+        // 收起动画结束后的收尾
         private void ClosePausePanel()
         {
-            pausePanel.SetActive(false);
-            pauseModel.SetPaused(false);
-            EventBus.Publish(new EPauseChanged(false));
+            pausePanel.SetActive(false); // 隐藏暂停菜单根节点
+            pauseModel.SetPaused(false); // 更新模型为“未暂停”
+            EventBus.Publish(new EPauseChanged(false)); // 广播“已恢复”事件
         }
 
+        // 确保暂停面板已被加载实例化
         private void EnsurePausePanel()
         {
             if (pausePanel == null)

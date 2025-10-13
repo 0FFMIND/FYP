@@ -1,12 +1,15 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MVC
 {
     [Serializable]
     public class InteractModel
     {
+        [Header("从第几次起生效（含），默认0，对应区间 [visit, +∞)")]
+        public int visit = 0;
+
         [SerializeField]
         public string[] lines;
 
@@ -17,11 +20,8 @@ namespace MVC
         [SerializeField]
         public LineMapping[] mappings;
 
-        [Header("标记")]
+        [Header("回调事件")]
         [SerializeField]
-        public bool isImportant = false; // 重要交互（主线/关键）
-
-        [NonSerialized]
-        public bool isTalked = false; // 是否已完整聊过（运行时置位）
+        public UnityEvent onInteractEnd; // 回调事件
     }
 }
