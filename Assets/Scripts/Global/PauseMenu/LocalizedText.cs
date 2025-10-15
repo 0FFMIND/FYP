@@ -1,6 +1,6 @@
-using Manager;
 using System.Collections.Generic;
 using System.Text;
+using Manager;
 using TMPro;
 using UnityEngine;
 using Utils;
@@ -9,7 +9,8 @@ namespace MVC
 {
     public class LocalizedText : MonoBehaviour
     {
-        [SerializeField] private string key;
+        [SerializeField]
+        private string key;
 
         // 运行期传入的“命名参数”，例如 { "action": "Sprint", "key": "Right Shift" }
         private Dictionary<string, string> _namedArgs = new Dictionary<string, string>();
@@ -49,7 +50,6 @@ namespace MVC
         public void Refresh()
         {
             tmpText.text = LocalizationMgr.Instance.GetText(key);
-
             if (_namedArgs.Count > 0)
             {
                 string template = LocalizationMgr.Instance.GetText(key);
@@ -75,7 +75,9 @@ namespace MVC
                         if (close == -1)
                         {
                             // 没找到右括号：警告一次，并把剩余文本原样追加
-                            Debug.LogWarning($"[LocalizedText] 模板花括号不匹配（缺少 '}}'）: 模板片段：\"{template.Substring(i)}\"");
+                            Debug.LogWarning(
+                                $"[LocalizedText] 模板花括号不匹配（缺少 '}}'）: 模板片段：\"{template.Substring(i)}\""
+                            );
                             sb.Append(template, i, template.Length - i);
                             break;
                         }
@@ -87,7 +89,9 @@ namespace MVC
                         if (name.Length == 0)
                         {
                             // 空占位符 "{ }"：提示并原样保留
-                            Debug.LogError($"[LocalizedText] 空占位符：: 模板片段：\"{template.Substring(i)}\"，位置={i}。将保留 \"{{}}\" 原样。");
+                            Debug.LogError(
+                                $"[LocalizedText] 空占位符：: 模板片段：\"{template.Substring(i)}\"，位置={i}。将保留 \"{{}}\" 原样。"
+                            );
                             sb.Append('{').Append(rawName).Append('}');
                             i = close + 1;
                             continue;
@@ -101,7 +105,9 @@ namespace MVC
                         else
                         {
                             // 缺少键：错误日志 + 不替换（保留原样）
-                            Debug.LogError($"[LocalizedText] 模板缺少参数 需要 '{name}'，但未提供。占位符将保留原样。");
+                            Debug.LogError(
+                                $"[LocalizedText] 模板缺少参数 需要 '{name}'，但未提供。占位符将保留原样。"
+                            );
                             sb.Append('{').Append(rawName).Append('}');
                         }
 
@@ -121,6 +127,7 @@ namespace MVC
                     sb.Append(c);
                     i++;
                 }
+                sb = sb.Replace("\\n", "\n");
                 tmpText.text = sb.ToString();
             }
         }
@@ -133,9 +140,14 @@ namespace MVC
                 tmpText = GetComponent<TMP_Text>();
             }
         }
-        public void SetKey(string key)
+
+        public void SetKey(string key, bool refresh = false)
         {
             this.key = key;
+            if (refresh && tmpText)
+            {
+                Refresh();
+            }
         }
 
         // 传入命名参数字典，并立即刷新

@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Manager;
 using UnityEngine;
-using UnityEngine.Events;
 using Utils;
 
 namespace MVC
@@ -78,7 +74,7 @@ namespace MVC
             }
 
             _curStep = StepFor(visitCount);
-            if (_curStep == null || _curStep.lines == null || _curStep.lines.Length == 0)
+            if (_curStep == null || _curStep.firstLines == null || _curStep.firstLines.Length == 0)
             {
                 Debug.LogWarning("[InteractCtl] BeginInteract -> FALSE (no step/lines).");
                 return false;
@@ -87,18 +83,18 @@ namespace MVC
 
             isInteracting = true;
 
-            bool hasMapping = _curStep.mappings != null && _curStep.mappings.Length > 0;
+            bool hasMapping = _curStep.secondMappings != null && _curStep.secondMappings.Length > 0;
 
             // 先走交互对话（带 linemapping）
             interactCtl.StartDialogue(
-                _curStep.lines,
+                _curStep.firstLines,
                 () =>
                 {
                     // 回调
                     if (hasMapping)
                     {
                         dialogCtl.StartInteractDialogue(
-                            _curStep.mappings,
+                            _curStep.secondMappings,
                             _curStep.secondLines,
                             () =>
                             {
@@ -121,15 +117,34 @@ namespace MVC
             {
                 return;
             }
-            isInteracting = false;
-            // 次数+1
-            visitCount++;
-            // 更新标志位
-            isTalked = true;
-            _curStep.onInteractEnd?.Invoke();
-            // 广播结束
-            EventBus.Publish(new EInteractEnd());
+            // 有持久监听（Inspector 上绑定了方法）→ 传 this，让监听方在合适时机调用 ctl.Done()
+            bool hasListeners =
+                _curStep != null
+                && _curStep.onInteractEnd != null
+                && _curStep.onInteractEnd.GetPersistentEventCount() > 0;
 
+            if (hasListeners)
+            {
+                _curStep.onInteractEnd.Invoke(this); // 动态参数：当前 InteractCtl
+            }
+            else
+            {
+                Done(); // 没绑定就立刻收尾
+            }
+        }
+
+        // 提供给监听方在流程末尾调用
+        public void Done()
+        {
+            // 退出交互状态
+            isInteracting = false;
+            // 访问次数 +1
+            visitCount++;
+            // 本对象标记为已聊完
+            isTalked = true;
+            // 广播结束事件（PlayerInteractCtl 等会解除吞键/高亮等）
+            EventBus.Publish(new EInteractEnd());
+            // 释放玩家引用
             _player = null;
         }
     }

@@ -66,7 +66,7 @@ namespace MVC
             for (int i = 0; i < _modeList.Count; i++)
             {
                 var v = _modeList[i];
-                if(v == mode)
+                if (v == mode)
                 {
                     return i;
                 }
@@ -87,8 +87,7 @@ namespace MVC
             {
                 text = "全屏";
             }
-            // 显示文本
-            currentScreenText.text = text;
+            currentScreenText.GetComponent<LocalizedText>().SetKey(text, true);
 
             if (!applyNow)
                 return;

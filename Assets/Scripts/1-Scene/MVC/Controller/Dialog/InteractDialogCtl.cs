@@ -90,11 +90,8 @@ namespace MVC
                 if (index == map.lineIndex)
                 {
                     currentSprite = map.sprite;
-                    foreach (Eact eact in map.eacts)
-                    {
-                        if (eact != Eact.none) { }
-                    }
-
+                    // 触发所有绑定的行为
+                    map.onEnter?.Invoke();
                     break;
                 }
             }

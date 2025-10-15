@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Manager;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Utils;
 
@@ -23,8 +24,8 @@ namespace MVC
         [Tooltip("切换时使用的 Sprite")]
         public Sprite sprite;
 
-        [Tooltip("触发行为")]
-        public Eact[] eacts;
+        [Tooltip("触发行为（可在 Inspector 里添加多个回调）")]
+        public UnityEvent onEnter;
     }
 
     public abstract class DialogCtlBase : MonoBehaviour
@@ -71,7 +72,10 @@ namespace MVC
         protected Sprite currentSprite;
         protected Coroutine typingCoroutine;
         private float typeSpeed;
+        private LanguageCode languageCode;
         private Coroutine arrowBounceCoroutine;
+        private int typingTotal;
+
         public virtual void StartDialogue()
         {
             // 创建down arrow
@@ -81,6 +85,8 @@ namespace MVC
                 // 载入对话
                 dialogueModel = new DialogueModel(modelText);
             }
+            // 启动时记录当前语言
+            languageCode = SettingsMgr.Instance.GetLanguage();
             // 刷新index
             index = 0;
             // 注册事件
@@ -158,24 +164,34 @@ namespace MVC
             RenderViews(currentSprite, fullRaw);
             if (dialogueView == null)
             {
-                Debug.LogError($"[DialogCtlBase] TypeLines: {nameof(dialogueView)} == null (index={index}, model='{modelText}')");
+                Debug.LogError(
+                    $"[DialogCtlBase] TypeLines: {nameof(dialogueView)} == null (index={index}, model='{modelText}')"
+                );
                 yield break;
             }
             if (dialogueView.tmp == null)
             {
-                Debug.LogError($"[DialogCtlBase] TypeLines: {nameof(dialogueView)}.tmp == null (dialogueView='{dialogueView.name}', index={index}, model='{modelText}')");
+                Debug.LogError(
+                    $"[DialogCtlBase] TypeLines: {nameof(dialogueView)}.tmp == null (dialogueView='{dialogueView.name}', index={index}, model='{modelText}')"
+                );
                 yield break;
             }
             var tmp = dialogueView.tmp;
             tmp.ForceMeshUpdate();
             tmp.maxVisibleCharacters = 0;
 
-            int total = tmp.textInfo.characterCount;
+            typingTotal = tmp.textInfo.characterCount;
             int cnt = 0;
 
-            for (int vis = 1; vis <= total; vis++)
+            for (; ; )
             {
-                tmp.maxVisibleCharacters = vis;
+                // 若外部（语言切换）导致文本变化，这里会看到最新的 typingTotal
+                int curTotal = typingTotal;
+                int visNow = tmp.maxVisibleCharacters;
+                if (visNow >= curTotal)
+                    break;
+
+                tmp.maxVisibleCharacters = visNow + 1;
 
                 // 英文两字符一个音效；中文每个字符一个音效
                 bool isEn = SettingsMgr.Instance.GetLanguage() == LanguageCode.en;
@@ -294,6 +310,46 @@ namespace MVC
         protected virtual void OnEnable()
         {
             EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged);
+            EventBus.Subscribe<ELanguageChanged>(OnLanguageChanged);
+        }
+
+        private void OnLanguageChanged(ELanguageChanged e)
+        {
+            // 仅当语言变化时，手动触发重译并刷新当前行
+            if (e.Language != languageCode)
+            {
+                languageCode = e.Language;
+                if (dialogueModel != null && dialogueView != null)
+                {
+                    // 让 Model 重新生成 Lines
+                    dialogueModel.Reload();
+                    // 直接改 TMP 的 text，并保留当前遮罩
+                    var tmp = dialogueView.tmp;
+                    if (tmp)
+                    {
+                        // 当前显示的是 index-1（NextLine 渲染后才 index++）
+                        int cur = Mathf.Clamp(index - 1, 0, dialogueModel.Lines.Length - 1);
+                        // 记住原来的可见字符数量（遮罩）
+                        int prevVisible = tmp.maxVisibleCharacters;
+
+                        // 换新文本
+                        if (dialogueModel.Lines.Length > 0)
+                        {
+                            tmp.text = dialogueModel.Lines[cur];
+                            tmp.ForceMeshUpdate();
+                            // 遮罩沿用并裁到新文本长度以内
+                            int newLen = tmp.textInfo.characterCount;
+                            typingTotal = newLen;
+                            tmp.maxVisibleCharacters = Mathf.Min(prevVisible, newLen);
+                            // 重新定位箭头
+                            if (arrow.gameObject.activeSelf)
+                            {
+                                PositionArrowUnderText();
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void OnSettingsChanged(ESettingsChanged e)
@@ -304,6 +360,8 @@ namespace MVC
         protected void End()
         {
             EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
+            EventBus.Unsubscribe<ELanguageChanged>(OnLanguageChanged);
+
             EventBus.Unsubscribe<EInputPressed, InputAction>(
                 InputAction.DialogueClick,
                 OnDialogueClick
@@ -318,6 +376,8 @@ namespace MVC
         protected void Unsubscribe()
         {
             EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
+            EventBus.Unsubscribe<ELanguageChanged>(OnLanguageChanged);
+
             EventBus.Unsubscribe<EInputPressed, InputAction>(
                 InputAction.DialogueClick,
                 OnDialogueClick

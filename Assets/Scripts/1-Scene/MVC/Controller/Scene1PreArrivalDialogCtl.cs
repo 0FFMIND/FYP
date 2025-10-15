@@ -7,7 +7,8 @@ namespace MVC
 {
     public class Scene1PreArrivalDialogCtl : DialogCtlBase
     {
-        [SerializeField] EnterAnim enterAnim;
+        [SerializeField]
+        EnterAnim enterAnim;
 
         public void HideDialogue()
         {
@@ -43,6 +44,16 @@ namespace MVC
             yield return base.TypeLines(fullRaw);
         }
 
+        public void PlayDefaultBGM()
+        {
+            AudioManager.Instance.PlayBGM("1-bgm");
+        }
+
+        public void ArrowRed()
+        {
+            arrow.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+
         protected override void NextLine()
         {
             arrow.GetComponent<SpriteRenderer>().color = Color.white;
@@ -70,20 +81,8 @@ namespace MVC
                 if (index == map.lineIndex)
                 {
                     currentSprite = map.sprite;
-                    foreach (Eact eact in map.eacts)
-                    {
-                        if (eact != Eact.none)
-                        {
-                            if (eact == Eact.playBGM)
-                            {
-                                AudioManager.Instance.PlayBGM("1-bgm");
-                            }
-                            if (eact == Eact.arrowRed)
-                            {
-                                arrow.GetComponent<SpriteRenderer>().color = Color.red;
-                            }
-                        }
-                    }
+                    // 触发所有绑定的行为
+                    map.onEnter?.Invoke();
 
                     break;
                 }

@@ -48,8 +48,8 @@
         "en": "Key Bindings"
     },
     {
-        "zh": "正在为<color=#FFC600>{action}</color>重新绑定，当前按键：<color=#FFC600>{key}</color>\\n请按任意键设置新按键\\n提示：如果 {key} 已被其他操作使用，此次更改将不会应用",
-        "en": "Rebinding <color=#FFC600>{action}</color> Current key: <color=#FFC600>{key}</color>\\nPress any key to assign a new binding.\\nNote: if {key} is already assigned to another action, this change will not be applied."
+        "zh": "正在为<color=#FFC600>{action}</color>重新绑定，当前按键：<color=#FFC600>{key}</color>\\n请按任意键设置新按键\\n提示：如果{key}已被其他操作使用，或者修改的按键为WASD或方向键（↑↓←→）此次更改将不会应用",
+        "en": "Rebinding for <color=#FFC600>{action}</color>, current key: <color=#FFC600>{key}</color>\\nPress any key to set a new key\\nTip: If {key} is already used by another action, or if the key being changed is WASD or the arrow keys (↑↓←→), this change will not be applied"
     },
     {
         "zh": "文本速率",

@@ -1,27 +1,33 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace MVC
 {
+    [Serializable]
+    public class InteractEndEvent : UnityEvent<InteractCtl> { }
+
     [Serializable]
     public class InteractModel
     {
         [Header("从第几次起生效（含），默认0，对应区间 [visit, +∞)")]
         public int visit = 0;
-
+        [Header("第一段")]
         [SerializeField]
-        public string[] lines;
+        [TextArea]
+        public string[] firstLines;
 
         [Header("第二段")]
         [SerializeField]
+        [TextArea]
         public string[] secondLines;
 
         [SerializeField]
-        public LineMapping[] mappings;
+        public LineMapping[] secondMappings;
 
         [Header("回调事件")]
         [SerializeField]
-        public UnityEvent onInteractEnd; // 回调事件
+        public InteractEndEvent onInteractEnd;
     }
 }

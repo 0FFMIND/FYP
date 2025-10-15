@@ -123,7 +123,7 @@ namespace Manager
             s = s.Replace("\\t", "\t");
             s = s.Replace("\\r", "\r");
 
-            // 如确有需要再还原双反斜杠到单反斜杠（可选）
+            // 如确有需要再还原双反斜杠到单反斜杠
             // s = s.Replace("\\\\", "\\");
             return s;
         }

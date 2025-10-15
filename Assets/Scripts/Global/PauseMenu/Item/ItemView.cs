@@ -16,12 +16,8 @@ namespace MVC
         /// <summary>给该行设置显示内容（控制器负责把 id 转成展示名）</summary>
         public void Bind(string displayName, int count)
         {
-            nameText.GetComponent<LocalizedText>().SetKey(displayName);
+            nameText.GetComponent<LocalizedText>().SetKey(displayName, true);
 
-            if (nameText)
-            {
-                nameText.text = displayName ?? "";
-            }
             if (countText)
             {
                 countText.text = count.ToString();

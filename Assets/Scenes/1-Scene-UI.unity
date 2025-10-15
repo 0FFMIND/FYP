@@ -466,7 +466,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &186853043
 Canvas:
   m_ObjectHideFlags: 0
@@ -600,7 +600,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &396104440
 Canvas:
   m_ObjectHideFlags: 0
@@ -857,10 +857,38 @@ MonoBehaviour:
   mappings:
   - lineIndex: 0
     sprite: {fileID: 21300000, guid: 58000e0e4efaf064eb9a9d9157be32be, type: 3}
-    eacts: 01000000
+    onEnter:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 527947528}
+          m_TargetAssemblyTypeName: MVC.Scene1PreArrivalDialogCtl, Assembly-CSharp
+          m_MethodName: PlayDefaultBGM
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - lineIndex: 5
     sprite: {fileID: 21300000, guid: 58000e0e4efaf064eb9a9d9157be32be, type: 3}
-    eacts: 02000000
+    onEnter:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 527947528}
+          m_TargetAssemblyTypeName: MVC.Scene1PreArrivalDialogCtl, Assembly-CSharp
+          m_MethodName: ArrowRed
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   enableTypingSfx: 1
   typingRate: 1
   bgView: {fileID: 186853044}
@@ -1970,7 +1998,7 @@ Canvas:
   m_GameObject: {fileID: 1196720869}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 1186905178}
   m_PlaneDistance: 100
   m_PixelPerfect: 0

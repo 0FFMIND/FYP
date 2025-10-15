@@ -79,11 +79,6 @@ namespace MVC
                 if (index == map.lineIndex)
                 {
                     currentSprite = map.sprite;
-                    foreach (Eact eact in map.eacts)
-                    {
-                        if (eact != Eact.none) { }
-                    }
-
                     break;
                 }
             }

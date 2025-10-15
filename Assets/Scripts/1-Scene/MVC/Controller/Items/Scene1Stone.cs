@@ -1,5 +1,8 @@
+using System;
 using Manager;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace MVC
 {
@@ -11,18 +14,17 @@ namespace MVC
         [SerializeField]
         string[] lines;
 
-        public void AddCoin()
+        public void AddCoin(InteractCtl ctl)
         {
-            // 禁止player移动
-            var player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtl>();
-            player.model.SetDisabled(true);
             InventoryMgr.Instance.AddById("coin", 1);
-            dialogCtl.StartDialogue(lines, CanMove);
-        }
-
-        private void CanMove() {
-            var player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtl>();
-            player.model.SetDisabled(false);
+            dialogCtl.StartDialogue(
+                lines,
+                () =>
+                {
+                    // 通知 InteractCtl 可以收尾
+                    ctl?.Done();
+                }
+            );
         }
     }
 }

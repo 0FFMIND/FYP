@@ -296,7 +296,7 @@ namespace MVC
             if (Application.isPlaying && playerModel != null)
                 dir = playerModel.FacingDir;
             dir = dir.sqrMagnitude > 0f ? dir.normalized : Vector2.right;
-            origin.y += Mathf.Sign(dir.y) * yOriginOffset;
+            origin += Vector2.up * yOriginOffset;
             // 末端点
             Vector2 end = origin + dir * rayLength; // 终点 = 起点 + 方向*长度
 
