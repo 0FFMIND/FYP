@@ -64,9 +64,10 @@ namespace Manager
         private bool Add(Item item, int amount)
         {
             if (Model == null || item == null || amount <= 0)
+            {
                 return false;
+            }
 
-            // 只叠加已有堆
             bool ok = Model.TryAdd(item, amount);
             if (ok)
             {
@@ -80,6 +81,58 @@ namespace Manager
         {
             var item = ResolveById(itemId);
             return Add(item, amount);
+        }
+
+        // 按 Item 查询数量
+        public int GetCount(Item item)
+        {
+            if (Model == null || item == null)
+            {
+                return 0;
+            }
+            return Model.GetCount(item);
+        }
+
+        // 按 id 查询数量
+        public int GetCountById(string itemId)
+        {
+            if (Model == null)
+            {
+                return 0;
+            }
+            var item = ResolveById(itemId);
+            return Model.GetCount(item);
+        }
+
+        // 按 Item 消耗（仅当单一堆可一次性扣完才成功；成功会写回存档）
+        public bool TryConsume(Item item, int amount = 1)
+        {
+            if (Model == null)
+            {
+                return false;
+            }
+            bool ok = Model.TryConsume(item, amount);
+            if (ok)
+            {
+                FlushInventorySnapshot();
+            }
+            return ok;
+        }
+
+        // 按 id 消耗（成功会写回存档）
+        public bool TryConsumeById(string itemId, int amount = 1)
+        {
+            if (Model == null)
+            {
+                return false;
+            }
+            var item = ResolveById(itemId);
+            bool ok = Model.TryConsume(item, amount);
+            if (ok)
+            {
+                FlushInventorySnapshot();
+            }
+            return ok;
         }
 
         // —— 将当前背包快照写回 SettingsMgr（是否立刻落盘由 saveNow 决定）——

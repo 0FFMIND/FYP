@@ -1,0 +1,106 @@
+[
+    {
+        "zh": "主音量",
+        "en": "Mixer"
+    },
+    {
+        "zh": "背景音",
+        "en": "BGM"
+    },
+    {
+        "zh": "音效",
+        "en": "SFX"
+    },
+    {
+        "zh": "当前语言",
+        "en": "Language"
+    },
+    {
+        "zh": "玩家疾跑",
+        "en": "Sprint"
+    },
+    {
+        "zh": "暂停/返回",
+        "en": "Pause"
+    },
+    {
+        "zh": "物体交互",
+        "en": "Interact"
+    },
+    {
+        "zh": "对话推进",
+        "en": "Dialogue"
+    },
+    {
+        "zh": "移动速度",
+        "en": "Speed"
+    },
+    {
+        "zh": "疾跑速度",
+        "en": "Sprint"
+    },
+    {
+        "zh": "人物设定",
+        "en": "Player Settings"
+    },
+    {
+        "zh": "按键设定",
+        "en": "Key Bindings"
+    },
+    {
+        "zh": "正在为<color=#FFC600>{action}</color>重新绑定，当前按键：<color=#FFC600>{key}</color>\\n请按任意键设置新按键\\n提示：如果{key}已被其他操作使用，或者修改的按键为WASD或方向键（↑↓←→）此次更改将不会应用",
+        "en": "Rebinding for <color=#FFC600>{action}</color>, current key: <color=#FFC600>{key}</color>\\nPress any key to set a new key\\nTip: If {key} is already used by another action, or if the key being changed is WASD or the arrow keys (↑↓←→), this change will not be applied"
+    },
+    {
+        "zh": "文本速率",
+        "en": "Text Speed"
+    },
+    {
+        "zh": "恢复默认",
+        "en": "Default"
+    },
+    {
+        "zh": "系统设定",
+        "en": "System Settings"
+    },
+    {
+        "zh": "音量设定",
+        "en": "Audio Settings"
+    },
+    {
+        "zh": "分辨率",
+        "en": "Resolution"
+    },
+    {
+        "zh": "显示模式",
+        "en": "Display Mode"
+    },
+    {
+        "zh": "窗口化",
+        "en": "Windowed"
+    },
+    {
+        "zh": "全屏",
+        "en": "Full Screen"
+    },
+    {
+        "zh": "设置",
+        "en": "Settings"
+    },
+    {
+        "zh": "背包",
+        "en": "Inventory"
+    },
+    {
+        "zh": "物品列表",
+        "en": "Item List"
+    },
+    {
+        "zh": "硬币",
+        "en": "Coin"
+    },
+    {
+        "zh": "日记",
+        "en": "Journal"
+    }
+]

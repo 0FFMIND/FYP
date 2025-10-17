@@ -1,8 +1,6 @@
 using System;
 using Manager;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace MVC
 {

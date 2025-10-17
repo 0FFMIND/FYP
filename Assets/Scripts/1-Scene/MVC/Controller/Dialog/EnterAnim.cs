@@ -143,6 +143,102 @@ namespace MVC
             target.SetActive(false);
         }
 
+        public IEnumerator PlayExitCode(DialogueView view, bool isBG)
+        {
+            if (mode != Mode.CodeTween)
+                yield break;
+            if (!view)
+                yield break;
+
+            var go = view.gameObject;
+            var panelImage = view.GetComponentInChildren<Image>(true);
+            var prof = isBG ? bgProfile : dialogProfile;
+            var img = view.GetComponentInChildren<Image>(true);
+
+            float keepAlpha = img ? img.color.a : 1f;
+
+            // 从当前位置滑到“入场起点位置”
+            yield return SlideOut(
+                go,
+                panelImage,
+                keepAlpha,
+                prof.duration,
+                prof.curve,
+                prof.offsetX,
+                prof.offsetY
+            );
+        }
+
+        private IEnumerator SlideOut(
+            GameObject go,
+            Image img,
+            float alphaTarget,
+            float duration,
+            AnimationCurve curve,
+            float offsetX,
+            float offsetY
+        )
+        {
+            float fadeOutAlpha = 0f;
+            float dur = Mathf.Max(0.0001f, duration);
+            float t = 0f;
+            curve = AnimationCurve.EaseInOut(1, 1, 0, 0);
+
+            var rt = go.transform as RectTransform;
+            if (rt != null)
+            {
+                Vector2 start = rt.anchoredPosition; // 退场前的“基准位”
+                Vector2 target = start + new Vector2(offsetX, -offsetY); // 退场终点（= 入场起点）
+
+                float a0 = img ? img.color.a : 1f;
+
+                while (t < dur)
+                {
+                    t += Time.unscaledDeltaTime;
+                    float u = curve.Evaluate(Mathf.Clamp01(t / dur));
+                    rt.anchoredPosition = Vector2.LerpUnclamped(start, target, u);
+
+                    if (img)
+                    {
+                        var c = img.color;
+                        c.a = Mathf.LerpUnclamped(a0, fadeOutAlpha, u);
+                        img.color = c;
+                    }
+                    yield return null;
+                }
+
+                img.gameObject.SetActive(false);
+
+                // 先抵达退场终点，再**复位回基准位**，防止下次进场累加偏移
+                rt.anchoredPosition = target;
+                if (img)
+                {
+                    var c = img.color;
+                    c.a = alphaTarget;
+                    img.color = c;
+                }
+
+                rt.anchoredPosition = start; // ← 关键复位
+            }
+            else
+            {
+                Vector3 start = go.transform.localPosition;
+                Vector3 target = start + new Vector3(offsetX, -offsetY, 0f);
+
+                while (t < dur)
+                {
+                    t += Time.unscaledDeltaTime;
+                    float u = curve.Evaluate(Mathf.Clamp01(t / dur));
+                    go.transform.localPosition = Vector3.LerpUnclamped(start, target, u);
+                    yield return null;
+                }
+
+                // 同样复位
+                go.transform.localPosition = target;
+                go.transform.localPosition = start; // ← 关键复位
+            }
+        }
+
         private IEnumerator SlideIn(
             GameObject go,
             Image img,
@@ -158,7 +254,7 @@ namespace MVC
             // 使用 RectTransform 优先（UI），否则走 Transform.localPosition（世界/局部物体）
             var rt = go.transform as RectTransform;
             if (curve == null)
-                curve = AnimationCurve.EaseInOut(0, 0, 1, 1); // 默认S型缓入缓出
+                curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
             if (rt != null)
             {

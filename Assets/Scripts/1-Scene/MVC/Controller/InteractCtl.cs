@@ -10,10 +10,10 @@ namespace MVC
         [SerializeField]
         private InteractModel[] steps;
 
-        private int visitCount = 0; // 已访问次数
+        protected int visitCount = 0; // 已访问次数
         private InteractModel _curStep; // 当前这一次使用的步骤
 
-        private PlayerCtl _player;
+        protected PlayerCtl _player;
 
         [Header("标记")]
         [SerializeField]
@@ -23,13 +23,17 @@ namespace MVC
         public bool isTalked = false; // 是否已完整聊过（运行时置位）
 
         [SerializeField]
-        private InteractDialogCtl interactCtl;
+        protected InteractDialogCtl interactCtl;
 
         [SerializeField]
-        private TimelineDialogCtl dialogCtl;
+        protected TimelineDialogCtl dialogCtl;
 
         // 是否处于对话中
         private bool isInteracting;
+
+        // 选项
+        [SerializeField]
+        private ChoiceCtl choiceCtl;
 
         // 提供只读访问，供 PlayerInteractCtl 判定
         public bool IsImportant => isImportant;
@@ -59,7 +63,73 @@ namespace MVC
             return best ?? steps[0];
         }
 
-        public bool BeginInteract(PlayerCtl player)
+        protected void BeginDialogue()
+        {
+            _curStep = StepFor(visitCount);
+
+            // 判定各段是否存在
+            bool hasFirst = _curStep.firstLines != null && _curStep.firstLines.Length > 0;
+            bool hasSecondLines = _curStep.secondLines != null && _curStep.secondLines.Length > 0;
+            bool hasSecondMaps = _curStep.secondMappings != null && _curStep.secondMappings.Length > 0;
+            bool hasChoice = _curStep.choiceModel.items != null && _curStep.choiceModel.items.Length > 0;
+
+            // 启动 second 段（走 dialogCtl），容错：映射或台词缺失则传空数组
+            void StartSecondFlow()
+            {
+                if (hasChoice)
+                {
+                    dialogCtl.hasChoice = true;
+                    dialogCtl.choiceModel = _curStep.choiceModel;
+                }
+                else
+                {
+                    dialogCtl.hasChoice = false;
+                    dialogCtl.choiceModel.items = null;
+                }
+
+                var maps = hasSecondMaps ? _curStep.secondMappings : System.Array.Empty<LineMapping>();
+                var lines = hasSecondLines ? _curStep.secondLines : System.Array.Empty<string>();
+
+                dialogCtl.StartInteractDialogue(
+                    maps,
+                    lines,
+                    () => { EndInteract(_player); }
+                );
+            }
+
+            // 情况A：first 不存在而 second 存在 → 直接进入 second（不走 interactCtl）
+            if (!hasFirst && hasSecondLines)
+            {
+                StartSecondFlow();
+                return;
+            }
+
+            // 情况B：first 存在 → 先走交互对话，回调里再决定是否进 second
+            if (hasFirst)
+            {
+                interactCtl.StartDialogue(
+                    _curStep.firstLines,
+                    () =>
+                    {
+                        if (hasSecondLines)
+                        {
+                            StartSecondFlow();
+                        }
+                        else
+                        {
+                            EndInteract(_player);
+                        }
+                    }
+                );
+            }
+            else
+            {
+                // 情况C：两段都没有台词
+                EndInteract(_player);
+            }
+        }
+
+        public virtual bool BeginInteract(PlayerCtl player)
         {
             if (isInteracting)
             {
@@ -84,6 +154,8 @@ namespace MVC
             isInteracting = true;
 
             bool hasMapping = _curStep.secondMappings != null && _curStep.secondMappings.Length > 0;
+            bool hasChoice =
+                _curStep.choiceModel.items != null && _curStep.choiceModel.items.Length > 0;
 
             // 先走交互对话（带 linemapping）
             interactCtl.StartDialogue(
@@ -93,6 +165,16 @@ namespace MVC
                     // 回调
                     if (hasMapping)
                     {
+                        if (hasChoice)
+                        {
+                            dialogCtl.hasChoice = true;
+                            dialogCtl.choiceModel = _curStep.choiceModel;
+                        }
+                        else
+                        {
+                            dialogCtl.hasChoice = false;
+                            dialogCtl.choiceModel.items = null;
+                        }
                         dialogCtl.StartInteractDialogue(
                             _curStep.secondMappings,
                             _curStep.secondLines,

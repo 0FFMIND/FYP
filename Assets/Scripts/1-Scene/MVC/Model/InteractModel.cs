@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace MVC
 {
@@ -13,6 +12,7 @@ namespace MVC
     {
         [Header("从第几次起生效（含），默认0，对应区间 [visit, +∞)")]
         public int visit = 0;
+
         [Header("第一段")]
         [SerializeField]
         [TextArea]
@@ -25,6 +25,11 @@ namespace MVC
 
         [SerializeField]
         public LineMapping[] secondMappings;
+
+        [Header("选项")]
+
+        [SerializeField]
+        public ChoiceModel choiceModel;
 
         [Header("回调事件")]
         [SerializeField]
