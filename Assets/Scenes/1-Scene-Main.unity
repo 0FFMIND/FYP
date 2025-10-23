@@ -361,7 +361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   img: {fileID: 1997089501}
   tmp: {fileID: 0}
-  imageFadeDuration: 0.2
+  imageFadeDuration: 0
 --- !u!1 &39773074
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,7 +664,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - visit: 0
-    firstLines: []
+    firstLines:
+    - "\u4E00\u4E2A\u7E41\u8302\u7684\u82B1\u5703\uFF0C\u4EE5\u9C9C\u9EC4\u8272\u82B1\u6735\u4E3A\u4E3B"
     secondLines: []
     secondMappings: []
     choiceModel:
@@ -809,8 +810,8 @@ MonoBehaviour:
   root: {fileID: 69404823}
   panels:
   - {fileID: 1100911654}
-  openDuration: 0.2
-  closeDuration: 0.2
+  openDuration: 0.15
+  closeDuration: 0.1
 --- !u!95 &69404826
 Animator:
   serializedVersion: 5
@@ -977,7 +978,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - visit: 0
-    firstLines: []
+    firstLines:
+    - "\u770B\u4E0A\u53BB\u65E0\u4EBA\u6253\u7406\u7684\u957F\u6905\uFF0C\u6905\u811A\u4EE5\u53CA\u5468\u56F4\u7684\u5730\u9762\u90FD\u957F\u51FA\u4E86\u9752\u82D4"
     secondLines: []
     secondMappings: []
     choiceModel:
@@ -1263,12 +1265,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - visit: 0
-    firstLines: []
+    firstLines:
+    - "\u5E76\u6392\u653E\u7740\u7684\u4E09\u76C6\u690D\u7269\uFF0C\u6700\u5DE6\u4FA7\u4E00\u76C6\u7684\u53F6\u7247\u5448\u73B0\u51FA\u5065\u5EB7\u7684\u7FE0\u7EFF\u8272\uFF0C\u4E2D\u95F4\u4E0E\u53F3\u4FA7\u76C6\u683D\u7684\u53F6\u7247\u5219\u663E\u5F97\u8584\u800C\u53D1\u9EC4"
     secondLines:
     - "\u5149\u662F\u4ECE\u5DE6\u8FB9\u8FD9\u4E2A\u65B9\u5411\u7167\u8FC7\u6765\u7684"
     - "\u5DE6\u8FB9\u8FD9\u76C6\u5728\u6700\u5916\u4FA7\uFF0C\u628A\u9633\u5149\u5835\u5F97\u6B7B\u6B7B\u7684\uFF0C\u4E00\u70B9\u6D3B\u8DEF\u90FD\u4E0D\u7ED9\u53E6\u5916\u4E24\u76C6\u7559"
     - "\u8981\u662F\u6211\u662F\u90A3\u4E24\u76C6\u91CC\u7684\u4E00\u4E2A\uFF0C\u6211\u5F97\u8DDF\u5B83\u4EEC\u4E00\u6837\u90C1\u95F7\u4E86"
-    secondMappings: []
+    secondMappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 2
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
     choiceModel:
       items: []
       choiceHeader: 
@@ -1728,12 +1741,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - visit: 0
-    firstLines: []
+    firstLines:
+    - "\u4E00\u4E2A\u8FB9\u89D2\u6709\u4E9B\u78E8\u574F\u4F46\u770B\u8D77\u6765\u5341\u5206\u7ED3\u5B9E\u7684\u94C1\u5236\u516C\u544A\u680F"
+    - "\u4E0A\u9762\u7684\u5B57\u8FF9\u88AB\u6DE1\u6DE1\u7684\u9752\u82D4\u906E\u4F4F\uFF0C\u4F46\u4F9D\u65E7\u53EF\u4EE5\u8FA8\u8BA4\uFF1A"
+    - "\u4E3A\u4FDD\u5B89\u5168\uFF0C\u8BF7\u52FF\u501A\u9760\u6216\u6500\u722C\u9632\u62A4\u680F"
     secondLines:
     - "\u8FD9\u91CC\u7279\u610F\u6302\u4E86\u724C\u5B50\u63D0\u9192\uFF0C\u770B\u6765\u8FD9\u680F\u6746\u786E\u5B9E\u9760\u4E0D\u4F4F"
     - "\u6211\u53EF\u4E0D\u60F3\u56E0\u4E3A\u81EA\u5DF1\u7684\u597D\u5947\u5FC3\uFF0C\u660E\u5929\u5C31\u767B\u4E0A\u6821\u56ED\u65B0\u95FB\u5934\u6761"
     - "\u8FD8\u662F\u522B\u9760\u592A\u8FD1\u4E86\uFF0C\u514D\u5F97\u8BA9\u8FD9\u91CC\u6210\u4E3A\u4E8B\u6545\u73B0\u573A"
-    secondMappings: []
+    secondMappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
     choiceModel:
       items: []
       choiceHeader: 
@@ -1744,7 +1765,7 @@ MonoBehaviour:
         - m_Target: {fileID: 1277239969}
           m_TargetAssemblyTypeName: MVC.Scene1ArrivalCtl, Assembly-CSharp
           m_MethodName: EndInteractBoard
-          m_Mode: 1
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3777,7 +3798,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - visit: 0
-    firstLines: []
+    firstLines:
+    - "\u4E00\u4E2A\u7E41\u8302\u7684\u82B1\u5703\uFF0C\u4EE5\u9C9C\u9EC4\u8272\u82B1\u6735\u4E3A\u4E3B"
     secondLines: []
     secondMappings: []
     choiceModel:
@@ -4812,6 +4834,7 @@ MonoBehaviour:
     choicePanel: 0
   choiceCtl: {fileID: 69404825}
   enlargeArrow: 0
+  skipBG: 0
   delayFinish: 0
 --- !u!114 &899453563
 MonoBehaviour:
@@ -5615,7 +5638,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - visit: 0
-    firstLines: []
+    firstLines:
+    - "\u968F\u5904\u53EF\u89C1\u7684\u788E\u77F3\u5934"
+    - "\u788E\u77F3\u4E0B\u6709\u5FAE\u5149\u95EA\u70C1"
+    - "\u4F60\u4F38\u624B\u62E8\u5F00\u788E\u77F3\uFF0C\u7ECF\u8FC7\u7FFB\u627E\uFF0C\u4ECE\u6CE5\u571F\u4E2D\u62FE\u8D77\u4E86\u4E00\u679A\u94F6\u8272\u7684\u786C\u5E01"
     secondLines: []
     secondMappings: []
     choiceModel:
@@ -5638,7 +5664,8 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - visit: 1
-    firstLines: []
+    firstLines:
+    - "\u4F60\u518D\u6B21\u7FFB\u627E\u4E86\u8FD9\u4E9B\u788E\u77F3\uFF0C\u4F46\u6CA1\u6709\u4EFB\u4F55\u65B0\u7684\u53D1\u73B0"
     secondLines:
     - "\u4EC0\u4E48\u90FD\u6CA1\u6709\u53D1\u73B0"
     - "\u679C\u7136\uFF0C\u5929\u4E0A\u4E0D\u4F1A\u6389\u4E24\u6B21\u9985\u997C"
@@ -6389,11 +6416,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - visit: 0
-    firstLines: []
+    firstLines:
+    - " \u4E00\u4E2A\u4E0D\u8D77\u773C\u7684\u4E0B\u6C34\u9053\u53E3\uFF0C\u5468\u56F4\u6E7F\u6F09\u6F09\u7684"
+    - "\u4F60\u77A5\u89C1\u4E0B\u6C34\u9053\u7F1D\u9699\u4E2D\u9690\u9690\u900F\u7740\u94F6\u8272\u7684\u5FAE\u5149"
+    - "\u4F46\u6251\u9F3B\u7684\u5F02\u5473\u548C\u9ECF\u817B\u7684\u6C61\u57A2\u8BA9\u4F60\u7ACB\u523B\u540E\u9000\u534A\u6B65"
     secondLines:
     - "\u8FD9\u5473\u9053\u2026\u2026\u53EF\u771F\u591F\u63D0\u795E\u9192\u8111\u7684"
     - "\u6211\u53EF\u4E0D\u60F3\u4E3A\u8FD9\u4E48\u70B9\u94B1\u5F04\u810F\u624B"
-    secondMappings: []
+    secondMappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
     choiceModel:
       items: []
       choiceHeader: 
@@ -6402,11 +6437,19 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - visit: 1
-    firstLines: []
+    firstLines:
+    - " \u4E00\u4E2A\u4E0D\u8D77\u773C\u7684\u4E0B\u6C34\u9053\u53E3\uFF0C\u5468\u56F4\u6E7F\u6F09\u6F09\u7684"
+    - "\u4F60\u77A5\u89C1\u4E0B\u6C34\u9053\u7F1D\u9699\u4E2D\u9690\u9690\u900F\u7740\u94F6\u8272\u7684\u5FAE\u5149"
+    - "\u4F46\u6251\u9F3B\u7684\u5F02\u5473\u548C\u9ECF\u817B\u7684\u6C61\u57A2\u8BA9\u4F60\u7ACB\u523B\u540E\u9000\u534A\u6B65"
     secondLines:
     - "\u6211\u7684\u5C0A\u4E25\uFF0C\u53EF\u6BD4\u4E00\u679A\u786C\u5E01\u503C\u94B1\u591A\u4E86"
     - "\uFF08\u4F60\u52AA\u529B\u4E0D\u8BA9\u81EA\u5DF1\u7684\u76EE\u5149\u505C\u7559\u5728\u90A3\u91CC\uFF0C\u5FEB\u6B65\u79BB\u5F00\uFF09"
-    secondMappings: []
+    secondMappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
     choiceModel:
       items: []
       choiceHeader: 
@@ -6415,12 +6458,20 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - visit: 2
-    firstLines: []
+    firstLines:
+    - " \u4E00\u4E2A\u4E0D\u8D77\u773C\u7684\u4E0B\u6C34\u9053\u53E3\uFF0C\u5468\u56F4\u6E7F\u6F09\u6F09\u7684"
+    - "\u4F60\u77A5\u89C1\u4E0B\u6C34\u9053\u7F1D\u9699\u4E2D\u9690\u9690\u900F\u7740\u94F6\u8272\u7684\u5FAE\u5149"
+    - "\u4F46\u6251\u9F3B\u7684\u5F02\u5473\u548C\u9ECF\u817B\u7684\u6C61\u57A2\u8BA9\u4F60\u7ACB\u523B\u540E\u9000\u534A\u6B65"
     secondLines:
     - "\u8BA9\u786C\u5E01\u7559\u5728\u8FD9\u91CC\u6C61\u67D3\u73AF\u5883\uFF0C\u4E5F\u662F\u4E00\u79CD\u7F6A\u8FC7\u5427\uFF1F"
     - "\u5BF9\uFF0C\u6211\u8FD9\u662F\u5728\u2026\u2026\u6E05\u7406\u73AF\u5883\uFF01"
     - "\uFF08\u4F60\u8FC5\u901F\u8E72\u4E0B\u4E86\u8EAB\uFF0C\u5C0F\u5FC3\u7FFC\u7FFC\u5730\u7528\u6307\u7532\u62A0\u51FA\u4E86\u786C\u5E01\uFF09"
-    secondMappings: []
+    secondMappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
     choiceModel:
       items: []
       choiceHeader: 
@@ -6441,7 +6492,8 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - visit: 3
-    firstLines: []
+    firstLines:
+    - " \u4E00\u4E2A\u4E0D\u8D77\u773C\u7684\u4E0B\u6C34\u9053\u53E3\uFF0C\u5468\u56F4\u6E7F\u6F09\u6F09\u7684"
     secondLines: []
     secondMappings: []
     choiceModel:
@@ -7559,11 +7611,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - visit: 0
-    firstLines: []
+    firstLines:
+    - "\u4E00\u6247\u865A\u63A9\u7740\u7684\u8001\u65E7\u94C1\u95E8\uFF0C\u95E8\u8F74\u4E0A\u5361\u7740\u4E00\u5757\u663E\u773C\u7684\u6241\u77F3\u5934"
     secondLines:
     - "\u521A\u521A\u653E\u7684\u77F3\u5934\u8FD8\u5361\u5728\u95E8\u8F74\u4E0A\u2026\u2026\u73B0\u5728\u6700\u597D\u522B\u53BB\u52A8\u5B83"
     - "\u4E07\u4E00\u78B0\u6389\u4E86\u77F3\u5934\uFF0C\u5BFC\u81F4\u8FD9\u6247\u95E8\u5173\u4E0A\u2026\u2026\u6211\u5C31\u771F\u51FA\u4E0D\u53BB\u4E86"
-    secondMappings: []
+    secondMappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 1
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
     choiceModel:
       items: []
       choiceHeader: 
@@ -7907,7 +7970,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - visit: 0
-    firstLines: []
+    firstLines:
+    - "\u770B\u4E0A\u53BB\u65E0\u4EBA\u6253\u7406\u7684\u957F\u6905\uFF0C\u6905\u811A\u4EE5\u53CA\u5468\u56F4\u7684\u5730\u9762\u90FD\u957F\u51FA\u4E86\u9752\u82D4"
     secondLines: []
     secondMappings: []
     choiceModel:
@@ -8389,6 +8453,7 @@ MonoBehaviour:
     - "\uFF08\u4F60\u9976\u6709\u5174\u81F4\u5730\u6D4F\u89C8\u7740\u5546\u54C1\uFF0C\u76F4\u5230\u770B\u89C1\u4EF7\u683C\uFF09"
     - "\u54C7\uFF0C\u6700\u4FBF\u5B9C\u7684\u77FF\u6CC9\u6C34\u90FD\u8981\u4E09\u679A\u786C\u5E01\u554A\u2026\u2026"
     - "\uFF08\u4F60\u4E0D\u7518\u5FC3\u5730\u7FFB\u904D\u6240\u6709\u53E3\u888B\uFF0C\u6700\u7EC8\u65E0\u529B\u5730\u5782\u4E0B\u5934\uFF09"
+    - "\u6211\u8BB0\u5F97<color=#FFC600>\u5929\u53F0\u8FB9\u7F18\u7684\u77F3\u7F1D</color>\u548C<color=#FFC600>\u89D2\u843D</color>\u597D\u50CF\u6CA1\u4ED4\u7EC6\u7FFB\u8FC7\uFF0C\u8BF4\u4E0D\u5B9A\u90A3\u91CC\u5C31\u6709\u786C\u5E01"
     - "\u2026\u2026\u8FD9\u79CD\u65F6\u5019\uFF0C\u8981\u662F\u80FD\u50CF\u52A8\u6F2B\u91CC\u4E00\u6837\uFF0C\u8E22\u4E00\u4E0B\u552E\u8D27\u673A\u5C31\u80FD\u6389\u51FA\u4E00\u74F6\u8BE5\u591A\u597D"
     secondMappings:
     - lineIndex: 0
@@ -8401,9 +8466,51 @@ MonoBehaviour:
       onEnter:
         m_PersistentCalls:
           m_Calls: []
+    - lineIndex: 5
+      sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 6
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
     choiceModel:
-      items: []
-      choiceHeader: 
+      items:
+      - label: "\u662F"
+        onClick:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 1798734549}
+              m_TargetAssemblyTypeName: MVC.Scene1VendingMachine, Assembly-CSharp
+              m_MethodName: Kick
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+      - label: "\u5426"
+        onClick:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 1798734549}
+              m_TargetAssemblyTypeName: MVC.Scene1VendingMachine, Assembly-CSharp
+              m_MethodName: KickCanceled
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+      choiceHeader: "\u8981\u8E22\u552E\u8D27\u673A\u5417"
       choicePanel: 0
     onInteractEnd:
       m_PersistentCalls:
@@ -8417,7 +8524,7 @@ MonoBehaviour:
     - "\u6B63\u597D\u6211\u6709\u70B9\u53E3\u6E34\u4E86"
     - "\uFF08\u4F60\u9976\u6709\u5174\u81F4\u5730\u6D4F\u89C8\u7740\u5546\u54C1\uFF0C\u76F4\u5230\u770B\u89C1\u4EF7\u683C\uFF09"
     - "\u54C7\uFF0C\u6700\u4FBF\u5B9C\u7684\u77FF\u6CC9\u6C34\u90FD\u8981\u4E09\u679A\u786C\u5E01\u554A\u2026\u2026"
-    - "\uFF08\u4F60\u6B63\u51C6\u5907\u79BB\u5F00\uFF0C\u624B\u65E0\u610F\u95F4\u4F38\u8FDB\u53E3\u888B\uFF0C\u6307\u5C16\u89E6\u5230\u90A3\u51E0\u679A\u521A\u4ECE\u4E0B\u6C34\u9053\u53E3\u548C\u5929\u53F0\u77F3\u7F1D\u91CC\u6361\u6765\u7684\u786C\u5E01\uFF09"
+    - "\uFF08\u4F60\u6B63\u51C6\u5907\u79BB\u5F00\uFF0C\u624B\u65E0\u610F\u95F4\u4F38\u8FDB\u53E3\u888B\uFF0C\u6307\u5C16\u89E6\u5230\u90A3\u51E0\u679A\u521A\u4ECE\u5929\u53F0\u89D2\u843D\u6361\u6765\u7684\u786C\u5E01\uFF09"
     - "\u592A\u597D\u4E86\uFF01\u521A\u624D\u6361\u7684\u786C\u5E01\u521A\u597D\u6D3E\u4E0A\u7528\u573A\uFF01"
     secondMappings:
     - lineIndex: 0
@@ -8539,9 +8646,16 @@ MonoBehaviour:
     firstLines: []
     secondLines:
     - "\u51B0\u51C9\u7684\u6DB2\u4F53\u6ED1\u8FC7\u5589\u5499\uFF0C\u90A3\u80A1\u707C\u70ED\u7684\u7126\u8E81\u611F\u7EC8\u4E8E\u88AB\u9547\u538B\u4E86\u4E0B\u53BB\r\n"
+    - "\u6211\u9760\u7740\u552E\u8D27\u673A\uFF0C\u957F\u957F\u5730\u8212\u4E86\u4E00\u53E3\u6C14\r"
+    - "\u4E16\u754C\u4EFF\u4F5B\u5728\u8FD9\u4E00\u523B\u88AB\u6309\u4E0B\u4E86\u9759\u97F3\u952E\uFF0C\u53EA\u5269\u4E0B\u5FC3\u8DF3\u9010\u6E10\u5E73\u590D\u7684\u8282\u594F\r\n"
+    - "\u771F\u662F\u4E0D\u53EF\u601D\u8BAE\u2026\u2026\u5C31\u662F\u8FD9\u4E48\u666E\u901A\u7684\u4E1C\u897F\r\n"
+    - "\u5374\u8BA9\u6211\u611F\u53D7\u5230\u4E00\u79CD\u88AB\u4E16\u754C\u5BBD\u6055\u7684\u5B89\u5B81\r"
+    - "\u50CF\u6709\u4EBA\u628A\u4F53\u5185\u90A3\u6839\u7D27\u7EF7\u7684\u5F26\u8F7B\u8F7B\u677E\u5F00\r"
+    - "\u6211\u628A\u7A7A\u74F6\u5728\u638C\u5FC3\u8F6C\u4E86\u534A\u5708\uFF0C\u6307\u5C16\u8FD8\u6B8B\u7740\u51B0\u610F\r\r\n"
+    - "\u552E\u8D27\u673A\u7684\u55E1\u9E23\u9000\u5230\u8FDC\u5904\uFF0C\u5149\u7EBF\u843D\u5728\u5730\u9762\uFF0C\u6162\u6162\u628A\u5F71\u5B50\u629A\u5E73"
     secondMappings:
     - lineIndex: 0
-      sprite: {fileID: 21300000, guid: 66c5612f9d811ac438d73ea169d174b4, type: 3}
+      sprite: {fileID: 21300000, guid: 58a80c5f1f3280840ab1e127c91c409e, type: 3}
       onEnter:
         m_PersistentCalls:
           m_Calls: []
@@ -8568,10 +8682,42 @@ MonoBehaviour:
     firstLines:
     - "\uFF08\u4F60\u7684\u786C\u5E01\u6570\u91CF\u4E0D\u591F\uFF09"
     secondLines:
-    - "\u2026...\u770B\u6765\u60F3\u559D\u5230\u6C34\uFF0C\u5F97\u5148\u5728\u5929\u53F0\u4E0A\u51D1\u591F\u4E09\u679A\u786C\u5E01\u624D\u884C"
+    - "\u2026\u2026\u770B\u6765\u60F3\u559D\u5230\u6C34\uFF0C\u5F97\u5148\u5728\u5929\u53F0\u4E0A\u51D1\u591F\u4E09\u679A\u786C\u5E01\u624D\u884C"
     secondMappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    choiceModel:
+      items: []
+      choiceHeader: 
+      choicePanel: 0
+    onInteractEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - visit: 8
+    firstLines:
+    - "\u4F60\u7167\u7740\u552E\u8D27\u673A\u4FA7\u9762\u4E0D\u8F7B\u4E0D\u91CD\u5730\u6765\u4E86\u4E00\u4E0B"
+    - "\u673A\u5668\u54D0\u5F53\u4E00\u54CD\uFF0C\u7EB9\u4E1D\u4E0D\u52A8\uFF0C\u53CD\u5012\u662F\u4F60\u7684\u811A\u6709\u70B9\u75BC"
+    secondLines: []
+    secondMappings: []
+    choiceModel:
+      items: []
+      choiceHeader: 
+      choicePanel: 0
+    onInteractEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - visit: 9
+    firstLines:
+    - "\uFF08\u60F3\u5230\u53EF\u80FD\u4F1A\u811A\u75BC\uFF0C\u8FD8\u53EF\u80FD\u60F9\u4E0A\u9EBB\u70E6\uFF09"
+    - "\uFF08\u4F60\u7ACB\u523B\u6253\u6D88\u4E86\u8FD9\u4E2A\u5FF5\u5934\uFF09"
+    secondLines:
+    - "\u50CF\u6211\u8FD9\u79CD\u4EBA\uFF0C\u8E22\u4E00\u811A\u4E0B\u53BB\uFF0C\u5012\u9709\u7684\u80AF\u5B9A\u8FD8\u662F\u6211\u81EA\u5DF1"
+    secondMappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
       onEnter:
         m_PersistentCalls:
           m_Calls: []
@@ -10145,6 +10291,7 @@ MonoBehaviour:
     choicePanel: 0
   choiceCtl: {fileID: 69404825}
   enlargeArrow: 1
+  skipBG: 1
   delayFinish: 1
 --- !u!114 &1955821182
 MonoBehaviour:
@@ -10351,7 +10498,7 @@ RectTransform:
   m_GameObject: {fileID: 1997089499}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.125, y: 0.125, z: 1}
+  m_LocalScale: {x: 0.127, y: 0.127, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2197153}
@@ -10381,7 +10528,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 66c5612f9d811ac438d73ea169d174b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58a80c5f1f3280840ab1e127c91c409e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10603,12 +10750,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - visit: 0
-    firstLines: []
+    firstLines:
+    - "\u4E00\u4E2A\u4FDD\u6D01\u7528\u7684\u62D6\u628A\uFF0C\u4E0A\u9762\u7559\u6709\u6CA1\u6709\u5E72\u900F\u7684\u6C34\u75D5\uFF0C\u65C1\u8FB9\u653E\u7740\u534A\u74F6\u9664\u8349\u5242"
     secondLines:
     - "\u62D6\u628A\u8FD8\u662F\u6E7F\u7684\uFF0C\u770B\u6765\u4FDD\u6D01\u963F\u59E8\u65E9\u4E0A\u521A\u6E05\u7406\u8FC7"
     - "\u5C31\u7B97\u6709\u5B66\u6821\u4FDD\u6D01\u5B9A\u671F\u6E05\u7406\uFF0C\u5929\u53F0\u4E0A\u8FD8\u662F\u957F\u6EE1\u4E86\u9752\u82D4"
     - "\u8FD9\u4E9B\u4E1C\u897F\u592A\u987D\u56FA\u4E86\uFF0C\u7528\u5237\u5B50\u4F7F\u52B2\u5237\u90FD\u672A\u5FC5\u80FD\u5237\u4E0B\u4E00\u5C42"
-    secondMappings: []
+    secondMappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 2
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
     choiceModel:
       items: []
       choiceHeader: 

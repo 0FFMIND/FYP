@@ -173,8 +173,10 @@ namespace MVC
             player.gameObject.GetComponent<PlayerInteractCtl>().Refresh();
         }
 
-        public void EndInteractBoard()
+        public void EndInteractBoard(InteractCtl ctl)
         {
+            ctl?.Done();
+
             if (state == Scene1State.InteractBoard)
             {
                 state = Scene1State.OpenMenu;

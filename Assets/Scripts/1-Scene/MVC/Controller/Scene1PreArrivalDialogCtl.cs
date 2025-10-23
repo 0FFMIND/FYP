@@ -28,7 +28,7 @@ namespace MVC
 
         public override void StartDialogue() => base.StartDialogue();
 
-        protected override IEnumerator TypeLines(string fullRaw)
+        protected override IEnumerator TypeLines()
         {
             arrow.gameObject.SetActive(false);
 
@@ -41,7 +41,7 @@ namespace MVC
                 yield return enterAnim.PlayEnterCode(dialogueView, false);
                 _isEntering = false;
             }
-            yield return base.TypeLines(fullRaw);
+            yield return base.TypeLines();
         }
 
         public void PlayDefaultBGM()
@@ -87,11 +87,8 @@ namespace MVC
                     break;
                 }
             }
-            string text = dialogueModel.Lines[index];
             // 打字
-            typingCoroutine = StartCoroutine(TypeLines(text));
-            // 移动到下一个line
-            index++;
+            typingCoroutine = StartCoroutine(TypeLines());
         }
     }
 }

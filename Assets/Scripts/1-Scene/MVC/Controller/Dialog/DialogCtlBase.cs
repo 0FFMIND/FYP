@@ -75,6 +75,7 @@ namespace MVC
         private LanguageCode languageCode;
         private Coroutine arrowBounceCoroutine;
         private int typingTotal;
+        private float revealProgress;
 
         public virtual void StartDialogue()
         {
@@ -148,7 +149,7 @@ namespace MVC
             var tmp = dialogueView.tmp;
             if (!tmp)
                 return;
-
+            revealProgress = 1f;
             // 直接拉满可见字符，避免依赖 textInfo 的计数时机
             tmp.maxVisibleCharacters = int.MaxValue;
 
@@ -158,8 +159,17 @@ namespace MVC
             PositionArrowUnderText();
         }
 
-        protected virtual IEnumerator TypeLines(string fullRaw)
+        protected virtual IEnumerator TypeLines()
         {
+            string fullRaw = "";
+            // 在真正渲染前，用“当前行”的最新文本覆盖 fullRaw
+            if (dialogueModel != null && dialogueModel.Lines != null && dialogueModel.Lines.Length > 0)
+            {
+                // NextLine() 渲染后才 index++，故此处屏上应是 index-1
+                int cur = Mathf.Clamp(index, 0, dialogueModel.Lines.Length - 1);
+                // 用最新（可能已 Reload 后）的文本覆盖
+                fullRaw = dialogueModel.Lines[cur] ?? fullRaw;
+            }
             // 一次性设置完整文本，然后用 maxVisibleCharacters 揭示
             RenderViews(currentSprite, fullRaw);
             if (dialogueView == null)
@@ -182,7 +192,7 @@ namespace MVC
 
             typingTotal = tmp.textInfo.characterCount;
             int cnt = 0;
-
+            revealProgress = 0f;
             for (; ; )
             {
                 // 若外部（语言切换）导致文本变化，这里会看到最新的 typingTotal
@@ -192,7 +202,7 @@ namespace MVC
                     break;
 
                 tmp.maxVisibleCharacters = visNow + 1;
-
+                revealProgress = Mathf.Clamp01((float)tmp.maxVisibleCharacters / Mathf.Max(1, typingTotal));
                 // 英文两字符一个音效；中文每个字符一个音效
                 bool isEn = SettingsMgr.Instance.GetLanguage() == LanguageCode.en;
                 if (isEn)
@@ -223,6 +233,7 @@ namespace MVC
             // 完成后显示箭头
             PositionArrowUnderText();
             typingCoroutine = null;
+            revealProgress = 1f;
         }
 
         private void OnDialogueClick()
@@ -240,6 +251,7 @@ namespace MVC
                 if (index <= dialogueModel.Lines.Length)
                 {
                     RevealAllNow();
+                    revealProgress = 1f;
                     // 开启小箭头
                     PositionArrowUnderText();
                 }
@@ -254,6 +266,8 @@ namespace MVC
             }
             else
             {
+                // 移动到下一个line
+                index++;
                 NextLine();
             }
         }
@@ -325,22 +339,25 @@ namespace MVC
                     dialogueModel.Reload();
                     // 直接改 TMP 的 text，并保留当前遮罩
                     var tmp = dialogueView.tmp;
-                    if (tmp)
+                    if (tmp && tmp.text != null && tmp.text.Length > 0)
                     {
-                        // 当前显示的是 index-1（NextLine 渲染后才 index++）
-                        int cur = Mathf.Clamp(index - 1, 0, dialogueModel.Lines.Length - 1);
-                        // 记住原来的可见字符数量（遮罩）
-                        int prevVisible = tmp.maxVisibleCharacters;
-
+                        // 当前显示的是 index
+                        int cur = Mathf.Clamp(index, 0, dialogueModel.Lines.Length - 1);
+                                                // 保留“旧进度百分比”。如果之前没统计，按当前可见/旧总长兜底
+                       float prevProgress = revealProgress > 0f
+                            ? Mathf.Clamp01(revealProgress)
+                                                        : Mathf.Clamp01((float)tmp.maxVisibleCharacters / Mathf.Max(1, typingTotal));
                         // 换新文本
                         if (dialogueModel.Lines.Length > 0)
                         {
                             tmp.text = dialogueModel.Lines[cur];
                             tmp.ForceMeshUpdate();
-                            // 遮罩沿用并裁到新文本长度以内
+                            // 按百分比映射到新长度
                             int newLen = tmp.textInfo.characterCount;
-                            typingTotal = newLen;
-                            tmp.maxVisibleCharacters = Mathf.Min(prevVisible, newLen);
+                           typingTotal = newLen;
+                            tmp.maxVisibleCharacters = Mathf.RoundToInt(prevProgress * newLen);
+                            // 同步内部进度
+                            revealProgress = prevProgress;
                             // 重新定位箭头
                             if (arrow.gameObject.activeSelf)
                             {

@@ -95,9 +95,6 @@ public class CameraSwitch : MonoBehaviour
             _brain.enabled = false; // 冻结机位更新
         }
         onCompleted?.Invoke();
-        // 3) 再从黑淡回画面
-        if (useFade && TransitionMgr.Instance != null)
-            yield return TransitionMgr.Instance.FadeIn(fadeInDuration);
 
         _switchCo = null;
     }

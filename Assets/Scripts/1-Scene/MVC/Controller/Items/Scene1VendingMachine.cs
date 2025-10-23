@@ -48,7 +48,7 @@ namespace MVC
 
         public void StartVendCutScene()
         {
-            // 等 EnterUI 完成（含淡入）后再切 visitCount/开始对话
+            // 等 EnterUI 完成后再切 visitCount/开始对话
             switcher.EnterUI(() =>
             {
                 AudioManager.Instance.PlayBGM("1-bgm-2", 0f);
@@ -72,6 +72,19 @@ namespace MVC
         public void VendCanceled()
         {
             visitCount = 4;
+            BeginDialogue();
+        }
+
+        public void KickCanceled()
+        {
+            visitCount = 9;
+            BeginDialogue();
+        }
+
+        public void Kick()
+        {
+            AudioManager.Instance.PlaySFX("metalKick");
+            visitCount = 8;
             BeginDialogue();
         }
 

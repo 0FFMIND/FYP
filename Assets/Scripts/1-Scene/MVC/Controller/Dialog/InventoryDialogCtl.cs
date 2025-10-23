@@ -33,7 +33,7 @@ namespace MVC
             StartDialogue();
         }
 
-        protected override IEnumerator TypeLines(string fullRaw)
+        protected override IEnumerator TypeLines()
         {
             arrow.gameObject.SetActive(false);
 
@@ -44,7 +44,7 @@ namespace MVC
                 yield return enterAnim.PlayEnterAnim();
                 _isEntering = false;
             }
-            yield return base.TypeLines(fullRaw);
+            yield return base.TypeLines();
         }
 
         private IEnumerator PlayClosed()
@@ -58,7 +58,7 @@ namespace MVC
         {
             arrow.GetComponent<SpriteRenderer>().color = Color.white;
             // 如果读完
-            if (index == dialogueModel.Lines.Length)
+            if (index >= dialogueModel.Lines.Length)
             {
                 // 清空文本
                 dialogueView.tmp.text = "";
@@ -82,11 +82,8 @@ namespace MVC
                     break;
                 }
             }
-            string text = dialogueModel.Lines[index];
             // 打字
-            typingCoroutine = StartCoroutine(TypeLines(text));
-            // 移动到下一个line
-            index++;
+            typingCoroutine = StartCoroutine(TypeLines());
         }
     }
 }

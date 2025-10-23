@@ -25,27 +25,39 @@
     },
     {
         "zh": "……总算到六楼了，教学楼的顶层",
-        "en": "...finally made it to the sixth floor, the top of the academic building."
+        "en": "...Finally made it to the sixth floor—the top of the academic building."
     },
     {
         "zh": "从教室一路逃过来，腿都软了……早知道平时应该多锻炼的",
-        "en": "I ran all the way here from the classroom; my legs are jelly... I should’ve exercised more."
+        "en": "I ran all the way from the classroom; my legs are jelly... I really should work out more."
     },
     {
         "zh": "楼层的布局倒是很简单，一到四楼是上课的教室，五楼是老师们的办公室，行政主任室也在那一层……",
-        "en": "The layout is pretty simple: floors one through four are classrooms, the fifth floor is the teachers’ offices, and the administrative director’s office is on that floor too..."
+        "en": "The layout is pretty simple: floors one through four are classrooms; the fifth floor is the teachers’ offices, and the administrative director’s office is there too..."
     },
     {
         "zh": "刚才在五楼差点撞上教务主任，真够倒霉的",
-        "en": "I almost ran into the academic dean on the fifth floor just now—what rotten luck."
+        "en": "I almost ran into the academic affairs director on the fifth floor just now—just my luck."
+    },
+    {
+        "zh": "说起来，这地方我好像也不是第一次来了……",
+        "en": "Come to think of it, this doesn’t seem like my first time here..."
     },
     {
         "zh": "上次来……是上周？还是上上周？具体时间完全想不起来了",
-        "en": "The last time I came... was it last week? Or the week before? I can’t remember exactly."
+        "en": "Last time... was it last week? Or the week before? I can’t remember the exact time at all."
     },
     {
-        "zh": "不过费了这么大劲才上来，反正来都来了，先四处逛逛吧",
-        "en": "But since it took so much effort to get up here—well, I’m here anyway—let’s look around a bit first."
+        "zh": "费了这么大劲才上来，要是什么都不干就下去,也不知道能去哪里",
+        "en": "After all that effort to get up here, if I go back down without doing anything, I don’t even know where I could go."
+    },
+    {
+        "zh": "……教室是肯定回不去了，我可不想在众目睽睽之下被老师堵在门口训话",
+        "en": "...Going back to the classroom is definitely not happening; I don’t want to get stopped at the door and lectured in front of everyone."
+    },
+    {
+        "zh": "既然来都来了，先四处逛逛吧",
+        "en": "Since I’m already here, I might as well take a look around first."
     },
     {
         "zh": "现在你可以按下WASD和方向键来移动人物",
@@ -110,5 +122,85 @@
     {
         "zh": "现在请尝试按下ESC键，打开系统的主菜单吧",
         "en": "Now try pressing ESC to open the main system menu."
+    },
+    {
+        "zh": "一个保洁用的拖把，上面留有没干透的水痕，旁边放着半瓶除草剂",
+        "en": "A janitorial mop with not-yet-dry water streaks; beside it sits a half-full bottle of herbicide."
+    },
+    {
+        "zh": "拖把还是湿的，看来保洁阿姨早上刚清理过",
+        "en": "The mop is still wet—looks like the custodian just cleaned this morning."
+    },
+    {
+        "zh": "就算有学校保洁定期清理，天台上还是长满了青苔",
+        "en": "Even with regular school cleanups, the rooftop is still covered in moss."
+    },
+    {
+        "zh": "这些东西太顽固了，用刷子使劲刷都未必能刷下一层",
+        "en": "It’s so stubborn that even a hard scrub with a brush might not remove a layer."
+    },
+    {
+        "zh": "<任务开启>",
+        "en": "<MISSION START>"
+    },
+    {
+        "zh": "一堆随处可见的碎石头",
+        "en": "A scatter of loose stones lies everywhere."
+    },
+    {
+        "zh": "石块的缝隙间生长着一些鲜黄色的花朵，与右侧花圃中种植的品种相同",
+        "en": "Bright yellow flowers grow in the gaps between the stones, the same variety as those planted in the flowerbed to the right."
+    },
+    {
+        "zh": "看来是风把花圃的种子带到了这里",
+        "en": "It seems the wind carried seeds from the flowerbed over here."
+    },
+    {
+        "zh": "这些花开得倒是挺倔强",
+        "en": "These flowers are blooming with stubborn tenacity."
+    },
+    {
+        "zh": "（你注意到一抹银光在花影间闪烁）",
+        "en": "(You notice a flash of silver glint among the flowers’ shadows.)"
+    },
+    {
+        "zh": "连石头缝里都藏着惊喜呢……",
+        "en": "Even the cracks between the stones hide surprises..."
+    },
+    {
+        "zh": "你将<color=#FFC600> [一枚硬币] </color>放入了背包",
+        "en": "You put <color=#FFC600>[a coin]</color> into your bag."
+    },
+    {
+        "zh": "一台指示灯亮起的自助售货机",
+        "en": "A vending machine with its indicator light on."
+    },
+    {
+        "zh": "机内饮品陈列整齐，价格标签清晰",
+        "en": "Inside, the drinks are neatly arranged and the price tags are clear."
+    },
+    {
+        "zh": "有意思，这种地方居然有台正常供电的售货机",
+        "en": "Huh, interesting—there’s actually a vending machine here that still has power."
+    },
+    {
+        "zh": "正好我有点口渴了",
+        "en": "Perfect, I’m a little thirsty."
+    },
+    {
+        "zh": "（你饶有兴致地浏览着商品，直到看见价格）",
+        "en": "(You browse the items with interest—until you see the prices.)"
+    },
+    {
+        "zh": "哇，最便宜的矿泉水都要三枚硬币啊……",
+        "en": "Wow, even the cheapest bottled water costs three coins..."
+    },
+    {
+        "zh": "（你不甘心地翻遍所有口袋，最终无力地垂下头）",
+        "en": "(You rummage through every pocket in frustration, then let your head drop.)"
+    },
+    {
+        "zh": "……这种时候，要是能像动漫里一样，踢一下售货机就能掉出一瓶该多好",
+        "en": "...If only it worked like in anime—one good kick and a bottle would pop out."
     }
 ]

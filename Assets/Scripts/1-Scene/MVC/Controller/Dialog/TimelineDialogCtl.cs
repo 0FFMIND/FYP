@@ -1,3 +1,4 @@
+using Manager;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -32,6 +33,9 @@ namespace MVC
 
         [SerializeField]
         private bool enlargeArrow = false;
+
+        [SerializeField]
+        private bool skipBG = false;
 
         [SerializeField]
         private bool delayFinish = false;
@@ -90,7 +94,7 @@ namespace MVC
             base.StartDialogue();
         }
 
-        protected override IEnumerator TypeLines(string fullRaw)
+        protected override IEnumerator TypeLines()
         {
             arrow.gameObject.SetActive(false);
             if (enlargeArrow)
@@ -116,19 +120,30 @@ namespace MVC
                     yield return enterAnim.PlayEnterCode(dialogueView, false);
                     donePanel = true;
                 }
-                IEnumerator RunBG()
+
+                StartCoroutine(RunPanel());
+                if (!skipBG)
                 {
-                    yield return enterAnim.PlayEnterCode(bgView, true);
+                    IEnumerator RunBG()
+                    {
+                        yield return enterAnim.PlayEnterCode(bgView, true);
+                        doneBG = true;
+                    }
+                    StartCoroutine(RunBG());
+                }
+                else
+                {
                     doneBG = true;
                 }
-
                 // 同时开跑
-                StartCoroutine(RunPanel());
-                StartCoroutine(RunBG());
                 yield return new WaitUntil(() => donePanel && doneBG);
                 _isEntering = false;
+                if (skipBG)
+                {
+                    TransitionMgr.Instance.FadeIn(0.5f);
+                }
             }
-            yield return base.TypeLines(fullRaw);
+            yield return base.TypeLines();
         }
         private IEnumerator PlayClosed()
         {
@@ -260,9 +275,7 @@ namespace MVC
             }
             string text = dialogueModel.Lines[index];
             // 打字
-            typingCoroutine = StartCoroutine(TypeLines(text));
-            // 移动到下一个line
-            index++;
+            typingCoroutine = StartCoroutine(TypeLines());
         }
     }
 }
