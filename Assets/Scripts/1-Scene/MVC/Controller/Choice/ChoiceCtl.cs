@@ -19,10 +19,10 @@ namespace MVC
 
         [Header("Anim")]
         [SerializeField]
-        private float openDuration = 0.2f; // 开场：Y 0→1
+        private float openDuration; // 开场：Y 0→1
 
         [SerializeField]
-        private float closeDuration = 0.2f; // 退场：Y 1→0
+        private float closeDuration; // 退场：Y 1→0
 
         private RectTransform _currentPanelRT;
         private Coroutine _anim;
@@ -42,13 +42,8 @@ namespace MVC
                 return;
             }
 
-            // 1) 选择并激活面板
+            // 选择面板
             int idx = Mathf.Clamp(model.choicePanel, 0, panels.Length - 1);
-            for (int i = 0; i < panels.Length; i++)
-            {
-                if (panels[i])
-                    panels[i].SetActive(i == idx);
-            }
             var panelGO = panels[idx];
             if (!panelGO)
             {
@@ -60,7 +55,9 @@ namespace MVC
             // 2) 找标题 TMP（直系子节点中的第一个 TMP_Text）
             TMP_Text title = FindDirectChildTMP(panel);
             if (title)
-                title.text = model.choiceHeader ?? string.Empty;
+            {
+                title.gameObject.GetComponent<LocalizedText>().SetKey(model.choiceHeader);
+            }
             else
                 Debug.LogWarning($"[ChoiceCtl] 面板 {panel.name} 未找到直系 TMP_Text 标题");
 
@@ -92,8 +89,11 @@ namespace MVC
 
                 // 文案：在该按钮的子层级里找 TMP_Text
                 var label = btn.GetComponentInChildren<TMP_Text>(true);
+
                 if (label)
-                    label.text = data.label ?? string.Empty;
+                {
+                    label.gameObject.GetComponent<LocalizedText>().SetKey(data.label);
+                }
 
                 // 点击：先调用 UnityEvent，再关闭面板
                 btn.onClick.RemoveAllListeners();
@@ -102,18 +102,22 @@ namespace MVC
                     Hide(() => data.onClick?.Invoke());
                 });
 
-                // 确保可见可点
-                if (!child.gameObject.activeSelf)
-                    child.gameObject.SetActive(true);
                 if (label)
-                    label.raycastTarget = false; // 避免文本吞点击
+                {
+                    // 避免文本吞点击
+                    label.raycastTarget = false;
+                } 
             }
 
-            // 多余按钮：没有对应 item 的，统一隐藏
-            for (int i = bindCount; i < btnCount; i++)
+            // 激活选择面板
+            for (int i = 0; i < panels.Length; i++)
             {
-                optionRoot.GetChild(i).gameObject.SetActive(false);
+                if (panels[i])
+                {
+                    panels[i].SetActive(i == idx);
+                }
             }
+
 
             // 开场动画（Y: 0 → 1）
             if (_anim != null)

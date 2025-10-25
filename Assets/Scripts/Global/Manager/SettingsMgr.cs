@@ -205,6 +205,46 @@ namespace Manager
             Save();
         }
 
+        public void SetPlayerSpeed(float speed)
+        {
+            if (speed == _data.playerSpeed)
+            {
+                return;
+            }
+            _data.playerSpeed = speed;
+            Save();
+        }
+
+        public void SetTypeSpeed(float speed)
+        {
+            if (speed == _data.typeSpeed)
+            {
+                return;
+            }
+            _data.typeSpeed = speed;
+            Save();
+        }
+
+        public void SetSprintMultiplier(float speed)
+        {
+            if (speed == _data.sprintMultiplier)
+            {
+                return;
+            }
+            _data.sprintMultiplier = speed;
+            Save();
+        }
+
+        public void SetKey(EKeySet e)
+        {
+            if (_data.keyBindings[e.Action] == e.Key)
+            {
+                return;
+            }
+            _data.keyBindings[e.Action] = e.Key;
+            Save();
+        }
+
         public void SetInventorySnapshot(InventorySaveData snap, bool saveNow = false)
         {
             if (snap == null)
@@ -220,6 +260,32 @@ namespace Manager
             {
                 Save();
             }
+        }
+
+        // 写回 Journal 快照到 Settings；saveNow=true 时立刻保存（会触发 Broadcast）
+        public void SetJournalSnapshot(JournalSaveData snap, bool saveNow = false)
+        {
+            if (snap == null)
+            {
+                return;
+            }
+            if (JournalEquals(_data.journalData, snap))
+            {
+                // 与现有存档一致，不必落盘
+                return;
+            }
+
+            _data.journalData = snap;
+
+            if (saveNow)
+            {
+                Save();
+            }
+        }
+
+        public JournalSaveData GetJournalSnapshot()
+        {
+            return _data.journalData;
         }
 
         public InventorySaveData GetInventorySnapshot()
@@ -273,46 +339,6 @@ namespace Manager
             return _data.sprintMultiplier;
         }
 
-        public void SetPlayerSpeed(float speed)
-        {
-            if (speed == _data.playerSpeed)
-            {
-                return;
-            }
-            _data.playerSpeed = speed;
-            Save();
-        }
-
-        public void SetTypeSpeed(float speed)
-        {
-            if (speed == _data.typeSpeed)
-            {
-                return;
-            }
-            _data.typeSpeed = speed;
-            Save();
-        }
-
-        public void SetSprintMultiplier(float speed)
-        {
-            if (speed == _data.sprintMultiplier)
-            {
-                return;
-            }
-            _data.sprintMultiplier = speed;
-            Save();
-        }
-
-        public void SetKey(EKeySet e)
-        {
-            if (_data.keyBindings[e.Action] == e.Key)
-            {
-                return;
-            }
-            _data.keyBindings[e.Action] = e.Key;
-            Save();
-        }
-
         private bool InventoryEquals(InventorySaveData a, InventorySaveData b)
         {
             if (ReferenceEquals(a, b))
@@ -330,6 +356,41 @@ namespace Manager
                 if (!string.Equals(a.itemIds[i], b.itemIds[i], StringComparison.Ordinal))
                     return false;
                 if (a.counts[i] != b.counts[i])
+                    return false;
+            }
+            return true;
+        }
+
+        // 判断两个 Journal 存档是否相等（容量/顺序/元素逐一比对）
+        private bool JournalEquals(JournalSaveData a, JournalSaveData b)
+        {
+            if (ReferenceEquals(a, b))
+                return true;
+            if (a == null || b == null)
+                return false;
+
+            // 三列必须同时存在
+            if (a.keys == null || a.statuses == null || a.createdAtIso == null)
+                return false;
+            if (b.keys == null || b.statuses == null || b.createdAtIso == null)
+                return false;
+
+            // 列长度一致
+            if (a.keys.Count != b.keys.Count)
+                return false;
+            if (a.statuses.Count != b.statuses.Count)
+                return false;
+            if (a.createdAtIso.Count != b.createdAtIso.Count)
+                return false;
+
+            // 逐行比对（保持顺序稳定）
+            for (int i = 0; i < a.keys.Count; i++)
+            {
+                if (!string.Equals(a.keys[i], b.keys[i], StringComparison.Ordinal))
+                    return false;
+                if (!string.Equals(a.statuses[i], b.statuses[i], StringComparison.Ordinal))
+                    return false;
+                if (!string.Equals(a.createdAtIso[i], b.createdAtIso[i], StringComparison.Ordinal))
                     return false;
             }
             return true;

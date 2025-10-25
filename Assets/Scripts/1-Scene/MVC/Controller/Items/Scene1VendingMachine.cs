@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 
@@ -72,19 +70,6 @@ namespace MVC
         public void VendCanceled()
         {
             visitCount = 4;
-            BeginDialogue();
-        }
-
-        public void KickCanceled()
-        {
-            visitCount = 9;
-            BeginDialogue();
-        }
-
-        public void Kick()
-        {
-            AudioManager.Instance.PlaySFX("metalKick");
-            visitCount = 8;
             BeginDialogue();
         }
 

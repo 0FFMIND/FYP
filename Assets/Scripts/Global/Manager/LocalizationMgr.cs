@@ -14,7 +14,7 @@ namespace Manager
         public string zh;
         public string en;
     }
-
+    // JsonUtility 无法直接解析顶层数组，需要使用Helper用一个临时包装进行解析
     public static class JsonHelper
     {
         [Serializable]

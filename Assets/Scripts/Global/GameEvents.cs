@@ -4,21 +4,11 @@ using UnityEngine;
 
 namespace Utils
 {
-    public struct JournalAdvanceEvent
+    public readonly struct EJournalSelected
     {
-        // 目标条目的唯一键，如 "interactboard"
         public readonly string Key;
-
-        // 该状态对应的展示文案
-        public readonly string Title;
-
-        public JournalAdvanceEvent(string key, string title)
-        {
-            Key = key;
-            Title = title;
-        }
+        public EJournalSelected(string key) { Key = key; }
     }
-
     public readonly struct EScene1ArrivalStateChange
     {
         public readonly Scene1State State;

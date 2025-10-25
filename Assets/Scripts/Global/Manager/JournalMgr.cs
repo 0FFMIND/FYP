@@ -1,85 +1,87 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Manager;
-using Utils; 
+using MVC;
 using UnityEngine;
+using Utils;
 
-namespace MVC
+namespace Manager
 {
     public class JournalMgr : SingletonMB<JournalMgr>
     {
         // 内存中的日记条目列表（顺序即展示顺序）
-        private readonly List<JournalItem> _items = new List<JournalItem>();
-        // 当前激活的任务键（用于将上一项置为完成）
-        private string _activeKey;
+        public JournalModel Model { get; private set; } = new JournalModel();
 
-        public event Action OnChanged;
+        private string jsonRelativePath = "JournalData/journal.json";
+
+        private void Awake()
+        {
+            var path = Path.Combine(Application.streamingAssetsPath, jsonRelativePath);
+            var json = File.ReadAllText(path);
+
+            // 用你已有的 JsonHelper.FromJsonArray<JournalItemDTO> 解析并初始化模型
+            Model.LoadFromJsonArray(json, JsonHelper.FromJsonArray<JournalItemDTO>);
+        }
 
         private void OnEnable()
         {
-            // 订阅推进事件
-            EventBus.Subscribe<JournalAdvanceEvent>(OnAdvanceEvent);
+            EventBus.Subscribe<ESettingsChanged>(SetJournal);
         }
 
         private void OnDisable()
         {
-            EventBus.Unsubscribe<JournalAdvanceEvent>(OnAdvanceEvent);
+            EventBus.Unsubscribe<ESettingsChanged>(SetJournal);
         }
 
-
-        // 初始化“今日待办”的基础条目（可在关卡加载时调用一次）
-        public void InitToday(params (string key, string title, bool done)[] seeds)
+        // 响应 Settings 变更：从 Settings 恢复 Journal
+        private void SetJournal(ESettingsChanged e)
         {
-            _items.Clear();
-            _activeKey = null;
-            foreach (var (key, title, done) in seeds)
+            if (Model == null) Model = new JournalModel();
+
+            var save = e.Settings?.journalData;
+            if (save == null)
             {
-                _items.Add(new JournalItem
-                {
-                    key = key,
-                    title = title,
-                    status = done ? JournalStatus.Done : JournalStatus.Pending,
-                    createdAt = DateTime.Now
-                });
-                if (!done && _activeKey == null) _activeKey = key;
+                // 没有存档则不覆盖
+                return;
             }
-            OnChanged?.Invoke();
+
+            // 将存档状态应用到运行时模型
+            JournalSaveAdapter.ApplyToModel(Model, save);
         }
 
-        // 外部也可直接调用：推进到某个任务/状态
-        public void AdvanceTo(string key, string title)
+        // —— 对外：切换某条日记的状态 —— 
+        // 需求：传入 key 和目标 status；若目标为 Active，则补写 createdAt（UTC“首次揭示时间”）。
+        // 返回：发生实际变更则 true；未找到或无变化则 false。
+        public bool TrySetStatus(string key, JournalStatus targetStatus)
         {
-            // 1) 把上一个激活项打勾
-            if (!string.IsNullOrEmpty(_activeKey))
+            if (Model == null || string.IsNullOrEmpty(key))
+                return false;
+
+            var it = Model.Find(key);
+            if (it == null)
+                return false;
+
+            // 切换状态
+            it.status = targetStatus;
+
+            // 目标为 Active：补写首次创建时间
+            if (targetStatus == JournalStatus.Active)
             {
-                var prev = _items.FirstOrDefault(i => i.key == _activeKey);
-                if (prev != null) prev.status = JournalStatus.Done;
+                it.createdAt = DateTime.Now;
             }
 
-            // 2) 新项若不存在就追加；存在则激活并更新标题（以便支持本地化热更新）
-            var cur = _items.FirstOrDefault(i => i.key == key);
-            if (cur == null)
-            {
-                cur = new JournalItem
-                {
-                    key = key,
-                    title = title,
-                    status = JournalStatus.Active,
-                    createdAt = DateTime.Now
-                };
-                _items.Add(cur);
-            }
-            else
-            {
-                cur.title = title;
-                cur.status = JournalStatus.Active;
-            }
-
-            _activeKey = key;
-            OnChanged?.Invoke();
+            FlushJournalSnapshot();
+            return true;
         }
 
-        private void OnAdvanceEvent(JournalAdvanceEvent e) => AdvanceTo(e.Key, e.Title);
+        // 向 SettingsMgr 写回当前日记快照（是否立即落盘由 SettingsMgr 决定）
+        private void FlushJournalSnapshot()
+        {
+            if (Model == null) return;
+            var snap = JournalSaveAdapter.ToSave(Model);
+            SettingsMgr.Instance.SetJournalSnapshot(snap, true);
+        }
     }
 }

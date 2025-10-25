@@ -105,6 +105,8 @@ namespace MVC
             // 设置人物位置
             var player = GameObject.FindGameObjectWithTag("Player");
             player.transform.position = initPos;
+            // 更新日记
+            JournalMgr.Instance.TrySetStatus("reachRooftop", JournalStatus.Active);
             // 启动timeline
             if (director != null)
             {

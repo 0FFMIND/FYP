@@ -49,6 +49,9 @@ namespace MVC
         };
         public InventorySaveData inventory = new InventorySaveData { capacity = 99 };
 
+        public JournalSaveData journalData = new JournalSaveData();
+
+
         /// <summary>
         /// 生成一份深拷贝
         /// - 避免外部持有对内部的引用而绕过模型层直接修改；
@@ -74,6 +77,12 @@ namespace MVC
                     itemIds = new List<string>(inventory.itemIds),
                     counts = new List<int>(inventory.counts),
                 },
+                journalData = new JournalSaveData
+                {
+                    keys = new List<string>(journalData.keys),
+                    statuses = new List<string>(journalData.statuses),
+                    createdAtIso = new List<string>(journalData.createdAtIso),
+                }
             };
         }
     }
