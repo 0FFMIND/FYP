@@ -15,6 +15,18 @@ public class JournalSaveData
 
     // 创建时间，ISO8601（UTC），未 Reveal 用空字符串
     public List<string> createdAtIso = new();
+
+    // 每个条目一份行状态表
+    public List<JournalItemSteps> steps = new();
+}
+
+// 存每个条目的“步骤行”状态；只记录 Kind==Step 的行
+[Serializable]
+public class JournalItemSteps
+{
+    public List<string> textKeys = new(); // 每条Step的TextKey（主匹配字段，可为空）
+    public List<int> indices = new(); // 兜底：该Step在contents里的索引
+    public List<string> states = new(); // "Pending" | "Done"
 }
 
 public static class JournalSaveAdapter
@@ -33,6 +45,24 @@ public static class JournalSaveAdapter
                     ? ""
                     : it.createdAt.ToString("o", CultureInfo.InvariantCulture)
             );
+            // 行级：只写出 Step 行
+            var lines = new JournalItemSteps();
+            if (it.contents != null)
+            {
+                for (int i = 0; i < it.contents.Count; i++)
+                {
+                    var ln = it.contents[i];
+                    if (ln?.line == null)
+                        continue;
+                    if (ln.line.Kind != JournalLineKind.Step)
+                        continue;
+
+                    lines.textKeys.Add(ln.line.TextKey ?? "");
+                    lines.indices.Add(i);
+                    lines.states.Add(ln.State.ToString()); // "Pending"/"Done"
+                }
+            }
+            d.steps.Add(lines);
         }
         return d;
     }
@@ -44,6 +74,8 @@ public static class JournalSaveAdapter
             return;
 
         int n = Math.Min(Math.Min(d.keys.Count, d.statuses.Count), d.createdAtIso.Count);
+        // 若 steps 数量不足，按可用的最小值
+        n = Math.Min(n, d.steps?.Count ?? 0);
         for (int i = 0; i < n; i++)
         {
             // 取出该行的 key
@@ -75,6 +107,61 @@ public static class JournalSaveAdapter
             {
                 // 空字符串：代表未 Reveal
                 it.createdAt = DateTime.MinValue;
+            }
+            // 行级状态（只回放 Step）
+            var savedLines = d.steps[i];
+            if (savedLines != null && it.contents != null)
+            {
+                // 1) 先按 TextKey 精确匹配
+                var mapByKey = new Dictionary<string, string>(StringComparer.Ordinal);
+                for (int k = 0; k < savedLines.textKeys.Count && k < savedLines.states.Count; k++)
+                {
+                    var tk = savedLines.textKeys[k] ?? "";
+                    mapByKey[tk] = savedLines.states[k];
+                }
+
+                for (int j = 0; j < it.contents.Count; j++)
+                {
+                    var ln = it.contents[j];
+                    if (ln?.line == null || ln.line.Kind != JournalLineKind.Step)
+                        continue;
+
+                    var tk = ln.line.TextKey ?? "";
+                    if (
+                        mapByKey.TryGetValue(tk, out var stStr)
+                        && Enum.TryParse(stStr, true, out StepState stepSt)
+                    )
+                    {
+                        ln.State = stepSt;
+                        // 已按TextKey命中则跳过索引兜底
+                        mapByKey.Remove(tk);
+                    }
+                }
+
+                // 2) 兜底：按索引（仅对那些未被TextKey命中的保存项生效）
+                int cnt = Math.Min(
+                    Math.Min(savedLines.indices.Count, savedLines.states.Count),
+                    savedLines.textKeys.Count
+                );
+                for (int k = 0; k < cnt; k++)
+                {
+                    int idx = savedLines.indices[k];
+                    string stStr = savedLines.states[k];
+
+                    // 若该保存项已被TextKey流程命中，则跳过
+                    var tk = savedLines.textKeys[k] ?? "";
+                    if (mapByKey.ContainsKey(tk) == false)
+                        continue; // 已命中并移除
+
+                    if (idx < 0 || idx >= (it.contents?.Count ?? 0))
+                        continue;
+                    var ln = it.contents[idx];
+                    if (ln?.line == null || ln.line.Kind != JournalLineKind.Step)
+                        continue;
+
+                    if (Enum.TryParse(stStr, true, out StepState stepSt))
+                        ln.State = stepSt;
+                }
             }
         }
     }

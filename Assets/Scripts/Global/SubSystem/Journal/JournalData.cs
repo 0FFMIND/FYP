@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace MVC
 {
@@ -21,7 +23,7 @@ namespace MVC
         public string title;
 
         // 详情
-        public string content;
+        public List<JournalLine> contents;
 
         // 当前状态：Pending/Active/Done，用于渲染勾选、排序等
         public JournalStatus status;
@@ -30,12 +32,41 @@ namespace MVC
         public DateTime createdAt;
     }
 
-    // 仅用于读取 JSON 的轻量条目：含 key, title 和 content
+    public enum JournalLineKind
+    {
+        Fixed,
+        Step,
+    }
+
+    public enum StepState
+    {
+        Pending,
+        Done,
+    }
+
     [Serializable]
-    public class JournalItemDTO
+    public class JournalDataLine
+    {
+        public JournalLineKind Kind;
+        [TextArea]
+        public string TextKey;
+    }
+
+    [Serializable]
+    public class JournalLine
+    {
+        public JournalDataLine line;
+
+        // 仅当 Kind==Step 有意义
+        public StepState State;
+    }
+
+    // 用于在 Inspector 里编辑的数据库资产
+    [CreateAssetMenu(fileName = "JournalData")]
+    public class JournalData : ScriptableObject
     {
         public string key;
         public string title;
-        public string content;
+        public List<JournalDataLine> contents = new();
     }
 }

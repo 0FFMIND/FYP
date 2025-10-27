@@ -61,6 +61,8 @@ namespace MVC
             TransitionMgr.Instance.FadeIn(0.5f);
             // 进入对话控制器
             dialogueCtl.StartDialogue();
+            // 更新日记
+            JournalMgr.Instance.TrySetStatus("reachRooftop", JournalStatus.Active);
             // 开启暂停菜单
             PauseMgr.Instance.SetPauseEnabled(true);
         }

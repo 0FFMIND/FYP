@@ -12,7 +12,8 @@ namespace MVC
         [SerializeField]
         private string key;
 
-        // 运行期传入的“命名参数”，例如 { "action": "Sprint", "key": "Right Shift" }
+        // 运行期传入的“命名参数”字典：占位符名 -> 参数值，例如 { "action": "Sprint", "key": "Right Shift" }
+        // 参数值被当作“本地化键”再次查表（不是直接字面量）
         private Dictionary<string, string> _namedArgs = new Dictionary<string, string>();
 
         private TMP_Text tmpText;

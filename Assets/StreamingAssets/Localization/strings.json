@@ -114,5 +114,49 @@
     {
         "zh": "要购买吗？",
         "en": "Ready to buy?"
+    },
+    {
+        "zh": "{yyyy}年{MM}月{dd}日 {period}{hh}点{mm}分",
+        "en": "{MM}/{dd}/{yyyy} {hh}:{mm} {period}"
+    },
+    {
+        "zh": "上午",
+        "en": "AM"
+    },
+    {
+        "zh": "下午",
+        "en": "PM"
+    },
+    {
+        "zh": "凌晨",
+        "en": "AM"
+    },
+    {
+        "zh": "夜间",
+        "en": "PM"
+    },
+    {
+        "zh": "抵达天台",
+        "en": "Arrival"
+    },
+    {
+        "zh": "探索天台",
+        "en": "Exploration"
+    },
+    {
+        "zh": "总算溜上来了: ",
+        "en": "Finally snuck up here:"
+    },
+    {
+        "zh": "·爬六层楼差点要命，在五楼还差点撞见主任 ",
+        "en": "·Climbing six flights nearly killed me; I almost ran into the dean on the fifth floor."
+    },
+    {
+        "zh": "·我决定用石头卡住铁门，要是被风刮得锁上就完了 ",
+        "en": "·I decided to wedge the iron door with a rock—if the wind blows it shut and it locks, I’m done for."
+    },
+    {
+        "zh": "·既然上来了，先跟着脚印去前面那个<color=#FFC600>告示牌</color>看看吧 ",
+        "en": "·Since I’m up here, let’s follow the footprints and check that <color=#FFC600>notice board</color> up ahead."
     }
 ]

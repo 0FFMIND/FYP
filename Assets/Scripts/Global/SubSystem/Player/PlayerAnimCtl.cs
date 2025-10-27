@@ -5,7 +5,7 @@ using Utils;
 
 namespace MVC
 {
-    public class SpriteAnimCtl : MonoBehaviour
+    public class PlayerAnimCtl : MonoBehaviour
     {
         [SerializeField]
         private Direction defaultDir;
@@ -38,7 +38,6 @@ namespace MVC
         private bool isPaused = false;
 
         private bool overrideLock = false;
-
 
         private void Awake()
         {

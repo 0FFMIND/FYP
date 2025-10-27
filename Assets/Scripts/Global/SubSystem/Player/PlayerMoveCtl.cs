@@ -9,8 +9,7 @@ namespace MVC
         private PlayerCtl root;
         private PlayerModel model;
         private Rigidbody2D rb;
-        private SpriteAnimCtl animator;
-        private PlayerScriptMoveCtl scriptMover;
+        private PlayerAnimCtl animator;
 
         private float sprintMultiplier;
 
@@ -22,7 +21,7 @@ namespace MVC
             // 获得引用
             model = root.model;
             rb = GetComponent<Rigidbody2D>();
-            animator = GetComponent<SpriteAnimCtl>();
+            animator = GetComponent<PlayerAnimCtl>();
         }
 
         private void OnEnable()

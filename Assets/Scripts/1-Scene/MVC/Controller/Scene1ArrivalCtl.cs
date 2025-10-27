@@ -12,8 +12,11 @@ namespace MVC
         Timeline,
         GoToBoard,
         InteractBoard,
-        OpenMenu,
-        CloseMenu,
+        MenuTutorial,
+
+        // 等待玩家按 ESC 打开/关闭菜单的“等待态”
+        AwaitMenuToggle,
+        ExploreRooftop,
     }
 
     public class Scene1ArrivalCtl : MonoBehaviour
@@ -44,11 +47,13 @@ namespace MVC
         private void OnEnable()
         {
             EventBus.Subscribe<EScene1ArrivalStateChange>(EvaluateState);
+            EventBus.Subscribe<EPauseChanged>(OnPauseChanged);
         }
 
         private void OnDisable()
         {
             EventBus.Unsubscribe<EScene1ArrivalStateChange>(EvaluateState);
+            EventBus.Unsubscribe<EPauseChanged>(OnPauseChanged);
         }
 
         private void Start()
@@ -57,6 +62,7 @@ namespace MVC
             AudioManager.Instance.PlayBGM("1-bgm-1", 1);
             // 禁止player移动
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtl>();
+            JournalMgr.Instance.TrySetStatus("exploreRooftop", JournalStatus.Active);
             player.model.SetDisabled(true);
             // 按状态启动
             EvaluateState();
@@ -84,8 +90,14 @@ namespace MVC
                 case Scene1State.InteractBoard:
                     EnterInteractBoard();
                     break;
-                case Scene1State.OpenMenu:
-                    EnterOpenMenu();
+                case Scene1State.MenuTutorial:
+                    EnterMenuTutorial();
+                    break;
+                case Scene1State.AwaitMenuToggle:
+                    EnterAwaitMenuToggle();
+                    break;
+                case Scene1State.ExploreRooftop:
+                    EnterExploreRooftop();
                     break;
                 default:
                     break;
@@ -100,13 +112,35 @@ namespace MVC
             player.model.SetDisabled(false);
         }
 
+        private void EnterExploreRooftop()
+        {
+            if (guideCtl != null)
+            {
+                guideCtl.StartDialogue("1-Scene-6.txt", EndGoToBoard);
+            }
+        }
+
+        // 全局暂停状态变化事件回调
+        private void OnPauseChanged(EPauseChanged e)
+        {
+            if (state != Scene1State.AwaitMenuToggle)
+            {
+                return;
+            }
+            if (!e.IsPaused)
+            {
+                state = Scene1State.ExploreRooftop;
+                EvaluateState();
+            }
+        }
+
+        private void EnterAwaitMenuToggle() { }
+
         private void EnterTimeline()
         {
             // 设置人物位置
             var player = GameObject.FindGameObjectWithTag("Player");
             player.transform.position = initPos;
-            // 更新日记
-            JournalMgr.Instance.TrySetStatus("reachRooftop", JournalStatus.Active);
             // 启动timeline
             if (director != null)
             {
@@ -115,7 +149,7 @@ namespace MVC
             }
         }
 
-        private void EnterOpenMenu()
+        private void EnterMenuTutorial()
         {
             if (guideCtl != null)
             {
@@ -125,8 +159,11 @@ namespace MVC
             }
         }
 
-        private void EndOpenMenu() {
+        private void EndOpenMenu()
+        {
+            // 教学对话结束 → 进入等待玩家 ESC 开关的阶段
             player.model.SetDisabled(false);
+            state = Scene1State.AwaitMenuToggle;
         }
 
         private void EnterGoToBoard()
@@ -181,7 +218,7 @@ namespace MVC
 
             if (state == Scene1State.InteractBoard)
             {
-                state = Scene1State.OpenMenu;
+                state = Scene1State.MenuTutorial;
                 EvaluateState();
             }
         }

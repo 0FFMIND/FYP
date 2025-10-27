@@ -14,15 +14,10 @@ namespace Manager
         // 内存中的日记条目列表（顺序即展示顺序）
         public JournalModel Model { get; private set; } = new JournalModel();
 
-        private string jsonRelativePath = "JournalData/journal.json";
-
         private void Awake()
         {
-            var path = Path.Combine(Application.streamingAssetsPath, jsonRelativePath);
-            var json = File.ReadAllText(path);
-
-            // 用你已有的 JsonHelper.FromJsonArray<JournalItemDTO> 解析并初始化模型
-            Model.LoadFromJsonArray(json, JsonHelper.FromJsonArray<JournalItemDTO>);
+            // 解析SO并初始化模型
+            Model.LoadFromSO();
         }
 
         private void OnEnable()
@@ -38,7 +33,8 @@ namespace Manager
         // 响应 Settings 变更：从 Settings 恢复 Journal
         private void SetJournal(ESettingsChanged e)
         {
-            if (Model == null) Model = new JournalModel();
+            if (Model == null)
+                Model = new JournalModel();
 
             var save = e.Settings?.journalData;
             if (save == null)
@@ -51,7 +47,7 @@ namespace Manager
             JournalSaveAdapter.ApplyToModel(Model, save);
         }
 
-        // —— 对外：切换某条日记的状态 —— 
+        // —— 对外：切换某条日记的状态 ——
         // 需求：传入 key 和目标 status；若目标为 Active，则补写 createdAt（UTC“首次揭示时间”）。
         // 返回：发生实际变更则 true；未找到或无变化则 false。
         public bool TrySetStatus(string key, JournalStatus targetStatus)
@@ -72,6 +68,14 @@ namespace Manager
                 it.createdAt = DateTime.Now;
             }
 
+            foreach (var ln in it.contents)
+            {
+                if (ln?.line == null)
+                    continue;
+                if (ln.line.Kind == JournalLineKind.Step)
+                    ln.State = StepState.Pending;
+            }
+
             FlushJournalSnapshot();
             return true;
         }
@@ -79,7 +83,8 @@ namespace Manager
         // 向 SettingsMgr 写回当前日记快照（是否立即落盘由 SettingsMgr 决定）
         private void FlushJournalSnapshot()
         {
-            if (Model == null) return;
+            if (Model == null)
+                return;
             var snap = JournalSaveAdapter.ToSave(Model);
             SettingsMgr.Instance.SetJournalSnapshot(snap, true);
         }

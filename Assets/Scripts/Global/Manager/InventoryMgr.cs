@@ -48,8 +48,8 @@ namespace Manager
             if (_cache == null)
             {
                 _cache = new Dictionary<string, Item>();
-                // 从 Resources/Items 加载所有 Item 资产
-                foreach (var asset in Resources.LoadAll<Item>("Item"))
+                // 从 Resources/SO/Items 加载所有 Item 资产
+                foreach (var asset in Resources.LoadAll<Item>("SO/Items"))
                 {
                     if (asset && !string.IsNullOrEmpty(asset.id))
                     {

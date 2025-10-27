@@ -4,11 +4,40 @@ using UnityEngine;
 
 namespace Utils
 {
+    public readonly struct EJournalProgressChanged
+    {
+        public readonly string Key;
+        public readonly int Done;
+        public readonly int Total;
+
+        public EJournalProgressChanged(string key, int done, int total)
+        {
+            Key = key;
+            Done = done;
+            Total = total;
+        }
+    }
+
+    public readonly struct EJournalCompleted
+    {
+        public readonly string Key;
+
+        public EJournalCompleted(string key)
+        {
+            Key = key;
+        }
+    }
+
     public readonly struct EJournalSelected
     {
         public readonly string Key;
-        public EJournalSelected(string key) { Key = key; }
+
+        public EJournalSelected(string key)
+        {
+            Key = key;
+        }
     }
+
     public readonly struct EScene1ArrivalStateChange
     {
         public readonly Scene1State State;

@@ -82,6 +82,7 @@ namespace MVC
                     keys = new List<string>(journalData.keys),
                     statuses = new List<string>(journalData.statuses),
                     createdAtIso = new List<string>(journalData.createdAtIso),
+                    steps = new List<JournalItemSteps>(journalData.steps),
                 }
             };
         }

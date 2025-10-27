@@ -96,6 +96,10 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/10/24 - 正在写日记系统
 
+2025/10/25 - 写完了日记系统
+
+
+
 
 
 正在做：
@@ -106,4 +110,4 @@ TODO: 解决对话机回调问题
 
 TODO: 场景中的任务更新，检测任务完成情况
 
-TODO: 加入日记系统
+TODO: Scene1ArrivalCtl其实更好用StateMachine做，现在大型SwitchCase有点冗余

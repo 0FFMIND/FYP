@@ -8,7 +8,7 @@ namespace MVC
         private float arriveEps = 0.1f;
         private PlayerCtl player;
         private Rigidbody2D rb;
-        private SpriteAnimCtl anim;
+        private PlayerAnimCtl anim;
         private bool _active; // 是否处于脚本驱动移动中（true 表示正在自动移动）
         private Vector2 _target;
         private float _speed;
@@ -22,7 +22,7 @@ namespace MVC
         {
             player = GetComponent<PlayerCtl>();
             rb = GetComponent<Rigidbody2D>();
-            anim = GetComponent<SpriteAnimCtl>();
+            anim = GetComponent<PlayerAnimCtl>();
         }
 
         public void StartMove(
