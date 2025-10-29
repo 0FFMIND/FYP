@@ -21,6 +21,7 @@ public static class JournalDateParser
         if (!dtOpt.HasValue) return dict;
 
         var dt = dtOpt.Value;
+        dt = dt.ToLocalTime();
         // 24 小时制的小时
         int h24 = dt.Hour;
         // 转 12 小时制

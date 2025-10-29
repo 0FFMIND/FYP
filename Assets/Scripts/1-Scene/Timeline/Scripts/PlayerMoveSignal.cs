@@ -22,6 +22,9 @@ namespace MVC
         [SerializeField]
         private List<Sprite> closeDoor;
 
+        [SerializeField]
+        private GuideDialogCtl guideCtl;
+
         private void Start()
         {
             mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScriptMoveCtl>();
@@ -100,6 +103,34 @@ namespace MVC
             director.Stop();
             // 改变当前scene1状态机状态
             EventBus.Publish(new EScene1ArrivalStateChange(Scene1State.GoToBoard));
+        }
+
+        public IEnumerator PlayerThirdMove()
+        {
+            if (mover.anim.currentDir != Direction.Up)
+            {
+                mover.SetFace(Direction.Up);
+                yield return new WaitForSecondsRealtime(0.4f);
+            }
+            MoveBack();
+            yield return new WaitForSecondsRealtime(1f);
+            emoteCtl.Play(EmoteType.Thinking, 1f);
+            yield return new WaitForSecondsRealtime(1.7f);
+            // 暂停director
+            director.Pause();
+            dialogCtl.StartThirdDialogue(PlayerThirdMoveEnd);
+        }
+
+        private void PlayerThirdMoveEnd()
+        {
+            if (guideCtl != null)
+            {
+
+                guideCtl.StartDialogue("1-Scene-3.txt", () => {
+                    // 改变当前scene1状态机状态
+                    EventBus.Publish(new EScene1ArrivalStateChange(Scene1State.AwaitMenuToggle));
+                });
+            }
         }
 
         private void ResumeDirector()

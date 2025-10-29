@@ -17,6 +17,9 @@ namespace MVC
         private LineMapping[] secondMappings;
 
         [SerializeField]
+        private LineMapping[] thirdMappings;
+
+        [SerializeField]
         private GameObject dialogPanel;
 
         private Action finished;
@@ -91,6 +94,14 @@ namespace MVC
             mappings = firstMappings;
             finished = onFinished;
             modelText = "1-Scene-1.txt";
+            base.StartDialogue();
+        }
+
+        public void StartThirdDialogue(Action onFinished)
+        {
+            mappings = thirdMappings;
+            finished = onFinished;
+            modelText = "1-Scene-5.txt";
             base.StartDialogue();
         }
 

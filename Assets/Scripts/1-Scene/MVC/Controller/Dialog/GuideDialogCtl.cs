@@ -35,6 +35,14 @@ namespace MVC
             StartDialogue();
         }
 
+        public void StartDialogue(string[] text, Action onFinished)
+        {
+            finished = onFinished;
+            this.dialogueModel = new DialogueModel(text);
+            this.modelText = "";
+            StartDialogue();
+        }
+
         protected override IEnumerator TypeLines()
         {
             arrow.gameObject.SetActive(false);

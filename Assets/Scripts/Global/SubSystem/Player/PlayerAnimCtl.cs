@@ -32,7 +32,7 @@ namespace MVC
         private PlayerModel playerModel;
 
         // ≥ı ºªØ
-        private Direction currentDir = (Direction)(-1);
+        public Direction currentDir = (Direction)(-1);
         private bool wasMoving;
         private bool isMoving;
         private bool isPaused = false;

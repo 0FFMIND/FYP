@@ -98,6 +98,8 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/10/25 - 写完了日记系统
 
+2025/10/27 - 修了一下跨场景的pausePanel出现的问题，现在场景也不是additive的load，而是正常的切换，因为没有叠加场景的需求
+
 
 
 

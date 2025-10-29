@@ -4,6 +4,32 @@ using UnityEngine;
 
 namespace Utils
 {
+    public readonly struct EJournalStatusChanged
+    {
+        public readonly string Key;
+        public readonly JournalStatus NewStatus;
+
+        public EJournalStatusChanged(string key, JournalStatus newStatus)
+        {
+            Key = key;
+            NewStatus = newStatus;
+        }
+    }
+
+    public readonly struct EJournalStepChanged
+    {
+        public readonly string Key; // Journal 条目的 key
+        public readonly int Index; // 实际命中的 contents 索引
+        public readonly StepState State;
+
+        public EJournalStepChanged(string key, int contentIndex, StepState newState)
+        {
+            Key = key;
+            Index = contentIndex;
+            State = newState;
+        }
+    }
+
     public readonly struct EJournalProgressChanged
     {
         public readonly string Key;
@@ -15,16 +41,6 @@ namespace Utils
             Key = key;
             Done = done;
             Total = total;
-        }
-    }
-
-    public readonly struct EJournalCompleted
-    {
-        public readonly string Key;
-
-        public EJournalCompleted(string key)
-        {
-            Key = key;
         }
     }
 
@@ -78,14 +94,14 @@ namespace Utils
         }
     }
 
-    public readonly struct ESceneFadeAdditiveDisable
+    public readonly struct ESceneFade
     {
         public readonly string FromScene;
         public readonly string ToScene;
         public readonly float FadeOutDuration;
         public readonly float FadeInDuration;
 
-        public ESceneFadeAdditiveDisable(
+        public ESceneFade(
             string fromScene,
             string toScene,
             float fadeOutDuration,

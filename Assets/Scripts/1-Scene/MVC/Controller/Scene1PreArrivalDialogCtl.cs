@@ -60,10 +60,11 @@ namespace MVC
             // 如果读完
             if (index == dialogueModel.Lines.Length)
             {
+                EventBus.Publish(new EJournalStepChanged("reachRooftop", 0, StepState.Done));
                 AudioManager.Instance.StopBGM(0.5f);
                 // 进入1-Scene-Main
                 EventBus.Publish(
-                    new ESceneFadeAdditiveDisable(
+                    new ESceneFade(
                         fromScene: "1-Scene-UI",
                         toScene: "1-Scene-Main",
                         fadeOutDuration: 0.5f,

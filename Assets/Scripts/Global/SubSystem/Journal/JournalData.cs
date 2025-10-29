@@ -12,15 +12,12 @@ namespace MVC
         Completed, // 已完成（打钩/置灰）
     }
 
-    // 游戏中运行的数据，用来放入SaveData里面的
+    // 游戏中运行的数据，会进入存档（SaveData）
     [Serializable]
     public class JournalItem
     {
         // 任务唯一键（程序用来识别/去重/定位）
         public string key;
-
-        // 在 UI 上展示的文案，如 "安全抵达天台"
-        public string title;
 
         // 详情
         public List<JournalLine> contents;
@@ -32,22 +29,25 @@ namespace MVC
         public DateTime createdAt;
     }
 
+    // 每一行内容的类别：固定文本或“可完成的步骤”
     public enum JournalLineKind
     {
-        Fixed,
-        Step,
+        Fixed, // 固定说明文本（不参与完成度）
+        Step, // 可打勾的步骤项（参与完成度）
     }
 
+    // 步骤状态：仅对 Step 行生效
     public enum StepState
     {
-        Pending,
-        Done,
+        Pending, // 未完成
+        Done, // 已完成
     }
 
     [Serializable]
     public class JournalDataLine
     {
         public JournalLineKind Kind;
+
         [TextArea]
         public string TextKey;
     }
@@ -66,7 +66,6 @@ namespace MVC
     public class JournalData : ScriptableObject
     {
         public string key;
-        public string title;
         public List<JournalDataLine> contents = new();
     }
 }

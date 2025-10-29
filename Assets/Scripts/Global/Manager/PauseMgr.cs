@@ -99,6 +99,8 @@ namespace Manager
                 if (prefab != null)
                 {
                     pausePanel = Instantiate(prefab);
+                    // 跨场景存活，防止切场景过程中对象被销毁/失活而无法启动协程
+                    DontDestroyOnLoad(pausePanel);
                 }
                 pausePanel.SetActive(false);
             }

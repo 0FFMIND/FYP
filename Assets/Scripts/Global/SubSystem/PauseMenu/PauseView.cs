@@ -9,7 +9,7 @@ namespace MVC
 {
     public class PauseView : MonoBehaviour
     {
-        [System.Serializable]
+        [Serializable]
         public class PageTab
         {
             public Button button; // ×ó²à°´Å¥

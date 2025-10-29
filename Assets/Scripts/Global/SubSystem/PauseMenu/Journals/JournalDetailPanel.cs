@@ -16,6 +16,8 @@ namespace MVC
         [SerializeField]
         private TMP_Text dateText;
 
+        private string dateTextKey = "{yyyy}年{MM}月{dd}日 {period}{hh}点{mm}分";
+
         private static readonly Color COLOR_WHITE = Color.white;
         private static readonly Color COLOR_PENDING = new Color(0.54f, 0.54f, 0.54f, 1f); // #8A8A8A
 
@@ -27,6 +29,9 @@ namespace MVC
 
         // 简单池
         private readonly List<GameObject> _pool = new();
+
+        [SerializeField]
+        private GameObject completed;
 
         [SerializeField]
         private float lineSpacing = 6f;
@@ -53,6 +58,8 @@ namespace MVC
             // 防御式：空 key 直接返回，避免无意义查询
             if (string.IsNullOrEmpty(key))
             {
+                if (completed)
+                    completed.SetActive(false);
                 dateText.gameObject.SetActive(false);
                 Debug.LogWarning(
                     $"[JournalDetailPanel] ShowByKey received an empty key. GameObject=\"{name}\""
@@ -79,6 +86,8 @@ namespace MVC
                 );
                 return;
             }
+            if (completed)
+                completed.SetActive(it.status == JournalStatus.Completed);
             // 绑定 UI 文本（日期 + 正文）
             BindTexts(it);
         }
@@ -93,6 +102,7 @@ namespace MVC
 
             // 在同节点上获取 LocalizedText 组件并注入占位符字典
             dateText.GetComponent<LocalizedText>().SetParams(args);
+            dateText.GetComponent<LocalizedText>().SetKey(dateTextKey, true);
 
             // —— 行内容：逐行实例化/复用 Prefab 并填 key ——
             RebuildLines(it);

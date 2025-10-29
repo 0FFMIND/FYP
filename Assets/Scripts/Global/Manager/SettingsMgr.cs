@@ -393,6 +393,55 @@ namespace Manager
                 if (!string.Equals(a.createdAtIso[i], b.createdAtIso[i], StringComparison.Ordinal))
                     return false;
             }
+            // —— 也要比较 steps（每条目下的行状态：textKeys/indices/states）——
+            // 两边 steps 的存在性与长度
+            if ((a.steps == null) != (b.steps == null))
+                return false;
+            if (a.steps != null)
+            {
+                if (a.steps.Count != b.steps.Count)
+                    return false;
+                for (int i = 0; i < a.steps.Count; i++)
+                {
+                    var sa = a.steps[i];
+                    var sb = b.steps[i];
+                    // 任一为 null 则只有两者都 null 才相等
+                    if ((sa == null) != (sb == null))
+                        return false;
+                    if (sa == null)
+                        continue;
+
+                    // 三列存在性与长度一致
+                    if ((sa.textKeys == null) != (sb.textKeys == null))
+                        return false;
+                    if ((sa.indices == null) != (sb.indices == null))
+                        return false;
+                    if ((sa.states == null) != (sb.states == null))
+                        return false;
+                    int tkCount = sa.textKeys?.Count ?? 0;
+                    int idCount = sa.indices?.Count ?? 0;
+                    int stCount = sa.states?.Count ?? 0;
+                    if (tkCount != (sb.textKeys?.Count ?? 0))
+                        return false;
+                    if (idCount != (sb.indices?.Count ?? 0))
+                        return false;
+                    if (stCount != (sb.states?.Count ?? 0))
+                        return false;
+
+                    // 逐项比对
+                    for (int k = 0; k < tkCount; k++)
+                        if (
+                            !string.Equals(sa.textKeys[k], sb.textKeys[k], StringComparison.Ordinal)
+                        )
+                            return false;
+                    for (int k = 0; k < idCount; k++)
+                        if (sa.indices[k] != sb.indices[k])
+                            return false;
+                    for (int k = 0; k < stCount; k++)
+                        if (!string.Equals(sa.states[k], sb.states[k], StringComparison.Ordinal))
+                            return false;
+                }
+            }
             return true;
         }
 

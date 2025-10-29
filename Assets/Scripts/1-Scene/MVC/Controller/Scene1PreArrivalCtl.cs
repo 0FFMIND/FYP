@@ -1,6 +1,7 @@
 using System.Collections;
 using Manager;
 using UnityEngine;
+using Utils;
 
 namespace MVC
 {
@@ -62,7 +63,7 @@ namespace MVC
             // 进入对话控制器
             dialogueCtl.StartDialogue();
             // 更新日记
-            JournalMgr.Instance.TrySetStatus("reachRooftop", JournalStatus.Active);
+            EventBus.Publish(new EJournalStatusChanged("reachRooftop", JournalStatus.Active));
             // 开启暂停菜单
             PauseMgr.Instance.SetPauseEnabled(true);
         }

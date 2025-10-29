@@ -17,6 +17,7 @@ namespace MVC
         // 等待玩家按 ESC 打开/关闭菜单的“等待态”
         AwaitMenuToggle,
         ExploreRooftop,
+        AwaitExploreComplete,
     }
 
     public class Scene1ArrivalCtl : MonoBehaviour
@@ -32,6 +33,9 @@ namespace MVC
         private GuideDialogCtl guideCtl;
 
         [SerializeField]
+        private TimelineDialogCtl timelineCtl;
+
+        [SerializeField]
         private GameObject guideSteps;
 
         [SerializeField]
@@ -43,6 +47,9 @@ namespace MVC
         private GameObject metalSign;
 
         private bool interactOnce = false;
+
+        [SerializeField]
+        private PlayerMoveSignal mover;
 
         private void OnEnable()
         {
@@ -62,7 +69,6 @@ namespace MVC
             AudioManager.Instance.PlayBGM("1-bgm-1", 1);
             // 禁止player移动
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtl>();
-            JournalMgr.Instance.TrySetStatus("exploreRooftop", JournalStatus.Active);
             player.model.SetDisabled(true);
             // 按状态启动
             EvaluateState();
@@ -114,9 +120,24 @@ namespace MVC
 
         private void EnterExploreRooftop()
         {
+            player.model.SetDisabled(true);
             if (guideCtl != null)
             {
-                guideCtl.StartDialogue("1-Scene-6.txt", EndGoToBoard);
+                guideCtl.StartDialogue("1-Scene-6.txt", EndExploreRooftop);
+            }
+        }
+
+        private void EndExploreRooftop()
+        {
+            EventBus.Publish(new EJournalStatusChanged("exploreRooftop", JournalStatus.Active));
+            if (guideCtl != null)
+            {
+                guideCtl.StartDialogue("1-Scene-7.txt", () => {
+                    timelineCtl.StartThirdDialogue(() => {
+                        player.model.SetDisabled(false);
+                        state = Scene1State.AwaitExploreComplete;
+                    });
+                });
             }
         }
 
@@ -149,23 +170,6 @@ namespace MVC
             }
         }
 
-        private void EnterMenuTutorial()
-        {
-            if (guideCtl != null)
-            {
-                // 禁止玩家移动
-                player.model.SetDisabled(true);
-                guideCtl.StartDialogue("1-Scene-5.txt", EndOpenMenu);
-            }
-        }
-
-        private void EndOpenMenu()
-        {
-            // 教学对话结束 → 进入等待玩家 ESC 开关的阶段
-            player.model.SetDisabled(false);
-            state = Scene1State.AwaitMenuToggle;
-        }
-
         private void EnterGoToBoard()
         {
             if (guideCtl != null)
@@ -182,6 +186,26 @@ namespace MVC
             guideSteps.SetActive(true);
         }
 
+        private void EnterMenuTutorial()
+        {
+            // 禁止玩家移动
+            player.model.SetDisabled(true);
+            // 开始播放动画
+            StartCoroutine(mover.PlayerThirdMove());
+        }
+
+        //private IEnumerator StartMenuTutorial()
+        //{
+
+        //}
+
+        private void EndOpenMenu()
+        {
+            // 教学对话结束 → 进入等待玩家 ESC 开关的阶段
+            player.model.SetDisabled(false);
+            state = Scene1State.AwaitMenuToggle;
+        }
+
         private void EnterInteractBoard()
         {
             StartCoroutine(InteractBoard());
@@ -189,9 +213,6 @@ namespace MVC
 
         private IEnumerator InteractBoard()
         {
-            // 显示物体高亮
-            var outline = metalSign.GetComponentInParent<SpritesOutline>();
-            outline.SetOutlineVisible(true);
             // 禁止玩家移动
             player.model.SetDisabled(true);
             // 播放人物思考
@@ -210,17 +231,6 @@ namespace MVC
             player.model.SetDisabled(false);
             // 重新显示交互图标
             player.gameObject.GetComponent<PlayerInteractCtl>().Refresh();
-        }
-
-        public void EndInteractBoard(InteractCtl ctl)
-        {
-            ctl?.Done();
-
-            if (state == Scene1State.InteractBoard)
-            {
-                state = Scene1State.MenuTutorial;
-                EvaluateState();
-            }
         }
 
         private void Update()

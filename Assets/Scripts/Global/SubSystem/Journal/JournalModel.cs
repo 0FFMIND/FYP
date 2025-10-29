@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 
@@ -62,7 +63,6 @@ namespace MVC
                 var item = new JournalItem
                 {
                     key = so.key,
-                    title = so.title,
                     status = JournalStatus.Hidden,
                     createdAt = DEFAULT_TIME,
                     contents = new List<JournalLine>(so.contents?.Count ?? 0),
@@ -73,18 +73,135 @@ namespace MVC
                 {
                     foreach (var line in so.contents)
                     {
-                        if (line == null) continue;
-                        item.contents.Add(new JournalLine
-                        {
-                            line = line,
-                            State = StepState.Pending,
-                        });
+                        if (line == null)
+                            continue;
+                        TrimCRInObjectStrings(line);
+                        item.contents.Add(
+                            new JournalLine { line = line, State = StepState.Pending }
+                        );
                     }
                 }
 
                 _items.Add(item);
                 _byKey[item.key] = item;
             }
+        }
+
+        // 修剪“每一行 content”里的所有 string 字段/属性（排除名为 key/title 的成员）
+        private static void TrimCRInObjectStrings(object obj)
+        {
+            if (obj == null)
+                return;
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public;
+            foreach (var f in obj.GetType().GetFields(flags))
+            {
+                if (f.FieldType == typeof(string) && !IsKeyOrTitleName(f.Name))
+                {
+                    var val = (string)f.GetValue(obj);
+                    var trimmed = TrimCR(val);
+                    if (!ReferenceEquals(val, trimmed))
+                        f.SetValue(obj, trimmed);
+                }
+            }
+            foreach (var p in obj.GetType().GetProperties(flags))
+            {
+                if (!p.CanRead || !p.CanWrite)
+                    continue;
+                if (p.PropertyType == typeof(string) && !IsKeyOrTitleName(p.Name))
+                {
+                    var val = (string)p.GetValue(obj, null);
+                    var trimmed = TrimCR(val);
+                    if (!ReferenceEquals(val, trimmed))
+                        p.SetValue(obj, trimmed, null);
+                }
+            }
+        }
+
+        private static bool IsKeyOrTitleName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return false;
+            var n = name.ToLowerInvariant();
+            return n == "key" || n == "title";
+        }
+
+        private static string TrimCR(string s) => s?.Trim('\r');
+
+        // Debug用
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"JournalModel: {_items.Count} items");
+
+            for (int i = 0; i < _items.Count; i++)
+            {
+                var it = _items[i];
+                string created =
+                    it.createdAt == DEFAULT_TIME
+                        ? "-"
+                        : it.createdAt.ToString("o", CultureInfo.InvariantCulture);
+
+                // 统计本条目的 Step 完成度
+                int stepDone = 0,
+                    stepPending = 0,
+                    stepTotal = 0;
+                if (it.contents != null)
+                {
+                    foreach (var c in it.contents)
+                    {
+                        if (c?.line == null)
+                            continue;
+                        if (c.line.Kind == JournalLineKind.Step)
+                        {
+                            stepTotal++;
+                            if (c.State == StepState.Done)
+                                stepDone++;
+                            else if (c.State == StepState.Pending)
+                                stepPending++;
+                        }
+                    }
+                }
+
+                sb.AppendLine(
+                    $"[{i}] key={it.key} | status={it.status} | createdAt={created} | steps {stepDone}/{stepTotal} done"
+                );
+
+                // 逐行明细
+                if (it.contents != null)
+                {
+                    for (int j = 0; j < it.contents.Count; j++)
+                    {
+                        var ln = it.contents[j];
+                        if (ln == null)
+                        {
+                            sb.AppendLine($"    ({j}) <null>");
+                            continue;
+                        }
+                        if (ln.line == null)
+                        {
+                            sb.AppendLine($"    ({j}) <line:null> state={ln.State}");
+                            continue;
+                        }
+
+                        var kind = ln.line.Kind;
+                        var tk = ln.line.TextKey ?? "";
+
+                        // 只有 Step 才有意义的完成状态；Fixed 显示 "-"
+                        string stateStr =
+                            (kind == JournalLineKind.Step) ? ln.State.ToString() : "-";
+
+                        sb.AppendLine($"    ({j}) {kind} | tk=\"{Esc(tk)}\" | state={stateStr}");
+                    }
+                }
+            }
+            return sb.ToString();
+            // --- helpers ---
+            static string Esc(string s) =>
+                (s ?? "")
+                    .Replace("\\", "\\\\")
+                    .Replace("\"", "\\\"")
+                    .Replace("\r", "\\r")
+                    .Replace("\n", "\\n");
         }
     }
 }

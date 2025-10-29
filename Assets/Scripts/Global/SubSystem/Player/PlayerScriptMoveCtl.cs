@@ -8,7 +8,7 @@ namespace MVC
         private float arriveEps = 0.1f;
         private PlayerCtl player;
         private Rigidbody2D rb;
-        private PlayerAnimCtl anim;
+        public PlayerAnimCtl anim;
         private bool _active; // 是否处于脚本驱动移动中（true 表示正在自动移动）
         private Vector2 _target;
         private float _speed;

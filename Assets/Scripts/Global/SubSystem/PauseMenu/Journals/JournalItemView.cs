@@ -47,36 +47,30 @@ namespace MVC
             // 记录对应的键，供点击回调使用
             _key = item.key;
 
-            // 本地化
-            titleText.GetComponent<LocalizedText>().SetKey(item.title, true);
             // 加入互斥组
             toggle.group = group;
             toggle.onValueChanged.RemoveAllListeners();
             toggle.onValueChanged.AddListener(isOn =>
             {
+                ApplyVisual(isOn);
                 // 只有切为选中时广播选中事件
                 if (isOn)
                 {
                     EventBus.Publish(new EJournalSelected(_key));
                 }
             });
-
             ApplyVisual(toggle.isOn);
         }
 
-        // 静默切换 isOn，不触发 onValueChanged
-        public void SetSelected(bool on)
+        public void SetSelected(bool on, bool notify = false)
         {
-            if (!toggle)
-            {
-                return;
-            }
-
-            toggle.SetIsOnWithoutNotify(on);
+            if (!toggle) return;
+            if (notify) toggle.isOn = on;                // 触发回调 & 通知 ToggleGroup
+            else        toggle.SetIsOnWithoutNotify(on); // 仅改状态/视觉
             ApplyVisual(on);
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
         {
             _isHover = true;
             ApplyVisual(toggle && toggle.isOn);

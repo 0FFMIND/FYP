@@ -40,11 +40,10 @@ public static class JournalSaveAdapter
         {
             d.keys.Add(it.key);
             d.statuses.Add(it.status.ToString());
-            d.createdAtIso.Add(
-                it.createdAt == DateTime.MinValue
-                    ? ""
-                    : it.createdAt.ToString("o", CultureInfo.InvariantCulture)
-            );
+            var utc = it.createdAt.Kind == DateTimeKind.Utc
+                    ? it.createdAt
+                    : it.createdAt.ToUniversalTime();
+            d.createdAtIso.Add(utc.ToString("o", CultureInfo.InvariantCulture));
             // 行级：只写出 Step 行
             var lines = new JournalItemSteps();
             if (it.contents != null)

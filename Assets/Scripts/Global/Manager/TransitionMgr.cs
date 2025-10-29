@@ -25,12 +25,12 @@ namespace Manager
 
         private void OnEnable()
         {
-            EventBus.Subscribe<ESceneFadeAdditiveDisable>(OnSceneFadeAdditiveDisable, false);
+            EventBus.Subscribe<ESceneFade>(OnSceneFade, false);
         }
 
         private void OnDisable()
         {
-            EventBus.Unsubscribe<ESceneFadeAdditiveDisable>(OnSceneFadeAdditiveDisable);
+            EventBus.Unsubscribe<ESceneFade>(OnSceneFade);
         }
 
         private void BuildOverlay()
@@ -62,28 +62,21 @@ namespace Manager
             rt.offsetMax = Vector2.zero;
         }
 
-        private void OnSceneFadeAdditiveDisable(ESceneFadeAdditiveDisable e)
+        private void OnSceneFade(ESceneFade e)
         {
             StartCoroutine(Co_FadeAdditiveDisable(e));
         }
 
-        private IEnumerator Co_FadeAdditiveDisable(ESceneFadeAdditiveDisable e)
+        private IEnumerator Co_FadeAdditiveDisable(ESceneFade e)
         {
             // 渐入进黑屏
             yield return FadeRoutine(cg.alpha, 1f, e.FadeOutDuration);
 
-            // Additive 加载 ToScene
             if (!string.IsNullOrEmpty(e.ToScene))
             {
-                SceneMgr.Instance.LoadScenesAdditive(e.ToScene);
-                // 等待真正 loaded（容错：即便 SceneMgr 内部是异步，这里也会等到）
-                yield return new WaitUntil(() => SceneManager.GetSceneByName(e.ToScene).isLoaded);
-            }
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(e.ToScene));
-            // Disable FromScene
-            if (!string.IsNullOrEmpty(e.FromScene))
-            {
-                SceneMgr.Instance.DisableScene(e.FromScene);
+                SceneManager.LoadScene(e.ToScene, LoadSceneMode.Single);
+                // 单场景加载是同步的；为了稳妥可让一帧再开始淡入
+                yield return null;
             }
             // 淡入
             yield return FadeRoutine(1f, 0f, e.FadeInDuration);
@@ -117,12 +110,12 @@ namespace Manager
             float t = 0f;
             cg.alpha = from;
             // 淡变期屏蔽输入
-            black.raycastTarget = true; 
+            black.raycastTarget = true;
 
             while (t < duration)
             {
                 // 不受 timeScale 影响
-                t += Time.unscaledDeltaTime; 
+                t += Time.unscaledDeltaTime;
                 cg.alpha = Mathf.Lerp(from, to, t / duration);
                 yield return null;
             }

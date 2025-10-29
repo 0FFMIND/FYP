@@ -78,22 +78,26 @@ namespace MVC
             {
                 // 有数据则取首个 key，否则保持 null
                 _selectedKey = list.Count > 0 ? list[0].key : null;
-                // 发送select事件
-                EventBus.Publish(new EJournalSelected(_selectedKey));
             }
-
+            JournalItemView selectedRow = null;
             foreach (var it in src) // 逐条实例化行项
             {
                 // 在容器下生成一行
-                var row = Instantiate(itemPrefab, viewRoot); 
+                var row = Instantiate(itemPrefab, viewRoot);
                 // 用 key 命名，便于后续反查
-                row.name = $"JournalTitle_{it.key}"; 
+                row.name = $"JournalTitle_{it.key}";
                 // 让行加入同一 ToggleGroup
                 row.Bind(it, toggleGroup);
-                // 静默设选中态
-                row.SetSelected(it.key == _selectedKey);   
+                // 统一先静默为 false
+                row.SetSelected(false, notify: false);
+                if (it.key == _selectedKey)
+                    selectedRow = row;
+            }
+            // 最后“带通知”点亮默认选中项（触发视觉 & 事件 & 组内互斥）
+            if (selectedRow != null)
+            {
+                selectedRow.SetSelected(true, notify: true);
             }
         }
-
     }
 }
