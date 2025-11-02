@@ -108,6 +108,7 @@ namespace Utils
         {
             var t = typeof(T);
             _last[t] = evt!;
+
             if (_typedTable.TryGetValue(t, out var del) && del is Action<T> cb)
             {
                 cb.Invoke(evt);

@@ -1,9 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 using Utils;
 
 namespace MVC
@@ -90,12 +88,6 @@ namespace MVC
             languageCode = SettingsMgr.Instance.GetLanguage();
             // 刷新index
             index = 0;
-            // 注册事件
-            EventBus.Subscribe<EInputPressed, InputAction>(
-                InputAction.DialogueClick,
-                OnDialogueClick
-            );
-
             NextLine();
         }
 
@@ -163,7 +155,11 @@ namespace MVC
         {
             string fullRaw = "";
             // 在真正渲染前，用“当前行”的最新文本覆盖 fullRaw
-            if (dialogueModel != null && dialogueModel.Lines != null && dialogueModel.Lines.Length > 0)
+            if (
+                dialogueModel != null
+                && dialogueModel.Lines != null
+                && dialogueModel.Lines.Length > 0
+            )
             {
                 // NextLine() 渲染后才 index++，故此处屏上应是 index-1
                 int cur = Mathf.Clamp(index, 0, dialogueModel.Lines.Length - 1);
@@ -172,20 +168,6 @@ namespace MVC
             }
             // 一次性设置完整文本，然后用 maxVisibleCharacters 揭示
             RenderViews(currentSprite, fullRaw);
-            if (dialogueView == null)
-            {
-                Debug.LogError(
-                    $"[DialogCtlBase] TypeLines: {nameof(dialogueView)} == null (index={index}, model='{modelText}')"
-                );
-                yield break;
-            }
-            if (dialogueView.tmp == null)
-            {
-                Debug.LogError(
-                    $"[DialogCtlBase] TypeLines: {nameof(dialogueView)}.tmp == null (dialogueView='{dialogueView.name}', index={index}, model='{modelText}')"
-                );
-                yield break;
-            }
             var tmp = dialogueView.tmp;
             tmp.ForceMeshUpdate();
             tmp.maxVisibleCharacters = 0;
@@ -202,7 +184,9 @@ namespace MVC
                     break;
 
                 tmp.maxVisibleCharacters = visNow + 1;
-                revealProgress = Mathf.Clamp01((float)tmp.maxVisibleCharacters / Mathf.Max(1, typingTotal));
+                revealProgress = Mathf.Clamp01(
+                    (float)tmp.maxVisibleCharacters / Mathf.Max(1, typingTotal)
+                );
                 // 英文两字符一个音效；中文每个字符一个音效
                 bool isEn = SettingsMgr.Instance.GetLanguage() == LanguageCode.en;
                 if (isEn)
@@ -239,7 +223,7 @@ namespace MVC
         private void OnDialogueClick()
         {
             // 如果正在加载panel
-            if (_isEntering)
+            if (_isEntering || dialogueModel == null)
             {
                 return;
             }
@@ -323,6 +307,10 @@ namespace MVC
 
         protected virtual void OnEnable()
         {
+            EventBus.Subscribe<EInputPressed, InputAction>(
+                InputAction.DialogueClick,
+                OnDialogueClick
+            );
             EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged);
             EventBus.Subscribe<ELanguageChanged>(OnLanguageChanged);
         }
@@ -343,10 +331,13 @@ namespace MVC
                     {
                         // 当前显示的是 index
                         int cur = Mathf.Clamp(index, 0, dialogueModel.Lines.Length - 1);
-                                                // 保留“旧进度百分比”。如果之前没统计，按当前可见/旧总长兜底
-                       float prevProgress = revealProgress > 0f
-                            ? Mathf.Clamp01(revealProgress)
-                                                        : Mathf.Clamp01((float)tmp.maxVisibleCharacters / Mathf.Max(1, typingTotal));
+                        // 保留“旧进度百分比”。如果之前没统计，按当前可见/旧总长兜底
+                        float prevProgress =
+                            revealProgress > 0f
+                                ? Mathf.Clamp01(revealProgress)
+                                : Mathf.Clamp01(
+                                    (float)tmp.maxVisibleCharacters / Mathf.Max(1, typingTotal)
+                                );
                         // 换新文本
                         if (dialogueModel.Lines.Length > 0)
                         {
@@ -354,7 +345,7 @@ namespace MVC
                             tmp.ForceMeshUpdate();
                             // 按百分比映射到新长度
                             int newLen = tmp.textInfo.characterCount;
-                           typingTotal = newLen;
+                            typingTotal = newLen;
                             tmp.maxVisibleCharacters = Mathf.RoundToInt(prevProgress * newLen);
                             // 同步内部进度
                             revealProgress = prevProgress;
@@ -374,23 +365,7 @@ namespace MVC
             typeSpeed = e.Settings.typeSpeed;
         }
 
-        protected void End()
-        {
-            EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
-            EventBus.Unsubscribe<ELanguageChanged>(OnLanguageChanged);
-
-            EventBus.Unsubscribe<EInputPressed, InputAction>(
-                InputAction.DialogueClick,
-                OnDialogueClick
-            );
-        }
-
         protected virtual void OnDisable()
-        {
-            Unsubscribe();
-        }
-
-        protected void Unsubscribe()
         {
             EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);
             EventBus.Unsubscribe<ELanguageChanged>(OnLanguageChanged);

@@ -107,29 +107,47 @@ namespace MVC
 
         public IEnumerator PlayerThirdMove()
         {
+            yield return new WaitForSecondsRealtime(0.5f);
             if (mover.anim.currentDir != Direction.Up)
             {
                 mover.SetFace(Direction.Up);
-                yield return new WaitForSecondsRealtime(0.4f);
+                yield return new WaitForSecondsRealtime(0.5f);
             }
-            MoveBack();
+            else
+            {
+                yield return new WaitForSecondsRealtime(0.5f);
+            }
+            yield return mover.Jump(0.2f, 0.6f);
+            yield return new WaitForSecondsRealtime(0.5f);
+            MoveBack(1.2f, 2f);
             yield return new WaitForSecondsRealtime(1f);
             emoteCtl.Play(EmoteType.Thinking, 1f);
             yield return new WaitForSecondsRealtime(1.7f);
-            // 暂停director
-            director.Pause();
             dialogCtl.StartThirdDialogue(PlayerThirdMoveEnd);
+        }
+
+        public void MoveBack(float y, float time)
+        {
+            Vector3 pos = mover.gameObject.transform.position;
+            pos.y -= y;
+            mover.StartMove(pos, time, Direction.Up, null);
         }
 
         private void PlayerThirdMoveEnd()
         {
             if (guideCtl != null)
             {
-
-                guideCtl.StartDialogue("1-Scene-3.txt", () => {
-                    // 改变当前scene1状态机状态
-                    EventBus.Publish(new EScene1ArrivalStateChange(Scene1State.AwaitMenuToggle));
-                });
+                guideCtl.StartDialogue(
+                    "1-Scene-6.txt",
+                    () =>
+                    {
+                        // 改变当前scene1状态机状态
+                        EventBus.Publish(
+                            new EScene1ArrivalStateChange(Scene1State.AwaitMenuToggle)
+                        );
+                        PauseMgr.Instance.SetShowGuide(true);
+                    }
+                );
             }
         }
 

@@ -1,5 +1,6 @@
 using Manager;
 using UnityEngine;
+using Utils;
 
 namespace MVC
 {
@@ -22,6 +23,12 @@ namespace MVC
             // 切换不同的文本
             visitCount = TryVend();
             return base.BeginInteract(player);
+        }
+
+        public void TryPublishJournal(InteractCtl ctl)
+        {
+            EventBus.Publish(new EJournalStatusChanged("vendingMachine", JournalStatus.Active));
+            ctl?.Done();
         }
 
         public void VendSuccess()

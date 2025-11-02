@@ -14,6 +14,7 @@ namespace Manager
         public string zh;
         public string en;
     }
+
     // JsonUtility 无法直接解析顶层数组，需要使用Helper用一个临时包装进行解析
     public static class JsonHelper
     {
@@ -45,7 +46,6 @@ namespace Manager
 
         // 上次加载时的场景名 & 语言，用来跳过重复加载
         private string lastSceneName;
-        private LanguageCode lastLanguage;
 
         // 监听全局设置变更
         private void OnEnable()
@@ -66,8 +66,6 @@ namespace Manager
                 return;
             }
             CurrentLanguage = e.Settings.language;
-            // 强制下次重新加载
-            table = null;
             // 广播语言变更事件，驱动 UI/文本组件刷新
             EventBus.Publish(new ELanguageChanged(CurrentLanguage));
         }
@@ -93,14 +91,15 @@ namespace Manager
             string sceneName = SceneManager.GetActiveScene().name;
 
             // 如果还没加载，或场景／语言换了，就重载
-            if (table == null || sceneName != lastSceneName || CurrentLanguage != lastLanguage)
+            if (sceneName != lastSceneName)
             {
                 // 载入当前场景的string.json
                 LoadTableForScene(sceneName);
                 // 载入全局UI的string.json
                 lastSceneName = sceneName;
-                lastLanguage = CurrentLanguage;
             }
+
+            key = key.Trim();
 
             if (table != null && table.TryGetValue(key, out var values))
             {
@@ -115,7 +114,8 @@ namespace Manager
 
         private string UnescapeCommon(string s)
         {
-            if (string.IsNullOrEmpty(s)) return s;
+            if (string.IsNullOrEmpty(s))
+                return s;
 
             // 先处理 \r\n 组合，再处理单个
             s = s.Replace("\\r\\n", "\n");

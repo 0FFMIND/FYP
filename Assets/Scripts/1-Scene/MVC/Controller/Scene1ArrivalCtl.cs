@@ -17,7 +17,7 @@ namespace MVC
         // 等待玩家按 ESC 打开/关闭菜单的“等待态”
         AwaitMenuToggle,
         ExploreRooftop,
-        AwaitExploreComplete,
+        ExploreComplete,
     }
 
     public class Scene1ArrivalCtl : MonoBehaviour
@@ -43,9 +43,6 @@ namespace MVC
 
         private PlayerCtl player;
 
-        [SerializeField]
-        private GameObject metalSign;
-
         private bool interactOnce = false;
 
         [SerializeField]
@@ -54,13 +51,32 @@ namespace MVC
         private void OnEnable()
         {
             EventBus.Subscribe<EScene1ArrivalStateChange>(EvaluateState);
+            EventBus.Subscribe<EJournalStatusChanged>(OnJournalChanged);
             EventBus.Subscribe<EPauseChanged>(OnPauseChanged);
         }
 
         private void OnDisable()
         {
             EventBus.Unsubscribe<EScene1ArrivalStateChange>(EvaluateState);
+            EventBus.Unsubscribe<EJournalStatusChanged>(OnJournalChanged);
             EventBus.Unsubscribe<EPauseChanged>(OnPauseChanged);
+        }
+
+        private void OnJournalChanged(EJournalStatusChanged e)
+        {
+            if(e.Key == "exploreRooftop" && e.NewStatus == JournalStatus.Completed && state == Scene1State.ExploreRooftop)
+            {
+                // 进入到下一状态
+            }
+            if (e.Key == "vendingMachine" && e.NewStatus == JournalStatus.Completed)
+            {
+                player.model.SetDisabled(true);
+                // 唤醒dialog
+                timelineCtl.StartFifthDialogue(() =>
+                {
+                    player.model.SetDisabled(false);
+                });
+            }
         }
 
         private void Start()
@@ -120,25 +136,10 @@ namespace MVC
 
         private void EnterExploreRooftop()
         {
-            player.model.SetDisabled(true);
-            if (guideCtl != null)
+            timelineCtl.StartFourthDialogue(() =>
             {
-                guideCtl.StartDialogue("1-Scene-6.txt", EndExploreRooftop);
-            }
-        }
-
-        private void EndExploreRooftop()
-        {
-            EventBus.Publish(new EJournalStatusChanged("exploreRooftop", JournalStatus.Active));
-            if (guideCtl != null)
-            {
-                guideCtl.StartDialogue("1-Scene-7.txt", () => {
-                    timelineCtl.StartThirdDialogue(() => {
-                        player.model.SetDisabled(false);
-                        state = Scene1State.AwaitExploreComplete;
-                    });
-                });
-            }
+                player.model.SetDisabled(false);
+            });
         }
 
         // 全局暂停状态变化事件回调
@@ -161,6 +162,7 @@ namespace MVC
         {
             // 设置人物位置
             var player = GameObject.FindGameObjectWithTag("Player");
+            EventBus.Publish(new EJournalStepChanged("reachRooftop", 0, StepState.Done));
             player.transform.position = initPos;
             // 启动timeline
             if (director != null)
@@ -193,11 +195,6 @@ namespace MVC
             // 开始播放动画
             StartCoroutine(mover.PlayerThirdMove());
         }
-
-        //private IEnumerator StartMenuTutorial()
-        //{
-
-        //}
 
         private void EndOpenMenu()
         {
@@ -247,7 +244,6 @@ namespace MVC
                 && state == Scene1State.GoToBoard
             )
             {
-                metalSign = target;
                 state = Scene1State.InteractBoard;
                 interactOnce = true;
                 EvaluateState();

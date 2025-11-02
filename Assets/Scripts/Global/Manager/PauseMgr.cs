@@ -10,7 +10,7 @@ namespace Manager
         private PauseModel pauseModel;
         private GameObject pausePanel;
         private const string PauseMenuPath = "Prefabs/Global/PauseMenu";
-        private bool canPause = true;
+        public bool canPause = true;
 
         private void Awake()
         {
@@ -104,6 +104,29 @@ namespace Manager
                 }
                 pausePanel.SetActive(false);
             }
+        }
+
+        public PauseView GetPauseView()
+        {
+            EnsurePausePanel();
+            if (pausePanel == null)
+            {
+                Debug.LogWarning("[PauseMgr] GetPauseView: pausePanel 仍为 null（可能资源路径不对？）");
+                return null;
+            }
+            var view = pausePanel.GetComponent<PauseView>();
+            if (view == null)
+            {
+                Debug.LogWarning("[PauseMgr] GetPauseView: 未在 pausePanel 上找到 PauseView 组件");
+            }
+            return view;
+        }
+
+        public void SetShowGuide(bool on)
+        {
+            var view = GetPauseView();
+            if (view == null) return;
+            view.showGuide = on;
         }
     }
 }

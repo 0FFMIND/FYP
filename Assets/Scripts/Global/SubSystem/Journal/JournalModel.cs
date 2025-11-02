@@ -63,6 +63,7 @@ namespace MVC
                 var item = new JournalItem
                 {
                     key = so.key,
+                    title = so.title,
                     status = JournalStatus.Hidden,
                     createdAt = DEFAULT_TIME,
                     contents = new List<JournalLine>(so.contents?.Count ?? 0),

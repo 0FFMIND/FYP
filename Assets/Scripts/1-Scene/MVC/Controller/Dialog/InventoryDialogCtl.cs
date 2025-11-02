@@ -58,14 +58,13 @@ namespace MVC
         {
             arrow.GetComponent<SpriteRenderer>().color = Color.white;
             // 如果读完
-            if (index >= dialogueModel.Lines.Length)
+            if (index == dialogueModel.Lines.Length)
             {
+                index++;
                 // 清空文本
                 dialogueView.tmp.text = "";
                 // 关掉向下小箭头
                 arrow.gameObject.SetActive(false);
-                // 关闭订阅
-                Unsubscribe();
                 // 播放动画
                 StartCoroutine(PlayClosed());
             }

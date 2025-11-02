@@ -1,4 +1,6 @@
+using Manager;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace MVC
@@ -16,6 +18,9 @@ namespace MVC
         private Direction _faceOverride;
         private Action _onArrive;
 
+        private Coroutine _jumpCo;
+        private SpriteRenderer[] _renderers; // 缓存所有渲染器（自身或子物体）
+
         public bool IsActive => _active;
 
         private void Awake()
@@ -23,6 +28,7 @@ namespace MVC
             player = GetComponent<PlayerCtl>();
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<PlayerAnimCtl>();
+            _renderers = GetComponentsInChildren<SpriteRenderer>(true);
         }
 
         public void StartMove(
@@ -69,6 +75,82 @@ namespace MVC
             _faceOverride = dir; // 记录强制朝向
             anim.SetMoving(false); // 明确告知动画机：当前为静止（避免行走帧）
             anim.SetDirection(dir); // 立即刷新朝向（本帧起效）
+        }
+
+        public Coroutine Jump(float totalTime, float height)
+        {
+            AudioManager.Instance.PlaySFX("jump");
+            if (_jumpCo != null) StopCoroutine(_jumpCo);
+            _jumpCo = StartCoroutine(JumpCo(Mathf.Max(0.0001f, totalTime), height));
+            return _jumpCo;
+        }
+
+        private IEnumerator JumpCo(float totalTime, float height)
+        {
+            // 保存并脱离物理
+            bool sim = rb.simulated;
+            Vector2 vel = rb.velocity;
+            float angVel = rb.angularVelocity;
+            float g = rb.gravityScale;
+            rb.simulated = false;
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.gravityScale = 0f;
+
+            // sortingOrder +1
+            int[] oldOrders = null;
+            if (_renderers != null && _renderers.Length > 0)
+            {
+                oldOrders = new int[_renderers.Length];
+                for (int i = 0; i < _renderers.Length; i++)
+                {
+                    if (!_renderers[i]) continue;
+                    oldOrders[i] = _renderers[i].sortingOrder;
+                    _renderers[i].sortingOrder = oldOrders[i] + 1;
+                }
+            }
+
+            // 做一个等速上/下的“V”形跳
+            Vector3 startPos = transform.position;
+            float half = totalTime * 0.5f;
+
+            // 上升阶段: 0 -> height
+            float t = 0f;
+            while (t < half)
+            {
+                t += Time.unscaledDeltaTime;
+                float u = Mathf.Clamp01(t / half);
+                transform.position = new Vector3(startPos.x, startPos.y + Mathf.Lerp(0f, height, u), startPos.z);
+                yield return null;
+            }
+
+            // 下降阶段: height -> 0
+            t = 0f;
+            while (t < half)
+            {
+                t += Time.unscaledDeltaTime;
+                float u = Mathf.Clamp01(t / half);
+                transform.position = new Vector3(startPos.x, startPos.y + Mathf.Lerp(height, 0f, u), startPos.z);
+                yield return null;
+            }
+
+            // 归位
+            transform.position = startPos;
+
+            // 还原 sortingOrder
+            if (oldOrders != null)
+            {
+                for (int i = 0; i < _renderers.Length; i++)
+                    if (_renderers[i]) _renderers[i].sortingOrder = oldOrders[i];
+            }
+
+            // 恢复物理
+            rb.simulated = sim;
+            rb.velocity = vel;
+            rb.angularVelocity = angVel;
+            rb.gravityScale = g;
+
+            _jumpCo = null;
         }
 
         private void Update()

@@ -100,6 +100,12 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/10/27 - 修了一下跨场景的pausePanel出现的问题，现在场景也不是additive的load，而是正常的切换，因为没有叠加场景的需求
 
+2025/10/29 - 修了一下pauseMenu的侧边栏，现在侧边栏改成互斥的了，通过toggle组实现
+
+2025/10/30 - 遇见metalSign，加入了人物稍微跳一下，此时rigidbody改为kinematic
+
+2025/11/1 - 修复了原来dialog加载中英文的问题，如果一个dialogctl一直出现在场景中，因为当它end()的时候会自动退订事件，那么重入startDialog不会重新订阅事件，onEnable和onDisable的时候会重新订阅/退订事件，写了一个新的shader，写完了菜单引导，holecolor，能出现遮罩的效果，写完了探索场景中的三个物体，进入到
+
 
 
 

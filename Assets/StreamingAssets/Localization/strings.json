@@ -136,43 +136,91 @@
         "en": "PM"
     },
     {
+        "zh": "日记已更新",
+        "en": "Journal Updated"
+    },
+    {
+        "zh": "已完成",
+        "en": "Completed"
+    },
+    {
         "zh": "抵达天台",
         "en": "Arrival"
     },
     {
         "zh": "探索天台",
-        "en": "Exploration"
+        "en": "Explore"
+    },
+    {
+        "zh": "售货机？",
+        "en": "Drink?"
+    },
+    {
+        "zh": "我总感觉天台上有些说不上来的变化：",
+        "en": "I keep feeling there are some indescribable changes on the rooftop:"
+    },
+    {
+        "zh": "·左侧杂乱的<color=#FFC600>草甸</color>",
+        "en": "· the messy <color=#FFC600>meadow</color> on the left"
+    },
+    {
+        "zh": "·三盆长势不同的<color=#FFC600>盆栽</color>",
+        "en": "· three <color=#FFC600>potted plants</color> with different growth"
+    },
+    {
+        "zh": "·旁边的<color=#FFC600>保洁工具和除草剂</color>组合",
+        "en": "· the nearby set of <color=#FFC600>cleaning tools and herbicide</color>"
+    },
+    {
+        "zh": "重点搜索一下这些地方吧！",
+        "en": "Let’s focus on searching these places!"
     },
     {
         "zh": "总算溜上来了: ",
-        "en": "Finally snuck up here:"
+        "en": "Finally slipped up here:"
     },
     {
-        "zh": "·爬六层楼差点要命，在五楼还差点撞见主任 ",
-        "en": "· Climbing six flights nearly killed me; I almost ran into the dean on the fifth floor."
+        "zh": "·这趟真是惊险，险些在五楼和主任撞个正着，我决定用石头卡住铁门，要是被风刮得锁上就完了",
+        "en": "· this trip was really thrilling; I almost ran right into the director on the fifth floor. I decide to wedge the iron door with a stone—if the wind blows it shut, it’s over"
     },
     {
-        "zh": "·我决定用石头卡住铁门，要是被风刮得锁上就完了 ",
-        "en": "· I decided to wedge the iron door with a rock—if the wind blows it shut and it locks, I’m done for."
+        "zh": "·我决定用石头卡住铁门，要是被风刮得锁上就完了",
+        "en": "· I decide to wedge the iron door with a stone—if the wind blows it shut, it’s over"
     },
     {
-        "zh": "·既然上来了，先跟着脚印去前面那个<color=#FFC600>告示牌</color>看看吧 ",
-        "en": "· Since I’m up here, let’s follow the footprints and check that <color=#FFC600>notice board</color> up ahead."
+        "zh": "·既然上来了，先跟着脚印去前面那个<color=#FFC600>告示牌</color>看看吧",
+        "en": "· since I’m up here, I’ll follow the footprints to that <color=#FFC600>notice board</color> up ahead and take a look"
     },
     {
-        "zh": "终于安全了！我决定把这片天台好好探索一遍：",
-        "en": "Finally safe! I’ve decided to thoroughly explore this rooftop:"
+        "zh": "天台上的售货机？正好我有点渴了：",
+        "en": "A vending machine on the rooftop? Just right, I’m a bit thirsty:"
     },
     {
-        "zh": "·左侧的<color=#FFC600>草甸</color>总让我觉得熟悉",
-        "en": "· The <color=#FFC600>meadow</color> on the left always feels familiar"
+        "zh": "·<color=#FFC600>下水道</color>里那枚硬币，呃，看来得克服一下了",
+        "en": "· that coin in the <color=#FFC600>sewer</color>—uh, looks like I’ll have to get over it"
     },
     {
-        "zh": "·三盆<color=#FFC600>盆栽</color>的长势完全不一样，真让人好奇",
-        "en": "· The three <color=#FFC600>potted plants</color> are growing completely differently—it really makes me curious"
+        "zh": "·草甸旁的<color=#FFC600>石头</color>说不定有什么",
+        "en": "· the <color=#FFC600>stone</color> by the meadow might have something"
     },
     {
-        "zh": "·旁边的<color=#FFC600>保洁工具和除草剂</color>...这个组合让人有些在意",
-        "en": "· The nearby <color=#FFC600>cleaning tools and herbicide</color>... that combination is a bit concerning"
+        "zh": "·右边的<color=#FFC600>石缝</color>里好像闪烁着银光",
+        "en": "· there seems to be a silvery glint in the <color=#FFC600>rock crevice</color> on the right"
+    },
+    {
+        "zh": "看来需要收集到三枚硬币",
+        "en": "Looks like I need to collect three coins."
+    },
+    {
+        "zh": "任务详情会显示在这里\\n（点击任意处关闭当前教程）\\n↓",
+        "en": "Task details will be displayed here\\n(Click anywhere to close the current tutorial)\\n↓"
+    },
+    {
+        "zh": "点击探索天台\\n↓",
+        "en": "Click Explore\\n↓"
+    },
+    {
+        "zh": "点击日记\\n↓",
+        "en": "Click Journal\\n↓"
     }
 ]

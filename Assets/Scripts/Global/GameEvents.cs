@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Utils
 {
+    public readonly struct EJournalUIChanged { }
+
     public readonly struct EJournalStatusChanged
     {
         public readonly string Key;

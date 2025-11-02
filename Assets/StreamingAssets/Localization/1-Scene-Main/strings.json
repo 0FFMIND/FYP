@@ -200,7 +200,159 @@
         "en": "(You rummage through every pocket in frustration, then let your head drop.)"
     },
     {
-        "zh": "……这种时候，要是能像动漫里一样，踢一下售货机就能掉出一瓶该多好",
-        "en": "...If only it worked like in anime—one good kick and a bottle would pop out."
+        "zh": "看来只能去<color=#FFC600>天台边缘</color>和<color=#FFC600>角落</color>仔细找找了，说不定那里能发现什么",
+        "en": "Looks like I’ll have to search the <color=#FFC600>rooftop edge</color> and the <color=#FFC600>corners</color> carefully—maybe there’s something there."
+    },
+    {
+        "zh": "（你正准备离开，手无意间伸进口袋，指尖触到那几枚刚从天台角落捡来的硬币）",
+        "en": "(Just as you’re about to leave, your hand slips into your pocket; your fingertips touch the coins you picked up from the rooftop corner.)"
+    },
+    {
+        "zh": "太好了！刚才捡的硬币刚好派上用场！",
+        "en": "Perfect! The coins I found earlier are just what I need!"
+    },
+    {
+        "zh": "（暂时还不太想喝）",
+        "en": "(I don’t really feel like drinking right now.)"
+    },
+    {
+        "zh": "……主要是这价格，还是再考虑考虑吧",
+        "en": "…Mostly because of the price—maybe I should think twice."
+    },
+    {
+        "zh": "（你迫不及待地将三枚硬币塞入投币口，按下按钮）",
+        "en": "(Impatiently, you feed three coins into the slot and press the button.)"
+    },
+    {
+        "zh": "冰凉的液体滑过喉咙，那股灼热的焦躁感终于被镇压了下去",
+        "en": "The chilled liquid slides down my throat, and that burning restlessness is finally subdued."
+    },
+    {
+        "zh": "我靠着售货机，长长地舒了一口气",
+        "en": "I lean against the vending machine and let out a long breath."
+    },
+    {
+        "zh": "世界仿佛在这一刻被按下了静音键，只剩下心跳逐渐平复的节奏",
+        "en": "For a moment, the world seems to hit mute; only the slowing rhythm of my heartbeat remains."
+    },
+    {
+        "zh": "真是不可思议……就是这么普通的东西",
+        "en": "Incredible… something so ordinary,"
+    },
+    {
+        "zh": "却让我感受到一种被世界宽恕的安宁",
+        "en": "yet it fills me with a calm, as if the world has forgiven me."
+    },
+    {
+        "zh": "像有人把体内那根紧绷的弦轻轻松开",
+        "en": "Like someone gently loosening a taut string inside me."
+    },
+    {
+        "zh": "我把空瓶在掌心转了半圈，指尖还残着冰意",
+        "en": "I twirl the empty bottle half a turn in my palm; a trace of cold still lingers on my fingertips."
+    },
+    {
+        "zh": "售货机的嗡鸣退到远处，光线落在地面，慢慢把影子抚平",
+        "en": "The vending machine’s hum recedes into the distance; light falls across the ground, slowly smoothing the shadows."
+    },
+    {
+        "zh": "（你的硬币数量不够）",
+        "en": "(You don’t have enough coins.)"
+    },
+    {
+        "zh": "……看来想喝到水，得先在天台上凑够三枚硬币才行",
+        "en": "…Looks like I’ll need to gather three coins on the rooftop if I want a drink."
+    },
+    {
+        "zh": "总觉得……刚才好像错过了什么地方，再回去确认一下吧",
+        "en": "I can’t shake the feeling I missed something—better go back and check."
+    },
+    {
+        "zh": "看上去无人打理的长椅，椅脚以及周围的地面都长出了青苔",
+        "en": "A bench that appears untended, with moss growing on its legs and on the surrounding ground"
+    },
+    {
+        "zh": "一扇紧闭的老旧铁门，门锁看上去十分牢固",
+        "en": "A tightly shut old iron door; the lock looks very secure"
+    },
+    {
+        "zh": "一个繁茂的花圃，以鲜黄色花朵为主",
+        "en": "A lush flowerbed dominated by bright yellow blossoms"
+    },
+    {
+        "zh": "一个边角有些磨坏但看起来十分结实的铁制公告栏，靠近有消毒水的气味",
+        "en": "An iron bulletin board with worn corners but looking very sturdy; up close there’s a smell of disinfectant"
+    },
+    {
+        "zh": "上面的字迹被淡淡的青苔遮住，但依旧可以辨认：",
+        "en": "The writing on it is veiled by a light moss, but still legible:"
+    },
+    {
+        "zh": "为保安全，请勿倚靠或攀爬防护栏",
+        "en": "For safety, please do not lean on or climb the guardrail"
+    },
+    {
+        "zh": "一个保洁用的拖把，上面留有没有干透的水痕，旁边放着半瓶除草剂",
+        "en": "A cleaning mop with still-damp streaks on it, and next to it a half-full bottle of herbicide"
+    },
+    {
+        "zh": "除草剂的瓶身冰凉，瓶口散发着一股格外刺鼻的化学药剂味",
+        "en": "The herbicide’s bottle is cold to the touch, and the mouth gives off an especially acrid chemical odor"
+    },
+    {
+        "zh": "从这湿拖把就能看出来，保洁阿姨早上指定是来打扫过了",
+        "en": "From this wet mop you can tell the cleaning lady definitely came by to clean this morning"
+    },
+    {
+        "zh": "可这空气里，霉味跟一股刺鼻的药水味混在一块儿，也太难顶了",
+        "en": "But in the air, the mustiness mixed with a sharp medicinal reek is just unbearable"
+    },
+    {
+        "zh": "阿姨这是下了猛料啊，杀毒效果先不说，杀伤力是够强的",
+        "en": "She really went heavy on the stuff—never mind the disinfecting effect, the potency is plenty"
+    },
+    {
+        "zh": "随处可见的碎石头",
+        "en": "Bits of gravel everywhere"
+    },
+    {
+        "zh": "碎石下有微光闪烁",
+        "en": "A faint glimmer flickers beneath the gravel"
+    },
+    {
+        "zh": "你伸手拨开碎石，经过翻找，从泥土中拾起了一枚银色的硬币",
+        "en": "You reach out to clear the gravel and, after searching, pick up a silver coin from the soil"
+    },
+    {
+        "zh": "你再次翻找了这些碎石，但没有任何新的发现",
+        "en": "You search through the gravel again, but find nothing new"
+    },
+    {
+        "zh": "什么都没有发现",
+        "en": "You find nothing"
+    },
+    {
+        "zh": "果然，天上不会掉两次馅饼",
+        "en": "As expected, pies don’t fall from the sky twice"
+    },
+    {
+        "zh": "一片自然形成的草甸，各种不知名的草肆意生长在一起",
+        "en": "A naturally formed meadow, with all kinds of unknown grasses growing unchecked together"
+    },
+    {
+        "zh": "空气里混杂着消毒水的化学气味、湿拖把散发的霉旧气息，以及泥土本身的味道",
+        "en": "The air is a mix of the chemical smell of disinfectant, the musty staleness from the wet mop, and the scent of the earth itself"
+    },
+    {
+        "zh": "细看之下，不少植株都呈现不自然的萎蔫状态",
+        "en": "On closer look, many plants show an unnatural wilted state"
+    },
+    {
+        "zh": "这是什么生态灾难现场吗",
+        "en": "Is this some kind of ecological disaster scene?"
+    },
+    {
+        "zh": "说是草甸，结果土壤里全是化学药剂的味道和霉味",
+        "en": "Call it a meadow, yet the soil reeks of chemicals and mildew"
     }
 ]

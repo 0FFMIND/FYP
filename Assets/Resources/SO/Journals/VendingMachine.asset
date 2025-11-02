@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1245b68870de88e40aecd4c7e52fea71, type: 3}
+  m_Name: VendingMachine
+  m_EditorClassIdentifier: 
+  key: vendingMachine
+  title: "\u552E\u8D27\u673A\uFF1F"
+  contents:
+  - Kind: 0
+    TextKey: "\u5929\u53F0\u4E0A\u7684\u552E\u8D27\u673A\uFF1F\u6B63\u597D\u6211\u6709\u70B9\u6E34\u4E86\uFF1A"
+  - Kind: 1
+    TextKey: "\xB7<color=#FFC600>\u4E0B\u6C34\u9053</color>\u91CC\u90A3\u679A\u786C\u5E01\uFF0C\u5443\uFF0C\u770B\u6765\u5F97\u514B\u670D\u4E00\u4E0B\u4E86"
+  - Kind: 1
+    TextKey: "\xB7\u8349\u7538\u65C1\u7684<color=#FFC600>\u77F3\u5934</color>\u8BF4\u4E0D\u5B9A\u6709\u4EC0\u4E48"
+  - Kind: 1
+    TextKey: "\xB7\u53F3\u8FB9\u7684<color=#FFC600>\u77F3\u7F1D</color>\u91CC\u597D\u50CF\u95EA\u70C1\u7740\u94F6\u5149"
+  - Kind: 0
+    TextKey: "\u770B\u6765\u9700\u8981\u6536\u96C6\u5230\u4E09\u679A\u786C\u5E01"

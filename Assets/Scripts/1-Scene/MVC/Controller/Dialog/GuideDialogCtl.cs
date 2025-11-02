@@ -81,8 +81,6 @@ namespace MVC
                 dialogueView.tmp.text = "";
                 // 关掉向下小箭头
                 arrow.gameObject.SetActive(false);
-                // 关闭订阅
-                Unsubscribe();
                 // 播放动画
                 StartCoroutine(PlayClosed());
             }

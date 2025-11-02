@@ -19,6 +19,8 @@ namespace MVC
         // 任务唯一键（程序用来识别/去重/定位）
         public string key;
 
+        public string title;
+
         // 详情
         public List<JournalLine> contents;
 
@@ -66,6 +68,7 @@ namespace MVC
     public class JournalData : ScriptableObject
     {
         public string key;
+        public string title;
         public List<JournalDataLine> contents = new();
     }
 }

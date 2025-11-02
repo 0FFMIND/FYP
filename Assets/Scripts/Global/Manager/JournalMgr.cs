@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Manager;
 using MVC;
 using UnityEngine;
 using Utils;
@@ -34,8 +31,10 @@ namespace Manager
             EventBus.Unsubscribe<EJournalStatusChanged>(OnStatusChanged);
         }
 
+        // 处理“某条日记的某个 Step 状态变化”的事件
         private void OnStepChanged(EJournalStepChanged e)
         {
+            // 通过 key 找到对应的 JournalItem（可能为 null）
             var it = Model?.Find(e.Key);
             if (it == null)
                 return;
@@ -54,8 +53,13 @@ namespace Manager
 
                 targetContentIdx = stepIndices[e.Index];
 
+                // 找到了对应内容位置
                 if (targetContentIdx != -1)
                 {
+                    // —— 状态未变化 → 直接返回（避免无谓刷新/激活/落盘）
+                    if (it.contents[targetContentIdx].State == e.State)
+                        return;
+                    // 把该 Step 的可视状态更新为事件传来的状态
                     it.contents[targetContentIdx].State = e.State;
                 }
                 else
@@ -65,19 +69,22 @@ namespace Manager
                     );
                 }
             }
+            // 如果当前条目标记为 Hidden
+            if (it.status == JournalStatus.Hidden)
+            {
+                // 把条目激活为 Active，但保留已存在的 Step 状态
+                TrySetStatus(e.Key, JournalStatus.Active, resetSteps: false);
+            }
 
             // 如果所有 Step 都完成，则把条目标为 Completed
             if (AllStepsDone(it) && it.status != JournalStatus.Completed)
             {
                 it.status = JournalStatus.Completed;
-                FlushJournalSnapshot();
                 EventBus.Publish(new EJournalStatusChanged(e.Key, it.status));
-                return;
             }
 
-            // 未全部完成：也要保存并刷新明细
+            // 保存刷新
             FlushJournalSnapshot();
-            EventBus.Publish(new EJournalSelected(e.Key));
         }
 
         private static bool AllStepsDone(JournalItem it)
@@ -122,15 +129,22 @@ namespace Manager
         }
 
         // —— 对外：切换某条日记的状态 ——
+        public bool TrySetStatus(string key, JournalStatus targetStatus) =>
+            TrySetStatus(key, targetStatus, resetSteps: true);
+
         // 需求：传入 key 和目标 status；若目标为 Active，则补写 createdAt（UTC“首次揭示时间”）。
         // 返回：发生实际变更则 true；未找到或无变化则 false。
-        public bool TrySetStatus(string key, JournalStatus targetStatus)
+        public bool TrySetStatus(string key, JournalStatus targetStatus, bool resetSteps)
         {
             if (Model == null || string.IsNullOrEmpty(key))
                 return false;
 
             var it = Model.Find(key);
             if (it == null)
+                return false;
+
+            // 目标状态与当前一致：直接返回 false（既不写 createdAt，也不重置步骤）
+            if (it.status == targetStatus)
                 return false;
 
             // 切换状态
@@ -142,12 +156,16 @@ namespace Manager
                 it.createdAt = DateTime.UtcNow.AddHours(-1); // 统一存 UTC，并往前移 1 小时
             }
 
-            foreach (var ln in it.contents)
+            // 只有在明确要求时才重置步骤
+            if (resetSteps && it.contents != null)
             {
-                if (ln?.line == null)
-                    continue;
-                if (ln.line.Kind == JournalLineKind.Step)
-                    ln.State = StepState.Pending;
+                foreach (var ln in it.contents)
+                {
+                    if (ln?.line == null)
+                        continue;
+                    if (ln.line.Kind == JournalLineKind.Step)
+                        ln.State = StepState.Pending;
+                }
             }
 
             FlushJournalSnapshot();
@@ -159,6 +177,7 @@ namespace Manager
         {
             if (Model == null)
                 return;
+            EventBus.Publish(new EJournalUIChanged());
             var snap = JournalSaveAdapter.ToSave(Model);
             SettingsMgr.Instance.SetJournalSnapshot(snap, true);
         }

@@ -20,6 +20,12 @@ namespace MVC
         private LineMapping[] thirdMappings;
 
         [SerializeField]
+        private LineMapping[] fourthMappings;
+
+        [SerializeField]
+        private LineMapping[] fifthMappings;
+
+        [SerializeField]
         private GameObject dialogPanel;
 
         private Action finished;
@@ -105,6 +111,20 @@ namespace MVC
             base.StartDialogue();
         }
 
+        public void StartFourthDialogue(Action onFinished)
+        {
+            mappings = fourthMappings;
+            finished = onFinished;
+            modelText = "1-Scene-7.txt";
+            base.StartDialogue();
+        }
+        public void StartFifthDialogue(Action onFinished)
+        {
+            mappings = fifthMappings;
+            finished = onFinished;
+            modelText = "1-Scene-8.txt";
+            base.StartDialogue();
+        }
         protected override IEnumerator TypeLines()
         {
             arrow.gameObject.SetActive(false);
@@ -158,7 +178,6 @@ namespace MVC
         }
         private IEnumerator PlayClosed()
         {
-            End();
             // 清空文本
             dialogueView.tmp.text = "";
             // 关掉向下小箭头
@@ -186,7 +205,6 @@ namespace MVC
         }
         private IEnumerator PlayClosedWithFinished()
         {
-            End();                
             // 清空文本
             dialogueView.tmp.text = "";
             // 关掉向下小箭头

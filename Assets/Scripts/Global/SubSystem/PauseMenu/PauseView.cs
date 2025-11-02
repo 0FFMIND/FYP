@@ -12,25 +12,32 @@ namespace MVC
         [Serializable]
         public class PageTab
         {
-            public Button button; // 左侧按钮
+            public PauseMenuToggleView toggleView;
             public GameObject page; // 对应页面根节点
         }
+
+        // 互斥分组
+        [SerializeField]
+        private ToggleGroup toggleGroup;
 
         [Header("Tabs")]
         [SerializeField]
         private List<PageTab> tabs = new List<PageTab>();
         private readonly Dictionary<PageTab, int> _indexOf = new Dictionary<PageTab, int>();
 
+        public Scene1UIGuideCtl guidectl;
+        public bool showGuide = false;
+        
+        // 折叠动画时长
         [Min(0.0001f)]
         [SerializeField]
-        private float foldDuration = 0.18f;
+        private float foldDuration;
 
         [SerializeField]
         private GameObject pauseMenuRoot;
 
         [SerializeField]
         private Animator animator;
-        private int animLayer = 0;
         private int _mainIndex = 0;
 
         // 是否正在进行动画
@@ -50,14 +57,17 @@ namespace MVC
                 _indexOf[t] = i;
 
                 // 绑定按钮：点击→ShowPage(i, withFold:true)
-                if (t.button)
+                if (t.toggleView)
                 {
                     int captured = i;
-                    t.button.onClick.AddListener(() =>
+                    t.toggleView.Bind(toggleGroup);
+
+                    // 订阅选中事件
+                    t.toggleView.OnSelected += () =>
                     {
                         ShowPage(captured);
                         _mainIndex = captured;
-                    });
+                    };
                 }
 
                 // 入场前先都隐藏
@@ -138,6 +148,15 @@ namespace MVC
             yield return FoldYIn(tabs[_mainIndex].page.GetComponent<RectTransform>());
             IsTransitioning = false;
             _transitionCo = null;
+            if (showGuide)
+            {
+                PauseMgr.Instance.canPause = false;
+                guidectl.StartShowSequence(() =>
+                {
+                    PauseMgr.Instance.canPause = true;
+                    showGuide = false;
+                });
+            }
         }
 
         private IEnumerator FoldYIn(RectTransform rt)
@@ -183,7 +202,7 @@ namespace MVC
 
         private IEnumerator PlayAnimState(string stateName, float waitSeconds)
         {
-            animator.Play(stateName, animLayer, 0f);
+            animator.Play(stateName, 0, 0f);
             yield return new WaitForSecondsRealtime(waitSeconds);
         }
     }
