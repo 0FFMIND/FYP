@@ -47,7 +47,7 @@ namespace MVC
             { InputAction.PlayerSprint, KeyCode.RightShift },
             { InputAction.PauseGame, KeyCode.Escape },
         };
-        public InventorySaveData inventory = new InventorySaveData { capacity = 99 };
+        public InventorySaveData inventoryData = new InventorySaveData { capacity = 99 };
 
         public JournalSaveData journalData = new JournalSaveData();
 
@@ -71,11 +71,11 @@ namespace MVC
                 screenWidth = screenWidth,
                 screenMode = screenMode,
                 keyBindings = new Dictionary<InputAction, KeyCode>(keyBindings),
-                inventory = new InventorySaveData
+                inventoryData = new InventorySaveData
                 {
-                    capacity = inventory.capacity,
-                    itemIds = new List<string>(inventory.itemIds),
-                    counts = new List<int>(inventory.counts),
+                    capacity = inventoryData.capacity,
+                    itemIds = new List<string>(inventoryData.itemIds),
+                    counts = new List<int>(inventoryData.counts),
                 },
                 journalData = new JournalSaveData
                 {

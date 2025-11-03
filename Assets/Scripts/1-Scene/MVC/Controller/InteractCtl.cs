@@ -87,8 +87,8 @@ namespace MVC
                     dialogCtl.choiceModel.items = null;
                 }
 
-                var maps = hasSecondMaps ? _curStep.secondMappings : System.Array.Empty<LineMapping>();
-                var lines = hasSecondLines ? _curStep.secondLines : System.Array.Empty<string>();
+                var maps = hasSecondMaps ? _curStep.secondMappings : Array.Empty<LineMapping>();
+                var lines = hasSecondLines ? _curStep.secondLines : Array.Empty<string>();
 
                 dialogCtl.StartInteractDialogue(
                     maps,

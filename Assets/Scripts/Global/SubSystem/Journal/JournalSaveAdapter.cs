@@ -40,7 +40,8 @@ public static class JournalSaveAdapter
         {
             d.keys.Add(it.key);
             d.statuses.Add(it.status.ToString());
-            var utc = it.createdAt.Kind == DateTimeKind.Utc
+            var utc =
+                it.createdAt.Kind == DateTimeKind.Utc
                     ? it.createdAt
                     : it.createdAt.ToUniversalTime();
             d.createdAtIso.Add(utc.ToString("o", CultureInfo.InvariantCulture));
@@ -75,6 +76,15 @@ public static class JournalSaveAdapter
         int n = Math.Min(Math.Min(d.keys.Count, d.statuses.Count), d.createdAtIso.Count);
         // 若 steps 数量不足，按可用的最小值
         n = Math.Min(n, d.steps?.Count ?? 0);
+        // 如果 n==0，说明这是“空存档”
+        if (n == 0)
+        {
+            // 恢复为资源默认状态
+            m.LoadFromSO();
+            // 不再做任何回放
+            return;
+        }
+
         for (int i = 0; i < n; i++)
         {
             // 取出该行的 key

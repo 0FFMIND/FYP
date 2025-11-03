@@ -65,7 +65,6 @@ namespace MVC
                 // ½øÈë1-Scene-Main
                 EventBus.Publish(
                     new ESceneFade(
-                        fromScene: "1-Scene-UI",
                         toScene: "1-Scene-Main",
                         fadeOutDuration: 0.5f,
                         fadeInDuration: 2f

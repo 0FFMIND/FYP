@@ -104,9 +104,9 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/10/30 - 遇见metalSign，加入了人物稍微跳一下，此时rigidbody改为kinematic
 
-2025/11/1 - 修复了原来dialog加载中英文的问题，如果一个dialogctl一直出现在场景中，因为当它end()的时候会自动退订事件，那么重入startDialog不会重新订阅事件，onEnable和onDisable的时候会重新订阅/退订事件，写了一个新的shader，写完了菜单引导，holecolor，能出现遮罩的效果，写完了探索场景中的三个物体，进入到
+2025/11/1 - 修复了原来dialog加载中英文的问题，如果一个dialogctl一直出现在场景中，因为当它end()的时候会自动退订事件，那么重入startDialog不会重新订阅事件，onEnable和onDisable的时候会重新订阅/退订事件，写了一个新的shader，写完了菜单引导，holecolor，能出现遮罩的效果，写完了探索场景中的三个物体，进入到gotomeadow的状态
 
-
+2025/11/2 - 做了一个很简单的开始菜单，修复了restartGame里面journal没法刷新到初始都为Hidden + Pending的值，因为在Setting里面把JournalSaveData置为empty，之后save，当游戏/Unity初始读取的时候，会使用JournalSaveAdapter，尝试解析JournalSaveData，当JournalSaveData.有效length == 0的时候，不会进入for循环，加了n == 0的特殊判断，写了cameraShake, cameraZoom的方法，提供给代码进行过场动画的摄像机行为
 
 
 
@@ -116,6 +116,18 @@ TODO: 推进剧情
 
 TODO: 解决对话机回调问题
 
-TODO: 场景中的任务更新，检测任务完成情况
-
 TODO: Scene1ArrivalCtl其实更好用StateMachine做，现在大型SwitchCase有点冗余
+
+TODO: 哈哈，一不小心就让我想起来了,应该是汗颜
+
+这里可以插入图片
+
+上上周的周三，我趁体育课自由活动的时间溜上来过
+那天早上路过校门口的花店，老板正把过季的铃兰种球往垃圾袋里倒，圆溜溜的种球滚了一地
+我这手欠的，实在是没忍住，就捡了一颗最饱满的
+听店员在旁边嘀咕，说这些种球存放太久，都失去活性了
+他越是这么说，我越是想试试
+说实在的，我对养花种草完全不懂，完全是瞎猫碰上死耗子，胡乱往草甸里一埋
+想着这么多天过去，说不定真有奇迹发生呢……
+
+然后走到草甸的时候触发剧情，先向右走，再向左走，走一下朝前转一下，找埋到哪里了

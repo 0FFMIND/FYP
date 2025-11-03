@@ -1,6 +1,6 @@
-using Manager;
 using System;
 using System.Collections;
+using Manager;
 using UnityEngine;
 
 namespace MVC
@@ -24,6 +24,9 @@ namespace MVC
 
         [SerializeField]
         private LineMapping[] fifthMappings;
+
+        [SerializeField]
+        private LineMapping[] sixthMappings;
 
         [SerializeField]
         private GameObject dialogPanel;
@@ -118,6 +121,7 @@ namespace MVC
             modelText = "1-Scene-7.txt";
             base.StartDialogue();
         }
+
         public void StartFifthDialogue(Action onFinished)
         {
             mappings = fifthMappings;
@@ -125,6 +129,15 @@ namespace MVC
             modelText = "1-Scene-8.txt";
             base.StartDialogue();
         }
+
+        public void StartSixthDialogue(Action onFinished)
+        {
+            mappings = sixthMappings;
+            finished = onFinished;
+            modelText = "1-Scene-9.txt";
+            base.StartDialogue();
+        }
+
         protected override IEnumerator TypeLines()
         {
             arrow.gameObject.SetActive(false);
@@ -176,6 +189,7 @@ namespace MVC
             }
             yield return base.TypeLines();
         }
+
         private IEnumerator PlayClosed()
         {
             // 清空文本
@@ -183,16 +197,19 @@ namespace MVC
             // 关掉向下小箭头
             arrow.gameObject.SetActive(false);
             // 并行把“对话框 & 背景”做 CodeTween 退场，等两者都结束
-            bool donePanel = false, doneBG = false;
+            bool donePanel = false,
+                doneBG = false;
 
             IEnumerator RunPanel()
             {
-                if (enterAnim) yield return enterAnim.PlayExitCode(dialogueView, false);
+                if (enterAnim)
+                    yield return enterAnim.PlayExitCode(dialogueView, false);
                 donePanel = true;
             }
             IEnumerator RunBG()
             {
-                if (enterAnim) yield return enterAnim.PlayExitCode(bgView, true);
+                if (enterAnim)
+                    yield return enterAnim.PlayExitCode(bgView, true);
                 doneBG = true;
             }
 
@@ -203,6 +220,7 @@ namespace MVC
             HideDialogue();
             dialogPanel.gameObject.SetActive(false);
         }
+
         private IEnumerator PlayClosedWithFinished()
         {
             // 清空文本
@@ -210,16 +228,19 @@ namespace MVC
             // 关掉向下小箭头
             arrow.gameObject.SetActive(false);
             // 并行把“对话框 & 背景”做 CodeTween 退场，等两者都结束
-            bool donePanel = false, doneBG = false;
+            bool donePanel = false,
+                doneBG = false;
 
             IEnumerator RunPanel()
             {
-                if (enterAnim) yield return enterAnim.PlayExitCode(dialogueView, false);
+                if (enterAnim)
+                    yield return enterAnim.PlayExitCode(dialogueView, false);
                 donePanel = true;
             }
             IEnumerator RunBG()
             {
-                if (enterAnim) yield return enterAnim.PlayExitCode(bgView, true);
+                if (enterAnim)
+                    yield return enterAnim.PlayExitCode(bgView, true);
                 doneBG = true;
             }
 

@@ -98,19 +98,16 @@ namespace Utils
 
     public readonly struct ESceneFade
     {
-        public readonly string FromScene;
         public readonly string ToScene;
         public readonly float FadeOutDuration;
         public readonly float FadeInDuration;
 
         public ESceneFade(
-            string fromScene,
             string toScene,
             float fadeOutDuration,
             float fadeInDuration
         ) =>
-            (FromScene, ToScene, FadeOutDuration, FadeInDuration) = (
-                fromScene,
+            (ToScene, FadeOutDuration, FadeInDuration) = (
                 toScene,
                 fadeOutDuration,
                 fadeInDuration

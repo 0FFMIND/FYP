@@ -251,11 +251,11 @@ namespace Manager
             {
                 return;
             }
-            if (InventoryEquals(_data.inventory, snap))
+            if (InventoryEquals(_data.inventoryData, snap))
             {
                 return;
             }
-            _data.inventory = snap;
+            _data.inventoryData = snap;
             if (saveNow)
             {
                 Save();
@@ -290,7 +290,7 @@ namespace Manager
 
         public InventorySaveData GetInventorySnapshot()
         {
-            return _data.inventory;
+            return _data.inventoryData;
         }
 
         public (int w, int h) GetResolution()
@@ -337,6 +337,42 @@ namespace Manager
         public float GetSprintMultiplier()
         {
             return _data.sprintMultiplier;
+        }
+
+        // 清空 Inventory（保留容量，不保留物品）
+        public void ClearInventory(bool saveNow = true)
+        {
+            var capacity = _data?.inventoryData?.capacity ?? 99;
+            var empty = new InventorySaveData
+            {
+                capacity = capacity,
+                itemIds = new List<string>(),
+                counts = new List<int>(),
+            };
+            SetInventorySnapshot(empty, saveNow);
+        }
+
+        // 清空 Journal（清空所有条目与 steps）
+        public void ClearJournal(bool saveNow = true)
+        {
+            var empty = new JournalSaveData
+            {
+                keys = new List<string>(),
+                statuses = new List<string>(),
+                createdAtIso = new List<string>(),
+                steps = new List<JournalItemSteps>(),
+            };
+            SetJournalSnapshot(empty, saveNow);
+        }
+
+        // 一键清空进度（Inventory + Journal）
+        public void ClearProgress()
+        {
+            // 顺序无所谓，这里避免重复落盘：都传 false，最后统一 Save 或至少 Broadcast
+            ClearInventory(false);
+            ClearJournal(false);
+
+            Save();
         }
 
         private bool InventoryEquals(InventorySaveData a, InventorySaveData b)

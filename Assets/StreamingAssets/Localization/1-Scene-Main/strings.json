@@ -33,11 +33,11 @@
     },
     {
         "zh": "楼层的布局倒是很简单，一到四楼是上课的教室，五楼是老师们的办公室，行政主任室也在那一层……",
-        "en": "The layout is pretty simple: floors one through four are classrooms; the fifth floor is the teachers’ offices, and the administrative director’s office is there too..."
+        "en": "The layout is pretty simple: floors one through four are classrooms; the fifth floor is the teachers’ offices, and the Administrative Director’s office is there too..."
     },
     {
         "zh": "刚才在五楼差点撞上教务主任，真够倒霉的",
-        "en": "I almost ran into the academic affairs director on the fifth floor just now—just my luck."
+        "en": "I almost ran into the Academic Affairs Director on the fifth floor just now—just my luck."
     },
     {
         "zh": "说起来，这地方我好像也不是第一次来了……",
@@ -100,44 +100,44 @@
         "en": "The <color=#FFC600>notice board in front of you</color> seems to have something written on it—try interacting with it."
     },
     {
-        "zh": "看来你已经熟悉了如何与场景中的物品互动",
-        "en": "Looks like you’re already familiar with interacting with objects in the scene."
+        "zh": "一个不起眼的下水道口，周围湿漉漉的",
+        "en": "A nondescript storm drain; the area around it is slick with moisture."
     },
     {
-        "zh": "现在是时候去确认一下系统菜单了，它提供了许多有用的功能：",
-        "en": "Now it’s time to check the system menu; it offers many useful functions:"
+        "zh": "你瞥见下水道缝隙中隐隐透着银色的微光",
+        "en": "You catch a faint silver gleam seeping through the drain’s gaps."
     },
     {
-        "zh": "[设置] 你可以根据个人喜好，随时调整游戏的按键、画面和声音效果",
-        "en": "[Settings] Adjust controls, graphics, and audio to your preference at any time."
+        "zh": "但扑鼻的异味和黏腻的污垢让你立刻后退半步",
+        "en": "But the stench and the clammy grime make you instinctively step back."
     },
     {
-        "zh": "[背包] 用于查看、使用或整理你收集到的所有任务物品和资源",
-        "en": "[Inventory] View, use, or organize all the quest items and resources you’ve collected."
+        "zh": "这味道……可真够提神醒脑的",
+        "en": "This smell… sure is eye-opening."
     },
     {
-        "zh": "[日记] 提供实时任务提示，当你不确定下一步该做什么时，请随时查阅",
-        "en": "[Journal] Provides real-time quest hints; check it whenever you’re unsure what to do next."
+        "zh": "我可不想为这么点钱弄脏手",
+        "en": "I’m not getting my hands dirty for that little money."
     },
     {
-        "zh": "现在请尝试按下ESC键，打开系统的主菜单吧",
-        "en": "Now try pressing ESC to open the main system menu."
+        "zh": "我的尊严，可比一枚硬币值钱多了",
+        "en": "My dignity is worth far more than a single coin."
     },
     {
-        "zh": "一个保洁用的拖把，上面留有没干透的水痕，旁边放着半瓶除草剂",
-        "en": "A janitorial mop with not-yet-dry water streaks; beside it sits a half-full bottle of herbicide."
+        "zh": "（你努力不让自己的目光停留在那里，快步离开）",
+        "en": "(You force your eyes away and hurry off.)"
     },
     {
-        "zh": "拖把还是湿的，看来保洁阿姨早上刚清理过",
-        "en": "The mop is still wet—looks like the custodian just cleaned this morning."
+        "zh": "让硬币留在这里污染环境，也是一种罪过吧？",
+        "en": "Leaving a coin here to pollute the environment is a sin too, isn’t it?"
     },
     {
-        "zh": "就算有学校保洁定期清理，天台上还是长满了青苔",
-        "en": "Even with regular school cleanups, the rooftop is still covered in moss."
+        "zh": "对，我这是在……清理环境！",
+        "en": "Right—this is… environmental cleanup!"
     },
     {
-        "zh": "这些东西太顽固了，用刷子使劲刷都未必能刷下一层",
-        "en": "It’s so stubborn that even a hard scrub with a brush might not remove a layer."
+        "zh": "（你迅速蹲下了身，小心翼翼地用指甲抠出了硬币）",
+        "en": "(You crouch quickly and carefully pry the coin out with a fingernail.)"
     },
     {
         "zh": "<任务开启>",
@@ -281,7 +281,7 @@
     },
     {
         "zh": "一个边角有些磨坏但看起来十分结实的铁制公告栏，靠近有消毒水的气味",
-        "en": "An iron bulletin board with worn corners but looking very sturdy; up close there’s a smell of disinfectant"
+        "en": "An iron notice board with worn corners but looking very sturdy; up close there’s a smell of disinfectant"
     },
     {
         "zh": "上面的字迹被淡淡的青苔遮住，但依旧可以辨认：",
@@ -297,7 +297,7 @@
     },
     {
         "zh": "除草剂的瓶身冰凉，瓶口散发着一股格外刺鼻的化学药剂味",
-        "en": "The herbicide’s bottle is cold to the touch, and the mouth gives off an especially acrid chemical odor"
+        "en": "The herbicide’s bottle is cold to the touch, and the opening gives off an especially acrid chemical odor"
     },
     {
         "zh": "从这湿拖把就能看出来，保洁阿姨早上指定是来打扫过了",
@@ -305,7 +305,7 @@
     },
     {
         "zh": "可这空气里，霉味跟一股刺鼻的药水味混在一块儿，也太难顶了",
-        "en": "But in the air, the mustiness mixed with a sharp medicinal reek is just unbearable"
+        "en": "But the mustiness mixed with a sharp chemical reek in the air is really hard to bear."
     },
     {
         "zh": "阿姨这是下了猛料啊，杀毒效果先不说，杀伤力是够强的",
@@ -333,7 +333,7 @@
     },
     {
         "zh": "果然，天上不会掉两次馅饼",
-        "en": "As expected, pies don’t fall from the sky twice"
+        "en": "As expected, the sky doesn’t drop a windfall twice."
     },
     {
         "zh": "一片自然形成的草甸，各种不知名的草肆意生长在一起",
@@ -354,5 +354,97 @@
     {
         "zh": "说是草甸，结果土壤里全是化学药剂的味道和霉味",
         "en": "Call it a meadow, yet the soil reeks of chemicals and mildew"
+    },
+    {
+        "zh": "哇？这个告示牌……",
+        "en": "Whoa—this notice board…"
+    },
+    {
+        "zh": "一股熟悉的潮湿霉味混着消毒水的味道，像是刚被人用湿抹布用力擦过",
+        "en": "A familiar damp musty smell mixed with disinfectant, as if it had just been scrubbed hard with a wet cloth"
+    },
+    {
+        "zh": "上面青苔少得厉害，还留着些被硬生生蹭掉的痕迹……",
+        "en": "The moss on it is greatly reduced, and there are still marks where it was forcibly rubbed off..."
+    },
+    {
+        "zh": "虽然可能是我多心了，但这种糟糕的感觉真让人不舒服",
+        "en": "Although I might be overthinking it, this awful feeling is really uncomfortable"
+    },
+    {
+        "zh": "真希望这是我的错觉……",
+        "en": "I really hope this is just my imagination..."
+    },
+    {
+        "zh": "既然上来了，还是把在意的地方都好好看看吧",
+        "en": "Since I’m up here, I should carefully check all the places I’m concerned about"
+    },
+    {
+        "zh": "告示牌是检查完了……接下来该检查哪里来着？",
+        "en": "The notice board is checked... what should I examine next again?"
+    },
+    {
+        "zh": "在游戏中，你需要通过完成<color=#FFC600>日记</color>中的事项来推进剧情",
+        "en": "In the game, you need to advance the story by completing the items in the <color=#FFC600>Journal</color>"
+    },
+    {
+        "zh": "在日记界面中，你可以通过条目的<color=#FFC600>颜色</color>辨别任务状态：",
+        "en": "In the journal interface, you can distinguish task status by the <color=#FFC600>color</color> of the entries:"
+    },
+    {
+        "zh": "<color=#FFC600>灰色</color>代表未完成",
+        "en": "<color=#FFC600>Gray</color> represents not completed"
+    },
+    {
+        "zh": "<color=#FFC600>白色</color>代表已完成",
+        "en": "<color=#FFC600>White</color> represents completed"
+    },
+    {
+        "zh": "当你清空当前日记中的所有<color=#FFC600>灰色</color>条目时，会触发关键剧情",
+        "en": "When you clear all the <color=#FFC600>gray</color> entries in the current journal, a key plot will be triggered"
+    },
+    {
+        "zh": "现在请按下<color=#FFC600>ESC</color>键，打开系统的主菜单查阅日记",
+        "en": "Now please press the <color=#FFC600>ESC</color> key to open the system main menu and check the journal"
+    },
+    {
+        "zh": "接下来，好好探索天台吧！",
+        "en": "Next, go explore the rooftop properly!"
+    },
+    {
+        "zh": "需要留意的地方应该记在日记里面了",
+        "en": "The places that need attention should be recorded in the journal"
+    },
+    {
+        "zh": "我记得日记里提到了几个关键点：左边的草甸、右边的盆栽，以及保洁工具和除草剂的组合",
+        "en": "I remember the journal mentioned a few key points: the meadow on the left, the potted plants on the right, and the combination of cleaning tools and herbicide"
+    },
+    {
+        "zh": "重点看看这些地方吧，说不定就能搞清楚心中那种糟糕的感觉是什么了",
+        "en": "Focus on these places; maybe I can figure out what that awful feeling inside is"
+    },
+    {
+        "zh": "终于凑齐三枚硬币了",
+        "en": "Finally gathered three coins"
+    },
+    {
+        "zh": "现在去售货机那里看看吧",
+        "en": "Now go take a look at the vending machine"
+    },
+    {
+        "zh": "应该可以买矿泉水了",
+        "en": "I should be able to buy mineral water now"
+    },
+    {
+        "zh": "一扇虚掩着的老旧铁门，门轴上卡着一块显眼的扁石头",
+        "en": "An old iron door stands ajar, with a conspicuous flat stone wedged in its hinge."
+    },
+    {
+        "zh": "刚刚放的石头还卡在门轴上……现在最好别去动它",
+        "en": "The stone I just placed is still wedged in the hinge… best not touch it now."
+    },
+    {
+        "zh": "万一碰掉了石头，导致这扇门关上……我就真出不去了",
+        "en": "If I knock the stone loose and the door swings shut… I really won’t be able to get out."
     }
 ]

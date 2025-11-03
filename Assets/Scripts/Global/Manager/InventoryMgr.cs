@@ -23,7 +23,7 @@ namespace Manager
         // 响应设置变更事件：从 Settings 恢复背包
         private void SetInventory(ESettingsChanged e)
         {
-            var save = e.Settings.inventory;
+            var save = e.Settings.inventoryData;
             // 若无存档或容量非法，直接返回
             if (save == null || save.capacity <= 0)
             {

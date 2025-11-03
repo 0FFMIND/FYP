@@ -1,11 +1,11 @@
-[
+[    
     {
         "zh": "开始游戏",
         "en": "Start Game"
     },
     {
         "zh": "主音量",
-        "en": "Master"
+        "en": "Mixer"
     },
     {
         "zh": "背景音",
@@ -53,7 +53,7 @@
     },
     {
         "zh": "正在为<color=#FFC600>{action}</color>重新绑定，当前按键：<color=#FFC600>{key}</color>\\n请按任意键设置新按键\\n提示：如果{key}已被其他操作使用，或者修改的按键为WASD或方向键（↑↓←→）此次更改将不会应用",
-        "en": "Rebinding for <color=#FFC600>{action}</color>, current key: <color=#FFC600>{key}</color>\\nPress any key to set a new binding\\nTip: If {key} is already used by another action, or if the key being changed is WASD or the arrow keys (↑↓←→), this change will not be applied"
+        "en": "Rebinding for <color=#FFC600>{action}</color>, current key: <color=#FFC600>{key}</color>\\nPress any key to set a new key\\nTip: If {key} is already used by another action, or if the key being changed is WASD or the arrow keys (↑↓←→), this change will not be applied"
     },
     {
         "zh": "文本速率",
@@ -117,7 +117,7 @@
     },
     {
         "zh": "要购买吗？",
-        "en": "Buy now?"
+        "en": "Ready to buy?"
     },
     {
         "zh": "{yyyy}年{MM}月{dd}日 {period}{hh}点{mm}分",
@@ -201,7 +201,7 @@
     },
     {
         "zh": "·<color=#FFC600>下水道</color>里那枚硬币，呃，看来得克服一下了",
-        "en": "· that coin in the <color=#FFC600>storm drain</color>—uh, looks like I’ll have to get over it"
+        "en": "· that coin in the <color=#FFC600>sewer</color>—uh, looks like I’ll have to get over it"
     },
     {
         "zh": "·草甸旁的<color=#FFC600>石头</color>说不定有什么",
@@ -209,7 +209,7 @@
     },
     {
         "zh": "·右边的<color=#FFC600>石缝</color>里好像闪烁着银光",
-        "en": "· there seems to be a silvery glint in the <color=#FFC600>stone crevice</color> on the right"
+        "en": "· there seems to be a silvery glint in the <color=#FFC600>rock crevice</color> on the right"
     },
     {
         "zh": "看来需要收集到三枚硬币",

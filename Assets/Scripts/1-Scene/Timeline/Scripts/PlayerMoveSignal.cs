@@ -24,7 +24,8 @@ namespace MVC
 
         [SerializeField]
         private GuideDialogCtl guideCtl;
-
+        [SerializeField]
+        private ParallaxBG bg;
         private void Start()
         {
             mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScriptMoveCtl>();
@@ -124,6 +125,18 @@ namespace MVC
             emoteCtl.Play(EmoteType.Thinking, 1f);
             yield return new WaitForSecondsRealtime(1.7f);
             dialogCtl.StartThirdDialogue(PlayerThirdMoveEnd);
+        }
+
+        public IEnumerator PlayerFourthMove()
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+            yield return mover.Jump(0.2f, 0.6f);
+            yield return new WaitForSecondsRealtime(0.5f);
+            bg.isOn = false;
+            dialogCtl.StartSixthDialogue(() => {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtl>().model.SetDisabled(false);
+                bg.isOn = true;
+            });
         }
 
         public void MoveBack(float y, float time)

@@ -17,7 +17,8 @@ namespace MVC
         // 等待玩家按 ESC 打开/关闭菜单的“等待态”
         AwaitMenuToggle,
         ExploreRooftop,
-        ExploreComplete,
+        ExploreCompleted,
+        GoToMeadow,
     }
 
     public class Scene1ArrivalCtl : MonoBehaviour
@@ -64,8 +65,14 @@ namespace MVC
 
         private void OnJournalChanged(EJournalStatusChanged e)
         {
-            if(e.Key == "exploreRooftop" && e.NewStatus == JournalStatus.Completed && state == Scene1State.ExploreRooftop)
+            if (
+                e.Key == "exploreRooftop"
+                && e.NewStatus == JournalStatus.Completed
+                && state == Scene1State.ExploreRooftop
+            )
             {
+                state = Scene1State.ExploreCompleted;
+                EvaluateState();
                 // 进入到下一状态
             }
             if (e.Key == "vendingMachine" && e.NewStatus == JournalStatus.Completed)
@@ -75,8 +82,16 @@ namespace MVC
                 timelineCtl.StartFifthDialogue(() =>
                 {
                     player.model.SetDisabled(false);
+                    state = Scene1State.GoToMeadow;
                 });
             }
+        }
+
+        private void EnterExploreCompleted()
+        {
+            player.model.SetDisabled(true);
+            // 开始播放动画
+            StartCoroutine(mover.PlayerFourthMove());
         }
 
         private void Start()
@@ -121,6 +136,9 @@ namespace MVC
                 case Scene1State.ExploreRooftop:
                     EnterExploreRooftop();
                     break;
+                case Scene1State.ExploreCompleted:
+                    EnterExploreCompleted();
+                    break;
                 default:
                     break;
             }
@@ -136,6 +154,7 @@ namespace MVC
 
         private void EnterExploreRooftop()
         {
+            player.model.SetDisabled(true);
             timelineCtl.StartFourthDialogue(() =>
             {
                 player.model.SetDisabled(false);
@@ -194,13 +213,6 @@ namespace MVC
             player.model.SetDisabled(true);
             // 开始播放动画
             StartCoroutine(mover.PlayerThirdMove());
-        }
-
-        private void EndOpenMenu()
-        {
-            // 教学对话结束 → 进入等待玩家 ESC 开关的阶段
-            player.model.SetDisabled(false);
-            state = Scene1State.AwaitMenuToggle;
         }
 
         private void EnterInteractBoard()
