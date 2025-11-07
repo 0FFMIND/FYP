@@ -11,6 +11,16 @@ public class CameraFollow : MonoBehaviour
     private CinemachineVirtualCamera vcam;
     private Coroutine zoomCo;
 
+    [Header("Shake Settings")]
+    public float duration = 0.5f; // 震动持续时间
+    public float magnitude = 0.1f; // 震动幅度
+    public float rotationMagnitude = 0.05f; // 旋转幅度
+
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
+    private float shakeTimer;
+    private bool isShaking = false;
+
     private void Awake()
     {
         var player = GameObject.FindGameObjectWithTag("Player");
@@ -81,17 +91,6 @@ public class CameraFollow : MonoBehaviour
         setter(target);
         zoomCo = null;
     }
-
-    [Header("Shake Settings")]
-    public float duration = 0.5f; // 震动持续时间
-    public float magnitude = 0.1f; // 震动幅度
-    public float rotationMagnitude = 0.05f; // 旋转幅度
-
-    private Vector3 originalPosition;
-    private Quaternion originalRotation;
-    private float shakeTimer;
-    private bool isShaking = false;
-
 
     void Update()
     {

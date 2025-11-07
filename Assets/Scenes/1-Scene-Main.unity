@@ -490,6 +490,11 @@ MonoBehaviour:
   - {fileID: 382234946, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
   guideCtl: {fileID: 1823472468}
   bg: {fileID: 1144513236}
+  stepX: 1
+  stepTime: 0.25
+  leftX: -12
+  rightX: -7
+  finalX: -10
 --- !u!1 &54542081
 GameObject:
   m_ObjectHideFlags: 0
@@ -3291,7 +3296,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.839308, y: 0.79514635}
+  m_Offset: {x: -1.839308, y: 0.8065347}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3302,7 +3307,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0508657, y: 0.54891706}
+  m_Size: {x: 1.0508657, y: 0.52614033}
   m_EdgeRadius: 0
 --- !u!114 &648898213
 MonoBehaviour:
@@ -4528,6 +4533,11 @@ MonoBehaviour:
     onEnter:
       m_PersistentCalls:
         m_Calls: []
+  - lineIndex: 6
+    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
   - lineIndex: 8
     sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
     onEnter:
@@ -4613,6 +4623,45 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  seventhMappings:
+  - lineIndex: 0
+    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+  - lineIndex: 5
+    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 899453564}
+          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
+          m_MethodName: CameraShake
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - lineIndex: 6
+    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+  eighthMappings:
+  - lineIndex: 0
+    sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+  - lineIndex: 2
+    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
   dialogPanel: {fileID: 901008674}
   hasChoice: 0
   choiceModel:
@@ -6911,7 +6960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60463378978a60547b7b1c89b2b8a172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 7
+  state: 4
   director: {fileID: 899453560}
   guideCtl: {fileID: 1823472468}
   timelineCtl: {fileID: 899453562}
@@ -9936,6 +9985,8 @@ MonoBehaviour:
   fourthMappings: []
   fifthMappings: []
   sixthMappings: []
+  seventhMappings: []
+  eighthMappings: []
   dialogPanel: {fileID: 901008674}
   hasChoice: 0
   choiceModel:
@@ -10732,6 +10783,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 05192830902941f47821273658fc72ad, type: 3}
   warningSprites:
   - {fileID: 21300000, guid: 6557c7b1abc5fc647a5f37ce13a546d7, type: 3}
+  errorSprites:
+  - {fileID: 21300000, guid: db28e24e6c67d8543820a2675af30d4c, type: 3}
   slideInDuration: 0.18
   slideOutDuration: 0.15
   slideInOffset: {x: 0, y: -0.015}

@@ -65,6 +65,7 @@ namespace MVC
                     // 订阅选中事件
                     t.toggleView.OnSelected += () =>
                     {
+                        AudioManager.Instance.PlaySFX("buttonClick");
                         ShowPage(captured);
                         _mainIndex = captured;
                     };

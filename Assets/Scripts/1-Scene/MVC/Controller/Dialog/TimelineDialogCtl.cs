@@ -29,6 +29,12 @@ namespace MVC
         private LineMapping[] sixthMappings;
 
         [SerializeField]
+        private LineMapping[] seventhMappings;
+
+        [SerializeField]
+        private LineMapping[] eighthMappings;
+
+        [SerializeField]
         private GameObject dialogPanel;
 
         private Action finished;
@@ -137,7 +143,21 @@ namespace MVC
             modelText = "1-Scene-9.txt";
             base.StartDialogue();
         }
+        public void StartSeventhDialogue(Action onFinished)
+        {
+            mappings = seventhMappings;
+            finished = onFinished;
+            modelText = "1-Scene-10.txt";
+            base.StartDialogue();
+        }
 
+        public void StartEighthDialogue(Action onFinished)
+        {
+            mappings = eighthMappings;
+            finished = onFinished;
+            modelText = "1-Scene-11.txt";
+            base.StartDialogue();
+        }
         protected override IEnumerator TypeLines()
         {
             arrow.gameObject.SetActive(false);

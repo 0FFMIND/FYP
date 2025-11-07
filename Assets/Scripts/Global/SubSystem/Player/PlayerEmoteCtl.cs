@@ -10,6 +10,7 @@ namespace MVC
         Eyes,
         Checked,
         Warning,
+        Error,
     }
 
     /// <summary>
@@ -35,6 +36,9 @@ namespace MVC
 
         [SerializeField]
         private Sprite[] warningSprites;
+
+        [SerializeField]
+        private Sprite[] errorSprites;
 
         [Header("»Î≥° / ÕÀ≥°")]
         [SerializeField]
@@ -315,6 +319,8 @@ namespace MVC
                     return checkedSprites;
                 case EmoteType.Warning:
                     return warningSprites;
+                case EmoteType.Error:
+                    return errorSprites;
                 default:
                     return null;
             }

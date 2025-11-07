@@ -60,13 +60,9 @@ namespace MVC
             // 取 Completed 组
             var completed = all.Where(it => it.status == JournalStatus.Completed);
 
-            // Active / Completed 各自排序（MinValue 视作“无时间”，放到该组的最后）
-            active = active.OrderBy(it =>
-                it.createdAt == DateTime.MinValue ? DateTime.MaxValue : it.createdAt
-            );
-            completed = completed.OrderBy(it =>
-                it.createdAt == DateTime.MinValue ? DateTime.MaxValue : it.createdAt
-            );
+            // Active / Completed 各自排序（降序）
+            active = active.OrderByDescending(it => it.createdAt);
+            completed = completed.OrderByDescending(it => it.createdAt);
 
             // 组合顺序：Active 一定在 Completed 上面
             var src = active.Concat(completed);

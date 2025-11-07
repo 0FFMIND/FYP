@@ -19,6 +19,7 @@ namespace MVC
         ExploreRooftop,
         ExploreCompleted,
         GoToMeadow,
+        InteractMeadow,
     }
 
     public class Scene1ArrivalCtl : MonoBehaviour
@@ -44,7 +45,8 @@ namespace MVC
 
         private PlayerCtl player;
 
-        private bool interactOnce = false;
+        private bool interactSignOnce = false;
+        private bool interactMeadowOnce = false;
 
         [SerializeField]
         private PlayerMoveSignal mover;
@@ -139,6 +141,12 @@ namespace MVC
                 case Scene1State.ExploreCompleted:
                     EnterExploreCompleted();
                     break;
+                case Scene1State.GoToMeadow:
+                    EnterGoToMeadow();
+                    break;
+                case Scene1State.InteractMeadow:
+                    EnterInteractMeadow();
+                    break;
                 default:
                     break;
             }
@@ -146,10 +154,21 @@ namespace MVC
 
         // —— 各状态入口逻辑 ——
 
+
         private void EnterNone()
         {
             // 测试用
             player.model.SetDisabled(false);
+        }
+        private void EnterGoToMeadow() {
+            player.model.SetDisabled(false);
+        }
+        private void EnterInteractMeadow()
+        {
+            // 禁止玩家移动
+            player.model.SetDisabled(true);
+            // 开始播放动画
+            StartCoroutine(mover.PlayerFifthMove());
         }
 
         private void EnterExploreRooftop()
@@ -252,12 +271,24 @@ namespace MVC
             if (
                 target != null
                 && target.gameObject.name == "metalSign"
-                && !interactOnce
+                && !interactSignOnce
                 && state == Scene1State.GoToBoard
             )
             {
                 state = Scene1State.InteractBoard;
-                interactOnce = true;
+                interactSignOnce = true;
+                EvaluateState();
+            }
+
+            if (
+                target != null
+                && target.gameObject.name == "meadow"
+                && !interactMeadowOnce
+                && state == Scene1State.GoToMeadow
+            )
+            {
+                state = Scene1State.InteractMeadow;
+                interactMeadowOnce = true;
                 EvaluateState();
             }
         }

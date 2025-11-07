@@ -108,9 +108,15 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/11/2 - 做了一个很简单的开始菜单，修复了restartGame里面journal没法刷新到初始都为Hidden + Pending的值，因为在Setting里面把JournalSaveData置为empty，之后save，当游戏/Unity初始读取的时候，会使用JournalSaveAdapter，尝试解析JournalSaveData，当JournalSaveData.有效length == 0的时候，不会进入for循环，加了n == 0的特殊判断，写了cameraShake, cameraZoom的方法，提供给代码进行过场动画的摄像机行为
 
+2025/11/6 - 之前做guidepanel的时候，总觉得中间被掏空了，实际上周围暗了中间没暗显出来中间特别亮，实际上shader没有任何问题，新画了一个表情，player-ashamed，加了buttonClick的UI音效，PauseMenuButton操作加了音效
+
 
 
 正在做：
+
+TODO: 下课铃的行为
+
+TODO: 日记的条目
 
 TODO: 推进剧情
 
@@ -131,3 +137,15 @@ TODO: 哈哈，一不小心就让我想起来了,应该是汗颜
 想着这么多天过去，说不定真有奇迹发生呢……
 
 然后走到草甸的时候触发剧情，先向右走，再向左走，走一下朝前转一下，找埋到哪里了
+
+
+
+现在它居然……破土了，两片细细的披针叶，如合起的小书页，并肩从泥面探出
+
+
+
+我应该马上去草甸那里，去查看我的铃兰苗情况
+
+铃兰苗长势很好
+
+啊？怎么下课了，等等，教务老师怎么正好上来了，我得马上跑下去，一切好像都变糟了

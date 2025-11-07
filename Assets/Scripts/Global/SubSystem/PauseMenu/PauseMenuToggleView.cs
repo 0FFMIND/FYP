@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Utils;
+using Manager;
 
 namespace MVC
 {
@@ -53,6 +53,7 @@ namespace MVC
                 // 只有切为选中时广播选中事件
                 if (isOn)
                 {
+                    AudioManager.Instance.PlaySFX("buttonClick");
                     OnSelected?.Invoke();
                 }
             });
@@ -64,6 +65,8 @@ namespace MVC
             if (!toggle) return;
             if (notify) toggle.isOn = on;                // 触发回调 & 通知 ToggleGroup
             else toggle.SetIsOnWithoutNotify(on); // 仅改状态/视觉
+            // 第一次初始化的时候避免触发isOn的音效
+            AudioManager.Instance.StopSFXImmediate();
             ApplyVisual(on);
         }
 

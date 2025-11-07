@@ -178,6 +178,10 @@ namespace Manager
 
             _fadeCoroutine = null;
         }
+        public void StopSFXImmediate()
+        {
+            _sfxSource.Stop();
+        }
 
         public void PlaySFX(string name, float volumeScale = 1f)
         {

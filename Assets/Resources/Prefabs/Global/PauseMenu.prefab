@@ -1162,6 +1162,7 @@ GameObject:
   - component: {fileID: 4665959773783908318}
   - component: {fileID: 5006361340991631563}
   - component: {fileID: 2668075201426397971}
+  - component: {fileID: 6191806603016942483}
   m_Layer: 0
   m_Name: RightButton
   m_TagString: Untagged
@@ -1283,6 +1284,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6191806603016942483}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6191806603016942483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191364009805470771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1271339199997051489
 GameObject:
   m_ObjectHideFlags: 0
@@ -2164,6 +2189,7 @@ GameObject:
   - component: {fileID: 9125239785500230045}
   - component: {fileID: 3392125869713493496}
   - component: {fileID: 9043625302853047112}
+  - component: {fileID: 6090577099683461478}
   m_Layer: 0
   m_Name: RightButton
   m_TagString: Untagged
@@ -2285,6 +2311,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6090577099683461478}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6090577099683461478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091546220058337274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2094016086880387111
 GameObject:
   m_ObjectHideFlags: 0
@@ -3337,6 +3387,7 @@ GameObject:
   - component: {fileID: 3237968259681522714}
   - component: {fileID: 2144172964358327607}
   - component: {fileID: 3835724644198483908}
+  - component: {fileID: 3505100003415546026}
   m_Layer: 0
   m_Name: RightButton
   m_TagString: Untagged
@@ -3458,6 +3509,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3505100003415546026}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3505100003415546026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2943895972330491499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3028724760683529698
 GameObject:
   m_ObjectHideFlags: 0
@@ -3784,6 +3859,7 @@ GameObject:
   - component: {fileID: 3293865755465412351}
   - component: {fileID: 1446847826685308093}
   - component: {fileID: 6773123895426597914}
+  - component: {fileID: 6603691074110459831}
   m_Layer: 0
   m_Name: RightButton
   m_TagString: Untagged
@@ -3905,6 +3981,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6603691074110459831}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6603691074110459831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3261873566050153409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3268865461230651721
 GameObject:
   m_ObjectHideFlags: 0
@@ -4103,6 +4203,7 @@ GameObject:
   - component: {fileID: 8038917818027433690}
   - component: {fileID: 2204942589984201350}
   - component: {fileID: 7130785194409644624}
+  - component: {fileID: 3254267795646062147}
   m_Layer: 0
   m_Name: DefaultButton
   m_TagString: Untagged
@@ -4224,6 +4325,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3254267795646062147}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3254267795646062147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3490924666439576855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3496487296299531379
 GameObject:
   m_ObjectHideFlags: 0
@@ -4816,6 +4941,7 @@ GameObject:
   - component: {fileID: 1218290234103021884}
   - component: {fileID: 5561919270194306476}
   - component: {fileID: 8109260137578548781}
+  - component: {fileID: 3260010459234779267}
   m_Layer: 0
   m_Name: LeftButton
   m_TagString: Untagged
@@ -4937,6 +5063,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3260010459234779267}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3260010459234779267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3811019239246515041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3893685924566167166
 GameObject:
   m_ObjectHideFlags: 0
@@ -5600,6 +5750,7 @@ GameObject:
   - component: {fileID: 1028762869447421121}
   - component: {fileID: 2052229341149911232}
   - component: {fileID: 6130330194144121043}
+  - component: {fileID: 4077572702448423067}
   m_Layer: 0
   m_Name: LeftButton
   m_TagString: Untagged
@@ -5721,6 +5872,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4077572702448423067}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4077572702448423067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4251734065592683186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4466187479621998848
 GameObject:
   m_ObjectHideFlags: 0
@@ -7492,6 +7667,7 @@ GameObject:
   - component: {fileID: 8776798796456559473}
   - component: {fileID: 9016861944169420817}
   - component: {fileID: 2345187087919418704}
+  - component: {fileID: 8743509967643584912}
   m_Layer: 0
   m_Name: DefaultButton
   m_TagString: Untagged
@@ -7613,6 +7789,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8743509967643584912}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8743509967643584912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5662772583120782629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5667002772069953521
 GameObject:
   m_ObjectHideFlags: 0
@@ -10624,7 +10824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3195565016375214934
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10812,6 +11012,7 @@ GameObject:
   - component: {fileID: 3839097181839875405}
   - component: {fileID: 8892931270944550012}
   - component: {fileID: 4963926158473100270}
+  - component: {fileID: 6195333829251003655}
   m_Layer: 0
   m_Name: LeftButton
   m_TagString: Untagged
@@ -10933,6 +11134,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6195333829251003655}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6195333829251003655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8463604306654867008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8483442070655959472
 GameObject:
   m_ObjectHideFlags: 0
@@ -10945,6 +11170,7 @@ GameObject:
   - component: {fileID: 4523683417964764272}
   - component: {fileID: 8382120529222164048}
   - component: {fileID: 349129860073421301}
+  - component: {fileID: 165707296888202470}
   m_Layer: 0
   m_Name: DefaultButton
   m_TagString: Untagged
@@ -11066,6 +11292,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 165707296888202470}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &165707296888202470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8483442070655959472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8504410098815012534
 GameObject:
   m_ObjectHideFlags: 0
@@ -11228,6 +11478,7 @@ GameObject:
   - component: {fileID: 9135254972865588476}
   - component: {fileID: 5170401752658948632}
   - component: {fileID: 5533642219570693870}
+  - component: {fileID: 1992713669719055719}
   m_Layer: 0
   m_Name: LeftButton
   m_TagString: Untagged
@@ -11349,6 +11600,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1992713669719055719}
+        m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+        m_MethodName: playSFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: buttonClick
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1992713669719055719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8787248975736074785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8878015881912920804
 GameObject:
   m_ObjectHideFlags: 0
@@ -12001,7 +12276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchorMin.x
@@ -12009,7 +12284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_SizeDelta.x
@@ -12049,11 +12324,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 76.15695
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -264.85074
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12126,7 +12401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchorMin.x
@@ -12134,7 +12409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_SizeDelta.x
@@ -12174,11 +12449,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 76.15695
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -145.88445
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12251,7 +12526,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchorMin.x
@@ -12259,7 +12534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_SizeDelta.x
@@ -12299,11 +12574,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 76.15695
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -26.91815
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7981204366504894287, guid: e41960f6528655f47bcdcd3e0d573e13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
