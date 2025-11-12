@@ -21,12 +21,105 @@ public class CameraFollow : MonoBehaviour
     private float shakeTimer;
     private bool isShaking = false;
 
+    private Transform player;
+    private Transform manualAnchor;
+    private Coroutine panCo;
+
     private void Awake()
     {
-        var player = GameObject.FindGameObjectWithTag("Player");
+        var p = GameObject.FindGameObjectWithTag("Player");
+        player = p != null ? p.transform : null;
+
         vcam.Follow = player.transform;
         originalPosition = transform.localPosition;
         originalRotation = transform.localRotation;
+    }
+    public void DetachCamera()
+    {
+        if (manualAnchor == null)
+        {
+            manualAnchor = new GameObject("CamManualAnchor").transform;
+            manualAnchor.position = vcam.transform.position; // 与当前机位对齐
+            manualAnchor.rotation = vcam.transform.rotation;
+        }
+        vcam.Follow = manualAnchor;
+        // 若你同时用了 LookAt（3D），也建议：
+        // vcam.LookAt = null;
+    }
+
+    // === 新增：重新跟随玩家 ===
+    public void ReattachToPlayer()
+    {
+        if (player == null)
+        {
+            var p = GameObject.FindGameObjectWithTag("Player");
+            player = p != null ? p.transform : null;
+        }
+        if (player != null) vcam.Follow = player;
+    }
+
+    // === 新增：对外方法，按给定 Vector2 世界坐标平移摄像机（保持当前 z）===
+    // 用于过场、展示场景细节等
+    public void PanTo(Vector2 xy, float duration)
+    {
+        DetachCamera(); // 确保已脱离人物，交给锚点驱动
+
+        if (panCo != null) StopCoroutine(panCo);
+        var start = (manualAnchor != null ? manualAnchor.position : vcam.transform.position);
+        var target = new Vector3(xy.x, xy.y, start.z); // 保持 z 不变（正交相机）
+
+        panCo = StartCoroutine(LerpVector3(
+            () => manualAnchor.position,
+            v => manualAnchor.position = v,
+            target,
+            duration
+        ));
+    }
+
+    public void PanToY(float y, float duration)
+    {
+        DetachCamera(); // 确保已脱离人物，交给锚点驱动
+
+        if (panCo != null) StopCoroutine(panCo);
+        var start = (manualAnchor != null ? manualAnchor.position : vcam.transform.position);
+        var target = new Vector3(start.x, y, start.z); // 保持 z 不变（正交相机）
+
+        panCo = StartCoroutine(LerpVector3(
+            () => manualAnchor.position,
+            v => manualAnchor.position = v,
+            target,
+            duration
+        ));
+    }
+
+    // === 新增：通用 Vector3 插值（与现有 LerpFloat 一致的曲线节奏）===
+    private IEnumerator LerpVector3(
+        System.Func<Vector3> getter,
+        System.Action<Vector3> setter,
+        Vector3 target,
+        float duration
+    )
+    {
+        if (duration <= 0f)
+        {
+            setter(target);
+            yield break;
+        }
+
+        Vector3 start = getter();
+        float t = 0f;
+        var curve = zoomCurve != null ? zoomCurve : AnimationCurve.Linear(0, 0, 1, 1);
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float k = Mathf.Clamp01(t / duration);
+            float eased = curve.Evaluate(k);
+            setter(Vector3.Lerp(start, target, eased));
+            yield return null;
+        }
+        setter(target);
+        panCo = null;
     }
 
     public void ZoomOrthoBy(float delta, float duration)

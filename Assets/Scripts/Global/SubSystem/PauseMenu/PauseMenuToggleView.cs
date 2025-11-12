@@ -41,6 +41,8 @@ namespace MVC
 
         public event Action OnSelected;
 
+        private bool _suppressNextSfx;
+
         // 绑定数据并指定所属 ToggleGroup
         public void Bind(ToggleGroup group)
         {
@@ -53,7 +55,10 @@ namespace MVC
                 // 只有切为选中时广播选中事件
                 if (isOn)
                 {
-                    AudioManager.Instance.PlaySFX("buttonClick");
+                    if (!_suppressNextSfx)
+                    {
+                        AudioManager.Instance.PlaySFX("buttonClick");
+                    }
                     OnSelected?.Invoke();
                 }
             });
@@ -63,11 +68,11 @@ namespace MVC
         public void SetSelected(bool on, bool notify = false)
         {
             if (!toggle) return;
+            _suppressNextSfx = true;
             if (notify) toggle.isOn = on;                // 触发回调 & 通知 ToggleGroup
             else toggle.SetIsOnWithoutNotify(on); // 仅改状态/视觉
-            // 第一次初始化的时候避免触发isOn的音效
-            AudioManager.Instance.StopSFXImmediate();
             ApplyVisual(on);
+            _suppressNextSfx = false;
         }
 
         public void OnPointerEnter(PointerEventData eventData)

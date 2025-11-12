@@ -1,3 +1,4 @@
+using Manager;
 using UnityEngine;
 using Utils;
 
@@ -15,7 +16,12 @@ namespace MVC
         {
             // ÐÞ¸Äjournal
             EventBus.Publish(new EJournalStepChanged("reachRooftop", 1, StepState.Done));
-            EventBus.Publish(new EJournalStatusChanged("exploreRooftop", JournalStatus.Active));
+
+            var it = JournalMgr.Instance?.Model?.Find("exploreRooftop");
+            if (it != null && it.status != JournalStatus.Completed)
+            {
+                EventBus.Publish(new EJournalStatusChanged("exploreRooftop", JournalStatus.Active));
+            }
             // ´¥·¢guide
             EventBus.Publish(new EScene1ArrivalStateChange(Scene1State.MenuTutorial));
             ctl?.Done();

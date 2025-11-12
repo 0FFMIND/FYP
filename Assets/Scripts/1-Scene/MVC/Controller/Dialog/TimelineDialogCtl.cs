@@ -35,6 +35,21 @@ namespace MVC
         private LineMapping[] eighthMappings;
 
         [SerializeField]
+        private LineMapping[] ninethMappings;
+
+        [SerializeField]
+        private LineMapping[] tenthMappings;
+
+        [SerializeField]
+        private LineMapping[] eleventhMappings;
+
+        [SerializeField]
+        private LineMapping[] twelfthMappings;
+
+        [SerializeField]
+        private LineMapping[] thirteenthMappings;
+
+        [SerializeField]
         private GameObject dialogPanel;
 
         private Action finished;
@@ -156,6 +171,46 @@ namespace MVC
             mappings = eighthMappings;
             finished = onFinished;
             modelText = "1-Scene-11.txt";
+            base.StartDialogue();
+        }
+
+        public void StartNinethDialogue(Action onFinished)
+        {
+            mappings = ninethMappings;
+            finished = onFinished;
+            modelText = "1-Scene-12.txt";
+            base.StartDialogue();
+        }
+
+        public void StartTenthDialogue(Action onFinished)
+        {
+            mappings = tenthMappings;
+            finished = onFinished;
+            modelText = "1-Scene-13.txt";
+            base.StartDialogue();
+        }
+
+        public void StartEleventhDialogue(Action onFinished)
+        {
+            mappings = eleventhMappings;
+            finished = onFinished;
+            modelText = "1-Scene-14.txt";
+            base.StartDialogue();
+        }
+
+        public void StartTwelfthDialogue(Action onFinished)
+        {
+            mappings = twelfthMappings;
+            finished = onFinished;
+            modelText = "1-Scene-15.txt";
+            base.StartDialogue();
+        }
+
+        public void StartThirteenthDialogue(Action onFinished)
+        {
+            mappings = thirteenthMappings;
+            finished = onFinished;
+            modelText = "1-Scene-16.txt";
             base.StartDialogue();
         }
         protected override IEnumerator TypeLines()

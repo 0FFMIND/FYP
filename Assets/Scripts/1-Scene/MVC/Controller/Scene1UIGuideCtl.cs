@@ -27,6 +27,7 @@ namespace MVC
         [SerializeField]
         private GameObject guideRoot;
 
+        private bool _idx1Hooked = false;
         private void Awake()
         {
             if (panelRoot)
@@ -100,33 +101,6 @@ namespace MVC
                 var p = _steps[i]?.panel;
                 if (p)
                     p.gameObject.SetActive(active && i == idx);
-            }
-        }
-
-        private void Update()
-        {
-            if (_idx == 1)
-            {
-                // 递归找到名为 "JournalTitle_exploreRooftop" 的 Transform
-                Transform target = null;
-                foreach (var t in guideRoot.GetComponentsInChildren<Transform>(true))
-                {
-                    if (t.name == "JournalTitle_exploreRooftop")
-                    {
-                        target = t;
-                        break;
-                    }
-                }
-                if (!target)
-                    return;
-
-                // 在该物体下拿一个 Toggle（自己或子物体）
-                _steps[_idx].nextToggle = target.GetComponentInChildren<Toggle>(true);
-                // 进入该步先重置状态，避免上一步遗留为 true 直接越过
-                _steps[_idx].nextToggle.onValueChanged.RemoveListener(OnToggleChanged);
-                _steps[_idx].nextToggle.isOn = false;
-                _steps[_idx].nextToggle.onValueChanged.AddListener(OnToggleChanged);
-                _steps[_idx].nextToggle.interactable = true;
             }
         }
 

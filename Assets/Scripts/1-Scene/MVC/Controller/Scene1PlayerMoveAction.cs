@@ -19,6 +19,10 @@ namespace MVC
         [SerializeField]
         private CameraFollow cameraFollow;
 
+        public void pan()
+        {
+            cameraFollow.PanTo(new Vector2(0f, 0f), 2f);
+        }
         public void CameraZoomIn()
         {
             cameraFollow.ZoomOrthoBy(zoomInDistance, zoomInDuration);

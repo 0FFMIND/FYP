@@ -84,7 +84,6 @@ namespace MVC
                 timelineCtl.StartFifthDialogue(() =>
                 {
                     player.model.SetDisabled(false);
-                    state = Scene1State.GoToMeadow;
                 });
             }
         }
@@ -177,6 +176,14 @@ namespace MVC
             timelineCtl.StartFourthDialogue(() =>
             {
                 player.model.SetDisabled(false);
+                var it = JournalMgr.Instance?.Model?.Find("exploreRooftop");
+                if (it != null && it.status == JournalStatus.Completed)
+                {
+                    // 已完成则直接推进到 ExploreCompleted（会在该状态里播放后续动画）
+                    state = Scene1State.ExploreCompleted;
+                    EvaluateState();
+                    return;
+                }
             });
         }
 

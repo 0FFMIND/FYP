@@ -226,5 +226,33 @@
     {
         "zh": "点击日记\\n↓",
         "en": "Click Journal\\n↓"
+    },
+    {
+        "zh": "我现在感觉糟透了：",
+        "en": "I feel really bad right now:"
+    },
+    {
+        "zh": "·<color=#FFC600>草甸</color>里的铃兰种球长得怎么样了？……等等，这些草长得都差不多，我有点分不清哪棵是它了",
+        "en": "· How is the lily-of-the-valley bulb in the <color=#FFC600>meadow</color> doing? ...Wait, all these grasses look so similar—I can’t quite tell which one it is."
+    },
+    {
+        "zh": "·糟了！今天有跑操",
+        "en": "· Oh no! There’s a morning run today."
+    },
+    {
+        "zh": "·真希望这一切只是我的梦",
+        "en": "· I really hope this is all just a dream."
+    },
+    {
+        "zh": "完蛋了",
+        "en": "What?"
+    },
+    {
+        "zh": "按下ESC查看",
+        "en": "Press ESC to view"
+    },
+    {
+        "zh": "重要提醒：此游戏流程约 10 分钟，暂不支持存档/读档，请确保有完整游玩的时间",
+        "en": "Important Notice: This game takes about 10 minutes to complete and currently does not support saving/loading. Please ensure you have enough time to finish in one go"
     }
 ]
