@@ -1,11 +1,3 @@
-EventSystem：
-
-在`GameEvents`里面定义每种事件 `Event`，由一个全局静态的 `EventBus` 用 `Dictionary<Event, Delegate> table_` 把`T(Event)`映射到 `Delegate`上，订阅者用 `Subscribe<T>(callback)` 把回调加入该`table_ [T]`，发布者用 `Publish<T>(data)` 从`table_[T]`里 `Invoke(all callback and pass data)`
-
-SettingsMgr:
-
-存入SettingsData，在游戏一开始的时候调用Load()，然后通过EventBus broadcast ESettingsChanged事件，InputMgr, LocalizationMgr, AudioMgr接收，并且修改自己的private副本，方便Mgr内部访问而不用每次需要数据的时候都query SettingsMgr，之后若外部想要修改SettingsData的数据，则会发送请求给SettingsMgr，它接受请求后修改SettingsData并且Save()，Save后broadcast一次，让其他mgr的副本得到更新
-
 使用过的软件：GPTo5 Audacity(变调/调整音量) Procreate
 
 2025/5/6 - 用了DialogueModel存从文本.txt里面读到的话，中间一个方法LoadDialogue会通过LocalizationManager(用一个static存的当前语言)定位到具体路径/文本.txt
@@ -112,6 +104,14 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/11/7 - 做完chapter1了，需要修复动画waitforrealtime的问题
 
+2025/11/11 - 补完Chapter1的贴图，Chapter1等待润色，正在写Chapter2的剧本，稍微修改了一下英文翻译的问题
+
+2025/11/12 - 稍微润色了一下Chapter1的剧本，还需要继续写
+
+2025/11/19 - 把Chapter1的剧本写出来了，要写Chapter2
+
+2025/11/20 - Chapter2的大概剧情已经写出来了，Chapter1也润色完成了，稍微让文字整体变得口语化一点了
+
 Chapter1的遗留问题【不重要】：
 
 TODO: 解决对话机回调问题
@@ -132,5 +132,15 @@ Chapter1的遗留问题【重要】：
 
 玩家反馈，按键，摄像机有时候抖动不出来，切换语言时候的全屏remain了
 
-2025/11/11 - 补完Chapter1的贴图，Chapter1等待润色，正在写Chapter2的剧本，稍微修改了一下英文翻译的问题
+TODO：加入第二章后选章的时候可以加入我的STORY.md里面的内容，加入概要
+
+TODO: 我有一个想法，说话的时候可以出现多个关键词，下面出现[] [] [] [] 很多个关键词框，上面是当前对话的人物，然后丢给当前对话的人物类似辩论环节进行剧情推进
+
+TODO: 需要修复动画waitforrealtime的问题
+
+TODO: 需要在售货机cg出现完后加一个判断的bool或者是什么，然后在选关的时候如果直接从ch2开始，基础的日记，然后判断有没有这个bool，有的话那就加一个售货机的日记
+
+
+
+
 
