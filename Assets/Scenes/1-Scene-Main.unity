@@ -493,7 +493,7 @@ MonoBehaviour:
   - {fileID: 382234946, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
   guideCtl: {fileID: 1823472468}
   bg: {fileID: 1144513236}
-  cameraFollow: {fileID: 790518763}
+  cameraCtl: {fileID: 0}
   door: {fileID: 1606627499}
   flower: {fileID: 1935421851}
   stepX: 1
@@ -2610,7 +2610,7 @@ Transform:
   m_GameObject: {fileID: 419505627}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.9, y: 3.5, z: -32.00702}
+  m_LocalPosition: {x: 6.9, y: 3.72, z: -32.00702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2639,7 +2639,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 5.3
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -4192,6 +4192,9 @@ GameObject:
   - component: {fileID: 790518761}
   - component: {fileID: 790518760}
   - component: {fileID: 790518762}
+  - component: {fileID: 790518765}
+  - component: {fileID: 790518764}
+  - component: {fileID: 790518766}
   - component: {fileID: 790518763}
   m_Layer: 0
   m_Name: Main Camera
@@ -4235,7 +4238,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.3
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -4260,7 +4263,7 @@ Transform:
   m_GameObject: {fileID: 790518758}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.9, y: 3.5, z: -32.00702}
+  m_LocalPosition: {x: 6.9, y: 3.72, z: -32.00702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4310,7 +4313,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 790518758}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23c8292e8b4017f41997b354f0a6f787, type: 3}
+  m_Script: {fileID: 11500000, guid: e8ff7b8fafc50a54ebc7eaf374bc2ce2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  follow: {fileID: 790518766}
+  shake: {fileID: 790518765}
+  move: {fileID: 790518764}
+--- !u!114 &790518764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790518758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69de0f89d1dc3e94f98528f4edfc7ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   zoomCurve:
@@ -4337,10 +4355,36 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  vcam: {fileID: 880656429}
-  duration: 0.2
+  playerVCam: {fileID: 880656429}
+--- !u!114 &790518765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790518758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2db2eabf274f46747a8fa2ed689ba6a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
   magnitude: 0.1
   rotationMagnitude: 0.2
+--- !u!114 &790518766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790518758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1507f67ba3b889489e6f0079afedf56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followYOffset: -0.5
+  playerVCam: {fileID: 880656429}
 --- !u!1 &880656427
 GameObject:
   m_ObjectHideFlags: 0
@@ -4397,7 +4441,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 5.3
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -5099,7 +5143,7 @@ MonoBehaviour:
   zoomInDistance: 0.5
   zoomInDuration: 0.2
   zoomOutDuration: 0.2
-  cameraFollow: {fileID: 790518763}
+  cameraCtl: {fileID: 790518763}
 --- !u!1 &901008674
 GameObject:
   m_ObjectHideFlags: 0
@@ -7865,7 +7909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60463378978a60547b7b1c89b2b8a172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 8
+  state: 1
   director: {fileID: 899453560}
   guideCtl: {fileID: 1823472468}
   timelineCtl: {fileID: 899453562}
@@ -10157,7 +10201,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -11775,7 +11819,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 1
+  m_SpriteSortPoint: 0
 --- !u!4 &2111873691
 Transform:
   m_ObjectHideFlags: 0

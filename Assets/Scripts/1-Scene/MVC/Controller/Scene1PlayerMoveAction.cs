@@ -1,6 +1,4 @@
 using Manager;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MVC
@@ -17,26 +15,26 @@ namespace MVC
         private float zoomOutDuration;
 
         [SerializeField]
-        private CameraFollow cameraFollow;
+        private CameraCtl cameraCtl;
 
         public void pan()
         {
-            cameraFollow.PanTo(new Vector2(0f, 0f), 2f);
+            cameraCtl.PanTo(new Vector2(0f, 0f), 2f);
         }
         public void CameraZoomIn()
         {
-            cameraFollow.ZoomOrthoBy(zoomInDistance, zoomInDuration);
+            cameraCtl.ZoomOrthoBy(zoomInDistance, zoomInDuration);
         }
 
         public void CameraZoomOut()
         {
-            cameraFollow.ZoomOrtho(5.0f, zoomOutDuration);
+            cameraCtl.ZoomOrtho(5.3f, zoomOutDuration);
         }
 
         public void CameraShake()
         {
             AudioManager.Instance.PlaySFX("Punch");
-            cameraFollow.StartShaking();
+            cameraCtl.Shake();
         }
     }
 }

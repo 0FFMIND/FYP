@@ -38,7 +38,7 @@ namespace MVC
         private ParallaxBG bg;
 
         [SerializeField]
-        private CameraFollow cameraFollow;
+        private CameraCtl cameraCtl;
 
         [SerializeField]
         private GameObject door;
@@ -232,7 +232,7 @@ namespace MVC
         public IEnumerator PlayerEighthMove()
         {
             EventBus.Publish(new EJournalStepChanged("endRooftop", 2, StepState.Done));
-            cameraFollow.PanToY(-3f, 3f);
+            cameraCtl.PanToY(-3f, 3f);
             yield return new WaitForSecondsRealtime(2f);
             dialogSideCtl.StartEleventhDialogue(() =>
             {
@@ -242,12 +242,12 @@ namespace MVC
         public IEnumerator PlayerNinethMove()
         {
             AudioManager.Instance.PlaySFX("keyTurning");
-            cameraFollow.PanToY(3f, 1f);
+            cameraCtl.PanToY(3f, 1f);
             yield return new WaitForSecondsRealtime(1f);
             bg.isOn = false;
             dialogCtl.StartTwelfthDialogue(() =>
             {
-                cameraFollow.ReattachToPlayer();
+                cameraCtl.FollowPlayer();
                 StartCoroutine(PlayerTenthMove());
                 bg.isOn = true;
             });
@@ -257,7 +257,7 @@ namespace MVC
             flower.SetActive(false);
             door.SetActive(false);
             mover.SetFace(Direction.Down);
-            cameraFollow.ZoomOrthoBy(0.7f, 0.2f);
+            cameraCtl.ZoomOrthoBy(0.7f, 0.2f);
             yield return new WaitForSecondsRealtime(0.5f);
             var target = new Vector3(mover.transform.position.x, 0.4f, mover.transform.position.z);
             mover.StartMove(target, 6f, Direction.Down, null);

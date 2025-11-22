@@ -44,7 +44,7 @@ namespace MVC
         public Dictionary<InputAction, KeyCode> keyBindings = new()
         {
             { InputAction.DialogueClick, KeyCode.Return },
-            { InputAction.PlayerSprint, KeyCode.RightShift },
+            { InputAction.PlayerSprint, KeyCode.LeftShift },
             { InputAction.PauseGame, KeyCode.Escape },
         };
         public InventorySaveData inventoryData = new InventorySaveData { capacity = 99 };

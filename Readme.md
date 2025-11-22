@@ -112,6 +112,8 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/11/20 - Chapter2的大概剧情已经写出来了，Chapter1也润色完成了，稍微让文字整体变得口语化一点了
 
+2025/11/21 - 修改玩家的反馈，把默认加速方式设为了leftShift，并且着重修改了camera Follow的代码，https://github.com/0FFMIND/FYP/blob/b62b6f0ae290ae1485936e34290d329c17c81c6b/Assets/Scripts/1-Scene/MVC/Controller/CameraFollow.cs，以前是camera Follow是一个上帝类，什么都要做，因为当时midterm比较匆忙，只考虑了游戏正常运行，现在修改为一个cameraCtl，把follow, move, shake单独分为一个脚本，ctl作为中心控制器，提供对外的API，而具体行为通过委托调用脚本
+
 Chapter1的遗留问题【不重要】：
 
 TODO: 解决对话机回调问题
