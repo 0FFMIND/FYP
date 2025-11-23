@@ -112,9 +112,19 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/11/20 - Chapter2的大概剧情已经写出来了，Chapter1也润色完成了，稍微让文字整体变得口语化一点了
 
-2025/11/21 - 修改玩家的反馈，把默认加速方式设为了leftShift，并且着重修改了camera Follow的代码，https://github.com/0FFMIND/FYP/blob/b62b6f0ae290ae1485936e34290d329c17c81c6b/Assets/Scripts/1-Scene/MVC/Controller/CameraFollow.cs，以前是camera Follow是一个上帝类，什么都要做，因为当时midterm比较匆忙，只考虑了游戏正常运行，现在修改为一个cameraCtl，把follow, move, shake单独分为一个脚本，ctl作为中心控制器，提供对外的API，而具体行为通过委托调用脚本
+2025/11/21 - 修改玩家的反馈，把默认加速方式设为了leftShift，并且着重修改了camera Follow的代码，https://github.com/0FFMIND/FYP/blob/b62b6f0ae290ae1485936e34290d329c17c81c6b/Assets/Scripts/1-Scene/MVC/Controller/CameraFollow.cs，以前是camera Follow是一个上帝类，什么都要做，因为当时midterm比较匆忙，只考虑了游戏正常运行，现在修改为一个cameraCtl，把follow, move, shake单独分为一个脚本，ctl作为中心控制器，提供对外的API，而具体行为通过委托调用脚本https://github.com/0FFMIND/FYP/tree/0f278d7624d96c501d05603fecb5fb476dd03f5e/Assets/Scripts/1-Scene/MVC/Controller/Camera
 
-Chapter1的遗留问题【不重要】：
+2025/11/22 - 修复了开头switch language的时候窗口分辨率txt没有switch的问题（key少了初始占位值），摄像机有时候抖动不出来，不知道是什么原因，把在Update的抖动偏移量换到LateUpdate里面了，可能是相机在Update里面有其他行为覆盖了
+
+2025/11/23 - 重构代码，https://github.com/0FFMIND/FYP/blob/main/Assets/Scripts/1-Scene/MVC/Controller/Scene1ArrivalCtl.cs，这里的问题是
+
+TODO: 在meadow结束后播放铃声结束的时候会卡住，之前也是有遗留的这个问题
+
+TODO: meadow结束后的panTo位置不对了
+
+TODO: 需要加一个AI commit的可以显示diff
+
+Chapter1的遗留问题【不重要】
 
 TODO: 解决对话机回调问题
 
@@ -132,7 +142,7 @@ TODO: Scene1ArrivalCtl其实更好用StateMachine做，现在大型SwitchCase有
 
 Chapter1的遗留问题【重要】：
 
-玩家反馈，按键，摄像机有时候抖动不出来，切换语言时候的全屏remain了
+玩家反馈，
 
 TODO：加入第二章后选章的时候可以加入我的STORY.md里面的内容，加入概要
 
@@ -142,7 +152,19 @@ TODO: 需要修复动画waitforrealtime的问题
 
 TODO: 需要在售货机cg出现完后加一个判断的bool或者是什么，然后在选关的时候如果直接从ch2开始，基础的日记，然后判断有没有这个bool，有的话那就加一个售货机的日记
 
+要做什么？
 
+勾取 ->
+
+你将硬币成功地勾近了一点
+
+你发力过猛，硬币从指尖弹开，滚向了远处
+
+成功了！
+
+你小心地将硬币勾到最近处，再稳稳捡起
+
+离开
 
 
 

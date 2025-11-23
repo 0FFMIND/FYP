@@ -23,7 +23,7 @@ namespace MVC
                 EventBus.Publish(new EJournalStatusChanged("exploreRooftop", JournalStatus.Active));
             }
             // ´¥·¢guide
-            EventBus.Publish(new EScene1ArrivalStateChange(Scene1State.MenuTutorial));
+            EventBus.Publish(new EScene1ArrivalPhaseChange(Scene1Phase.MenuTutorial));
             ctl?.Done();
         }
 

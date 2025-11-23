@@ -46,11 +46,21 @@ namespace MVC
         [SerializeField]
         private GameObject flower;
 
-        [SerializeField] private float stepX = 0.40f;      // 每次移动的步长（世界坐标X）
-        [SerializeField] private float stepTime = 0.25f;   // 每步移动所用时长（秒）
-        [SerializeField] private float leftX = -12f;      // 最左X
-        [SerializeField] private float rightX = -7f;       // 最右X
-        [SerializeField] private float finalX = -10.69f;   // 最终停在这里
+        [SerializeField]
+        private float stepX = 0.40f; // 每次移动的步长（世界坐标X）
+
+        [SerializeField]
+        private float stepTime = 0.25f; // 每步移动所用时长（秒）
+
+        [SerializeField]
+        private float leftX = -12f; // 最左X
+
+        [SerializeField]
+        private float rightX = -7f; // 最右X
+
+        [SerializeField]
+        private float finalX = -10.69f; // 最终停在这里
+
         private void Start()
         {
             mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScriptMoveCtl>();
@@ -128,7 +138,7 @@ namespace MVC
             // 停止Timeline过场动画
             director.Stop();
             // 改变当前scene1状态机状态
-            EventBus.Publish(new EScene1ArrivalStateChange(Scene1State.GoToBoard));
+            EventBus.Publish(new EScene1ArrivalPhaseChange(Scene1Phase.SignTutorial));
         }
 
         public IEnumerator PlayerThirdMove()
@@ -152,16 +162,38 @@ namespace MVC
             dialogCtl.StartThirdDialogue(PlayerThirdMoveEnd);
         }
 
+        private void PlayerThirdMoveEnd()
+        {
+            if (guideCtl != null)
+            {
+                guideCtl.StartDialogue(
+                    "1-Scene-6.txt",
+                    () =>
+                    {
+                        // 改变当前scene1状态机状态
+                        EventBus.Publish(
+                            new EScene1ArrivalPhaseChange(Scene1Phase.AwaitMenuToggle)
+                        );
+                        PauseMgr.Instance.SetShowGuide(true);
+                    }
+                );
+            }
+        }
+
         public IEnumerator PlayerFourthMove()
         {
             yield return new WaitForSecondsRealtime(0.5f);
             yield return mover.Jump(0.2f, 0.6f);
             yield return new WaitForSecondsRealtime(0.5f);
             bg.isOn = false;
-            dialogCtl.StartSixthDialogue(() => {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtl>().model.SetDisabled(false);
+            dialogCtl.StartSixthDialogue(() =>
+            {
+                GameObject
+                    .FindGameObjectWithTag("Player")
+                    .GetComponent<PlayerCtl>()
+                    .model.SetDisabled(false);
                 EventBus.Publish(new EJournalStatusChanged("endRooftop", JournalStatus.Active));
-                EventBus.Publish(new EScene1ArrivalStateChange(Scene1State.GoToMeadow));
+                EventBus.Publish(new EScene1ArrivalPhaseChange(Scene1Phase.MeadowExplore));
                 bg.isOn = true;
             });
         }
@@ -180,6 +212,7 @@ namespace MVC
                 StartCoroutine(PlayerSixthMove());
             });
         }
+
         public IEnumerator PlayerSixthMove()
         {
             var t = mover.transform;
@@ -194,7 +227,11 @@ namespace MVC
             // 2) 再向左到最左
             yield return StepMoveToX(leftX, true);
 
-            var target = new Vector3(mover.transform.position.x + stepX, mover.transform.position.y, mover.transform.position.z);
+            var target = new Vector3(
+                mover.transform.position.x + stepX,
+                mover.transform.position.y,
+                mover.transform.position.z
+            );
             mover.StartMove(target, 2.3f, Direction.Right, null);
             yield return new WaitForSecondsRealtime(0.5f);
             mover.SetFace(Direction.Up);
@@ -229,6 +266,7 @@ namespace MVC
                 StartCoroutine(PlayerEighthMove());
             });
         }
+
         public IEnumerator PlayerEighthMove()
         {
             EventBus.Publish(new EJournalStepChanged("endRooftop", 2, StepState.Done));
@@ -239,6 +277,7 @@ namespace MVC
                 StartCoroutine(PlayerNinethMove());
             });
         }
+
         public IEnumerator PlayerNinethMove()
         {
             AudioManager.Instance.PlaySFX("keyTurning");
@@ -252,6 +291,7 @@ namespace MVC
                 bg.isOn = true;
             });
         }
+
         public IEnumerator PlayerTenthMove()
         {
             flower.SetActive(false);
@@ -291,14 +331,19 @@ namespace MVC
             });
         }
 
-
         // 按固定步长把玩家在水平线上推进到 targetX；自动设置朝向并等待每步动画完成
         private IEnumerator StepMoveToX(float targetX, bool isLeft)
         {
             var current = mover.transform.position.x;
-            while(Mathf.Abs(targetX - current) > stepX)
+            while (Mathf.Abs(targetX - current) > stepX)
             {
-                var target = new Vector3(isLeft ? mover.transform.position.x - stepX : mover.transform.position.x + stepX, mover.transform.position.y, mover.transform.position.z);
+                var target = new Vector3(
+                    isLeft
+                        ? mover.transform.position.x - stepX
+                        : mover.transform.position.x + stepX,
+                    mover.transform.position.y,
+                    mover.transform.position.z
+                );
                 mover.StartMove(target, 2.3f, isLeft ? Direction.Left : Direction.Right, null);
                 yield return new WaitForSecondsRealtime(0.5f);
                 mover.SetFace(Direction.Up);
@@ -306,33 +351,16 @@ namespace MVC
                 AudioManager.Instance.PlaySFX("warning");
                 emoteCtl.Play(EmoteType.Error, 0.6f, true);
                 yield return new WaitForSecondsRealtime(1f);
-                
+
                 current = mover.transform.position.x;
             }
         }
+
         public void MoveBack(float y, float time)
         {
             Vector3 pos = mover.gameObject.transform.position;
             pos.y -= y;
             mover.StartMove(pos, time, Direction.Up, null);
-        }
-
-        private void PlayerThirdMoveEnd()
-        {
-            if (guideCtl != null)
-            {
-                guideCtl.StartDialogue(
-                    "1-Scene-6.txt",
-                    () =>
-                    {
-                        // 改变当前scene1状态机状态
-                        EventBus.Publish(
-                            new EScene1ArrivalStateChange(Scene1State.AwaitMenuToggle)
-                        );
-                        PauseMgr.Instance.SetShowGuide(true);
-                    }
-                );
-            }
         }
 
         private void ResumeDirector()

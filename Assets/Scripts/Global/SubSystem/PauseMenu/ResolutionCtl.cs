@@ -79,8 +79,8 @@ namespace MVC
             _resList.Sort(
                 (a, b) =>
                 {
-                    int cmp = a.x.CompareTo(b.x);
-                    return cmp != 0 ? cmp : a.y.CompareTo(b.y);
+                    int cmp = -a.x.CompareTo(b.x);
+                    return cmp != 0 ? cmp : -a.y.CompareTo(b.y);
                 }
             );
         }

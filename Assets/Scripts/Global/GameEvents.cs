@@ -56,11 +56,11 @@ namespace Utils
         }
     }
 
-    public readonly struct EScene1ArrivalStateChange
+    public readonly struct EScene1ArrivalPhaseChange
     {
-        public readonly Scene1State State;
+        public readonly Scene1Phase Phase;
 
-        public EScene1ArrivalStateChange(Scene1State state) => State = state;
+        public EScene1ArrivalPhaseChange(Scene1Phase phase) => Phase = phase;
     }
 
     public readonly struct EInteract

@@ -20,7 +20,7 @@ public class CameraShake : MonoBehaviour
         originalRotation = transform.localRotation;
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (!isShaking)
         {
