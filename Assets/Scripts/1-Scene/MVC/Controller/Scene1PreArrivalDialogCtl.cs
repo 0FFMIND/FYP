@@ -30,7 +30,7 @@ namespace MVC
 
         protected override IEnumerator TypeLines()
         {
-            arrow.gameObject.SetActive(false);
+            arrowIndicator.Hide();
 
             // 如果是第一句
             if (index == 0)
@@ -51,12 +51,12 @@ namespace MVC
 
         public void ArrowRed()
         {
-            arrow.GetComponent<SpriteRenderer>().color = Color.red;
+            arrowIndicator.SetColor(Color.red);
         }
 
         protected override void NextLine()
         {
-            arrow.GetComponent<SpriteRenderer>().color = Color.white;
+            arrowIndicator.SetColor(Color.white);
             // 如果读完
             if (index == dialogueModel.Lines.Length)
             {

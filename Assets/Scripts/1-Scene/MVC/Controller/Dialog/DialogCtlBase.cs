@@ -6,13 +6,6 @@ using Utils;
 
 namespace MVC
 {
-    public enum Eact
-    {
-        none,
-        playBGM,
-        arrowRed,
-    }
-
     [System.Serializable]
     public struct LineMapping
     {
@@ -29,19 +22,6 @@ namespace MVC
     public abstract class DialogCtlBase : MonoBehaviour
     {
         protected bool _isEntering;
-
-        [Header("翻页箭头位移")]
-        [SerializeField]
-        protected float arrowOffset = 0.4f; // 首次定位的像素偏移
-
-        [SerializeField]
-        protected int downFrames = 100; // 向下移动时等待帧数
-
-        [SerializeField]
-        protected float downDistance = 0.07f; // 向下移动的世界/本地单位
-
-        [SerializeField]
-        protected int upFrames = 100; // 向上移动时等待帧数
 
         [Header("ScriptableObject 对话资源")]
         [SerializeField]
@@ -64,21 +44,32 @@ namespace MVC
         [SerializeField]
         protected DialogueView dialogueView;
 
-        protected Transform arrow;
         protected int index;
         protected DialogueModel dialogueModel;
         protected Sprite currentSprite;
         protected Coroutine typingCoroutine;
+        protected ArrowIndicator arrowIndicator;
+
         private float typeSpeed;
         private LanguageCode languageCode;
-        private Coroutine arrowBounceCoroutine;
+
+        // 打字进度
         private int typingTotal;
         private float revealProgress;
 
+        protected virtual void Awake()
+        {
+            // 获取箭头指示器
+            arrowIndicator = GetComponent<ArrowIndicator>();
+            if (arrowIndicator == null)
+                // 若不存在则添加
+                arrowIndicator = gameObject.AddComponent<ArrowIndicator>();
+        }
+
         public virtual void StartDialogue()
         {
-            // 创建down arrow
-            CreateArrow();
+            arrowIndicator.EnsureCreated(this.transform);
+
             if (modelText != null && modelText.Length > 0)
             {
                 // 载入对话
@@ -89,27 +80,6 @@ namespace MVC
             // 刷新index
             index = 0;
             NextLine();
-        }
-
-        private void CreateArrow()
-        {
-            if (arrow != null)
-            {
-                return;
-            }
-            var prefab = Resources.Load<GameObject>("Prefabs/1-Scene/DownRow");
-            if (!prefab)
-            {
-                Debug.LogError($"[DialogCtlBase] Resources.Load 失败");
-                return;
-            }
-
-            // 实例化并挂到dialog上
-            var go = Instantiate(prefab, transform);
-
-            // 记录 Transform
-            arrow = go.transform;
-            arrow.gameObject.SetActive(false);
         }
 
         // 基类提供统一渲染方法，子类可直接调用
@@ -144,11 +114,10 @@ namespace MVC
             revealProgress = 1f;
             // 直接拉满可见字符，避免依赖 textInfo 的计数时机
             tmp.maxVisibleCharacters = int.MaxValue;
-
-            // 可选：如果你需要用到 characterCount，再强制刷新一次
+            // 强制刷新
             tmp.ForceMeshUpdate();
-
-            PositionArrowUnderText();
+            // 显示箭头
+            arrowIndicator.PositionArrowUnderText(dialogueView.tmp);
         }
 
         protected virtual IEnumerator TypeLines()
@@ -215,7 +184,7 @@ namespace MVC
             }
 
             // 完成后显示箭头
-            PositionArrowUnderText();
+            arrowIndicator.PositionArrowUnderText(dialogueView.tmp);
             typingCoroutine = null;
             revealProgress = 1f;
         }
@@ -237,15 +206,15 @@ namespace MVC
                     RevealAllNow();
                     revealProgress = 1f;
                     // 开启小箭头
-                    PositionArrowUnderText();
+                    arrowIndicator.PositionArrowUnderText(dialogueView.tmp);
                 }
                 else
                 {
                     // 结束的时候清空
                     RenderViews(null, null);
                     // 关掉小箭头
-                    arrow.gameObject.SetActive(false);
-                    arrow.GetComponent<SpriteRenderer>().color = Color.white;
+                    arrowIndicator.Hide();
+                    arrowIndicator.SetColor(Color.white);
                 }
             }
             else
@@ -259,61 +228,7 @@ namespace MVC
         // 由子类实现：推进到下一行
         protected abstract void NextLine();
 
-        private void PositionArrowUnderText()
-        {
-            dialogueView.tmp.ForceMeshUpdate();
-            Bounds b = dialogueView.tmp.textBounds;
-            Vector3 localBotCenter = new Vector3(b.center.x, b.min.y, 0);
-            Vector3 worldBotCenter = dialogueView.tmp.transform.TransformPoint(localBotCenter);
-            Vector3 downOffset = Vector3.down * arrowOffset;
-            arrow.position = new Vector3(
-                worldBotCenter.x,
-                worldBotCenter.y + downOffset.y,
-                arrow.position.z
-            );
-            // 显示，并向下偏移
-            arrow.gameObject.SetActive(true);
-            // 启动抖动
-            if (arrowBounceCoroutine != null)
-            {
-                StopCoroutine(arrowBounceCoroutine);
-            }
-            arrowBounceCoroutine = StartCoroutine(ArrowBounce());
-        }
 
-        private IEnumerator ArrowBounce()
-        {
-            // 记录原始位置
-            Vector3 original = arrow.position;
-            Vector3 target = original + Vector3.down * downDistance;
-            while (true)
-            {
-                // 平滑下移
-                for (int i = 0; i <= downFrames; i++)
-                {
-                    float t = i / (float)downFrames; // 从 0 到 1
-                    arrow.position = Vector3.Lerp(original, target, t);
-                    yield return null;
-                }
-                // 平滑上移
-                for (int i = 0; i <= upFrames; i++)
-                {
-                    float t = i / (float)upFrames;
-                    arrow.position = Vector3.Lerp(target, original, t);
-                    yield return null;
-                }
-            }
-        }
-
-        protected virtual void OnEnable()
-        {
-            EventBus.Subscribe<EInputPressed, InputAction>(
-                InputAction.DialogueClick,
-                OnDialogueClick
-            );
-            EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged);
-            EventBus.Subscribe<ELanguageChanged>(OnLanguageChanged);
-        }
 
         private void OnLanguageChanged(ELanguageChanged e)
         {
@@ -350,9 +265,9 @@ namespace MVC
                             // 同步内部进度
                             revealProgress = prevProgress;
                             // 重新定位箭头
-                            if (arrow.gameObject.activeSelf)
+                            if (arrowIndicator.gameObject.activeSelf)
                             {
-                                PositionArrowUnderText();
+                                arrowIndicator.PositionArrowUnderText(tmp);
                             }
                         }
                     }
@@ -360,11 +275,24 @@ namespace MVC
             }
         }
 
+        // 订阅输入与设置变更事件
+        protected virtual void OnEnable()
+        {
+            EventBus.Subscribe<EInputPressed, InputAction>(
+                InputAction.DialogueClick,
+                OnDialogueClick
+            );
+            EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged);
+            EventBus.Subscribe<ELanguageChanged>(OnLanguageChanged);
+        }
+
+        // 设置打字速度
         private void OnSettingsChanged(ESettingsChanged e)
         {
             typeSpeed = e.Settings.typeSpeed;
         }
 
+        // 取消订阅事件
         protected virtual void OnDisable()
         {
             EventBus.Unsubscribe<ESettingsChanged>(OnSettingsChanged);

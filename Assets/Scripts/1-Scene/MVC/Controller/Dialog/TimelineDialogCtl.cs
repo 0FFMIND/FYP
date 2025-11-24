@@ -215,19 +215,17 @@ namespace MVC
         }
         protected override IEnumerator TypeLines()
         {
-            arrow.gameObject.SetActive(false);
+            arrowIndicator.Hide();
             if (enlargeArrow)
             {
                 enlargeArrow = false;
-                Vector3 scale = arrow.gameObject.transform.localScale;
-                scale *= 100f;
-                arrow.gameObject.transform.localScale = scale;
+                arrowIndicator.SetArrowScale(100f);
             }
             // 如果是第一句
             if (index == 0)
             {
                 _isEntering = true;
-                arrow.gameObject.SetActive(false);
+                arrowIndicator.Hide();
                 RenderViews(currentSprite, null);
                 bool donePanel = false,
                     doneBG = false;
@@ -270,7 +268,7 @@ namespace MVC
             // 清空文本
             dialogueView.tmp.text = "";
             // 关掉向下小箭头
-            arrow.gameObject.SetActive(false);
+            arrowIndicator.Hide();
             // 并行把“对话框 & 背景”做 CodeTween 退场，等两者都结束
             bool donePanel = false,
                 doneBG = false;
@@ -301,7 +299,7 @@ namespace MVC
             // 清空文本
             dialogueView.tmp.text = "";
             // 关掉向下小箭头
-            arrow.gameObject.SetActive(false);
+            arrowIndicator.Hide();
             // 并行把“对话框 & 背景”做 CodeTween 退场，等两者都结束
             bool donePanel = false,
                 doneBG = false;
@@ -351,7 +349,7 @@ namespace MVC
 
         protected override void NextLine()
         {
-            arrow.GetComponent<SpriteRenderer>().color = Color.white;
+            arrowIndicator.SetColor(Color.white);
             // 若正在等选项，直接忽略一切推进输入
             if (_waitingChoice)
             {
