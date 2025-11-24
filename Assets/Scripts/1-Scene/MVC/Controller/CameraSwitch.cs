@@ -7,22 +7,22 @@ using UnityEngine;
 public class CameraSwitch : MonoBehaviour
 {
     [Header("Cameras")]
-    public Camera worldCam; // Ö÷Ïà»ú£¨¹Ò×Å CinemachineBrain£©
-    public Camera uiCam; // ×¨ÃÅäÖÈ¾ UI µÄÏà»ú£¨²»¹Ò Brain£©
+    public Camera worldCam; // ä¸»ç›¸æœºï¼ˆæŒ‚ç€ CinemachineBrainï¼‰
+    public Camera uiCam; // ä¸“é—¨æ¸²æŸ“ UI çš„ç›¸æœºï¼ˆä¸æŒ‚ Brainï¼‰
 
     public Canvas uiCanvas;
 
     [Header("Options")]
-    // ½øÈëUIÊ±ÊÇ·ñÔİÍ£Brain£¬±ÜÃâ»úÎ»¶¶¶¯/Blend
+    // è¿›å…¥UIæ—¶æ˜¯å¦æš‚åœBrainï¼Œé¿å…æœºä½æŠ–åŠ¨/Blend
     public bool freezeBrainOnUI = true;
 
-    // ÔİÍ£Ç°°ÑÄ¬ÈÏ¹ı¶É¸Ä³É Cut£¨ÍË³öÊ±»¹Ô­£©
+    // æš‚åœå‰æŠŠé»˜è®¤è¿‡æ¸¡æ”¹æˆ Cutï¼ˆé€€å‡ºæ—¶è¿˜åŸï¼‰
     public bool useCutBlendWhenFreeze = true;
 
     [Header("Fade Options")]
-    public bool useFade = true; // ÊÇ·ñÔÚÇĞ»»Ê±µ­Èëµ­³ö
-    public float fadeOutDuration = 0.5f; // ½øÈëÇĞ»»Ç°£º0¡ú1£¨±äºÚ£©
-    public float fadeInDuration = 0.5f; // ÇĞ»»Íê³Éºó£º1¡ú0£¨»Ö¸´»­Ãæ£©
+    public bool useFade = true; // æ˜¯å¦åœ¨åˆ‡æ¢æ—¶æ·¡å…¥æ·¡å‡º
+    public float fadeOutDuration = 0.5f; // è¿›å…¥åˆ‡æ¢å‰ï¼š0â†’1ï¼ˆå˜é»‘ï¼‰
+    public float fadeInDuration = 0.5f; // åˆ‡æ¢å®Œæˆåï¼š1â†’0ï¼ˆæ¢å¤ç”»é¢ï¼‰
 
     private CinemachineBrain _brain;
     private CinemachineBlendDefinition _prevBlend;
@@ -30,35 +30,35 @@ public class CameraSwitch : MonoBehaviour
 
     void Start()
     {
-        // ÈôÎ´ÊÖ¶¯Ö¸¶¨Ö÷Ïà»ú£¬»ØÍËµ½³¡¾°ÖĞµÄ Camera.main
+        // è‹¥æœªæ‰‹åŠ¨æŒ‡å®šä¸»ç›¸æœºï¼Œå›é€€åˆ°åœºæ™¯ä¸­çš„ Camera.main
         if (!worldCam)
         {
             worldCam = Camera.main;
         }
 
-        // ÄÃ Brain ²¢±£´æÄ¬ÈÏ¹ı¶É
+        // æ‹¿ Brain å¹¶ä¿å­˜é»˜è®¤è¿‡æ¸¡
         _brain = worldCam ? worldCam.GetComponent<CinemachineBrain>() : null;
         if (_brain != null)
             _prevBlend = _brain.m_DefaultBlend;
 
-        // °Ñ UI Ïà»úµşÔÚÖ÷Ïà»úÖ®ÉÏ
+        // æŠŠ UI ç›¸æœºå åœ¨ä¸»ç›¸æœºä¹‹ä¸Š
         if (uiCam)
         {
-            uiCam.clearFlags = CameraClearFlags.Depth; // Ö»ÇåÉî¶È
-            uiCam.depth = (worldCam ? worldCam.depth : 0f) + 1f; // äÖÈ¾Ë³Ğò¸ü¿¿ºó
+            uiCam.clearFlags = CameraClearFlags.Depth; // åªæ¸…æ·±åº¦
+            uiCam.depth = (worldCam ? worldCam.depth : 0f) + 1f; // æ¸²æŸ“é¡ºåºæ›´é å
             uiCam.stereoTargetEye = StereoTargetEyeMask.None;
-            // Ò»¿ªÊ¼ÕûÌ¨ UI Ïà»ú GameObject ¹Ø±Õ£¨º¬Æä×Ó²ãµÄ Canvas Ò»²¢¹Ø±Õ£©
+            // ä¸€å¼€å§‹æ•´å° UI ç›¸æœº GameObject å…³é—­ï¼ˆå«å…¶å­å±‚çš„ Canvas ä¸€å¹¶å…³é—­ï¼‰
             uiCam.gameObject.SetActive(false);
         }
 
-        // Screen Space - Camera °ó¶¨ UI Ïà»ú
+        // Screen Space - Camera ç»‘å®š UI ç›¸æœº
         if (uiCanvas && uiCanvas.renderMode == RenderMode.ScreenSpaceCamera)
             uiCanvas.worldCamera = uiCam;
         if (uiCanvas)
-            uiCanvas.enabled = false; // ³õÊ¼¹Ø±Õ
+            uiCanvas.enabled = false; // åˆå§‹å…³é—­
     }
 
-    /// <summary>½øÈë UI£¨´ø¿ÉÑ¡µ­Èëµ­³ö£©¡£</summary>
+    /// <summary>è¿›å…¥ UIï¼ˆå¸¦å¯é€‰æ·¡å…¥æ·¡å‡ºï¼‰ã€‚</summary>
     public void EnterUI(Action onCompleted)
     {
         if (_switchCo != null)
@@ -68,7 +68,7 @@ public class CameraSwitch : MonoBehaviour
         _switchCo = StartCoroutine(Co_EnterUI(onCompleted));
     }
 
-    /// <summary>ÍË³ö UI£¨´ø¿ÉÑ¡µ­Èëµ­³ö£©¡£</summary>
+    /// <summary>é€€å‡º UIï¼ˆå¸¦å¯é€‰æ·¡å…¥æ·¡å‡ºï¼‰ã€‚</summary>
     public void ExitUI(Action onCompleted = null)
     {
         if (_switchCo != null)
@@ -78,11 +78,11 @@ public class CameraSwitch : MonoBehaviour
 
     private IEnumerator Co_EnterUI(Action onCompleted)
     {
-        // 1) ÏÈµ­µ½ºÚ
+        // 1) å…ˆæ·¡åˆ°é»‘
         if (useFade && TransitionMgr.Instance != null)
             yield return TransitionMgr.Instance.FadeOut(fadeOutDuration);
 
-        // ´ò¿ªÕûÌ× UI£¨°üº¬Ïà»ú GameObject£©
+        // æ‰“å¼€æ•´å¥— UIï¼ˆåŒ…å«ç›¸æœº GameObjectï¼‰
         SetUIActive(true);
 
         if (freezeBrainOnUI && _brain)
@@ -92,7 +92,7 @@ public class CameraSwitch : MonoBehaviour
                     CinemachineBlendDefinition.Style.Cut,
                     0f
                 );
-            _brain.enabled = false; // ¶³½á»úÎ»¸üĞÂ
+            _brain.enabled = false; // å†»ç»“æœºä½æ›´æ–°
         }
         onCompleted?.Invoke();
 
@@ -117,26 +117,26 @@ public class CameraSwitch : MonoBehaviour
         if (useFade && TransitionMgr.Instance != null)
             yield return TransitionMgr.Instance.FadeIn(fadeInDuration);
 
-        // ÕâÀï²ÅÊÇ¡°ÍË³öÍê³É¡±µÄÊ±»ú
+        // è¿™é‡Œæ‰æ˜¯â€œé€€å‡ºå®Œæˆâ€çš„æ—¶æœº
         onCompleted?.Invoke();
 
         _switchCo = null;
         yield return null;
     }
 
-    /// <summary>Í³Ò»¿ª¹Ø UI£ºÏà»ú GameObject¡¢Camera ×é¼ş¡¢Canvas Ò»²¢´¦Àí¡£</summary>
+    /// <summary>ç»Ÿä¸€å¼€å…³ UIï¼šç›¸æœº GameObjectã€Camera ç»„ä»¶ã€Canvas ä¸€å¹¶å¤„ç†ã€‚</summary>
     private void SetUIActive(bool on)
     {
         if (uiCam)
         {
-            // ÏÈÇĞ GameObject ¼¤»îÌ¬£¬ÔÙÍ¬²½×é¼ş¿ª¹Ø
+            // å…ˆåˆ‡ GameObject æ¿€æ´»æ€ï¼Œå†åŒæ­¥ç»„ä»¶å¼€å…³
             uiCam.gameObject.SetActive(on);
             uiCam.enabled = on;
         }
         if (uiCanvas)
         {
             uiCanvas.enabled = on;
-            // ÈôÄãµÄ UI »¹ÓĞ CanvasGroup/¿É½»»¥¿ØÖÆ£¬Ò²¿ÉÒÔÔÚÕâÀïÒ»Æğ´¦Àí
+            // è‹¥ä½ çš„ UI è¿˜æœ‰ CanvasGroup/å¯äº¤äº’æ§åˆ¶ï¼Œä¹Ÿå¯ä»¥åœ¨è¿™é‡Œä¸€èµ·å¤„ç†
             // var cg = uiCanvas.GetComponent<CanvasGroup>();
             // if (cg) { cg.blocksRaycasts = on; cg.interactable = on; }
         }

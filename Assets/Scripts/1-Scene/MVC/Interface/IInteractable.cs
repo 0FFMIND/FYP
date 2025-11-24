@@ -2,7 +2,7 @@ namespace MVC
 {
     public interface IInteractable
     {
-        bool BeginInteract(PlayerCtl player); // ·µ»Ø false ±íÊ¾¾Ü¾ø¿ªÊ¼
+        bool BeginInteract(PlayerCtl player); // è¿”å› false è¡¨ç¤ºæ‹’ç»å¼€å§‹
         void EndInteract(PlayerCtl player);
     }
 }

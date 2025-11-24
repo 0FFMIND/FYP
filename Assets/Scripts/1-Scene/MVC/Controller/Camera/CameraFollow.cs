@@ -6,11 +6,11 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField]
-    private float followYOffset = -0.5f;
+    private float followYOffset = 0.5f;
 
     [SerializeField]
     private CinemachineVirtualCamera playerVCam;
-
+    public Transform ManualAnchor => manualAnchor;
     private Transform manualAnchor;
     private Transform player;
     private CinemachineTransposer transposer;
@@ -28,7 +28,7 @@ public class CameraFollow : MonoBehaviour
         if (transposer != null)
         {
             baseFollowOffset = transposer.m_FollowOffset;
-            transposer.m_FollowOffset = baseFollowOffset + Vector3.down * followYOffset;
+            transposer.m_FollowOffset = baseFollowOffset + Vector3.up * followYOffset;
         }
 
         framingTransposer = playerVCam.GetCinemachineComponent<CinemachineFramingTransposer>();
@@ -40,19 +40,26 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
-    // È¡Ïû¸úËæÍæ¼Ò
+    // å–æ¶ˆè·Ÿéšç©å®¶
     public void DetachCamera()
     {
         if (manualAnchor == null)
         {
             manualAnchor = new GameObject("CamManualAnchor").transform;
-            manualAnchor.position = playerVCam.transform.position;
-            manualAnchor.rotation = playerVCam.transform.rotation;
         }
+        // è®¡ç®—å½“å‰æœ‰æ•ˆçš„çºµå‘ offset
+        Vector3 offset = Vector3.zero;
+        if (transposer != null) offset += transposer.m_FollowOffset;
+        if (framingTransposer != null) offset += framingTransposer.m_TrackedObjectOffset;
+
+        // è®©åˆ‡ Follow åç›¸æœºä½ç½®ä¸å˜
+        manualAnchor.position = playerVCam.transform.position - offset;
+        manualAnchor.rotation = playerVCam.transform.rotation;
+
         playerVCam.Follow = manualAnchor;
     }
 
-    // ÖØĞÂ¸úËæÍæ¼Ò
+    // é‡æ–°è·Ÿéšç©å®¶
     public void ReattachToPlayer()
     {
         if (player == null)

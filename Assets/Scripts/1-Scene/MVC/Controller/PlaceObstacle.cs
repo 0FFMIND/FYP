@@ -5,12 +5,12 @@ namespace MVC
 {
     public class PlaceObstacle : MonoBehaviour
     {
-        private SpriteRenderer top; // Ö¸ÏòÒª¡°Ñ¹×¡ÈË¡±µÄÄÇÕÅRenderer£¨ÉÏÑØ/ÕûÕÅ£©
-        private Transform player; // Ö¸ÏòÍæ¼Ò
+        private SpriteRenderer top; // æŒ‡å‘è¦â€œå‹ä½äººâ€çš„é‚£å¼ Rendererï¼ˆä¸Šæ²¿/æ•´å¼ ï¼‰
+        private Transform player; // æŒ‡å‘ç©å®¶
         private SpritesOutline outline;
-        public float xMargin = 0.1f; // ¶îÍâÈİ²î£¨ÊÀ½çµ¥Î»£©
-        public int baseOrder = 0; // ÓëÍæ¼ÒÏàÍ¬µÄ Order£¨ÈÃYÅÅĞò½Ó¹Ü£©
-        public int sideOrder = -1; // Õ¾²àÃæÊ±Ç¿ÖÆÔÚÍæ¼ÒºóÃæ
+        public float xMargin = 0.1f; // é¢å¤–å®¹å·®ï¼ˆä¸–ç•Œå•ä½ï¼‰
+        public int baseOrder = 0; // ä¸ç©å®¶ç›¸åŒçš„ Orderï¼ˆè®©Yæ’åºæ¥ç®¡ï¼‰
+        public int sideOrder = -1; // ç«™ä¾§é¢æ—¶å¼ºåˆ¶åœ¨ç©å®¶åé¢
 
         void Start()
         {

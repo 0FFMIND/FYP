@@ -8,12 +8,12 @@ namespace Manager
 {
     public class JournalMgr : SingletonMB<JournalMgr>
     {
-        // ÄÚ´æÖĞµÄÈÕ¼ÇÌõÄ¿ÁĞ±í£¨Ë³Ğò¼´Õ¹Ê¾Ë³Ğò£©
+        // å†…å­˜ä¸­çš„æ—¥è®°æ¡ç›®åˆ—è¡¨ï¼ˆé¡ºåºå³å±•ç¤ºé¡ºåºï¼‰
         public JournalModel Model { get; private set; } = new JournalModel();
 
         private void Awake()
         {
-            // ½âÎöSO²¢³õÊ¼»¯Ä£ĞÍ
+            // è§£æSOå¹¶åˆå§‹åŒ–æ¨¡å‹
             Model.LoadFromSO();
         }
 
@@ -31,15 +31,15 @@ namespace Manager
             EventBus.Unsubscribe<EJournalStatusChanged>(OnStatusChanged);
         }
 
-        // ´¦Àí¡°Ä³ÌõÈÕ¼ÇµÄÄ³¸ö Step ×´Ì¬±ä»¯¡±µÄÊÂ¼ş
+        // å¤„ç†â€œæŸæ¡æ—¥è®°çš„æŸä¸ª Step çŠ¶æ€å˜åŒ–â€çš„äº‹ä»¶
         private void OnStepChanged(EJournalStepChanged e)
         {
-            // Í¨¹ı key ÕÒµ½¶ÔÓ¦µÄ JournalItem£¨¿ÉÄÜÎª null£©
+            // é€šè¿‡ key æ‰¾åˆ°å¯¹åº”çš„ JournalItemï¼ˆå¯èƒ½ä¸º nullï¼‰
             var it = Model?.Find(e.Key);
             if (it == null)
                 return;
 
-            // ÕÒµ½ËùÓĞ Step ÔÚ contents ÀïµÄÏÂ±ê
+            // æ‰¾åˆ°æ‰€æœ‰ Step åœ¨ contents é‡Œçš„ä¸‹æ ‡
             int targetContentIdx = -1;
             if (it.contents != null)
             {
@@ -53,13 +53,13 @@ namespace Manager
 
                 targetContentIdx = stepIndices[e.Index];
 
-                // ÕÒµ½ÁË¶ÔÓ¦ÄÚÈİÎ»ÖÃ
+                // æ‰¾åˆ°äº†å¯¹åº”å†…å®¹ä½ç½®
                 if (targetContentIdx != -1)
                 {
-                    // ¡ª¡ª ×´Ì¬Î´±ä»¯ ¡ú Ö±½Ó·µ»Ø£¨±ÜÃâÎŞÎ½Ë¢ĞÂ/¼¤»î/ÂäÅÌ£©
+                    // â€”â€” çŠ¶æ€æœªå˜åŒ– â†’ ç›´æ¥è¿”å›ï¼ˆé¿å…æ— è°“åˆ·æ–°/æ¿€æ´»/è½ç›˜ï¼‰
                     if (it.contents[targetContentIdx].State == e.State)
                         return;
-                    // °Ñ¸Ã Step µÄ¿ÉÊÓ×´Ì¬¸üĞÂÎªÊÂ¼ş´«À´µÄ×´Ì¬
+                    // æŠŠè¯¥ Step çš„å¯è§†çŠ¶æ€æ›´æ–°ä¸ºäº‹ä»¶ä¼ æ¥çš„çŠ¶æ€
                     it.contents[targetContentIdx].State = e.State;
                 }
                 else
@@ -69,21 +69,21 @@ namespace Manager
                     );
                 }
             }
-            // Èç¹ûµ±Ç°ÌõÄ¿±ê¼ÇÎª Hidden
+            // å¦‚æœå½“å‰æ¡ç›®æ ‡è®°ä¸º Hidden
             if (it.status == JournalStatus.Hidden)
             {
-                // °ÑÌõÄ¿¼¤»îÎª Active£¬µ«±£ÁôÒÑ´æÔÚµÄ Step ×´Ì¬
+                // æŠŠæ¡ç›®æ¿€æ´»ä¸º Activeï¼Œä½†ä¿ç•™å·²å­˜åœ¨çš„ Step çŠ¶æ€
                 TrySetStatus(e.Key, JournalStatus.Active, resetSteps: false);
             }
 
-            // Èç¹ûËùÓĞ Step ¶¼Íê³É£¬Ôò°ÑÌõÄ¿±êÎª Completed
+            // å¦‚æœæ‰€æœ‰ Step éƒ½å®Œæˆï¼Œåˆ™æŠŠæ¡ç›®æ ‡ä¸º Completed
             if (AllStepsDone(it) && it.status != JournalStatus.Completed)
             {
                 it.status = JournalStatus.Completed;
                 EventBus.Publish(new EJournalStatusChanged(e.Key, it.status));
             }
 
-            // ±£´æË¢ĞÂ
+            // ä¿å­˜åˆ·æ–°
             FlushJournalSnapshot();
         }
 
@@ -101,7 +101,7 @@ namespace Manager
             return true;
         }
 
-        // ÏìÓ¦ Settings ±ä¸ü£º´Ó Settings »Ö¸´ Journal
+        // å“åº” Settings å˜æ›´ï¼šä» Settings æ¢å¤ Journal
         private void SetJournal(ESettingsChanged e)
         {
             if (Model == null)
@@ -110,30 +110,30 @@ namespace Manager
             var save = e.Settings?.journalData;
             if (save == null)
             {
-                // Ã»ÓĞ´æµµÔò²»¸²¸Ç
+                // æ²¡æœ‰å­˜æ¡£åˆ™ä¸è¦†ç›–
                 return;
             }
 
-            // ½«´æµµ×´Ì¬Ó¦ÓÃµ½ÔËĞĞÊ±Ä£ĞÍ
+            // å°†å­˜æ¡£çŠ¶æ€åº”ç”¨åˆ°è¿è¡Œæ—¶æ¨¡å‹
             JournalSaveAdapter.ApplyToModel(Model, save);
             print(Model.ToString());
         }
 
         private void OnStatusChanged(EJournalStatusChanged e)
         {
-            // ÒÑÊÇ¸Ã×´Ì¬Ôò²»ÖØ¸´Ğ´Èë£¬±ÜÃâ¸±×÷ÓÃ£¨ÀıÈç´íÎóÖØÖÃ²½Öè£©
+            // å·²æ˜¯è¯¥çŠ¶æ€åˆ™ä¸é‡å¤å†™å…¥ï¼Œé¿å…å‰¯ä½œç”¨ï¼ˆä¾‹å¦‚é”™è¯¯é‡ç½®æ­¥éª¤ï¼‰
             var it = Model?.Find(e.Key);
             if (it != null && it.status == e.NewStatus)
                 return;
             TrySetStatus(e.Key, e.NewStatus);
         }
 
-        // ¡ª¡ª ¶ÔÍâ£ºÇĞ»»Ä³ÌõÈÕ¼ÇµÄ×´Ì¬ ¡ª¡ª
+        // â€”â€” å¯¹å¤–ï¼šåˆ‡æ¢æŸæ¡æ—¥è®°çš„çŠ¶æ€ â€”â€”
         public bool TrySetStatus(string key, JournalStatus targetStatus) =>
             TrySetStatus(key, targetStatus, resetSteps: true);
 
-        // ĞèÇó£º´«Èë key ºÍÄ¿±ê status£»ÈôÄ¿±êÎª Active£¬Ôò²¹Ğ´ createdAt£¨UTC¡°Ê×´Î½ÒÊ¾Ê±¼ä¡±£©¡£
-        // ·µ»Ø£º·¢ÉúÊµ¼Ê±ä¸üÔò true£»Î´ÕÒµ½»òÎŞ±ä»¯Ôò false¡£
+        // éœ€æ±‚ï¼šä¼ å…¥ key å’Œç›®æ ‡ statusï¼›è‹¥ç›®æ ‡ä¸º Activeï¼Œåˆ™è¡¥å†™ createdAtï¼ˆUTCâ€œé¦–æ¬¡æ­ç¤ºæ—¶é—´â€ï¼‰ã€‚
+        // è¿”å›ï¼šå‘ç”Ÿå®é™…å˜æ›´åˆ™ trueï¼›æœªæ‰¾åˆ°æˆ–æ— å˜åŒ–åˆ™ falseã€‚
         public bool TrySetStatus(string key, JournalStatus targetStatus, bool resetSteps)
         {
             if (Model == null || string.IsNullOrEmpty(key))
@@ -143,20 +143,20 @@ namespace Manager
             if (it == null)
                 return false;
 
-            // Ä¿±ê×´Ì¬Óëµ±Ç°Ò»ÖÂ£ºÖ±½Ó·µ»Ø false£¨¼È²»Ğ´ createdAt£¬Ò²²»ÖØÖÃ²½Öè£©
+            // ç›®æ ‡çŠ¶æ€ä¸å½“å‰ä¸€è‡´ï¼šç›´æ¥è¿”å› falseï¼ˆæ—¢ä¸å†™ createdAtï¼Œä¹Ÿä¸é‡ç½®æ­¥éª¤ï¼‰
             if (it.status == targetStatus)
                 return false;
 
-            // ÇĞ»»×´Ì¬
+            // åˆ‡æ¢çŠ¶æ€
             it.status = targetStatus;
 
-            // Ä¿±êÎª Active£º²¹Ğ´Ê×´Î´´½¨Ê±¼ä
+            // ç›®æ ‡ä¸º Activeï¼šè¡¥å†™é¦–æ¬¡åˆ›å»ºæ—¶é—´
             if (targetStatus == JournalStatus.Active)
             {
-                it.createdAt = DateTime.UtcNow.AddHours(-1); // Í³Ò»´æ UTC£¬²¢ÍùÇ°ÒÆ 1 Ğ¡Ê±
+                it.createdAt = DateTime.UtcNow.AddHours(-1); // ç»Ÿä¸€å­˜ UTCï¼Œå¹¶å¾€å‰ç§» 1 å°æ—¶
             }
 
-            // Ö»ÓĞÔÚÃ÷È·ÒªÇóÊ±²ÅÖØÖÃ²½Öè
+            // åªæœ‰åœ¨æ˜ç¡®è¦æ±‚æ—¶æ‰é‡ç½®æ­¥éª¤
             if (resetSteps && it.contents != null)
             {
                 foreach (var ln in it.contents)
@@ -172,7 +172,7 @@ namespace Manager
             return true;
         }
 
-        // Ïò SettingsMgr Ğ´»Øµ±Ç°ÈÕ¼Ç¿ìÕÕ£¨ÊÇ·ñÁ¢¼´ÂäÅÌÓÉ SettingsMgr ¾ö¶¨£©
+        // å‘ SettingsMgr å†™å›å½“å‰æ—¥è®°å¿«ç…§ï¼ˆæ˜¯å¦ç«‹å³è½ç›˜ç”± SettingsMgr å†³å®šï¼‰
         private void FlushJournalSnapshot()
         {
             if (Model == null)

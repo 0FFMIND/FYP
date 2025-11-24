@@ -19,7 +19,7 @@ namespace Manager
         private string mixerVolumeParam = "MixerVolume";
         private string sfxVolumeParam = "SFXVolume";
 
-        // ÔÚresourceÏÂ
+        // åœ¨resourceä¸‹
         private string mixerPath = "Audio/Mixer";
         private string bgmPath = "Audio/bgm/";
         private string sfxPath = "Audio/sfx/";
@@ -30,21 +30,21 @@ namespace Manager
         private AudioSource _sfxSource;
         private Coroutine _fadeCoroutine;
 
-        // »º´æ£¬Èç¹û²»ÊÇµÚÒ»´Î¼ÓÔØÔò²éÕÒ»º´æ
+        // ç¼“å­˜ï¼Œå¦‚æœä¸æ˜¯ç¬¬ä¸€æ¬¡åŠ è½½åˆ™æŸ¥æ‰¾ç¼“å­˜
         private Dictionary<string, AudioClip> _clipCache = new Dictionary<string, AudioClip>();
 
-        // È«¾Ölistener¹ÒÔÚaudioManagerÏÂ
+        // å…¨å±€listeneræŒ‚åœ¨audioManagerä¸‹
         private AudioListener _listener;
 
         private void Awake()
         {
-            // Ìí¼Ólistener
+            // æ·»åŠ listener
             _listener = GetComponent<AudioListener>();
             if (_listener == null)
                 _listener = gameObject.AddComponent<AudioListener>();
 
             _audioMixer = Resources.Load<AudioMixer>(mixerPath);
-            // ¶¯Ì¬´´½¨Á½¸ösource£¬Ò»¸ö²¥·Åbgm£¬Ò»¸ö²¥·Åsfx
+            // åŠ¨æ€åˆ›å»ºä¸¤ä¸ªsourceï¼Œä¸€ä¸ªæ’­æ”¾bgmï¼Œä¸€ä¸ªæ’­æ”¾sfx
             if (_bgmSource == null)
             {
                 _bgmSource = gameObject.AddComponent<AudioSource>();
@@ -55,7 +55,7 @@ namespace Manager
             {
                 _sfxSource = gameObject.AddComponent<AudioSource>();
             }
-            // °ó¶¨mixerµÄÊä³öµ½audioSource
+            // ç»‘å®šmixerçš„è¾“å‡ºåˆ°audioSource
             var groups = _audioMixer.FindMatchingGroups("bgm");
             if (groups.Length > 0)
             {
@@ -68,10 +68,10 @@ namespace Manager
             }
         }
 
-        // ¼àÌıÈ«¾ÖÉèÖÃ±ä¸ü
+        // ç›‘å¬å…¨å±€è®¾ç½®å˜æ›´
         private void OnEnable()
         {
-            // ²»ÔÚonEnableÕâÀïğ¤ĞÔÖØ·Å£¬¼û¹Ù·½API
+            // ä¸åœ¨onEnableè¿™é‡Œé»æ€§é‡æ”¾ï¼Œè§å®˜æ–¹API
             // https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Audio.AudioMixer.SetFloat.html
             EventBus.Subscribe<ESettingsChanged>(OnSettingsChanged, false);
         }
@@ -83,7 +83,7 @@ namespace Manager
 
         private void Start()
         {
-            // setFloat·½·¨ĞèÒª·ÅÔÚStartÀï
+            // setFloatæ–¹æ³•éœ€è¦æ”¾åœ¨Starté‡Œ
             SetBGMVolume(SettingsMgr.Instance.GetBGMVolume());
             SetSFXVolume(SettingsMgr.Instance.GetSFXVolume());
             SetMixerVolume(SettingsMgr.Instance.GetMixerVolume());
@@ -104,7 +104,7 @@ namespace Manager
                 clip = Resources.Load<AudioClip>(bgmPath + name);
                 _clipCache[name] = clip;
             }
-            // ¿ªÆôĞ¯³Ì
+            // å¼€å¯æºç¨‹
             if (_fadeCoroutine != null)
             {
                 StopCoroutine(_fadeCoroutine);
@@ -114,12 +114,12 @@ namespace Manager
 
         public void StopBGM(float fadeTime = 1f)
         {
-            // Èç¹ûÕıÓĞ FadeToNewBGM ÔÚÅÜ£¬ÏÈÍ£ÁËËü
+            // å¦‚æœæ­£æœ‰ FadeToNewBGM åœ¨è·‘ï¼Œå…ˆåœäº†å®ƒ
             if (_fadeCoroutine != null)
             {
                 StopCoroutine(_fadeCoroutine);
             }
-            // Æô¶¯Ò»¸öĞÂµÄµ­³öĞ­³Ì
+            // å¯åŠ¨ä¸€ä¸ªæ–°çš„æ·¡å‡ºåç¨‹
             _fadeCoroutine = StartCoroutine(FadeOutAndStop(fadeTime));
         }
 
@@ -134,7 +134,7 @@ namespace Manager
                 yield return null;
             }
 
-            // ÕæÕıÍ£Ö¹
+            // çœŸæ­£åœæ­¢
             _bgmSource.Stop();
             _bgmSource.volume = 1f;
 
@@ -144,7 +144,7 @@ namespace Manager
         private IEnumerator FadeToNewBGM(AudioClip newClip, float duration)
         {
             float startVol = _bgmSource.volume;
-            // Èôµ±Ç°ÕıÔÚ²¥·Å¾ÉÇúÇÒĞèÒª¹ı¶É£¬ÔòÏÈµ­³öµ½ 0
+            // è‹¥å½“å‰æ­£åœ¨æ’­æ”¾æ—§æ›²ä¸”éœ€è¦è¿‡æ¸¡ï¼Œåˆ™å…ˆæ·¡å‡ºåˆ° 0
             if (_bgmSource.isPlaying && duration > 0f)
             {
                 float t = 0f;
@@ -157,15 +157,15 @@ namespace Manager
             }
             else
             {
-                // ÉèÖÃÎª0f£¬±ÜÃâ±¬Òô
+                // è®¾ç½®ä¸º0fï¼Œé¿å…çˆ†éŸ³
                 _bgmSource.volume = 0f;
             }
 
-            // ÇĞ»»²¢¿ªÊ¼²¥·ÅĞÂÇú
+            // åˆ‡æ¢å¹¶å¼€å§‹æ’­æ”¾æ–°æ›²
             _bgmSource.clip = newClip;
             _bgmSource.Play();
 
-            // ´Ó 0 µ­Èëµ½1
+            // ä» 0 æ·¡å…¥åˆ°1
             float target = 1f;
             float t2 = 0f;
             while (t2 < duration)
@@ -193,7 +193,7 @@ namespace Manager
             _sfxSource.PlayOneShot(clip, volumeScale);
         }
 
-        // ÉèÖÃ±êÁ¿»¯ÒôÁ¿
+        // è®¾ç½®æ ‡é‡åŒ–éŸ³é‡
         public void SetBGMVolume(float db)
         {
             _audioMixer.SetFloat(bgmVolumeParam, db);
@@ -209,7 +209,7 @@ namespace Manager
             _audioMixer.SetFloat(mixerVolumeParam, db);
         }
 
-        // ÉèÖÃ±êÁ¿»¯ÒôÁ¿
+        // è®¾ç½®æ ‡é‡åŒ–éŸ³é‡
         public void SetBGMVolumeNormalized(float normalized)
         {
             float db;
@@ -252,7 +252,7 @@ namespace Manager
             EventBus.Publish(new EVolumeSet(db, VolumeType.mixer));
         }
 
-        // »ñÈ¡±êÁ¿»¯ÒôÁ¿
+        // è·å–æ ‡é‡åŒ–éŸ³é‡
         public float GetBGMVolumeNormalized()
         {
             var db = SettingsMgr.Instance.GetBGMVolume();

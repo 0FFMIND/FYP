@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Manager;
 using UnityEngine;
@@ -270,7 +270,7 @@ namespace MVC
         public IEnumerator PlayerEighthMove()
         {
             EventBus.Publish(new EJournalStepChanged("endRooftop", 2, StepState.Done));
-            cameraCtl.PanToY(-3f, 3f);
+            cameraCtl.PanToY(-4f, 3f);
             yield return new WaitForSecondsRealtime(2f);
             dialogSideCtl.StartEleventhDialogue(() =>
             {
@@ -281,7 +281,7 @@ namespace MVC
         public IEnumerator PlayerNinethMove()
         {
             AudioManager.Instance.PlaySFX("keyTurning");
-            cameraCtl.PanToY(3f, 1f);
+            cameraCtl.PanToY(4f, 1f);
             yield return new WaitForSecondsRealtime(1f);
             bg.isOn = false;
             dialogCtl.StartTwelfthDialogue(() =>

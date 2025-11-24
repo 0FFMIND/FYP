@@ -116,19 +116,19 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/11/22 - 修复了开头switch language的时候窗口分辨率txt没有switch的问题（key少了初始占位值），摄像机有时候抖动不出来，不知道是什么原因，把在Update的抖动偏移量换到LateUpdate里面了，可能是相机在Update里面有其他行为覆盖了
 
-2025/11/23 - 重构代码，https://github.com/0FFMIND/FYP/blob/main/Assets/Scripts/1-Scene/MVC/Controller/Scene1ArrivalCtl.cs，这里的问题是
+2025/11/23 - 重构代码，https://github.com/0FFMIND/FYP/blob/0f278d7624d96c501d05603fecb5fb476dd03f5e/Assets/Scripts/1-Scene/MVC/Controller/Scene1ArrivalCtl.cs，这里的问题是FSM，当管理的状态变多变得难以维护，修改后的代码：https://github.com/0FFMIND/FYP/tree/main/Assets/Scripts/1-Scene/MVC/Controller/Phase
 
-TODO: 在meadow结束后播放铃声结束的时候会卡住，之前也是有遗留的这个问题
+2025/11/24 - 把代码迁移到VSCode上了，VSCode可以和Github集成，并且使用免费的Copilot自动生成的commit message，从而让commit更有信息，继续重构代码，修改了guidePanel仍然提示右shift move faster的问题，现在统一左shift移动，修复了meadow结束后的panTo位置问题，统一了camera的锚点，修复了之前Camera抖动不出来的问题，是因为follow也在update，覆盖了shake的update，修复了父camera brain和子类vcam的关系，现在人物移动的时候也可以抖动了
 
-TODO: meadow结束后的panTo位置不对了
+2025/11/25 - 修复了在meadow结束后播放铃声结束的时候动画推进会卡住的问题，是因为跑操的音乐有20MB，并且读取方式是一次读取并且解压缩，会阻塞U3D的主线程，把音频的加载改为streaming，流式加载解决问题
 
-TODO: 需要加一个AI commit的可以显示diff
+
 
 Chapter1的遗留问题【不重要】
 
 TODO: 解决对话机回调问题
 
-TODO: Scene1ArrivalCtl其实更好用StateMachine做，现在大型SwitchCase有点冗余
+
 
 这里可以插入图片
 

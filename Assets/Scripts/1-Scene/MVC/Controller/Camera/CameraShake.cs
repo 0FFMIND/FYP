@@ -1,29 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
     [Header("Shake Settings")]
-    public float duration = 0.5f; // 震动持续时间
-    public float magnitude = 0.1f; // 震动幅度
-    public float rotationMagnitude = 0.2f; // 旋转幅度
+    public float duration = 0.5f; // 闇囧姩鎸佺画鏃堕棿
+    public float magnitude = 0.1f; // 闇囧姩骞呭害
+    public float rotationMagnitude = 0.2f; // 鏃嬭浆骞呭害
 
     private Vector3 originalPosition;
     private Quaternion originalRotation;
     private float shakeTimer;
     private bool isShaking = false;
 
-    private void Awake()
-    {
-        originalPosition = transform.localPosition;
-        originalRotation = transform.localRotation;
-    }
-
     void LateUpdate()
     {
         if (!isShaking)
         {
+            originalPosition = transform.localPosition;
+            originalRotation = transform.localRotation;
             return;
         }
 

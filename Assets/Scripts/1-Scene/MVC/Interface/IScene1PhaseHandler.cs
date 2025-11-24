@@ -5,7 +5,7 @@ namespace MVC
     public interface IScene1PhaseHandler
     {
         void Enter();
-        void Tick(); // ¿É¿ÕÊµÏÖ
+        void Tick(); // å¯ç©ºå®ç°
         void OnJournalChanged(EJournalStatusChanged e);
         void OnPauseChanged(EPauseChanged e);
     }

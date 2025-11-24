@@ -3,35 +3,35 @@ using UnityEngine;
 
 public class ObjBounce : MonoBehaviour
 {
-    [Tooltip("ÏòÏÂÎ»ÒÆµÄ¾àÀë£¨ÊÀ½ç×ø±êµ¥Î»£©")]
+    [Tooltip("å‘ä¸‹ä½ç§»çš„è·ç¦»ï¼ˆä¸–ç•Œåæ ‡å•ä½ï¼‰")]
     public float downDistance = 0.07f;
 
-    [Tooltip("ÏÂÐÐºÄÊ±£¨Ãë£©")]
+    [Tooltip("ä¸‹è¡Œè€—æ—¶ï¼ˆç§’ï¼‰")]
     public float downTime = 0.4f;
 
-    [Tooltip("ÉÏÐÐºÄÊ±£¨Ãë£©")]
+    [Tooltip("ä¸Šè¡Œè€—æ—¶ï¼ˆç§’ï¼‰")]
     public float upTime = 0.4f;
 
-    [Tooltip("ÆôÓÃÊ±×Ô¶¯²¥·Å")]
+    [Tooltip("å¯ç”¨æ—¶è‡ªåŠ¨æ’­æ”¾")]
     public bool playOnEnable = true;
 
-    private Vector3 _pivot;       // ÒÔµ±Ç°µãÎªÊàÖá
-    private Coroutine _co;        // ÅÜ¶¯Ð­³Ì
+    private Vector3 _pivot;       // ä»¥å½“å‰ç‚¹ä¸ºæž¢è½´
+    private Coroutine _co;        // è·‘åŠ¨åç¨‹
 
     private void OnEnable()
     {
-        SetPivotHere();           // ÎïÌåÔÚÄÄÀï¾ÍÒÔÄÄÀïÎª pivot
+        SetPivotHere();           // ç‰©ä½“åœ¨å“ªé‡Œå°±ä»¥å“ªé‡Œä¸º pivot
         if (playOnEnable) Play();
     }
 
     private void OnDisable()
     {
         Stop();
-        // Í£Ö¹ºó»Øµ½ÊàÖá£¬±ÜÃâ²ÐÁôÆ«ÒÆ
+        // åœæ­¢åŽå›žåˆ°æž¢è½´ï¼Œé¿å…æ®‹ç•™åç§»
         transform.position = _pivot;
     }
 
-    /// ÒÔµ±Ç° Transform Î»ÖÃ×÷ÎªÐÂµÄÊàÖá
+    /// ä»¥å½“å‰ Transform ä½ç½®ä½œä¸ºæ–°çš„æž¢è½´
     public void SetPivotHere()
     {
         _pivot = transform.position;
@@ -54,7 +54,7 @@ public class ObjBounce : MonoBehaviour
     {
         for (; ; )
         {
-            // ÖÐ -> ÏÂ
+            // ä¸­ -> ä¸‹
             float t = 0f;
             while (t < 1f)
             {
@@ -64,7 +64,7 @@ public class ObjBounce : MonoBehaviour
                 yield return null;
             }
 
-            // ÏÂ -> ÖÐ
+            // ä¸‹ -> ä¸­
             t = 0f;
             while (t < 1f)
             {
@@ -74,7 +74,7 @@ public class ObjBounce : MonoBehaviour
                 yield return null;
             }
 
-            // ÖÐ -> ÉÏ
+            // ä¸­ -> ä¸Š
             t = 0f;
             while (t < 1f)
             {
@@ -84,7 +84,7 @@ public class ObjBounce : MonoBehaviour
                 yield return null;
             }
 
-            // ÉÏ -> ÖÐ
+            // ä¸Š -> ä¸­
             t = 0f;
             while (t < 1f)
             {

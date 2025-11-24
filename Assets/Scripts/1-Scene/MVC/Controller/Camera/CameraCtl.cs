@@ -14,7 +14,7 @@ public class CameraCtl : MonoBehaviour
 
     private void Awake()
     {
-        // ÔÊĞí²»ÊÖ¶¯ÍÏÒıÓÃ£º×Ô¶¯ GetComponent
+        // å…è®¸ä¸æ‰‹åŠ¨æ‹–å¼•ç”¨ï¼šè‡ªåŠ¨ GetComponent
         if (follow == null)
         {
             follow = GetComponent<CameraFollow>();
@@ -70,7 +70,7 @@ public class CameraCtl : MonoBehaviour
         {
             return;
         }
-        // È·±£ÒÑÍÑÀëÈËÎï£¬½»¸øÃªµãÇı¶¯
+        // ç¡®ä¿å·²è„±ç¦»äººç‰©ï¼Œäº¤ç»™é”šç‚¹é©±åŠ¨
         follow.DetachCamera();
         move.PanTo(xy, duration);
     }
@@ -81,7 +81,7 @@ public class CameraCtl : MonoBehaviour
         {
             return;
         }
-        // È·±£ÒÑÍÑÀëÈËÎï£¬½»¸øÃªµãÇı¶¯
+        // ç¡®ä¿å·²è„±ç¦»äººç‰©ï¼Œäº¤ç»™é”šç‚¹é©±åŠ¨
         follow.DetachCamera();
         move.PanToY(y, duration);
     }

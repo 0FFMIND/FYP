@@ -1,28 +1,28 @@
 using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    [SerializeField]
-    private AnimationCurve zoomCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
-
-    [SerializeField]
-    private CinemachineVirtualCamera playerVCam;
+    [SerializeField] private AnimationCurve zoomCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+    [SerializeField] private CameraFollow follow;
+    [SerializeField] private CinemachineVirtualCamera playerVCam;
 
     private Coroutine zoomCo;
 
-    private Transform manualAnchor;
+    private Transform manualAnchor
+        => (follow != null && follow.ManualAnchor != null)
+            ? follow.ManualAnchor
+            : playerVCam.Follow;
     private Coroutine panCo;
 
-    // === ¶ÔÍâ·½·¨£¬°´¸ø¶¨ Vector2 ÊÀ½ç×ø±êÆ½ÒÆÉãÏñ»ú£¨±£³Öµ±Ç° z£©===
+    // === å¯¹å¤–æ–¹æ³•ï¼ŒæŒ‰ç»™å®š Vector2 ä¸–ç•Œåæ ‡å¹³ç§»æ‘„åƒæœºï¼ˆä¿æŒå½“å‰ zï¼‰===
     public void PanTo(Vector2 xy, float duration)
     {
         if (panCo != null)
             StopCoroutine(panCo);
-        var start = (manualAnchor != null ? manualAnchor.position : playerVCam.transform.position);
-        var target = new Vector3(xy.x, xy.y, start.z); // ±£³Ö z ²»±ä£¨Õı½»Ïà»ú£©
+        var start = manualAnchor != null ? manualAnchor.position : playerVCam.transform.position;
+        var target = new Vector3(xy.x, xy.y, start.z); // ä¿æŒ z ä¸å˜ï¼ˆæ­£äº¤ç›¸æœºï¼‰
 
         panCo = StartCoroutine(
             LerpVector3(
@@ -38,8 +38,8 @@ public class CameraMove : MonoBehaviour
     {
         if (panCo != null)
             StopCoroutine(panCo);
-        var start = (manualAnchor != null ? manualAnchor.position : playerVCam.transform.position);
-        var target = new Vector3(start.x, y, start.z); // ±£³Ö z ²»±ä£¨Õı½»Ïà»ú£©
+        var start = manualAnchor != null ? manualAnchor.position : playerVCam.transform.position;
+        var target = new Vector3(start.x, y, start.z); // ä¿æŒ z ä¸å˜ï¼ˆæ­£äº¤ç›¸æœºï¼‰
 
         panCo = StartCoroutine(
             LerpVector3(
@@ -51,7 +51,7 @@ public class CameraMove : MonoBehaviour
         );
     }
 
-    // === ĞÂÔö£ºÍ¨ÓÃ Vector3 ²åÖµ£¨ÓëÏÖÓĞ LerpFloat Ò»ÖÂµÄÇúÏß½Ú×à£©===
+    // === æ–°å¢ï¼šé€šç”¨ Vector3 æ’å€¼ï¼ˆä¸ç°æœ‰ LerpFloat ä¸€è‡´çš„æ›²çº¿èŠ‚å¥ï¼‰===
     private IEnumerator LerpVector3(
         System.Func<Vector3> getter,
         System.Action<Vector3> setter,
@@ -117,7 +117,7 @@ public class CameraMove : MonoBehaviour
         );
     }
 
-    // ÓÃ AnimationCurve ×ö»º¶¯µÄÍ¨ÓÃ²åÖµ
+    // ç”¨ AnimationCurve åšç¼“åŠ¨çš„é€šç”¨æ’å€¼
     private IEnumerator LerpFloat(
         System.Func<float> getter,
         System.Action<float> setter,
@@ -128,7 +128,7 @@ public class CameraMove : MonoBehaviour
         float start = getter();
         float t = 0f;
 
-        // ·À¿Õ£ºÃ»ÅäÇúÏß¾ÍÓÃÏßĞÔ
+        // é˜²ç©ºï¼šæ²¡é…æ›²çº¿å°±ç”¨çº¿æ€§
         var curve = zoomCurve != null ? zoomCurve : AnimationCurve.Linear(0, 0, 1, 1);
 
         while (t < duration)
