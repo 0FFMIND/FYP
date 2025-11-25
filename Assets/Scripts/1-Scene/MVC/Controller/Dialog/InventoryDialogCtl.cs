@@ -35,8 +35,6 @@ namespace MVC
 
         protected override IEnumerator TypeLines()
         {
-            arrowIndicator.Hide();
-
             // 如果是第一句
             if (index == 0)
             {
@@ -56,15 +54,13 @@ namespace MVC
 
         protected override void NextLine()
         {
-            arrowIndicator.SetColor(Color.white);
             // 如果读完
             if (index == dialogueModel.Lines.Length)
             {
                 index++;
                 // 清空文本
                 dialogueView.tmp.text = "";
-                // 关掉向下小箭头
-                arrowIndicator.Hide();
+                HideArrow();
                 // 播放动画
                 StartCoroutine(PlayClosed());
             }
@@ -82,7 +78,7 @@ namespace MVC
                 }
             }
             // 打字
-            typingCoroutine = StartCoroutine(TypeLines());
+            StartCoroutine(TypeLines());
         }
     }
 }

@@ -4917,6 +4917,7 @@ GameObject:
   - component: {fileID: 889014634}
   - component: {fileID: 889014637}
   - component: {fileID: 889014638}
+  - component: {fileID: 889014639}
   m_Layer: 0
   m_Name: GuideCanvas
   m_TagString: Untagged
@@ -5043,6 +5044,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &889014639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889014632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a291229305d778947986655cd2791d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgView: {fileID: 394919203}
+  dialogueView: {fileID: 345553676}
+  enableTypingSfx: 1
+  typingRate: 1
+  enlargeArrow: 0
+  arrowIndicator: {fileID: 0}
 --- !u!1 &899285827
 GameObject:
   m_ObjectHideFlags: 0
@@ -5223,16 +5242,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12264e12fabd504183cad3d5a79ef5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowOffset: 0.4
-  downFrames: 100
-  downDistance: 0.07
-  upFrames: 100
   modelText: 
   mappings: []
   enableTypingSfx: 1
   typingRate: 1
   bgView: {fileID: 929169984}
   dialogueView: {fileID: 1911904465}
+  dialogueRenderer: {fileID: 1960129108}
   enterAnim: {fileID: 899453563}
   firstMappings:
   - lineIndex: 0
@@ -6743,6 +6759,7 @@ GameObject:
   - component: {fileID: 1015094541}
   - component: {fileID: 1015094540}
   - component: {fileID: 1015094539}
+  - component: {fileID: 1015094543}
   m_Layer: 0
   m_Name: TimelineDialogCanvas_FullText
   m_TagString: Untagged
@@ -6783,16 +6800,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12264e12fabd504183cad3d5a79ef5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowOffset: 0.4
-  downFrames: 100
-  downDistance: 0.07
-  upFrames: 100
   modelText: 
   mappings: []
   enableTypingSfx: 1
   typingRate: 1
   bgView: {fileID: 240227893}
   dialogueView: {fileID: 1046734074}
+  dialogueRenderer: {fileID: 1015094543}
   enterAnim: {fileID: 899453563}
   firstMappings:
   - lineIndex: 0
@@ -7104,6 +7118,24 @@ Canvas:
   m_SortingLayerID: -1089969487
   m_SortingOrder: 5
   m_TargetDisplay: 0
+--- !u!114 &1015094543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015094537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a291229305d778947986655cd2791d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgView: {fileID: 240227893}
+  dialogueView: {fileID: 1046734074}
+  enableTypingSfx: 1
+  typingRate: 1
+  enlargeArrow: 0
+  arrowIndicator: {fileID: 0}
 --- !u!1 &1030757741
 GameObject:
   m_ObjectHideFlags: 0
@@ -10953,6 +10985,7 @@ GameObject:
   - component: {fileID: 1818900624}
   - component: {fileID: 1818900628}
   - component: {fileID: 1818900627}
+  - component: {fileID: 1818900629}
   m_Layer: 0
   m_Name: InventoryCanvas
   m_TagString: Untagged
@@ -11077,6 +11110,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1818900629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818900622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a291229305d778947986655cd2791d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgView: {fileID: 943327090}
+  dialogueView: {fileID: 1269363206}
+  enableTypingSfx: 0
+  typingRate: 2
+  enlargeArrow: 1
+  arrowIndicator: {fileID: 0}
 --- !u!1 &1823472466
 GameObject:
   m_ObjectHideFlags: 0
@@ -11134,16 +11185,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf74549c87474c94e9c0a1bf2823b773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowOffset: 0.4
-  downFrames: 100
-  downDistance: 0.07
-  upFrames: 100
   modelText: 
   mappings: []
   enableTypingSfx: 1
   typingRate: 1
   bgView: {fileID: 394919203}
   dialogueView: {fileID: 345553676}
+  dialogueRenderer: {fileID: 889014639}
   enterAnim: {fileID: 1823472471}
 --- !u!114 &1823472469
 MonoBehaviour:
@@ -11157,16 +11205,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7bcf95cfa51c84a9432cb2cea9d054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowOffset: 0.4
-  downFrames: 100
-  downDistance: 0.07
-  upFrames: 100
   modelText: 
   mappings: []
   enableTypingSfx: 0
   typingRate: 2
   bgView: {fileID: 1918345073}
   dialogueView: {fileID: 397659223}
+  dialogueRenderer: {fileID: 1840459809}
   enterAnim: {fileID: 1823472470}
 --- !u!114 &1823472470
 MonoBehaviour:
@@ -11330,16 +11375,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7a94d1921e1c34dba78f1c3b563a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowOffset: 0.4
-  downFrames: 100
-  downDistance: 0.07
-  upFrames: 100
   modelText: 
   mappings: []
   enableTypingSfx: 0
   typingRate: 2
   bgView: {fileID: 943327090}
   dialogueView: {fileID: 1269363206}
+  dialogueRenderer: {fileID: 1818900629}
   enterAnim: {fileID: 1823472473}
 --- !u!114 &1823472473
 MonoBehaviour:
@@ -11514,6 +11556,7 @@ GameObject:
   - component: {fileID: 1840459803}
   - component: {fileID: 1840459807}
   - component: {fileID: 1840459808}
+  - component: {fileID: 1840459809}
   m_Layer: 0
   m_Name: InteractCanvas
   m_TagString: Untagged
@@ -11638,6 +11681,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed70615ed2fc4d45a6cbe8b42466eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1840459809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840459801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a291229305d778947986655cd2791d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgView: {fileID: 1918345073}
+  dialogueView: {fileID: 397659223}
+  enableTypingSfx: 0
+  typingRate: 2
+  enlargeArrow: 1
+  arrowIndicator: {fileID: 0}
 --- !u!1 &1850188338
 GameObject:
   m_ObjectHideFlags: 0
@@ -11923,74 +11984,6 @@ MonoBehaviour:
   img: {fileID: 0}
   tmp: {fileID: 0}
   imageFadeDuration: 0
---- !u!1 &1926435499
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1926435502}
-  - component: {fileID: 1926435501}
-  - component: {fileID: 1926435500}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1926435500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1926435499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &1926435501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1926435499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &1926435502
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1926435499}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1926880959
 GameObject:
   m_ObjectHideFlags: 0
@@ -12519,16 +12512,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12264e12fabd504183cad3d5a79ef5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowOffset: 0.4
-  downFrames: 100
-  downDistance: 0.07
-  upFrames: 100
   modelText: 
   mappings: []
   enableTypingSfx: 1
   typingRate: 1
   bgView: {fileID: 2197157}
   dialogueView: {fileID: 1257427458}
+  dialogueRenderer: {fileID: 0}
   enterAnim: {fileID: 1955821182}
   firstMappings:
   - lineIndex: 0
@@ -12726,6 +12716,7 @@ GameObject:
   - component: {fileID: 1960129106}
   - component: {fileID: 1960129105}
   - component: {fileID: 1960129104}
+  - component: {fileID: 1960129108}
   m_Layer: 0
   m_Name: TimelineDialogCanvas
   m_TagString: Untagged
@@ -12817,6 +12808,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1960129108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960129103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a291229305d778947986655cd2791d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgView: {fileID: 929169984}
+  dialogueView: {fileID: 1911904465}
+  enableTypingSfx: 1
+  typingRate: 1
+  enlargeArrow: 1
+  arrowIndicator: {fileID: 0}
 --- !u!1 &1975287358
 GameObject:
   m_ObjectHideFlags: 0
@@ -13718,4 +13727,3 @@ SceneRoots:
   - {fileID: 1277239968}
   - {fileID: 899453561}
   - {fileID: 1823472467}
-  - {fileID: 1926435502}

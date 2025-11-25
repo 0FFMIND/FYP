@@ -45,9 +45,7 @@ namespace MVC
 
         protected override IEnumerator TypeLines()
         {
-            arrowIndicator.Hide();
-
-            // Èç¹ûÊÇµÚÒ»¾ä
+            // å¦‚æžœæ˜¯ç¬¬ä¸€å¥
             if (index == 0 && startOnce)
             {
                 _isEntering = true;
@@ -67,30 +65,28 @@ namespace MVC
         private IEnumerator PlayClosed()
         {
             yield return enterAnim.PlayExit();
-            // ´¥·¢¶Ô»°½áÊø»Øµ÷
+            // è§¦å‘å¯¹è¯ç»“æŸå›žè°ƒ
             finished?.Invoke();
         }
 
         protected override void NextLine()
         {
-            arrowIndicator.SetColor(Color.white);
-            // Èç¹û¶ÁÍê
+            // å¦‚æžœè¯»å®Œ
             if (index == dialogueModel.Lines.Length)
             {
-                // Çå¿ÕÎÄ±¾
+                // æ¸…ç©ºæ–‡æœ¬
                 dialogueView.tmp.text = "";
-                // ¹ØµôÏòÏÂÐ¡¼ýÍ·
-                arrowIndicator.Hide();
-                // ²¥·Å¶¯»­
+                HideArrow();
+                // æ’­æ”¾åŠ¨ç”»
                 StartCoroutine(PlayClosed());
             }
-            // ²»È»°´Å¥µã»÷»áÎóÈÏÎªnextline
+            // ä¸ç„¶æŒ‰é’®ç‚¹å‡»ä¼šè¯¯è®¤ä¸ºnextline
             if (dialogueModel == null || index >= dialogueModel.Lines.Length)
             {
                 return;
             }
-            // ´ò×Ö
-            typingCoroutine = StartCoroutine(TypeLines());
+            // æ‰“å­—
+            StartCoroutine(TypeLines());
         }
     }
 }

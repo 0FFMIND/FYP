@@ -120,7 +120,11 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/11/24 - 把代码迁移到VSCode上了，VSCode可以和Github集成，并且使用免费的Copilot自动生成的commit message，从而让commit更有信息，继续重构代码，修改了guidePanel仍然提示右shift move faster的问题，现在统一左shift移动，修复了meadow结束后的panTo位置问题，统一了camera的锚点，修复了之前Camera抖动不出来的问题，是因为follow也在update，覆盖了shake的update，修复了父camera brain和子类vcam的关系，现在人物移动的时候也可以抖动了
 
-2025/11/25 - 修复了在meadow结束后播放铃声结束的时候动画推进会卡住的问题，是因为跑操的音乐有20MB，并且读取方式是一次读取并且解压缩，会阻塞U3D的主线程，把音频的加载改为streaming，流式加载解决问题
+2025/11/25 - 修复了在meadow结束后播放铃声结束的时候动画推进会卡住的问题，是因为跑操的音乐有20MB，并且读取方式是一次读取并且解压缩，会阻塞U3D的主线程，把音频的加载改为streaming，流式加载解决问题，正在重构：https://github.com/0FFMIND/FYP/blob/main/Assets/Scripts/1-Scene/MVC/Controller/Dialog/DialogCtlBase.cs，首先删掉了无用代码，原来DialogCtlBase是God类，也会初始化arrow的行为，因此把arrow移到了单独的ArrowIndicator类里面
+
+TODO: 继续重构dialog
+
+TODO: 重构https://github.com/0FFMIND/FYP/blob/7c3ae58bbc6c53a396f874b1477fcf99a3d0b169/Assets/Scripts/1-Scene/Timeline/Scripts/PlayerMoveSignal.cs，
 
 
 
@@ -151,6 +155,8 @@ TODO: 我有一个想法，说话的时候可以出现多个关键词，下面�
 TODO: 需要修复动画waitforrealtime的问题
 
 TODO: 需要在售货机cg出现完后加一个判断的bool或者是什么，然后在选关的时候如果直接从ch2开始，基础的日记，然后判断有没有这个bool，有的话那就加一个售货机的日记
+
+TODO: 想标题，潮汐将至时？
 
 要做什么？
 

@@ -64,6 +64,8 @@ namespace MVC
 
         public void PositionArrowUnderText(TMP_Text tmp)
         {
+            if (!isActiveAndEnabled || !gameObject.activeInHierarchy)
+                return;
             // 强制刷新 TMP 网格与 bounds，确保 textBounds 为最新
             tmp.ForceMeshUpdate();
             Bounds b = tmp.textBounds;
@@ -83,6 +85,11 @@ namespace MVC
                 StopCoroutine(bounceCoroutine);
             }
             bounceCoroutine = StartCoroutine(ArrowBounce());
+        }
+
+        public bool IsActive()
+        {
+            return arrow != null && arrow.gameObject.activeSelf;
         }
 
         // 隐藏箭头并停止抖动

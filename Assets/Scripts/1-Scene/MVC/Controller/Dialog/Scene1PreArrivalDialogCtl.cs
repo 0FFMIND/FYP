@@ -30,8 +30,7 @@ namespace MVC
 
         protected override IEnumerator TypeLines()
         {
-            arrowIndicator.Hide();
-
+            HideArrow();
             // 如果是第一句
             if (index == 0)
             {
@@ -51,12 +50,12 @@ namespace MVC
 
         public void ArrowRed()
         {
-            arrowIndicator.SetColor(Color.red);
+            //arrowIndicator.SetColor(Color.red);
         }
 
         protected override void NextLine()
         {
-            arrowIndicator.SetColor(Color.white);
+            //arrowIndicator.SetColor(Color.white);
             // 如果读完
             if (index == dialogueModel.Lines.Length)
             {
@@ -88,7 +87,7 @@ namespace MVC
                 }
             }
             // 打字
-            typingCoroutine = StartCoroutine(TypeLines());
+            StartCoroutine(TypeLines());
         }
     }
 }
