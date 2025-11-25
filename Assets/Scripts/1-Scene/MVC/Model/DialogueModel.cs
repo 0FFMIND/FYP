@@ -5,37 +5,37 @@ using UnityEngine.SceneManagement;
 
 namespace MVC
 {
-    // ²»¼Ì³Ğmono£¬Ôò¿ÉÒÔÍ¨¹ınew T()³öÀ´
+    // ä¸ç»§æ‰¿monoï¼Œåˆ™å¯ä»¥é€šè¿‡new T()å‡ºæ¥
     public class DialogueModel
     {
-        // Ô­Ê¼ key£¨ÖğĞĞ¶ÁÈ¡ºó±£´æ£¬ËæÓïÑÔ±ä»¯ÔÙ·­Òë£©
+        // åŸå§‹ keyï¼ˆé€è¡Œè¯»å–åä¿å­˜ï¼Œéšè¯­è¨€å˜åŒ–å†ç¿»è¯‘ï¼‰
         private string[] _keys;
 
-        // ·­ÒëºóµÄ¶Ô»°ÄÚÈİ
+        // ç¿»è¯‘åçš„å¯¹è¯å†…å®¹
         public string[] Lines { get; private set; }
 
-        // ´ÓÎÄ¼ş¶ÁÈ¡¹¹ÔìÎÄ±¾
+        // ä»æ–‡ä»¶è¯»å–æ„é€ æ–‡æœ¬
         public DialogueModel(string fileName)
         {
-            // ÄÃµ½µ±Ç°³¡¾°Ãû
+            // æ‹¿åˆ°å½“å‰åœºæ™¯å
             string sceneName = SceneManager.GetActiveScene().name;
             string path = LocalizationMgr.Instance.GetDialoguePath(sceneName, fileName);
-            // ÏÈ°ÑÎÄ¼şµÄÃ¿Ò»ĞĞ¶¼µ±×÷Ò»¸ö key ¶Á½øÀ´
+            // å…ˆæŠŠæ–‡ä»¶çš„æ¯ä¸€è¡Œéƒ½å½“ä½œä¸€ä¸ª key è¯»è¿›æ¥
             _keys = File.ReadAllLines(path);
             LoadDialogue(_keys);
         }
 
-        // ´Ó×Ö·û´®Êı×Ö×é¹¹ÔìÎÄ±¾
+        // ä»å­—ç¬¦ä¸²æ•°å­—ç»„æ„é€ æ–‡æœ¬
         public DialogueModel(string[] lines)
         {
             _keys = lines;
             LoadDialogue(_keys);
         }
 
-        // ¶ÁÈ¡¶Ô»°ÎÄ±¾
+        // è¯»å–å¯¹è¯æ–‡æœ¬
         private void LoadDialogue(string[] keys)
         {
-            // °ÑÃ¿¸ö key ´«¸ø LocalizationMgr£¬·µ»Øµ±Ç°ÓïÑÔ¶ÔÓ¦µÄÎÄ±¾
+            // æŠŠæ¯ä¸ª key ä¼ ç»™ LocalizationMgrï¼Œè¿”å›å½“å‰è¯­è¨€å¯¹åº”çš„æ–‡æœ¬
             Lines = keys.Select(k =>
                 {
                     string txt = LocalizationMgr.Instance.GetText(k.Trim());
@@ -44,7 +44,7 @@ namespace MVC
                 .ToArray();
         }
 
-        // ¶ÔÍâÌá¹©µÄÖØÒëÈë¿Ú£ºÊ¹ÓÃÒÑ»º´æµÄ _keys ÖØĞÂÉú³É Lines
+        // å¯¹å¤–æä¾›çš„é‡è¯‘å…¥å£ï¼šä½¿ç”¨å·²ç¼“å­˜çš„ _keys é‡æ–°ç”Ÿæˆ Lines
         public void Reload()
         {
             if (_keys == null)

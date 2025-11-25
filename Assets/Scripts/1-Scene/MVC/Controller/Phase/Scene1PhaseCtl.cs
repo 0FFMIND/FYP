@@ -113,7 +113,7 @@ namespace MVC
             {
                 player.model.SetDisabled(true);
                 // »½ÐÑdialog
-                timelineCtl.StartFifthDialogue(() =>
+                timelineCtl.StartDialogue(5, () =>
                 {
                     player.model.SetDisabled(false);
                 });

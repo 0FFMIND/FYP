@@ -21,21 +21,17 @@ namespace MVC
             base.OnDisable();
         }
 
-        public override void StartDialogue()
-        {
-            base.StartDialogue();
-        }
 
         public void StartDialogue(string[] lines, Action onFinished)
         {
             dialogueModel = new DialogueModel(lines);
             finished = onFinished;
-            StartDialogue();
+            StartDialogue(new DialogueModel(lines));
         }
 
-        protected override IEnumerator TypeLines()
+        protected override IEnumerator TypeLines(Sprite currentSprite = null)
         {
-            // Èç¹ûÊÇµÚÒ»¾ä
+            // å¦‚æžœæ˜¯ç¬¬ä¸€å¥
             if (index == 0)
             {
                 _isEntering = true;
@@ -48,36 +44,26 @@ namespace MVC
         private IEnumerator PlayClosed()
         {
             yield return enterAnim.PlayExit();
-            // ´¥·¢¶Ô»°½áÊø»Øµ÷
+            // è§¦å‘å¯¹è¯ç»“æŸå›žè°ƒ
             finished?.Invoke();
         }
 
         protected override void NextLine()
         {
-            // Èç¹û¶ÁÍê
+            // å¦‚æžœè¯»å®Œ
             if (index == dialogueModel.Lines.Length)
             {
-                index++;
-                // Çå¿ÕÎÄ±¾
-                dialogueView.tmp.text = "";
-                HideArrow();
-                // ²¥·Å¶¯»­
+                // æ¸…ç©ºæ–‡æœ¬
+                dialogueRenderer.Hide();
+                // æ’­æ”¾åŠ¨ç”»
                 StartCoroutine(PlayClosed());
             }
-            // ²»È»°´Å¥µã»÷»áÎóÈÏÎªnextline
+            // ä¸ç„¶æŒ‰é’®ç‚¹å‡»ä¼šè¯¯è®¤ä¸ºnextline
             if (dialogueModel == null || index >= dialogueModel.Lines.Length)
             {
                 return;
             }
-            foreach (var map in mappings)
-            {
-                if (index == map.lineIndex)
-                {
-                    currentSprite = map.sprite;
-                    break;
-                }
-            }
-            // ´ò×Ö
+            // æ‰“å­—
             StartCoroutine(TypeLines());
         }
     }

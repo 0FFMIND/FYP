@@ -13,7 +13,6 @@ namespace MVC
     {
         private Coroutine typingCo;
         private TMP_Text tmp;
-        private ArrowIndicator arrowIndicator;
         private bool enableTypingSfx;
         private float typingRate;
         private float typeSpeed;
@@ -29,14 +28,12 @@ namespace MVC
             string fullText,
             float typeSpeed,
             float typingRate,
-            bool enableTypingSfx,
-            ArrowIndicator arrowIndicator
+            bool enableTypingSfx
         )
         {
             StopTypingInternal();
 
             this.tmp = tmp;
-            this.arrowIndicator = arrowIndicator;
             this.enableTypingSfx = enableTypingSfx;
             this.typingRate = typingRate;
             this.typeSpeed = typeSpeed;
@@ -133,9 +130,6 @@ namespace MVC
 
             progress = 1f;
             typingCo = null;
-
-            // 打字结束显示箭头
-            arrowIndicator?.PositionArrowUnderText(tmp);
         }
 
         private void StopTypingInternal(bool clearRefs = true)
@@ -149,7 +143,6 @@ namespace MVC
             if (clearRefs)
             {
                 tmp = null;
-                arrowIndicator = null;
             }
         }
     }

@@ -11,6 +11,7 @@ namespace Manager
         private GameObject pausePanel;
         private const string PauseMenuPath = "Prefabs/Global/PauseMenu";
         public bool canPause = true;
+        private bool pendingShowGuide = false;
 
         private void Awake()
         {
@@ -101,6 +102,8 @@ namespace Manager
                     pausePanel = Instantiate(prefab);
                     // 跨场景存活，防止切场景过程中对象被销毁/失活而无法启动协程
                     DontDestroyOnLoad(pausePanel);
+                    var view = pausePanel.GetComponent<PauseView>();
+                    if (view != null) view.showGuide = pendingShowGuide;
                 }
                 pausePanel.SetActive(false);
             }
@@ -124,9 +127,12 @@ namespace Manager
 
         public void SetShowGuide(bool on)
         {
-            var view = GetPauseView();
-            if (view == null) return;
-            view.showGuide = on;
+            pendingShowGuide = on;
+            if (pausePanel != null)
+            {
+                var view = pausePanel.GetComponent<PauseView>();
+                if (view != null) view.showGuide = on;
+            }
         }
     }
 }

@@ -6,21 +6,21 @@ namespace MVC
 {
     public class InteractCtl : MonoBehaviour, IInteractable
     {
-        [Header("Ã¿´Î½»»¥ÅäÖÃ£¨µÚ i ´Î£©")]
+        [Header("æ¯æ¬¡äº¤äº’é…ç½®ï¼ˆç¬¬ i æ¬¡ï¼‰")]
         [SerializeField]
         private InteractModel[] steps;
 
-        protected int visitCount = 0; // ÒÑ·ÃÎÊ´ÎÊı
-        private InteractModel _curStep; // µ±Ç°ÕâÒ»´ÎÊ¹ÓÃµÄ²½Öè
+        protected int visitCount = 0; // å·²è®¿é—®æ¬¡æ•°
+        private InteractModel _curStep; // å½“å‰è¿™ä¸€æ¬¡ä½¿ç”¨çš„æ­¥éª¤
 
         protected PlayerCtl _player;
 
-        [Header("±ê¼Ç")]
+        [Header("æ ‡è®°")]
         [SerializeField]
-        public bool isImportant = false; // ÖØÒª½»»¥£¨Ö÷Ïß/¹Ø¼ü£©
+        public bool isImportant = false; // é‡è¦äº¤äº’ï¼ˆä¸»çº¿/å…³é”®ï¼‰
 
         [NonSerialized]
-        public bool isTalked = false; // ÊÇ·ñÒÑÍêÕûÁÄ¹ı£¨ÔËĞĞÊ±ÖÃÎ»£©
+        public bool isTalked = false; // æ˜¯å¦å·²å®Œæ•´èŠè¿‡ï¼ˆè¿è¡Œæ—¶ç½®ä½ï¼‰
 
         [SerializeField]
         protected InteractDialogCtl interactCtl;
@@ -28,21 +28,21 @@ namespace MVC
         [SerializeField]
         protected TimelineDialogCtl dialogCtl;
 
-        // ÊÇ·ñ´¦ÓÚ¶Ô»°ÖĞ
+        // æ˜¯å¦å¤„äºå¯¹è¯ä¸­
         private bool isInteracting;
 
-        // Ñ¡Ïî
+        // é€‰é¡¹
         [SerializeField]
         private ChoiceCtl choiceCtl;
 
-        // Ìá¹©Ö»¶Á·ÃÎÊ£¬¹© PlayerInteractCtl ÅĞ¶¨
+        // æä¾›åªè¯»è®¿é—®ï¼Œä¾› PlayerInteractCtl åˆ¤å®š
         public bool IsImportant => isImportant;
         public bool IsTalked => isTalked;
 
-        // ¸ù¾İµ±Ç°·ÃÎÊ´ÎÊı vc£¬ÌôÑ¡¡°ÆğÊ¼ãĞÖµ visit ¡Ü vc ÇÒ×î´ó¡±µÄ²½Öè
+        // æ ¹æ®å½“å‰è®¿é—®æ¬¡æ•° vcï¼ŒæŒ‘é€‰â€œèµ·å§‹é˜ˆå€¼ visit â‰¤ vc ä¸”æœ€å¤§â€çš„æ­¥éª¤
         private InteractModel StepFor(int vc)
         {
-            // ÈôÎ´ÅäÖÃ steps£¬Ö±½Ó·µ»Ø null
+            // è‹¥æœªé…ç½® stepsï¼Œç›´æ¥è¿”å› null
             if (steps == null || steps.Length == 0)
                 return null;
             InteractModel best = null;
@@ -52,14 +52,14 @@ namespace MVC
                 var s = steps[i];
                 if (s == null)
                     continue;
-                // Èô¸Ã²½ÖèµÄãĞÖµ ¡Ü vc ÇÒ±ÈÒÑÑ¡µÄãĞÖµ¸ü´ó
+                // è‹¥è¯¥æ­¥éª¤çš„é˜ˆå€¼ â‰¤ vc ä¸”æ¯”å·²é€‰çš„é˜ˆå€¼æ›´å¤§
                 if (vc >= s.visit && s.visit > bestStart)
                 {
                     best = s;
                     bestStart = s.visit;
                 }
             }
-            // Ã»ÃüÖĞ¾ÍÓÃµÚÒ»¸ö£¨¿É°´Ğè¸Ä³É null£©
+            // æ²¡å‘½ä¸­å°±ç”¨ç¬¬ä¸€ä¸ªï¼ˆå¯æŒ‰éœ€æ”¹æˆ nullï¼‰
             return best ?? steps[0];
         }
 
@@ -67,13 +67,13 @@ namespace MVC
         {
             _curStep = StepFor(visitCount);
 
-            // ÅĞ¶¨¸÷¶ÎÊÇ·ñ´æÔÚ
+            // åˆ¤å®šå„æ®µæ˜¯å¦å­˜åœ¨
             bool hasFirst = _curStep.firstLines != null && _curStep.firstLines.Length > 0;
             bool hasSecondLines = _curStep.secondLines != null && _curStep.secondLines.Length > 0;
             bool hasSecondMaps = _curStep.secondMappings != null && _curStep.secondMappings.Length > 0;
             bool hasChoice = _curStep.choiceModel.items != null && _curStep.choiceModel.items.Length > 0;
 
-            // Æô¶¯ second ¶Î£¨×ß dialogCtl£©£¬Èİ´í£ºÓ³Éä»òÌ¨´ÊÈ±Ê§Ôò´«¿ÕÊı×é
+            // å¯åŠ¨ second æ®µï¼ˆèµ° dialogCtlï¼‰ï¼Œå®¹é”™ï¼šæ˜ å°„æˆ–å°è¯ç¼ºå¤±åˆ™ä¼ ç©ºæ•°ç»„
             void StartSecondFlow()
             {
                 if (hasChoice)
@@ -97,14 +97,14 @@ namespace MVC
                 );
             }
 
-            // Çé¿öA£ºfirst ²»´æÔÚ¶ø second ´æÔÚ ¡ú Ö±½Ó½øÈë second£¨²»×ß interactCtl£©
+            // æƒ…å†µAï¼šfirst ä¸å­˜åœ¨è€Œ second å­˜åœ¨ â†’ ç›´æ¥è¿›å…¥ secondï¼ˆä¸èµ° interactCtlï¼‰
             if (!hasFirst && hasSecondLines)
             {
                 StartSecondFlow();
                 return;
             }
 
-            // Çé¿öB£ºfirst ´æÔÚ ¡ú ÏÈ×ß½»»¥¶Ô»°£¬»Øµ÷ÀïÔÙ¾ö¶¨ÊÇ·ñ½ø second
+            // æƒ…å†µBï¼šfirst å­˜åœ¨ â†’ å…ˆèµ°äº¤äº’å¯¹è¯ï¼Œå›è°ƒé‡Œå†å†³å®šæ˜¯å¦è¿› second
             if (hasFirst)
             {
                 interactCtl.StartDialogue(
@@ -124,7 +124,7 @@ namespace MVC
             }
             else
             {
-                // Çé¿öC£ºÁ½¶Î¶¼Ã»ÓĞÌ¨´Ê
+                // æƒ…å†µCï¼šä¸¤æ®µéƒ½æ²¡æœ‰å°è¯
                 EndInteract(_player);
             }
         }
@@ -157,12 +157,12 @@ namespace MVC
             bool hasChoice =
                 _curStep.choiceModel.items != null && _curStep.choiceModel.items.Length > 0;
 
-            // ÏÈ×ß½»»¥¶Ô»°£¨´ø linemapping£©
+            // å…ˆèµ°äº¤äº’å¯¹è¯ï¼ˆå¸¦ linemappingï¼‰
             interactCtl.StartDialogue(
                 _curStep.firstLines,
                 () =>
                 {
-                    // »Øµ÷
+                    // å›è°ƒ
                     if (hasMapping)
                     {
                         if (hasChoice)
@@ -199,7 +199,7 @@ namespace MVC
             {
                 return;
             }
-            // ÓĞ³Ö¾Ã¼àÌı£¨Inspector ÉÏ°ó¶¨ÁË·½·¨£©¡ú ´« this£¬ÈÃ¼àÌı·½ÔÚºÏÊÊÊ±»úµ÷ÓÃ ctl.Done()
+            // æœ‰æŒä¹…ç›‘å¬ï¼ˆInspector ä¸Šç»‘å®šäº†æ–¹æ³•ï¼‰â†’ ä¼  thisï¼Œè®©ç›‘å¬æ–¹åœ¨åˆé€‚æ—¶æœºè°ƒç”¨ ctl.Done()
             bool hasListeners =
                 _curStep != null
                 && _curStep.onInteractEnd != null
@@ -207,26 +207,26 @@ namespace MVC
 
             if (hasListeners)
             {
-                _curStep.onInteractEnd.Invoke(this); // ¶¯Ì¬²ÎÊı£ºµ±Ç° InteractCtl
+                _curStep.onInteractEnd.Invoke(this); // åŠ¨æ€å‚æ•°ï¼šå½“å‰ InteractCtl
             }
             else
             {
-                Done(); // Ã»°ó¶¨¾ÍÁ¢¿ÌÊÕÎ²
+                Done(); // æ²¡ç»‘å®šå°±ç«‹åˆ»æ”¶å°¾
             }
         }
 
-        // Ìá¹©¸ø¼àÌı·½ÔÚÁ÷³ÌÄ©Î²µ÷ÓÃ
+        // æä¾›ç»™ç›‘å¬æ–¹åœ¨æµç¨‹æœ«å°¾è°ƒç”¨
         public void Done()
         {
-            // ÍË³ö½»»¥×´Ì¬
+            // é€€å‡ºäº¤äº’çŠ¶æ€
             isInteracting = false;
-            // ·ÃÎÊ´ÎÊı +1
+            // è®¿é—®æ¬¡æ•° +1
             visitCount++;
-            // ±¾¶ÔÏó±ê¼ÇÎªÒÑÁÄÍê
+            // æœ¬å¯¹è±¡æ ‡è®°ä¸ºå·²èŠå®Œ
             isTalked = true;
-            // ¹ã²¥½áÊøÊÂ¼ş£¨PlayerInteractCtl µÈ»á½â³ıÍÌ¼ü/¸ßÁÁµÈ£©
+            // å¹¿æ’­ç»“æŸäº‹ä»¶ï¼ˆPlayerInteractCtl ç­‰ä¼šè§£é™¤åé”®/é«˜äº®ç­‰ï¼‰
             EventBus.Publish(new EInteractEnd());
-            // ÊÍ·ÅÍæ¼ÒÒıÓÃ
+            // é‡Šæ”¾ç©å®¶å¼•ç”¨
             _player = null;
         }
     }

@@ -84,7 +84,7 @@ namespace MVC
                 yield break;
             }
             var go = view.gameObject;
-            // Èë³¡Ç°ÏÈÈ·±£Ãæ°å¿É¼û£¬¼ıÍ·Òş²Ø
+            // å…¥åœºå‰å…ˆç¡®ä¿é¢æ¿å¯è§ï¼Œç®­å¤´éšè—
             if (!go.activeSelf)
             {
                 go.SetActive(true);
@@ -157,7 +157,7 @@ namespace MVC
 
             float keepAlpha = img ? img.color.a : 1f;
 
-            // ´Óµ±Ç°Î»ÖÃ»¬µ½¡°Èë³¡ÆğµãÎ»ÖÃ¡±
+            // ä»å½“å‰ä½ç½®æ»‘åˆ°â€œå…¥åœºèµ·ç‚¹ä½ç½®â€
             yield return SlideOut(
                 go,
                 panelImage,
@@ -187,8 +187,8 @@ namespace MVC
             var rt = go.transform as RectTransform;
             if (rt != null)
             {
-                Vector2 start = rt.anchoredPosition; // ÍË³¡Ç°µÄ¡°»ù×¼Î»¡±
-                Vector2 target = start + new Vector2(offsetX, -offsetY); // ÍË³¡ÖÕµã£¨= Èë³¡Æğµã£©
+                Vector2 start = rt.anchoredPosition; // é€€åœºå‰çš„â€œåŸºå‡†ä½â€
+                Vector2 target = start + new Vector2(offsetX, -offsetY); // é€€åœºç»ˆç‚¹ï¼ˆ= å…¥åœºèµ·ç‚¹ï¼‰
 
                 float a0 = img ? img.color.a : 1f;
 
@@ -209,7 +209,7 @@ namespace MVC
 
                 img.gameObject.SetActive(false);
 
-                // ÏÈµÖ´ïÍË³¡ÖÕµã£¬ÔÙ**¸´Î»»Ø»ù×¼Î»**£¬·ÀÖ¹ÏÂ´Î½ø³¡ÀÛ¼ÓÆ«ÒÆ
+                // å…ˆæŠµè¾¾é€€åœºç»ˆç‚¹ï¼Œå†**å¤ä½å›åŸºå‡†ä½**ï¼Œé˜²æ­¢ä¸‹æ¬¡è¿›åœºç´¯åŠ åç§»
                 rt.anchoredPosition = target;
                 if (img)
                 {
@@ -218,7 +218,7 @@ namespace MVC
                     img.color = c;
                 }
 
-                rt.anchoredPosition = start; // ¡û ¹Ø¼ü¸´Î»
+                rt.anchoredPosition = start;
             }
             else
             {
@@ -233,9 +233,9 @@ namespace MVC
                     yield return null;
                 }
 
-                // Í¬Ñù¸´Î»
+                // åŒæ ·å¤ä½
                 go.transform.localPosition = target;
-                go.transform.localPosition = start; // ¡û ¹Ø¼ü¸´Î»
+                go.transform.localPosition = start;
             }
         }
 
@@ -251,7 +251,7 @@ namespace MVC
         {
             float dur = Mathf.Max(0.0001f, duration);
             float t = 0f;
-            // Ê¹ÓÃ RectTransform ÓÅÏÈ£¨UI£©£¬·ñÔò×ß Transform.localPosition£¨ÊÀ½ç/¾Ö²¿ÎïÌå£©
+            // ä½¿ç”¨ RectTransform ä¼˜å…ˆï¼ˆUIï¼‰ï¼Œå¦åˆ™èµ° Transform.localPositionï¼ˆä¸–ç•Œ/å±€éƒ¨ç‰©ä½“ï¼‰
             var rt = go.transform as RectTransform;
             if (curve == null)
                 curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -264,8 +264,8 @@ namespace MVC
                 while (t < dur)
                 {
                     t += Time.unscaledDeltaTime;
-                    float u = curve.Evaluate(Mathf.Clamp01(t / dur)); // ÓÉÇúÏß¾ö¶¨½ø¶È
-                    rt.anchoredPosition = Vector2.LerpUnclamped(start, target, u); // ÔÊĞíÇúÏß>1²úÉú»Øµ¯
+                    float u = curve.Evaluate(Mathf.Clamp01(t / dur)); // ç”±æ›²çº¿å†³å®šè¿›åº¦
+                    rt.anchoredPosition = Vector2.LerpUnclamped(start, target, u); // å…è®¸æ›²çº¿>1äº§ç”Ÿå›å¼¹
                     var c = img.color;
                     c.a = Mathf.LerpUnclamped(0f, alphaTarget, u);
                     img.color = c;

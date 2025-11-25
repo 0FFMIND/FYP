@@ -14,7 +14,7 @@ namespace MVC
 
         public void PublishJournal(InteractCtl ctl)
         {
-            // –ﬁ∏ƒjournal
+            // ‰øÆÊîπjournal
             EventBus.Publish(new EJournalStepChanged("reachRooftop", 1, StepState.Done));
 
             var it = JournalMgr.Instance?.Model?.Find("exploreRooftop");
@@ -22,7 +22,7 @@ namespace MVC
             {
                 EventBus.Publish(new EJournalStatusChanged("exploreRooftop", JournalStatus.Active));
             }
-            // ¥•∑¢guide
+            // Ëß¶Âèëguide
             EventBus.Publish(new EScene1ArrivalPhaseChange(Scene1Phase.MenuTutorial));
             ctl?.Done();
         }

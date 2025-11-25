@@ -23,27 +23,19 @@ namespace MVC
             base.OnDisable();
         }
 
-        public override void StartDialogue()
-        {
-            base.StartDialogue();
-        }
-
         public void StartDialogue(string modelText, Action onFinished)
         {
             finished = onFinished;
-            this.modelText = modelText;
-            StartDialogue();
+            StartDialogue(new DialogueModel(modelText));
         }
 
         public void StartDialogue(string[] text, Action onFinished)
         {
             finished = onFinished;
-            this.dialogueModel = new DialogueModel(text);
-            this.modelText = "";
-            StartDialogue();
+            StartDialogue(new DialogueModel(text));
         }
 
-        protected override IEnumerator TypeLines()
+        protected override IEnumerator TypeLines(Sprite currentSprite = null)
         {
             // 如果是第一句
             if (index == 0 && startOnce)
@@ -75,8 +67,7 @@ namespace MVC
             if (index == dialogueModel.Lines.Length)
             {
                 // 清空文本
-                dialogueView.tmp.text = "";
-                HideArrow();
+                dialogueRenderer.Hide();
                 // 播放动画
                 StartCoroutine(PlayClosed());
             }

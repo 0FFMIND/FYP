@@ -22,31 +22,8 @@ namespace MVC
     public abstract class DialogCtlBase : MonoBehaviour
     {
         protected bool _isEntering;
-
-        [Header("ScriptableObject 对话资源")]
-        [SerializeField]
-        protected string modelText;
-
-        [SerializeField]
-        protected LineMapping[] mappings;
-
-        [Header("打字机设置")]
-        [SerializeField]
-        private bool enableTypingSfx = true;
-
-        [SerializeField, Min(0.01f)]
-        private float typingRate = 1f;
-
-        [Header("视图引用")]
-        [SerializeField]
-        protected DialogueView bgView;
-
-        [SerializeField]
-        protected DialogueView dialogueView;
         protected int index;
         protected DialogueModel dialogueModel;
-        protected Sprite currentSprite;
-
         private LanguageCode languageCode;
 
         [SerializeField]
@@ -56,13 +33,9 @@ namespace MVC
         {
             dialogueRenderer.RenderViews(sprite, text);
         }
-        public virtual void StartDialogue()
+        public virtual void StartDialogue(DialogueModel dialogueModel)
         {
-            // 载入对话
-            if (modelText != null && modelText.Length > 0)
-            {
-                dialogueModel = new DialogueModel(modelText);
-            }
+            this.dialogueModel = dialogueModel;
             // 启动时记录当前语言
             languageCode = SettingsMgr.Instance.GetLanguage();
             // 刷新index
@@ -71,25 +44,10 @@ namespace MVC
             NextLine();
         }
 
-        public void HideArrow()
+        protected virtual IEnumerator TypeLines(Sprite currentSprite = null)
         {
-            dialogueRenderer.Hide();
-        }
-
-        protected virtual IEnumerator TypeLines()
-        {
-            string fullRaw = "";
-
-            if (
-                dialogueModel != null
-                && dialogueModel.Lines != null
-                && dialogueModel.Lines.Length > 0
-            )
-            {
-                int cur = Mathf.Clamp(index, 0, dialogueModel.Lines.Length - 1);
-                // 取出当前行的文本
-                fullRaw = dialogueModel.Lines[cur] ?? fullRaw;
-            }
+            // 获取当前行文本
+            string fullRaw = GetLine(index);
             // 交给 dialogueRenderer 进行显示和打字
             dialogueRenderer.ShowLine(currentSprite, fullRaw);
 
@@ -123,16 +81,23 @@ namespace MVC
             if (e.Language != languageCode)
             {
                 languageCode = e.Language;
-                if (dialogueModel != null && dialogueView != null)
+                if (dialogueModel != null)
                 {
                     // 让 Model 重新生成 Lines
                     dialogueModel.Reload();
-                    int cur = Mathf.Clamp(index, 0, dialogueModel.Lines.Length - 1);
-                    string newText = dialogueModel.Lines[cur] ?? "";
+                    string newText = GetLine(index);
                     // 让 Renderer 重新绑定语言
-                    dialogueRenderer.RebindLanguage(currentSprite, newText);
+                    dialogueRenderer.RebindLanguage(null, newText);
                 }
             }
+        }
+
+        // 获取指定行的文本，防止越界
+        private string GetLine(int i)
+        {
+            if (dialogueModel?.Lines == null || dialogueModel.Lines.Length == 0) return "";
+            int cur = Mathf.Clamp(i, 0, dialogueModel.Lines.Length - 1);
+            return dialogueModel.Lines[cur] ?? "";
         }
 
         // 订阅输入与设置变更事件

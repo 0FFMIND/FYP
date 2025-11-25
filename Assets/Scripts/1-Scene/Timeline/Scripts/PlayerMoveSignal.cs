@@ -99,7 +99,7 @@ namespace MVC
             // 暂停director
             director.Pause();
             // 启动dialog
-            dialogCtl.StartFirstDialogue(ResumeDirector);
+            dialogCtl.StartDialogue(1, ResumeDirector);
         }
 
         public void PlayerSecondMove()
@@ -123,7 +123,7 @@ namespace MVC
             yield return new WaitForSecondsRealtime(1.7f);
             // 暂停director
             director.Pause();
-            dialogCtl.StartSecondDialogue(PlayerSecondMoveEnd);
+            dialogCtl.StartDialogue(2, PlayerSecondMoveEnd);
         }
 
         private void PlayerSecondTurn()
@@ -159,7 +159,7 @@ namespace MVC
             yield return new WaitForSecondsRealtime(1f);
             emoteCtl.Play(EmoteType.Thinking, 1f);
             yield return new WaitForSecondsRealtime(1.7f);
-            dialogCtl.StartThirdDialogue(PlayerThirdMoveEnd);
+            dialogCtl.StartDialogue(3, PlayerThirdMoveEnd);
         }
 
         private void PlayerThirdMoveEnd()
@@ -186,7 +186,7 @@ namespace MVC
             yield return mover.Jump(0.2f, 0.6f);
             yield return new WaitForSecondsRealtime(0.5f);
             bg.isOn = false;
-            dialogCtl.StartSixthDialogue(() =>
+            dialogCtl.StartDialogue(6, () =>
             {
                 GameObject
                     .FindGameObjectWithTag("Player")
@@ -205,7 +205,7 @@ namespace MVC
             emoteCtl.Play(EmoteType.Warning, 0.6f, true);
             yield return new WaitForSecondsRealtime(1f);
             bg.isOn = false;
-            dialogCtl.StartSeventhDialogue(() =>
+            dialogCtl.StartDialogue(7, () =>
             {
                 bg.isOn = true;
                 // 开始播放动画
@@ -239,13 +239,13 @@ namespace MVC
             yield return mover.Jump(0.2f, 0.6f);
             emoteCtl.Play(EmoteType.Warning, 0.6f, true);
             yield return new WaitForSecondsRealtime(1f);
-            dialogCtl.StartEighthDialogue(() =>
+            dialogCtl.StartDialogue(8, () =>
             {
                 EventBus.Publish(new EJournalStepChanged("endRooftop", 1, StepState.Done));
                 switcher.EnterUI(() =>
                 {
                     AudioManager.Instance.PlayBGM("1-bgm-2", 0f);
-                    UICtl.StartNinethDialogue(() =>
+                    UICtl.StartDialogue(9, () =>
                     {
                         switcher.ExitUI(() =>
                         {
@@ -261,7 +261,7 @@ namespace MVC
             yield return new WaitForSecondsRealtime(0.1f);
             emoteCtl.Play(EmoteType.Warning, 0.6f, true);
             yield return mover.Jump(0.2f, 0.6f);
-            dialogCtl.StartTenthDialogue(() =>
+            dialogCtl.StartDialogue(10, () =>
             {
                 StartCoroutine(PlayerEighthMove());
             });
@@ -272,7 +272,7 @@ namespace MVC
             EventBus.Publish(new EJournalStepChanged("endRooftop", 2, StepState.Done));
             cameraCtl.PanToY(-4f, 3f);
             yield return new WaitForSecondsRealtime(2f);
-            dialogSideCtl.StartEleventhDialogue(() =>
+            dialogSideCtl.StartDialogue(11, () =>
             {
                 StartCoroutine(PlayerNinethMove());
             });
@@ -284,7 +284,7 @@ namespace MVC
             cameraCtl.PanToY(4f, 1f);
             yield return new WaitForSecondsRealtime(1f);
             bg.isOn = false;
-            dialogCtl.StartTwelfthDialogue(() =>
+            dialogCtl.StartDialogue(12, () =>
             {
                 cameraCtl.FollowPlayer();
                 StartCoroutine(PlayerTenthMove());
@@ -316,7 +316,7 @@ namespace MVC
             switcher.EnterUI(() =>
             {
                 AudioManager.Instance.PlayBGM("1-bgm-4", 0f);
-                UICtl.StartThirteenthDialogue(() =>
+                UICtl.StartDialogue(13, () =>
                 {
                     AudioManager.Instance.StopBGM();
                     // 进入1-Scene-UI

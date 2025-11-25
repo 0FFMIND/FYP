@@ -10,15 +10,15 @@ namespace MVC
     [Serializable]
     public class InteractModel
     {
-        [Header("´ÓµÚ¼¸´ÎÆğÉúĞ§£¨º¬£©£¬Ä¬ÈÏ0£¬¶ÔÓ¦Çø¼ä [visit, +¡Ş)")]
+        [Header("ä»ç¬¬å‡ æ¬¡èµ·ç”Ÿæ•ˆï¼ˆå«ï¼‰ï¼Œé»˜è®¤0ï¼Œå¯¹åº”åŒºé—´ [visit, +âˆ)")]
         public int visit = 0;
 
-        [Header("µÚÒ»¶Î")]
+        [Header("ç¬¬ä¸€æ®µ")]
         [SerializeField]
         [TextArea]
         public string[] firstLines;
 
-        [Header("µÚ¶ş¶Î")]
+        [Header("ç¬¬äºŒæ®µ")]
         [SerializeField]
         [TextArea]
         public string[] secondLines;
@@ -26,12 +26,12 @@ namespace MVC
         [SerializeField]
         public LineMapping[] secondMappings;
 
-        [Header("Ñ¡Ïî")]
+        [Header("é€‰é¡¹")]
 
         [SerializeField]
         public ChoiceModel choiceModel;
 
-        [Header("»Øµ÷ÊÂ¼ş")]
+        [Header("å›è°ƒäº‹ä»¶")]
         [SerializeField]
         public InteractEndEvent onInteractEnd;
     }

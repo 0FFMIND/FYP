@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 
@@ -11,55 +12,22 @@ namespace MVC
         EnterAnim enterAnim;
 
         [SerializeField]
-        private LineMapping[] firstMappings;
-
-        [SerializeField]
-        private LineMapping[] secondMappings;
-
-        [SerializeField]
-        private LineMapping[] thirdMappings;
-
-        [SerializeField]
-        private LineMapping[] fourthMappings;
-
-        [SerializeField]
-        private LineMapping[] fifthMappings;
-
-        [SerializeField]
-        private LineMapping[] sixthMappings;
-
-        [SerializeField]
-        private LineMapping[] seventhMappings;
-
-        [SerializeField]
-        private LineMapping[] eighthMappings;
-
-        [SerializeField]
-        private LineMapping[] ninethMappings;
-
-        [SerializeField]
-        private LineMapping[] tenthMappings;
-
-        [SerializeField]
-        private LineMapping[] eleventhMappings;
-
-        [SerializeField]
-        private LineMapping[] twelfthMappings;
-
-        [SerializeField]
-        private LineMapping[] thirteenthMappings;
+        private Scene1DialogueClips dialogueClips;
 
         [SerializeField]
         private GameObject dialogPanel;
-
         private Action finished;
 
-        // ÊÇ·ñÔÚ±¾ÂÖ½áÊøÊ±½øÈë Choice Á÷³Ì£¨²»Á¢¼´¹Ø±ÕÃæ°å£©
+        // æ˜¯å¦åœ¨æœ¬è½®ç»“æŸæ—¶è¿›å…¥ Choice æµç¨‹ï¼ˆä¸ç«‹å³å…³é—­é¢æ¿ï¼‰
         public bool hasChoice = false;
 
         private bool _waitingChoice = false;
 
+        private LineMapping[] mappings;
+
         public ChoiceModel choiceModel;
+
+        protected Sprite currentSprite;
 
         [SerializeField]
         private ChoiceCtl choiceCtl;
@@ -75,13 +43,13 @@ namespace MVC
 
         private void Start()
         {
-            // Òş²Ødialog
+            // éšè—dialog
             HideDialogue();
         }
 
         private void HideDialogue()
         {
-            // Òş²ØÄÚÈİ
+            // éšè—å†…å®¹
             RenderViews(null, null);
             dialogPanel.gameObject.SetActive(false);
         }
@@ -96,126 +64,31 @@ namespace MVC
             base.OnDisable();
         }
 
-        public override void StartDialogue()
-        {
-            base.StartDialogue();
-        }
-
-        // ×¨ÃÅ¸øinteractµÄ·½·¨
+        // ä¸“é—¨ç»™interactçš„æ–¹æ³•
         public void StartInteractDialogue(LineMapping[] mappings, string[] lines, Action onFinished)
         {
             this.mappings = mappings;
             finished = onFinished;
-            modelText = "";
-            dialogueModel = new DialogueModel(lines);
-            StartDialogue();
+            StartDialogue(new DialogueModel(lines));
         }
 
-        public void StartSecondDialogue(Action onFinished)
+        public void StartDialogue(int index, Action onFinished)
         {
-            mappings = secondMappings;
+            if (dialogueClips == null)
+            {
+                Debug.LogError("[TimelineDialogCtl]: Dialogue Clips is not assigned");
+                return;
+            }
+            index = index - 1; // ç”¨æˆ·ä¼ è¿›æ¥çš„ä»1å¼€å§‹
+            mappings = dialogueClips.dialogMappings[index].mappings;
             finished = onFinished;
-            modelText = "1-Scene-2.txt";
-            StartDialogue();
+            string modelText = dialogueClips.dialogMappings[index].textFile;
+            base.StartDialogue(new DialogueModel(modelText));
         }
 
-        public void StartFirstDialogue(Action onFinished)
+        protected override IEnumerator TypeLines(Sprite currentSprite = null)
         {
-            mappings = firstMappings;
-            finished = onFinished;
-            modelText = "1-Scene-1.txt";
-            base.StartDialogue();
-        }
-
-        public void StartThirdDialogue(Action onFinished)
-        {
-            mappings = thirdMappings;
-            finished = onFinished;
-            modelText = "1-Scene-5.txt";
-            base.StartDialogue();
-        }
-
-        public void StartFourthDialogue(Action onFinished)
-        {
-            mappings = fourthMappings;
-            finished = onFinished;
-            modelText = "1-Scene-7.txt";
-            base.StartDialogue();
-        }
-
-        public void StartFifthDialogue(Action onFinished)
-        {
-            mappings = fifthMappings;
-            finished = onFinished;
-            modelText = "1-Scene-8.txt";
-            base.StartDialogue();
-        }
-
-        public void StartSixthDialogue(Action onFinished)
-        {
-            mappings = sixthMappings;
-            finished = onFinished;
-            modelText = "1-Scene-9.txt";
-            base.StartDialogue();
-        }
-        public void StartSeventhDialogue(Action onFinished)
-        {
-            mappings = seventhMappings;
-            finished = onFinished;
-            modelText = "1-Scene-10.txt";
-            base.StartDialogue();
-        }
-
-        public void StartEighthDialogue(Action onFinished)
-        {
-            mappings = eighthMappings;
-            finished = onFinished;
-            modelText = "1-Scene-11.txt";
-            base.StartDialogue();
-        }
-
-        public void StartNinethDialogue(Action onFinished)
-        {
-            mappings = ninethMappings;
-            finished = onFinished;
-            modelText = "1-Scene-12.txt";
-            base.StartDialogue();
-        }
-
-        public void StartTenthDialogue(Action onFinished)
-        {
-            mappings = tenthMappings;
-            finished = onFinished;
-            modelText = "1-Scene-13.txt";
-            base.StartDialogue();
-        }
-
-        public void StartEleventhDialogue(Action onFinished)
-        {
-            mappings = eleventhMappings;
-            finished = onFinished;
-            modelText = "1-Scene-14.txt";
-            base.StartDialogue();
-        }
-
-        public void StartTwelfthDialogue(Action onFinished)
-        {
-            mappings = twelfthMappings;
-            finished = onFinished;
-            modelText = "1-Scene-15.txt";
-            base.StartDialogue();
-        }
-
-        public void StartThirteenthDialogue(Action onFinished)
-        {
-            mappings = thirteenthMappings;
-            finished = onFinished;
-            modelText = "1-Scene-16.txt";
-            base.StartDialogue();
-        }
-        protected override IEnumerator TypeLines()
-        {
-            // Èç¹ûÊÇµÚÒ»¾ä
+            // å¦‚æœæ˜¯ç¬¬ä¸€å¥
             if (index == 0)
             {
                 _isEntering = true;
@@ -224,10 +97,10 @@ namespace MVC
                     doneBG = false;
                 dialogPanel.gameObject.SetActive(true);
 
-                // ÏÈ×öÎÄ±¾¿òÉÏ¸¡
+                // å…ˆåšæ–‡æœ¬æ¡†ä¸Šæµ®
                 IEnumerator RunPanel()
                 {
-                    yield return enterAnim.PlayEnterCode(dialogueView, false);
+                    yield return enterAnim.PlayEnterCode(dialogueRenderer.dialogueView, false);
                     donePanel = true;
                 }
 
@@ -236,7 +109,7 @@ namespace MVC
                 {
                     IEnumerator RunBG()
                     {
-                        yield return enterAnim.PlayEnterCode(bgView, true);
+                        yield return enterAnim.PlayEnterCode(dialogueRenderer.bgView, true);
                         doneBG = true;
                     }
                     StartCoroutine(RunBG());
@@ -245,7 +118,7 @@ namespace MVC
                 {
                     doneBG = true;
                 }
-                // Í¬Ê±¿ªÅÜ
+                // åŒæ—¶å¼€è·‘
                 yield return new WaitUntil(() => donePanel && doneBG);
                 _isEntering = false;
                 if (skipBG)
@@ -253,70 +126,64 @@ namespace MVC
                     TransitionMgr.Instance.FadeIn(0.5f);
                 }
             }
-            yield return base.TypeLines();
+            yield return base.TypeLines(currentSprite);
         }
 
         private IEnumerator PlayClosed()
         {
-            // Çå¿ÕÎÄ±¾
-            dialogueView.tmp.text = "";
-            // ¹ØµôÏòÏÂĞ¡¼ıÍ·
-            HideArrow();
-            // ²¢ĞĞ°Ñ¡°¶Ô»°¿ò & ±³¾°¡±×ö CodeTween ÍË³¡£¬µÈÁ½Õß¶¼½áÊø
+            dialogueRenderer.Hide();
+            // å¹¶è¡ŒæŠŠâ€œå¯¹è¯æ¡† & èƒŒæ™¯â€åš CodeTween é€€åœºï¼Œç­‰ä¸¤è€…éƒ½ç»“æŸ
             bool donePanel = false,
                 doneBG = false;
 
             IEnumerator RunPanel()
             {
                 if (enterAnim)
-                    yield return enterAnim.PlayExitCode(dialogueView, false);
+                    yield return enterAnim.PlayExitCode(dialogueRenderer.dialogueView, false);
                 donePanel = true;
             }
             IEnumerator RunBG()
             {
                 if (enterAnim)
-                    yield return enterAnim.PlayExitCode(bgView, true);
+                    yield return enterAnim.PlayExitCode(dialogueRenderer.bgView, true);
                 doneBG = true;
             }
 
             StartCoroutine(RunPanel());
             StartCoroutine(RunBG());
             yield return new WaitUntil(() => donePanel && doneBG);
-            // Òş²Ø¶Ô»°Óë±³¾°
+            // éšè—å¯¹è¯ä¸èƒŒæ™¯
             HideDialogue();
             dialogPanel.gameObject.SetActive(false);
         }
 
         private IEnumerator PlayClosedWithFinished()
         {
-            // Çå¿ÕÎÄ±¾
-            dialogueView.tmp.text = "";
-            // ¹ØµôÏòÏÂĞ¡¼ıÍ·
-            HideArrow();
-            // ²¢ĞĞ°Ñ¡°¶Ô»°¿ò & ±³¾°¡±×ö CodeTween ÍË³¡£¬µÈÁ½Õß¶¼½áÊø
+            dialogueRenderer.Hide();
+            // å¹¶è¡ŒæŠŠâ€œå¯¹è¯æ¡† & èƒŒæ™¯â€åš CodeTween é€€åœºï¼Œç­‰ä¸¤è€…éƒ½ç»“æŸ
             bool donePanel = false,
                 doneBG = false;
 
             IEnumerator RunPanel()
             {
                 if (enterAnim)
-                    yield return enterAnim.PlayExitCode(dialogueView, false);
+                    yield return enterAnim.PlayExitCode(dialogueRenderer.dialogueView, false);
                 donePanel = true;
             }
             IEnumerator RunBG()
             {
                 if (enterAnim)
-                    yield return enterAnim.PlayExitCode(bgView, true);
+                    yield return enterAnim.PlayExitCode(dialogueRenderer.bgView, true);
                 doneBG = true;
             }
 
             StartCoroutine(RunPanel());
             StartCoroutine(RunBG());
             yield return new WaitUntil(() => donePanel && doneBG);
-            // Òş²Ø¶Ô»°Óë±³¾°
+            // éšè—å¯¹è¯ä¸èƒŒæ™¯
             HideDialogue();
             dialogPanel.gameObject.SetActive(false);
-            // ÔÙ»Øµ÷
+            // å†å›è°ƒ
             finished?.Invoke();
         }
 
@@ -329,7 +196,7 @@ namespace MVC
         {
             if (delayFinish)
             {
-                // ´¥·¢¶Ô»°½áÊø»Øµ÷
+                // è§¦å‘å¯¹è¯ç»“æŸå›è°ƒ
                 var cb = finished;
                 finished = null;
                 cb?.Invoke();
@@ -342,12 +209,12 @@ namespace MVC
 
         protected override void NextLine()
         {
-            // ÈôÕıÔÚµÈÑ¡Ïî£¬Ö±½ÓºöÂÔÒ»ÇĞÍÆ½øÊäÈë
+            // è‹¥æ­£åœ¨ç­‰é€‰é¡¹ï¼Œç›´æ¥å¿½ç•¥ä¸€åˆ‡æ¨è¿›è¾“å…¥
             if (_waitingChoice)
             {
                 return;
             }
-            // ¶ÁÍê
+            // è¯»å®Œ
             if (index == dialogueModel.Lines.Length)
             {
                 if (
@@ -357,7 +224,7 @@ namespace MVC
                     && choiceCtl != null
                 )
                 {
-                    _waitingChoice = true; // ÉÏËø£¬·ÀÖ¹ÖØ¸´ Show
+                    _waitingChoice = true; // ä¸Šé”ï¼Œé˜²æ­¢é‡å¤ Show
                     choiceCtl.ShowWithClosed(
                         () =>
                         {
@@ -371,9 +238,9 @@ namespace MVC
                 {
                     CloseAndFinish();
                 }
-                return; // ÕâÀïÎñ±Ø return£¬·ÀÖ¹¼ÌĞøÍùÏÂÅÜ
+                return; // è¿™é‡ŒåŠ¡å¿… returnï¼Œé˜²æ­¢ç»§ç»­å¾€ä¸‹è·‘
             }
-            // ²»È»°´Å¥µã»÷»áÎóÈÏÎªnextline
+            // ä¸ç„¶æŒ‰é’®ç‚¹å‡»ä¼šè¯¯è®¤ä¸ºnextline
             if (dialogueModel == null || index >= dialogueModel.Lines.Length)
             {
                 return;
@@ -383,13 +250,13 @@ namespace MVC
                 if (index == map.lineIndex)
                 {
                     currentSprite = map.sprite;
-                    // ´¥·¢ËùÓĞ°ó¶¨µÄĞĞÎª
+                    // è§¦å‘æ‰€æœ‰ç»‘å®šçš„è¡Œä¸º
                     map.onEnter?.Invoke();
                     break;
                 }
             }
-            // ´ò×Ö
-            StartCoroutine(TypeLines());
+            // æ‰“å­—
+            StartCoroutine(TypeLines(currentSprite));
         }
     }
 }

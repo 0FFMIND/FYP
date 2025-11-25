@@ -8,11 +8,8 @@ namespace MVC
     public class DialogueRenderer : MonoBehaviour
     {
         [Header("视图引用")]
-        [SerializeField]
-        protected DialogueView bgView;
-
-        [SerializeField]
-        protected DialogueView dialogueView;
+        public DialogueView bgView;
+        public DialogueView dialogueView;
 
         [Header("打字机设置")]
         [SerializeField]
@@ -31,6 +28,9 @@ namespace MVC
 
         public void Hide()
         {
+            // 清空文本
+            dialogueView.tmp.text = "";
+            // 隐藏箭头指示器
             arrowIndicator.Hide();
         }
 
@@ -60,13 +60,15 @@ namespace MVC
             }
         }
 
-        public void RenderViews(Sprite sprite, string text)
+        public void RenderViews(Sprite sprite, string text, bool refreshSprite = true)
         {
-            if (dialogueView != null && !dialogueView.gameObject.activeInHierarchy) return;
-            if (bgView != null && !bgView.gameObject.activeInHierarchy) return;
             if (bgView)
             {
-                bgView.Render(sprite, null);
+                if (refreshSprite)
+                {
+                    bgView.Render(sprite, null);
+
+                }
             }
             if (dialogueView)
             {
@@ -96,7 +98,7 @@ namespace MVC
         public void RebindLanguage(Sprite currentSprite, string newText)
         {
             // 重新渲染视图
-            RenderViews(currentSprite, newText);
+            RenderViews(currentSprite, newText, false);
             // 交给 Typewriter 处理映射
             typewriter.RebindAfterLanguageChange(newText);
             // 重新定位箭头
@@ -130,8 +132,7 @@ namespace MVC
                 fullRaw,
                 typeSpeed,
                 typingRate,
-                enableTypingSfx,
-                arrowIndicator
+                enableTypingSfx
             );
 
             // 等打字结束再显示箭头

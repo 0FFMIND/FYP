@@ -26,7 +26,7 @@ namespace MVC
                 lines,
                 () =>
                 {
-                    // 通知 InteractCtl 可以收尾
+                    // 閫氱煡 InteractCtl 鍙互鏀跺熬
                     ctl?.Done();
                     if (isDrain)
                     {

@@ -9,10 +9,17 @@ namespace MVC
     {
         [SerializeField]
         EnterAnim enterAnim;
+        [Header("ScriptableObject å¯¹è¯èµ„æº")]
+        [SerializeField]
+        protected string modelText;
 
+        [SerializeField]
+        protected LineMapping[] mappings;
+
+        protected Sprite currentSprite;
         public void HideDialogue()
         {
-            // Òş²ØÄÚÈİ
+            // éšè—å†…å®¹
             RenderViews(null, null);
         }
 
@@ -26,21 +33,24 @@ namespace MVC
             base.OnDisable();
         }
 
-        public override void StartDialogue() => base.StartDialogue();
-
-        protected override IEnumerator TypeLines()
+        public void StartDialogue()
         {
-            HideArrow();
-            // Èç¹ûÊÇµÚÒ»¾ä
+            base.StartDialogue(new DialogueModel(modelText));
+        }
+
+        protected override IEnumerator TypeLines(Sprite currentSprite = null)
+        {
+            dialogueRenderer.Hide();
+            // å¦‚æœæ˜¯ç¬¬ä¸€å¥
             if (index == 0)
             {
                 _isEntering = true;
                 RenderViews(currentSprite, null);
-                // ÏÈ×öÎÄ±¾¿òÉÏ¸¡
-                yield return enterAnim.PlayEnterCode(dialogueView, false);
+                // å…ˆåšæ–‡æœ¬æ¡†ä¸Šæµ®
+                yield return enterAnim.PlayEnterCode(dialogueRenderer.dialogueView, false);
                 _isEntering = false;
             }
-            yield return base.TypeLines();
+            yield return base.TypeLines(currentSprite);
         }
 
         public void PlayDefaultBGM()
@@ -50,18 +60,18 @@ namespace MVC
 
         public void ArrowRed()
         {
-            //arrowIndicator.SetColor(Color.red);
+            dialogueRenderer.arrowIndicator.SetColor(Color.red);
         }
 
         protected override void NextLine()
         {
-            //arrowIndicator.SetColor(Color.white);
-            // Èç¹û¶ÁÍê
+            dialogueRenderer.arrowIndicator.SetColor(Color.white);
+            // å¦‚æœè¯»å®Œ
             if (index == dialogueModel.Lines.Length)
             {
                 EventBus.Publish(new EJournalStepChanged("reachRooftop", 0, StepState.Done));
                 AudioManager.Instance.StopBGM(0.5f);
-                // ½øÈë1-Scene-Main
+                // è¿›å…¥1-Scene-Main
                 EventBus.Publish(
                     new ESceneFade(
                         toScene: "1-Scene-Main",
@@ -70,7 +80,7 @@ namespace MVC
                     )
                 );
             }
-            // ²»È»°´Å¥µã»÷»áÎóÈÏÎªnextline
+            // ä¸ç„¶æŒ‰é’®ç‚¹å‡»ä¼šè¯¯è®¤ä¸ºnextline
             if (dialogueModel == null || index >= dialogueModel.Lines.Length)
             {
                 return;
@@ -80,14 +90,14 @@ namespace MVC
                 if (index == map.lineIndex)
                 {
                     currentSprite = map.sprite;
-                    // ´¥·¢ËùÓĞ°ó¶¨µÄĞĞÎª
+                    // è§¦å‘æ‰€æœ‰ç»‘å®šçš„è¡Œä¸º
                     map.onEnter?.Invoke();
 
                     break;
                 }
             }
-            // ´ò×Ö
-            StartCoroutine(TypeLines());
+            // æ‰“å­—
+            StartCoroutine(TypeLines(currentSprite));
         }
     }
 }

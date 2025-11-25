@@ -362,145 +362,6 @@ MonoBehaviour:
   img: {fileID: 1997089501}
   tmp: {fileID: 0}
   imageFadeDuration: 0
---- !u!1 &39773074
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 39773075}
-  - component: {fileID: 39773077}
-  - component: {fileID: 39773078}
-  m_Layer: 0
-  m_Name: SignalReceiver
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &39773075
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 39773074}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 899453561}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &39773077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 39773074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: f433e2628ba3e0546a8206ef3e0ad6e4, type: 2}
-    - {fileID: 11400000, guid: deafa5008d71f974a8cab630b3d88961, type: 2}
-    - {fileID: 11400000, guid: ae797597c330f8041a34f5312038bcbb, type: 2}
-    - {fileID: 11400000, guid: cfbc50ba19c1de44f8825c05f8b2d685, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 39773078}
-          m_TargetAssemblyTypeName: MVC.PlayerMoveSignal, Assembly-CSharp
-          m_MethodName: MoveBack
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 39773078}
-          m_TargetAssemblyTypeName: MVC.PlayerMoveSignal, Assembly-CSharp
-          m_MethodName: FirstDialog
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 39773078}
-          m_TargetAssemblyTypeName: MVC.PlayerMoveSignal, Assembly-CSharp
-          m_MethodName: CloseDoor
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: dooropen
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 39773078}
-          m_TargetAssemblyTypeName: MVC.PlayerMoveSignal, Assembly-CSharp
-          m_MethodName: PlayerSecondMove
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &39773078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 39773074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8381a1ad536d0a42a22301441940ec0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  director: {fileID: 899453560}
-  dialogCtl: {fileID: 899453562}
-  dialogSideCtl: {fileID: 1015094539}
-  UICtl: {fileID: 1955821181}
-  switcher: {fileID: 1277239970}
-  closeDoor:
-  - {fileID: -382266346, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
-  - {fileID: -600001288, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
-  - {fileID: 382234946, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
-  guideCtl: {fileID: 1823472468}
-  bg: {fileID: 1144513236}
-  cameraCtl: {fileID: 790518763}
-  door: {fileID: 1606627499}
-  flower: {fileID: 1935421851}
-  stepX: 1
-  stepTime: 0.25
-  leftX: -11.9
-  rightX: -6.5
-  finalX: -10
 --- !u!1 &54542081
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,7 +467,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 0
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!1 &63137113
 GameObject:
@@ -922,7 +783,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 0
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!1 &136368171
 GameObject:
@@ -1151,7 +1012,7 @@ MonoBehaviour:
           m_CallState: 2
   isImportant: 1
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!114 &143438806
 MonoBehaviour:
@@ -1756,7 +1617,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 1
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!61 &304675672
 BoxCollider2D:
@@ -2734,78 +2595,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 414716846}
   m_CullTransparentMesh: 1
---- !u!1 &419505627
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 419505628}
-  - component: {fileID: 419505629}
-  m_Layer: 0
-  m_Name: UpCamera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &419505628
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 419505627}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.9, y: 3.72, z: -32.00702}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 446894286}
-  m_Father: {fileID: 899453561}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &419505629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 419505627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ExcludedPropertiesInInspector:
-  - m_Script
-  m_LockStageInInspector: 
-  m_StreamingVersion: 20170927
-  m_Priority: 10
-  m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
-  m_Lens:
-    FieldOfView: 60
-    OrthographicSize: 5.3
-    NearClipPlane: 0.3
-    FarClipPlane: 1000
-    Dutch: 0
-    ModeOverride: 0
-    LensShift: {x: 0, y: 0}
-    GateFit: 2
-    FocusDistance: 10
-    m_SensorSize: {x: 1, y: 1}
-  m_Transitions:
-    m_BlendHint: 0
-    m_InheritPosition: 0
-    m_OnCameraLive:
-      m_PersistentCalls:
-        m_Calls: []
-  m_LegacyBlendHint: 0
-  m_ComponentOwner: {fileID: 446894286}
 --- !u!1 &425725099
 GameObject:
   m_ObjectHideFlags: 0
@@ -2941,101 +2730,6 @@ RectTransform:
   m_AnchoredPosition: {x: -223.57, y: -357}
   m_SizeDelta: {x: 1154.4, y: 210.26}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &446894285
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 446894286}
-  - component: {fileID: 446894289}
-  - component: {fileID: 446894288}
-  - component: {fileID: 446894287}
-  m_Layer: 0
-  m_Name: cm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &446894286
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446894285}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 419505628}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &446894287
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446894285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 0, z: -10}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
-  m_AngularDampingMode: 0
-  m_PitchDamping: 0
-  m_YawDamping: 0
-  m_RollDamping: 0
-  m_AngularDamping: 0
---- !u!114 &446894288
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446894285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
-  m_LookaheadTime: 0
-  m_LookaheadSmoothing: 0
-  m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0.5
-  m_VerticalDamping: 0.5
-  m_ScreenX: 0.5
-  m_ScreenY: 0.5
-  m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0
-  m_SoftZoneWidth: 0.8
-  m_SoftZoneHeight: 0.8
-  m_BiasX: 0
-  m_BiasY: 0
-  m_CenterOnActivate: 1
---- !u!114 &446894289
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446894285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &489224290
 GameObject:
   m_ObjectHideFlags: 0
@@ -3919,7 +3613,7 @@ MonoBehaviour:
           m_CallState: 2
   isImportant: 1
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!114 &648898214
 MonoBehaviour:
@@ -4091,7 +3785,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 0
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!61 &710223211
 BoxCollider2D:
@@ -4781,7 +4475,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  follow: {fileID: 0}
+  follow: {fileID: 790518766}
   playerVCam: {fileID: 880656429}
 --- !u!114 &790518766
 MonoBehaviour:
@@ -5060,7 +4754,7 @@ MonoBehaviour:
   dialogueView: {fileID: 345553676}
   enableTypingSfx: 1
   typingRate: 1
-  enlargeArrow: 0
+  enlargeArrow: 1
   arrowIndicator: {fileID: 0}
 --- !u!1 &899285827
 GameObject:
@@ -5168,426 +4862,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &899453559
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 899453561}
-  - component: {fileID: 899453560}
-  - component: {fileID: 899453562}
-  - component: {fileID: 899453563}
-  - component: {fileID: 899453564}
-  m_Layer: 0
-  m_Name: Timeline
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!320 &899453560
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899453559}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 9f2c0e31168bb1742ba155426b087ab3, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 0
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 4878867468814947216, guid: 9f2c0e31168bb1742ba155426b087ab3, type: 2}
-    value: {fileID: 790518762}
-  - key: {fileID: 4053813897406149789, guid: 9f2c0e31168bb1742ba155426b087ab3, type: 2}
-    value: {fileID: 39773077}
-  m_ExposedReferences:
-    m_References:
-    - 9a1573f6dc5ac424c9c810a234c27d88: {fileID: 0}
-    - 4b03c332a6339254eb6354ddbb0a441e: {fileID: 419505629}
-    - 3f04af2705e1b454abf66e3985ad2b91: {fileID: 419505629}
-    - 0d5c65a6c5f0b93448b3fb6cc0c9a241: {fileID: 0}
---- !u!4 &899453561
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899453559}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 39773075}
-  - {fileID: 419505628}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &899453562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899453559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b12264e12fabd504183cad3d5a79ef5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modelText: 
-  mappings: []
-  enableTypingSfx: 1
-  typingRate: 1
-  bgView: {fileID: 929169984}
-  dialogueView: {fileID: 1911904465}
-  dialogueRenderer: {fileID: 1960129108}
-  enterAnim: {fileID: 899453563}
-  firstMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 2
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  secondMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 4
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  thirdMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 5
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  fourthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  fifthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  sixthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 4
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 6
-    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 8
-    sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 18
-    sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraZoomIn
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - lineIndex: 19
-    sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraZoomIn
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - lineIndex: 20
-    sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraZoomIn
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - lineIndex: 21
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraShake
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraZoomOut
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  seventhMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 5
-    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraShake
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - lineIndex: 6
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  eighthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 3
-    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  ninethMappings: []
-  tenthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 4
-    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 5
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 8
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 9
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  eleventhMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  twelfthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraShake
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  thirteenthMappings: []
-  dialogPanel: {fileID: 901008674}
-  hasChoice: 0
-  choiceModel:
-    items: []
-    choiceHeader: 
-    choicePanel: 0
-  choiceCtl: {fileID: 69404825}
-  enlargeArrow: 0
-  skipBG: 0
-  delayFinish: 0
---- !u!114 &899453563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899453559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 806cdf24e67a9234fa21e32c5c044d19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mode: 0
-  dialogProfile:
-    duration: 0.4
-    offsetX: 0
-    offsetY: 200
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  bgProfile:
-    duration: 0.05
-    offsetX: 50
-    offsetY: 0
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  animator: {fileID: 0}
-  target: {fileID: 899453559}
-  enterState: 
-  exitState: 
-  enterWaitSeconds: 0
-  exitWaitSeconds: 0
---- !u!114 &899453564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899453559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c9b2681dd253aa48922e0a204b11e0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zoomInDistance: 0.5
-  zoomInDuration: 0.2
-  zoomOutDuration: 0.2
-  cameraCtl: {fileID: 790518763}
 --- !u!1 &901008674
 GameObject:
   m_ObjectHideFlags: 0
@@ -6577,7 +5851,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 0
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!114 &994940446
 MonoBehaviour:
@@ -6800,251 +6074,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12264e12fabd504183cad3d5a79ef5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelText: 
-  mappings: []
-  enableTypingSfx: 1
-  typingRate: 1
-  bgView: {fileID: 240227893}
-  dialogueView: {fileID: 1046734074}
   dialogueRenderer: {fileID: 1015094543}
-  enterAnim: {fileID: 899453563}
-  firstMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 2
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  secondMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 4
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  thirdMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 5
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  fourthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  fifthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  sixthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 4
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 6
-    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 8
-    sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 18
-    sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraZoomIn
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - lineIndex: 19
-    sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraZoomIn
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - lineIndex: 20
-    sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraZoomIn
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - lineIndex: 21
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraShake
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraZoomOut
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  seventhMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 5
-    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraShake
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - lineIndex: 6
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  eighthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 3
-    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  ninethMappings: []
-  tenthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 4
-    sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 5
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 8
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 9
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  eleventhMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  twelfthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 899453564}
-          m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
-          m_MethodName: CameraShake
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  thirteenthMappings: []
+  enterAnim: {fileID: 1734552772830508035}
+  dialogueClips: {fileID: 7387562188456360109}
   dialogPanel: {fileID: 1622242234}
   hasChoice: 0
   choiceModel:
@@ -7134,7 +6166,7 @@ MonoBehaviour:
   dialogueView: {fileID: 1046734074}
   enableTypingSfx: 1
   typingRate: 1
-  enlargeArrow: 0
+  enlargeArrow: 1
   arrowIndicator: {fileID: 0}
 --- !u!1 &1030757741
 GameObject:
@@ -8072,7 +7104,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 0
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 69404825}
   gameCtl: {fileID: 69404825}
   model:
@@ -8932,13 +7964,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd26acc9663f9c4283665b57e75a052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phase: 6
-  director: {fileID: 899453560}
+  phase: 1
+  director: {fileID: 4839773860695319372}
   guideCtl: {fileID: 1823472468}
-  timelineCtl: {fileID: 899453562}
+  timelineCtl: {fileID: 1401251239175435381}
   guideSteps: {fileID: 254704491}
   initPos: {x: 6.89, y: 2, z: 1}
-  mover: {fileID: 39773078}
+  mover: {fileID: 8088918302841303503}
 --- !u!1 &1355577324
 GameObject:
   m_ObjectHideFlags: 0
@@ -9748,7 +8780,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 0
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!1 &1612772216
 GameObject:
@@ -10226,7 +9258,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 0
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!70 &1717009931
 CapsuleCollider2D:
@@ -10967,7 +9999,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 0
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 69404825}
   switcher: {fileID: 1277239970}
   UICtl: {fileID: 1955821181}
@@ -11185,12 +10217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf74549c87474c94e9c0a1bf2823b773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelText: 
-  mappings: []
-  enableTypingSfx: 1
-  typingRate: 1
-  bgView: {fileID: 394919203}
-  dialogueView: {fileID: 345553676}
   dialogueRenderer: {fileID: 889014639}
   enterAnim: {fileID: 1823472471}
 --- !u!114 &1823472469
@@ -11205,12 +10231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7bcf95cfa51c84a9432cb2cea9d054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelText: 
-  mappings: []
-  enableTypingSfx: 0
-  typingRate: 2
-  bgView: {fileID: 1918345073}
-  dialogueView: {fileID: 397659223}
   dialogueRenderer: {fileID: 1840459809}
   enterAnim: {fileID: 1823472470}
 --- !u!114 &1823472470
@@ -11375,12 +10395,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7a94d1921e1c34dba78f1c3b563a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelText: 
-  mappings: []
-  enableTypingSfx: 0
-  typingRate: 2
-  bgView: {fileID: 943327090}
-  dialogueView: {fileID: 1269363206}
   dialogueRenderer: {fileID: 1818900629}
   enterAnim: {fileID: 1823472473}
 --- !u!114 &1823472473
@@ -12089,7 +11103,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 0
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!1 &1935421851
 GameObject:
@@ -12200,7 +11214,7 @@ MonoBehaviour:
         m_Calls: []
   isImportant: 0
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!70 &1935421855
 CapsuleCollider2D:
@@ -12409,6 +11423,7 @@ GameObject:
   - component: {fileID: 1955821178}
   - component: {fileID: 1955821181}
   - component: {fileID: 1955821182}
+  - component: {fileID: 1955821183}
   m_Layer: 0
   m_Name: UIDialogCanvas
   m_TagString: Untagged
@@ -12512,113 +11527,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12264e12fabd504183cad3d5a79ef5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelText: 
-  mappings: []
-  enableTypingSfx: 1
-  typingRate: 1
-  bgView: {fileID: 2197157}
-  dialogueView: {fileID: 1257427458}
-  dialogueRenderer: {fileID: 0}
+  dialogueRenderer: {fileID: 1955821183}
   enterAnim: {fileID: 1955821182}
-  firstMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 2
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  secondMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 4
-    sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  thirdMappings: []
-  fourthMappings: []
-  fifthMappings: []
-  sixthMappings: []
-  seventhMappings: []
-  eighthMappings: []
-  ninethMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: f0a48217910eb49489ae0196a3a06800, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 14
-    sprite: {fileID: 21300000, guid: f0a48217910eb49489ae0196a3a06800, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 648898215}
-          m_TargetAssemblyTypeName: Scene1MeadowCtl, Assembly-CSharp
-          m_MethodName: PlayBell
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - lineIndex: 19
-    sprite: {fileID: 21300000, guid: f0a48217910eb49489ae0196a3a06800, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 648898215}
-          m_TargetAssemblyTypeName: Scene1MeadowCtl, Assembly-CSharp
-          m_MethodName: PlayRunning
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  tenthMappings: []
-  eleventhMappings: []
-  twelfthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 0}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  thirteenthMappings:
-  - lineIndex: 0
-    sprite: {fileID: 21300000, guid: b073d02691ba5c849afd505e23adeea2, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-  - lineIndex: 6
-    sprite: {fileID: 21300000, guid: b073d02691ba5c849afd505e23adeea2, type: 3}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 938279081}
-          m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
-          m_MethodName: playSFX
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: heavyPunching
-            m_BoolArgument: 0
-          m_CallState: 2
+  dialogueClips: {fileID: 7387562188456360109}
   dialogPanel: {fileID: 901008674}
   hasChoice: 0
   choiceModel:
@@ -12699,11 +11610,29 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   animator: {fileID: 0}
-  target: {fileID: 899453559}
+  target: {fileID: 1147435137456050671}
   enterState: 
   exitState: 
   enterWaitSeconds: 0
   exitWaitSeconds: 0
+--- !u!114 &1955821183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955821174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a291229305d778947986655cd2791d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgView: {fileID: 2197157}
+  dialogueView: {fileID: 1257427458}
+  enableTypingSfx: 1
+  typingRate: 1
+  enlargeArrow: 1
+  arrowIndicator: {fileID: 0}
 --- !u!1 &1960129103
 GameObject:
   m_ObjectHideFlags: 0
@@ -13284,7 +12213,7 @@ MonoBehaviour:
           m_CallState: 2
   isImportant: 1
   interactCtl: {fileID: 1823472469}
-  dialogCtl: {fileID: 899453562}
+  dialogCtl: {fileID: 1401251239175435381}
   choiceCtl: {fileID: 0}
 --- !u!114 &2095016142
 MonoBehaviour:
@@ -13715,6 +12644,847 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &907609238795216792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4847998667315705309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: f433e2628ba3e0546a8206ef3e0ad6e4, type: 2}
+    - {fileID: 11400000, guid: deafa5008d71f974a8cab630b3d88961, type: 2}
+    - {fileID: 11400000, guid: ae797597c330f8041a34f5312038bcbb, type: 2}
+    - {fileID: 11400000, guid: cfbc50ba19c1de44f8825c05f8b2d685, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8088918302841303503}
+          m_TargetAssemblyTypeName: MVC.PlayerMoveSignal, Assembly-CSharp
+          m_MethodName: MoveBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8088918302841303503}
+          m_TargetAssemblyTypeName: MVC.PlayerMoveSignal, Assembly-CSharp
+          m_MethodName: FirstDialog
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8088918302841303503}
+          m_TargetAssemblyTypeName: MVC.PlayerMoveSignal, Assembly-CSharp
+          m_MethodName: CloseDoor
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: dooropen
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8088918302841303503}
+          m_TargetAssemblyTypeName: MVC.PlayerMoveSignal, Assembly-CSharp
+          m_MethodName: PlayerSecondMove
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!1 &1147435137456050671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7166025013438455334}
+  - component: {fileID: 4839773860695319372}
+  - component: {fileID: 1401251239175435381}
+  - component: {fileID: 1734552772830508035}
+  - component: {fileID: 8580292825026335958}
+  m_Layer: 0
+  m_Name: Timeline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1401251239175435381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147435137456050671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12264e12fabd504183cad3d5a79ef5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueRenderer: {fileID: 1960129108}
+  enterAnim: {fileID: 1734552772830508035}
+  dialogueClips: {fileID: 7387562188456360109}
+  dialogPanel: {fileID: 901008674}
+  hasChoice: 0
+  choiceModel:
+    items: []
+    choiceHeader: 
+    choicePanel: 0
+  choiceCtl: {fileID: 69404825}
+  enlargeArrow: 0
+  skipBG: 0
+  delayFinish: 0
+--- !u!114 &1734552772830508035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147435137456050671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806cdf24e67a9234fa21e32c5c044d19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  dialogProfile:
+    duration: 0.4
+    offsetX: 0
+    offsetY: 200
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  bgProfile:
+    duration: 0.05
+    offsetX: 50
+    offsetY: 0
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  animator: {fileID: 0}
+  target: {fileID: 1147435137456050671}
+  enterState: 
+  exitState: 
+  enterWaitSeconds: 0
+  exitWaitSeconds: 0
+--- !u!114 &2548751241457207326
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3303490967012849996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
+  m_LookaheadTime: 0
+  m_LookaheadSmoothing: 0
+  m_LookaheadIgnoreY: 0
+  m_HorizontalDamping: 0.5
+  m_VerticalDamping: 0.5
+  m_ScreenX: 0.5
+  m_ScreenY: 0.5
+  m_DeadZoneWidth: 0
+  m_DeadZoneHeight: 0
+  m_SoftZoneWidth: 0.8
+  m_SoftZoneHeight: 0.8
+  m_BiasX: 0
+  m_BiasY: 0
+  m_CenterOnActivate: 1
+--- !u!4 &2997152956103246158
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6645004185855839008}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.9, y: 3.72, z: -32.00702}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3862292459064458835}
+  m_Father: {fileID: 7166025013438455334}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3303490967012849996
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3862292459064458835}
+  - component: {fileID: 3455300616847782897}
+  - component: {fileID: 2548751241457207326}
+  - component: {fileID: 4901535311207472495}
+  m_Layer: 0
+  m_Name: cm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &3455300616847782897
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3303490967012849996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &3508050515699453372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4847998667315705309}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7166025013438455334}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &3862292459064458835
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3303490967012849996}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2997152956103246158}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4745558997544354674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5473630540304957281}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7166025013438455334}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &4839773860695319372
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147435137456050671}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 9f2c0e31168bb1742ba155426b087ab3, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 0
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 4878867468814947216, guid: 9f2c0e31168bb1742ba155426b087ab3, type: 2}
+    value: {fileID: 790518762}
+  - key: {fileID: 4053813897406149789, guid: 9f2c0e31168bb1742ba155426b087ab3, type: 2}
+    value: {fileID: 907609238795216792}
+  m_ExposedReferences:
+    m_References:
+    - 9a1573f6dc5ac424c9c810a234c27d88: {fileID: 0}
+    - 4b03c332a6339254eb6354ddbb0a441e: {fileID: 9048534220740257847}
+    - 3f04af2705e1b454abf66e3985ad2b91: {fileID: 9048534220740257847}
+    - 0d5c65a6c5f0b93448b3fb6cc0c9a241: {fileID: 0}
+--- !u!1 &4847998667315705309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3508050515699453372}
+  - component: {fileID: 907609238795216792}
+  - component: {fileID: 8088918302841303503}
+  m_Layer: 0
+  m_Name: SignalReceiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &4901535311207472495
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3303490967012849996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 0, z: -10}
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_AngularDampingMode: 0
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
+  m_AngularDamping: 0
+--- !u!1 &5473630540304957281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4745558997544354674}
+  - component: {fileID: 7387562188456360109}
+  m_Layer: 0
+  m_Name: DialogClips
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &6645004185855839008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2997152956103246158}
+  - component: {fileID: 9048534220740257847}
+  m_Layer: 0
+  m_Name: UpCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7166025013438455334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147435137456050671}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3508050515699453372}
+  - {fileID: 2997152956103246158}
+  - {fileID: 4745558997544354674}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7387562188456360109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5473630540304957281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ed4247f23047846b10716f6b0d71ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogMappings:
+  - textFile: 1-Scene-1.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 2
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+  - textFile: 1-Scene-2.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 4
+      sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+  - textFile: 1-Scene-5.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 5
+      sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+  - textFile: 1-Scene-7.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+  - textFile: 1-Scene-8.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+  - textFile: 1-Scene-9.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 4
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 6
+      sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 8
+      sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 18
+      sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8580292825026335958}
+            m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
+            m_MethodName: CameraZoomIn
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - lineIndex: 19
+      sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8580292825026335958}
+            m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
+            m_MethodName: CameraZoomIn
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - lineIndex: 20
+      sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8580292825026335958}
+            m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
+            m_MethodName: CameraZoomIn
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - lineIndex: 21
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8580292825026335958}
+            m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
+            m_MethodName: CameraShake
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 8580292825026335958}
+            m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
+            m_MethodName: CameraZoomOut
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - textFile: 1-Scene-10.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 5
+      sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8580292825026335958}
+            m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
+            m_MethodName: CameraShake
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - lineIndex: 6
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+  - textFile: 1-Scene-11.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 3
+      sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+  - textFile: 1-Scene-12.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: f0a48217910eb49489ae0196a3a06800, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 14
+      sprite: {fileID: 21300000, guid: f0a48217910eb49489ae0196a3a06800, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 648898215}
+            m_TargetAssemblyTypeName: Scene1MeadowCtl, Assembly-CSharp
+            m_MethodName: PlayBell
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - lineIndex: 19
+      sprite: {fileID: 21300000, guid: f0a48217910eb49489ae0196a3a06800, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 648898215}
+            m_TargetAssemblyTypeName: Scene1MeadowCtl, Assembly-CSharp
+            m_MethodName: PlayRunning
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - textFile: 1-Scene-13.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 4
+      sprite: {fileID: 21300000, guid: a54bc62d3d3825d458fe45c33e7163af, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 5
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 8
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 9
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+  - textFile: 1-Scene-14.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8580292825026335958}
+            m_TargetAssemblyTypeName: MVC.Scene1PlayerMoveAction, Assembly-CSharp
+            m_MethodName: CameraShake
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - textFile: 1-Scene-15.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+  - textFile: 1-Scene-16.txt
+    mappings:
+    - lineIndex: 0
+      sprite: {fileID: 21300000, guid: b073d02691ba5c849afd505e23adeea2, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls: []
+    - lineIndex: 6
+      sprite: {fileID: 21300000, guid: b073d02691ba5c849afd505e23adeea2, type: 3}
+      onEnter:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 938279081}
+            m_TargetAssemblyTypeName: MVC.Scene1UIEventCtl, Assembly-CSharp
+            m_MethodName: playSFX
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: heavyPunching
+              m_BoolArgument: 0
+            m_CallState: 2
+--- !u!114 &8088918302841303503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4847998667315705309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8381a1ad536d0a42a22301441940ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  director: {fileID: 4839773860695319372}
+  dialogCtl: {fileID: 1401251239175435381}
+  dialogSideCtl: {fileID: 1015094539}
+  UICtl: {fileID: 1955821181}
+  switcher: {fileID: 1277239970}
+  closeDoor:
+  - {fileID: -382266346, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
+  - {fileID: -600001288, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
+  - {fileID: 382234946, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
+  guideCtl: {fileID: 1823472468}
+  bg: {fileID: 1144513236}
+  cameraCtl: {fileID: 790518763}
+  door: {fileID: 1606627499}
+  flower: {fileID: 1935421851}
+  stepX: 1
+  stepTime: 0.25
+  leftX: -11.9
+  rightX: -6.5
+  finalX: -10
+--- !u!114 &8580292825026335958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147435137456050671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9b2681dd253aa48922e0a204b11e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoomInDistance: 0.5
+  zoomInDuration: 0.2
+  zoomOutDuration: 0.2
+  cameraCtl: {fileID: 790518763}
+--- !u!114 &9048534220740257847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6645004185855839008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ExcludedPropertiesInInspector:
+  - m_Script
+  m_LockStageInInspector: 
+  m_StreamingVersion: 20170927
+  m_Priority: 9
+  m_StandbyUpdate: 2
+  m_LookAt: {fileID: 0}
+  m_Follow: {fileID: 0}
+  m_Lens:
+    FieldOfView: 60
+    OrthographicSize: 5.3
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    LensShift: {x: 0, y: 0}
+    GateFit: 2
+    FocusDistance: 10
+    m_SensorSize: {x: 1, y: 1}
+  m_Transitions:
+    m_BlendHint: 0
+    m_InheritPosition: 0
+    m_OnCameraLive:
+      m_PersistentCalls:
+        m_Calls: []
+  m_LegacyBlendHint: 0
+  m_ComponentOwner: {fileID: 3862292459064458835}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -13725,5 +13495,5 @@ SceneRoots:
   - {fileID: 2111873691}
   - {fileID: 1739929565}
   - {fileID: 1277239968}
-  - {fileID: 899453561}
+  - {fileID: 7166025013438455334}
   - {fileID: 1823472467}

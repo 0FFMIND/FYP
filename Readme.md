@@ -112,25 +112,40 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/11/20 - Chapter2的大概剧情已经写出来了，Chapter1也润色完成了，稍微让文字整体变得口语化一点了
 
-2025/11/21 - 修改玩家的反馈，把默认加速方式设为了leftShift，并且着重修改了camera Follow的代码，https://github.com/0FFMIND/FYP/blob/b62b6f0ae290ae1485936e34290d329c17c81c6b/Assets/Scripts/1-Scene/MVC/Controller/CameraFollow.cs，以前是camera Follow是一个上帝类，什么都要做，因为当时midterm比较匆忙，只考虑了游戏正常运行，现在修改为一个cameraCtl，把follow, move, shake单独分为一个脚本，ctl作为中心控制器，提供对外的API，而具体行为通过委托调用脚本https://github.com/0FFMIND/FYP/tree/0f278d7624d96c501d05603fecb5fb476dd03f5e/Assets/Scripts/1-Scene/MVC/Controller/Camera
+2025/11/21 - 修改玩家的反馈，把默认加速方式设为了leftShift，并且着重修改了camera Follow的代码，https://github.com/0FFMIND/FYP/blob/b62b6f0ae290ae1485936e34290d329c17c81c6b/Assets/Scripts/1-Scene/MVC/Controller/CameraFollow.cs
+以前是camera Follow是一个上帝类，什么都要做，因为当时midterm比较匆忙，只考虑了游戏正常运行，现在修改为一个cameraCtl，把follow, move, shake单独分为一个脚本，ctl作为中心控制器，提供对外的API，而具体行为通过委托调用脚本https://github.com/0FFMIND/FYP/tree/0f278d7624d96c501d05603fecb5fb476dd03f5e/Assets/Scripts/1-Scene/MVC/Controller/Camera
 
 2025/11/22 - 修复了开头switch language的时候窗口分辨率txt没有switch的问题（key少了初始占位值），摄像机有时候抖动不出来，不知道是什么原因，把在Update的抖动偏移量换到LateUpdate里面了，可能是相机在Update里面有其他行为覆盖了
 
-2025/11/23 - 重构代码，https://github.com/0FFMIND/FYP/blob/0f278d7624d96c501d05603fecb5fb476dd03f5e/Assets/Scripts/1-Scene/MVC/Controller/Scene1ArrivalCtl.cs，这里的问题是FSM，当管理的状态变多变得难以维护，修改后的代码：https://github.com/0FFMIND/FYP/tree/main/Assets/Scripts/1-Scene/MVC/Controller/Phase
+2025/11/23 - 重构代码，https://github.com/0FFMIND/FYP/blob/0f278d7624d96c501d05603fecb5fb476dd03f5e/Assets/Scripts/1-Scene/MVC/Controller/Scene1ArrivalCtl.cs
+这里的问题是FSM，当管理的状态变多变得难以维护，修改后的代码：https://github.com/0FFMIND/FYP/tree/main/Assets/Scripts/1-Scene/MVC/Controller/Phase
 
 2025/11/24 - 把代码迁移到VSCode上了，VSCode可以和Github集成，并且使用免费的Copilot自动生成的commit message，从而让commit更有信息，继续重构代码，修改了guidePanel仍然提示右shift move faster的问题，现在统一左shift移动，修复了meadow结束后的panTo位置问题，统一了camera的锚点，修复了之前Camera抖动不出来的问题，是因为follow也在update，覆盖了shake的update，修复了父camera brain和子类vcam的关系，现在人物移动的时候也可以抖动了
 
-2025/11/25 - 修复了在meadow结束后播放铃声结束的时候动画推进会卡住的问题，是因为跑操的音乐有20MB，并且读取方式是一次读取并且解压缩，会阻塞U3D的主线程，把音频的加载改为streaming，流式加载解决问题，正在重构：https://github.com/0FFMIND/FYP/blob/main/Assets/Scripts/1-Scene/MVC/Controller/Dialog/DialogCtlBase.cs，首先删掉了无用代码，原来DialogCtlBase是God类，也会初始化arrow的行为，因此把arrow移到了单独的ArrowIndicator类里面
+2025/11/25 - 修复了在meadow结束后播放铃声结束的时候动画推进会卡住的问题，是因为跑操的音乐有20MB，并且读取方式是一次读取并且解压缩，会阻塞U3D的主线程，把音频的加载改为streaming，流式加载解决问题，正在重构：https://github.com/0FFMIND/FYP/blob/b620ad88bab23c954b6f1b4693e440577328b3d8/Assets/Scripts/1-Scene/MVC/Controller/Dialog/DialogCtlBase.cs
+首先删掉了无用代码，原来DialogCtlBase是God类，也会初始化arrow的行为，因此把arrow移到了单独的ArrowIndicator类里面
 
-TODO: 继续重构dialog
+2025/11/26 - 把之前逐行打字/揭露的过程移动到了新类TypeWriter，进一步把Dialog的God类解耦，之后把Arrow和TypeWriter还有DialogueView移到了DialogRenderer类里面，现在DialogCtl控制事件接收，DialogModel的储存和DialogRenderer的调用
 
-TODO: 重构https://github.com/0FFMIND/FYP/blob/7c3ae58bbc6c53a396f874b1477fcf99a3d0b169/Assets/Scripts/1-Scene/Timeline/Scripts/PlayerMoveSignal.cs，
+TODO: 重构
+https://github.com/0FFMIND/FYP/blob/2707e79decb851b6877228a248f3e73b591f16ab/Assets/Scripts/1-Scene/MVC/Controller/InteractCtl.cs
+
+TODO: 重构
+https://github.com/0FFMIND/FYP/blob/2707e79decb851b6877228a248f3e73b591f16ab/Assets/Scripts/1-Scene/MVC/Controller/Dialog/TimelineDialogCtl.cs
+
+TODO: 重构
+
+https://github.com/0FFMIND/FYP/blob/7c3ae58bbc6c53a396f874b1477fcf99a3d0b169/Assets/Scripts/1-Scene/Timeline/Scripts/PlayerMoveSignal.cs
 
 
 
-Chapter1的遗留问题【不重要】
+【Chapter1的问题】
 
 TODO: 解决对话机回调问题
+
+TODO: 需要修复动画waitforrealtime的问题
+
+TODO: 动画离开的时候需要最后关一下门，门变黑，再走进去
 
 
 
@@ -144,19 +159,19 @@ TODO: 解决对话机回调问题
 说实在的，我对养花种草完全不懂，完全是瞎猫碰上死耗子，胡乱往草甸里一埋
 想着这么多天过去，说不定真有奇迹发生呢……
 
-Chapter1的遗留问题【重要】：
+【设计Chapter2的问题】：
 
-玩家反馈，
+TODO: Chapter1的末尾
 
 TODO：加入第二章后选章的时候可以加入我的STORY.md里面的内容，加入概要
 
 TODO: 我有一个想法，说话的时候可以出现多个关键词，下面出现[] [] [] [] 很多个关键词框，上面是当前对话的人物，然后丢给当前对话的人物类似辩论环节进行剧情推进
 
-TODO: 需要修复动画waitforrealtime的问题
+
 
 TODO: 需要在售货机cg出现完后加一个判断的bool或者是什么，然后在选关的时候如果直接从ch2开始，基础的日记，然后判断有没有这个bool，有的话那就加一个售货机的日记
 
-TODO: 想标题，潮汐将至时？
+TODO: 想标题，潮汐将至时？潮汐可以改名叫寂静？沉眠?沉寂？永眠这种？还有落叶归根，落叶待归根，终将/需这种
 
 要做什么？
 

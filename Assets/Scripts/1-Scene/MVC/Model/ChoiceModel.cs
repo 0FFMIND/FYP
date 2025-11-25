@@ -3,11 +3,11 @@ using UnityEngine.Events;
 
 namespace MVC
 {
-    [Serializable] // ÔÊĞíÔÚ Inspector ĞòÁĞ»¯£¨Ö÷ÒªÓÃÓÚ label£»Action ²»¿ÉĞòÁĞ»¯£©
+    [Serializable] // å…è®¸åœ¨ Inspector åºåˆ—åŒ–ï¼ˆä¸»è¦ç”¨äº labelï¼›Action ä¸å¯åºåˆ—åŒ–ï¼‰
     public struct ChoiceData
     {
-        public string label; // °´Å¥Õ¹Ê¾µÄÎÄ°¸
-        public UnityEvent onClick; // µã»÷Ê±µÄ»Øµ÷£¨ÔËĞĞÊ±×¢Èë£¬²»²ÎÓëĞòÁĞ»¯£©
+        public string label; // æŒ‰é’®å±•ç¤ºçš„æ–‡æ¡ˆ
+        public UnityEvent onClick; // ç‚¹å‡»æ—¶çš„å›è°ƒï¼ˆè¿è¡Œæ—¶æ³¨å…¥ï¼Œä¸å‚ä¸åºåˆ—åŒ–ï¼‰
 
         public ChoiceData(string label, UnityEvent onClick)
         {
@@ -16,7 +16,7 @@ namespace MVC
         }
     }
 
-    [Serializable] // ÔÊĞíÔÚ Inspector ĞòÁĞ»¯£¨Ö÷ÒªÓÃÓÚ label£»Action ²»¿ÉĞòÁĞ»¯£©
+    [Serializable] // å…è®¸åœ¨ Inspector åºåˆ—åŒ–ï¼ˆä¸»è¦ç”¨äº labelï¼›Action ä¸å¯åºåˆ—åŒ–ï¼‰
     public struct ChoiceModel
     {
         public ChoiceData[] items;
