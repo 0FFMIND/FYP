@@ -8,9 +8,9 @@ namespace MVC
 {
     public class ChoiceCtl : MonoBehaviour
     {
-        [Header("UI Refs")] // ÔÚ Inspector ÏÔÊ¾Ò»¸ö±êÌâ·Ö×é
+        [Header("UI Refs")] // åœ¨ Inspector æ˜¾ç¤ºä¸€ä¸ªæ ‡é¢˜åˆ†ç»„
         [SerializeField]
-        private GameObject root; // Õû¸öÑ¡ÔñÃæ°åµÄ¸ù½Úµã£¨ÓÃÀ´ÕûÌåÏÔÊ¾/Òş²Ø£©
+        private GameObject root; // æ•´ä¸ªé€‰æ‹©é¢æ¿çš„æ ¹èŠ‚ç‚¹ï¼ˆç”¨æ¥æ•´ä½“æ˜¾ç¤º/éšè—ï¼‰
 
         [SerializeField]
         private GameObject[] panels;
@@ -19,10 +19,10 @@ namespace MVC
 
         [Header("Anim")]
         [SerializeField]
-        private float openDuration; // ¿ª³¡£ºY 0¡ú1
+        private float openDuration; // å¼€åœºï¼šY 0â†’1
 
         [SerializeField]
-        private float closeDuration; // ÍË³¡£ºY 1¡ú0
+        private float closeDuration; // é€€åœºï¼šY 1â†’0
 
         private RectTransform _currentPanelRT;
         private Coroutine _anim;
@@ -38,42 +38,42 @@ namespace MVC
         {
             if (!root || panels == null || panels.Length == 0)
             {
-                Debug.LogError("[ChoiceCtl] ÒıÓÃÎ´°ó¶¨£¨root/panels£©");
+                Debug.LogError("[ChoiceCtl] å¼•ç”¨æœªç»‘å®šï¼ˆroot/panelsï¼‰");
                 return;
             }
 
-            // Ñ¡ÔñÃæ°å
+            // é€‰æ‹©é¢æ¿
             int idx = Mathf.Clamp(model.choicePanel, 0, panels.Length - 1);
             var panelGO = panels[idx];
             if (!panelGO)
             {
-                Debug.LogError($"[ChoiceCtl] panels[{idx}] Îª null");
+                Debug.LogError($"[ChoiceCtl] panels[{idx}] ä¸º null");
                 return;
             }
             var panel = panelGO.transform;
 
-            // 2) ÕÒ±êÌâ TMP£¨Ö±Ïµ×Ó½ÚµãÖĞµÄµÚÒ»¸ö TMP_Text£©
+            // 2) æ‰¾æ ‡é¢˜ TMPï¼ˆç›´ç³»å­èŠ‚ç‚¹ä¸­çš„ç¬¬ä¸€ä¸ª TMP_Textï¼‰
             TMP_Text title = FindDirectChildTMP(panel);
             if (title)
             {
                 title.gameObject.GetComponent<LocalizedText>().SetKey(model.choiceHeader);
             }
             else
-                Debug.LogWarning($"[ChoiceCtl] Ãæ°å {panel.name} Î´ÕÒµ½Ö±Ïµ TMP_Text ±êÌâ");
+                Debug.LogWarning($"[ChoiceCtl] é¢æ¿ {panel.name} æœªæ‰¾åˆ°ç›´ç³» TMP_Text æ ‡é¢˜");
 
-            // 3) ÕÒ option ÈİÆ÷£¨ÓÅÏÈ¾«È·Ãû¡°option¡±£¬·ñÔòÄ£ºı´óĞ¡Ğ´°üº¬£©
+            // 3) æ‰¾ option å®¹å™¨ï¼ˆä¼˜å…ˆç²¾ç¡®åâ€œoptionâ€ï¼Œå¦åˆ™æ¨¡ç³Šå¤§å°å†™åŒ…å«ï¼‰
             Transform optionRoot = FindOptionContainer(panel);
             if (!optionRoot)
             {
-                Debug.LogError($"[ChoiceCtl] Ãæ°å {panel.name} Î´ÕÒµ½ 'option' ÈİÆ÷");
+                Debug.LogError($"[ChoiceCtl] é¢æ¿ {panel.name} æœªæ‰¾åˆ° 'option' å®¹å™¨");
                 return;
             }
-            // 4) °ó¶¨ÏÖÓĞ°´Å¥£º°´ option ÈİÆ÷µÄ×ÓÎïÌåË³Ğò¶ÔÓ¦ items[]
+            // 4) ç»‘å®šç°æœ‰æŒ‰é’®ï¼šæŒ‰ option å®¹å™¨çš„å­ç‰©ä½“é¡ºåºå¯¹åº” items[]
             var items = model.items ?? Array.Empty<ChoiceData>();
             int btnCount = optionRoot.childCount;
             int bindCount = Mathf.Min(btnCount, items.Length);
 
-            // Öğ¸ö°ó¶¨
+            // é€ä¸ªç»‘å®š
             for (int i = 0; i < bindCount; i++)
             {
                 var data = items[i];
@@ -82,12 +82,12 @@ namespace MVC
                 if (!btn)
                 {
                     Debug.LogWarning(
-                        $"[ChoiceCtl] Ñ¡ÏîÈİÆ÷µÚ {i} ¸ö×ÓÎïÌåÈ±ÉÙ Button ×é¼ş£º{child.name}"
+                        $"[ChoiceCtl] é€‰é¡¹å®¹å™¨ç¬¬ {i} ä¸ªå­ç‰©ä½“ç¼ºå°‘ Button ç»„ä»¶ï¼š{child.name}"
                     );
                     continue;
                 }
 
-                // ÎÄ°¸£ºÔÚ¸Ã°´Å¥µÄ×Ó²ã¼¶ÀïÕÒ TMP_Text
+                // æ–‡æ¡ˆï¼šåœ¨è¯¥æŒ‰é’®çš„å­å±‚çº§é‡Œæ‰¾ TMP_Text
                 var label = btn.GetComponentInChildren<TMP_Text>(true);
 
                 if (label)
@@ -95,7 +95,7 @@ namespace MVC
                     label.gameObject.GetComponent<LocalizedText>().SetKey(data.label);
                 }
 
-                // µã»÷£ºÏÈµ÷ÓÃ UnityEvent£¬ÔÙ¹Ø±ÕÃæ°å
+                // ç‚¹å‡»ï¼šå…ˆè°ƒç”¨ UnityEventï¼Œå†å…³é—­é¢æ¿
                 btn.onClick.RemoveAllListeners();
                 btn.onClick.AddListener(() =>
                 {
@@ -104,12 +104,12 @@ namespace MVC
 
                 if (label)
                 {
-                    // ±ÜÃâÎÄ±¾ÍÌµã»÷
+                    // é¿å…æ–‡æœ¬åç‚¹å‡»
                     label.raycastTarget = false;
-                } 
+                }
             }
 
-            // ¼¤»îÑ¡ÔñÃæ°å
+            // æ¿€æ´»é€‰æ‹©é¢æ¿
             for (int i = 0; i < panels.Length; i++)
             {
                 if (panels[i])
@@ -119,7 +119,7 @@ namespace MVC
             }
 
 
-            // ¿ª³¡¶¯»­£¨Y: 0 ¡ú 1£©
+            // å¼€åœºåŠ¨ç”»ï¼ˆY: 0 â†’ 1ï¼‰
             if (_anim != null)
                 StopCoroutine(_anim);
             if (_cg == null)
@@ -159,10 +159,10 @@ namespace MVC
             }
         }
 
-        // ÊÕÆğÑ¡ÔñÃæ°å
+        // æ”¶èµ·é€‰æ‹©é¢æ¿
         public void Hide(Action afterClosed = null)
         {
-            // ÍË³¡¶¯»­£¨Y: 1 ¡ú 0£©£¬½áÊøºóÔÙ»Øµ÷²¢Òş²Ø
+            // é€€åœºåŠ¨ç”»ï¼ˆY: 1 â†’ 0ï¼‰ï¼Œç»“æŸåå†å›è°ƒå¹¶éšè—
             if (_anim != null)
                 StopCoroutine(_anim);
 
@@ -193,7 +193,7 @@ namespace MVC
             );
         }
 
-        // ¡ª¡ª ¸¨Öú£ºÕÒÖ±Ïµ×ÓÀïµÚÒ»¸ö TMP_Text ×÷Îª±êÌâ ¡ª¡ª
+        // â€”â€” è¾…åŠ©ï¼šæ‰¾ç›´ç³»å­é‡Œç¬¬ä¸€ä¸ª TMP_Text ä½œä¸ºæ ‡é¢˜ â€”â€”
         private TMP_Text FindDirectChildTMP(Transform parent)
         {
             int c = parent.childCount;
@@ -207,30 +207,30 @@ namespace MVC
             return null;
         }
 
-        // ¡ª¡ª ¸¨Öú£ºÕÒÃûÎª "option" µÄÈİÆ÷£¨´óĞ¡Ğ´²»Ãô¸Ğ£»ÏÈÑÏ¸ñµÈÃûÔÙÄ£ºı°üº¬£© ¡ª¡ª
+        // â€”â€” è¾…åŠ©ï¼šæ‰¾åä¸º "option" çš„å®¹å™¨ï¼ˆå¤§å°å†™ä¸æ•æ„Ÿï¼›å…ˆä¸¥æ ¼ç­‰åå†æ¨¡ç³ŠåŒ…å«ï¼‰ â€”â€”
         private Transform FindOptionContainer(Transform panel)
         {
             int c = panel.childCount;
-            // ÏÈÕÒÖ±ÏµµÈÃû
+            // å…ˆæ‰¾ç›´ç³»ç­‰å
             for (int i = 0; i < c; i++)
             {
                 var t = panel.GetChild(i);
                 if (string.Equals(t.name, "option", StringComparison.OrdinalIgnoreCase))
                     return t;
             }
-            // ÔÙÕÒÖ±Ïµ°üº¬¡°option¡±µÄ
+            // å†æ‰¾ç›´ç³»åŒ…å«â€œoptionâ€çš„
             for (int i = 0; i < c; i++)
             {
                 var t = panel.GetChild(i);
                 if (t.name != null && t.name.ToLower().Contains("option"))
                     return t;
             }
-            // ÔÙ²»ĞĞ¾Í´ÓÕû¿Ã×ÓÊ÷ÀïÕÒµÈÃû
+            // å†ä¸è¡Œå°±ä»æ•´æ£µå­æ ‘é‡Œæ‰¾ç­‰å
             var found = panel.Find("option") ?? panel.Find("Option");
             return found;
         }
 
-        // ¡ª¡ª ¶¯»­£º°Ñ target.localScale.y ´Ó from ¡ú to£¨ÏßĞÔ£© ¡ª¡ª
+        // â€”â€” åŠ¨ç”»ï¼šæŠŠ target.localScale.y ä» from â†’ toï¼ˆçº¿æ€§ï¼‰ â€”â€”
         private IEnumerator ScaleY(
             RectTransform target,
             float from,

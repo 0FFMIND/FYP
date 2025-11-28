@@ -12,11 +12,11 @@ namespace MVC
         private bool _used = false; // 只允许交互一次
 
         // 最简单的购买尝试：判断当前硬币数是否足够，足够则扣除并返回 true，否则返回 false
-        public override bool BeginInteract(PlayerCtl player)
+        public override bool BeginInteract(PlayerCtl player, bool shouldEndInteract = true)
         {
             // 切换不同的文本
             visitCount = TryPick();
-            return base.BeginInteract(player);
+            return base.BeginInteract(player, shouldEndInteract);
         }
 
         public void StartDrainGame(InteractCtl ctl)

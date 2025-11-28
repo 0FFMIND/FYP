@@ -21,7 +21,6 @@ namespace MVC
             base.OnDisable();
         }
 
-
         public void StartDialogue(string[] lines, Action onFinished)
         {
             dialogueModel = new DialogueModel(lines);

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 
@@ -33,13 +32,10 @@ namespace MVC
         private ChoiceCtl choiceCtl;
 
         [SerializeField]
-        private bool enlargeArrow = false;
-
-        [SerializeField]
         private bool skipBG = false;
 
         [SerializeField]
-        private bool delayFinish = false;
+        private bool earlyFinish = false;
 
         private void Start()
         {
@@ -64,7 +60,9 @@ namespace MVC
             base.OnDisable();
         }
 
-        // 专门给interact的方法
+        /// <summary>
+        /// 由 InteractCtl 调用：传入行映射 + 文本行数组。
+        /// </summary>
         public void StartInteractDialogue(LineMapping[] mappings, string[] lines, Action onFinished)
         {
             this.mappings = mappings;
@@ -72,18 +70,28 @@ namespace MVC
             StartDialogue(new DialogueModel(lines));
         }
 
-        public void StartDialogue(int index, Action onFinished)
+        /// <summary>
+        /// 由 Timeline 调用：通过枚举 ID 从 ScriptableObject 里取文本。
+        /// </summary>
+        public void StartDialogue(Scene1DialogueId id, Action onFinished)
         {
             if (dialogueClips == null)
             {
-                Debug.LogError("[TimelineDialogCtl]: Dialogue Clips is not assigned");
+                Debug.LogError("[TimelineDialogCtl]: 未绑定 Scene1DialogueClips 组件，请检查场景中的引用");
                 return;
             }
-            index = index - 1; // 用户传进来的从1开始
-            mappings = dialogueClips.dialogMappings[index].mappings;
+            // 通过枚举 ID 从 clips 里找到对应配置
+            var clip = dialogueClips.GetClip(id);
+            if (clip == null)
+            {
+                Debug.LogError($"[TimelineDialogCtl]: 找不到对应的对话配置，dialogueId = {id}。请检查 Scene1DialogueClips 的 dialogMappings 配置");
+                return;
+            }
+
+            mappings = clip.mappings;
             finished = onFinished;
-            string modelText = dialogueClips.dialogMappings[index].textFile;
-            base.StartDialogue(new DialogueModel(modelText));
+
+            base.StartDialogue(new DialogueModel(clip.textFile));
         }
 
         protected override IEnumerator TypeLines(Sprite currentSprite = null)
@@ -129,7 +137,7 @@ namespace MVC
             yield return base.TypeLines(currentSprite);
         }
 
-        private IEnumerator PlayClosed()
+        private IEnumerator PlayCloseAndFinished()
         {
             dialogueRenderer.Hide();
             // 并行把“对话框 & 背景”做 CodeTween 退场，等两者都结束
@@ -152,58 +160,23 @@ namespace MVC
             StartCoroutine(RunPanel());
             StartCoroutine(RunBG());
             yield return new WaitUntil(() => donePanel && doneBG);
-            // 隐藏对话与背景
-            HideDialogue();
-            dialogPanel.gameObject.SetActive(false);
-        }
-
-        private IEnumerator PlayClosedWithFinished()
-        {
-            dialogueRenderer.Hide();
-            // 并行把“对话框 & 背景”做 CodeTween 退场，等两者都结束
-            bool donePanel = false,
-                doneBG = false;
-
-            IEnumerator RunPanel()
-            {
-                if (enterAnim)
-                    yield return enterAnim.PlayExitCode(dialogueRenderer.dialogueView, false);
-                donePanel = true;
-            }
-            IEnumerator RunBG()
-            {
-                if (enterAnim)
-                    yield return enterAnim.PlayExitCode(dialogueRenderer.bgView, true);
-                doneBG = true;
-            }
-
-            StartCoroutine(RunPanel());
-            StartCoroutine(RunBG());
-            yield return new WaitUntil(() => donePanel && doneBG);
-            // 隐藏对话与背景
-            HideDialogue();
-            dialogPanel.gameObject.SetActive(false);
             // 再回调
             finished?.Invoke();
         }
 
-        private void Close()
-        {
-            StartCoroutine(PlayClosed());
-        }
-
         private void CloseAndFinish()
         {
-            if (delayFinish)
+            if (earlyFinish)
             {
-                // 触发对话结束回调
+                // 不播放面板退出动画，直接回调
+                // 用于UI场景中，避免直接关闭Canvas再进行场景切换的淡出动画
                 var cb = finished;
                 finished = null;
                 cb?.Invoke();
             }
             else
             {
-                StartCoroutine(PlayClosedWithFinished());
+                StartCoroutine(PlayCloseAndFinished());
             }
         }
 
@@ -229,7 +202,7 @@ namespace MVC
                         () =>
                         {
                             _waitingChoice = false;
-                            Close();
+                            CloseAndFinish();
                         },
                         choiceModel
                     );
@@ -238,7 +211,8 @@ namespace MVC
                 {
                     CloseAndFinish();
                 }
-                return; // 这里务必 return，防止继续往下跑
+                // 防止继续往下跑
+                return;
             }
             // 不然按钮点击会误认为nextline
             if (dialogueModel == null || index >= dialogueModel.Lines.Length)

@@ -22,7 +22,7 @@ namespace MVC
         {
             rooftopExploreStage = RooftopExploreStage.StartRooftopExplore;
             ctl.Player.model.SetDisabled(true);
-            ctl.TimelineCtl.StartDialogue(4, () =>
+            ctl.TimelineCtl.StartDialogue(Scene1DialogueId.RooftopExploreIntro, () =>
             {
                 rooftopExploreStage = RooftopExploreStage.AwaitExploreComplete;
                 ctl.Player.model.SetDisabled(false);

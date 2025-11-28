@@ -31,6 +31,7 @@ namespace MVC
         // 是否处于对话中
         private bool isInteracting;
 
+        private bool shouldEndInteract;
         // 选项
         [SerializeField]
         private ChoiceCtl choiceCtl;
@@ -67,11 +68,17 @@ namespace MVC
         {
             _curStep = StepFor(visitCount);
 
+            if (_curStep == null)
+            {
+                Debug.LogWarning("[InteractCtl] BeginInteract -> FALSE (no step/lines).");
+                return;
+            }
             // 判定各段是否存在
             bool hasFirst = _curStep.firstLines != null && _curStep.firstLines.Length > 0;
             bool hasSecondLines = _curStep.secondLines != null && _curStep.secondLines.Length > 0;
             bool hasSecondMaps = _curStep.secondMappings != null && _curStep.secondMappings.Length > 0;
             bool hasChoice = _curStep.choiceModel.items != null && _curStep.choiceModel.items.Length > 0;
+            bool endThisTime = shouldEndInteract;
 
             // 启动 second 段（走 dialogCtl），容错：映射或台词缺失则传空数组
             void StartSecondFlow()
@@ -93,7 +100,11 @@ namespace MVC
                 dialogCtl.StartInteractDialogue(
                     maps,
                     lines,
-                    () => { EndInteract(_player); }
+                    () =>
+                    {
+                        if (endThisTime)
+                            EndInteract(_player);
+                    }
                 );
             }
 
@@ -117,20 +128,23 @@ namespace MVC
                         }
                         else
                         {
-                            EndInteract(_player);
+                            if (endThisTime)
+                                EndInteract(_player);
                         }
                     }
                 );
             }
             else
             {
-                // 情况C：两段都没有台词
-                EndInteract(_player);
+                if (endThisTime)
+                    EndInteract(_player);
             }
+            shouldEndInteract = true; // 重置默认值
         }
 
-        public virtual bool BeginInteract(PlayerCtl player)
+        public virtual bool BeginInteract(PlayerCtl player, bool shouldEndInteract = true)
         {
+            this.shouldEndInteract = shouldEndInteract;
             if (isInteracting)
             {
                 Debug.Log($"[InteractCtl] BeginInteract -> FALSE (already interacting).");
@@ -142,54 +156,12 @@ namespace MVC
                 Debug.LogWarning($"[InteractCtl] BeginInteract -> FALSE (player is null).");
                 return false;
             }
-
-            _curStep = StepFor(visitCount);
-            if (_curStep == null || _curStep.firstLines == null || _curStep.firstLines.Length == 0)
-            {
-                Debug.LogWarning("[InteractCtl] BeginInteract -> FALSE (no step/lines).");
-                return false;
-            }
+            // 持有玩家引用
             _player = player;
-
+            // 进入交互状态
             isInteracting = true;
-
-            bool hasMapping = _curStep.secondMappings != null && _curStep.secondMappings.Length > 0;
-            bool hasChoice =
-                _curStep.choiceModel.items != null && _curStep.choiceModel.items.Length > 0;
-
-            // 先走交互对话（带 linemapping）
-            interactCtl.StartDialogue(
-                _curStep.firstLines,
-                () =>
-                {
-                    // 回调
-                    if (hasMapping)
-                    {
-                        if (hasChoice)
-                        {
-                            dialogCtl.hasChoice = true;
-                            dialogCtl.choiceModel = _curStep.choiceModel;
-                        }
-                        else
-                        {
-                            dialogCtl.hasChoice = false;
-                            dialogCtl.choiceModel.items = null;
-                        }
-                        dialogCtl.StartInteractDialogue(
-                            _curStep.secondMappings,
-                            _curStep.secondLines,
-                            () =>
-                            {
-                                EndInteract(_player);
-                            }
-                        );
-                    }
-                    else
-                    {
-                        EndInteract(_player);
-                    }
-                }
-            );
+            // 启动对话
+            BeginDialogue();
             return true;
         }
 

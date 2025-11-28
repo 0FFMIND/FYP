@@ -12806,7 +12806,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   bgProfile:
-    duration: 0.05
+    duration: 0.1
     offsetX: 50
     offsetY: 0
     curve:

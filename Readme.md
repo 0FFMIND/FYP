@@ -123,9 +123,13 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 2025/11/24 - 把代码迁移到VSCode上了，VSCode可以和Github集成，并且使用免费的Copilot自动生成的commit message，从而让commit更有信息，继续重构代码，修改了guidePanel仍然提示右shift move faster的问题，现在统一左shift移动，修复了meadow结束后的panTo位置问题，统一了camera的锚点，修复了之前Camera抖动不出来的问题，是因为follow也在update，覆盖了shake的update，修复了父camera brain和子类vcam的关系，现在人物移动的时候也可以抖动了
 
 2025/11/25 - 修复了在meadow结束后播放铃声结束的时候动画推进会卡住的问题，是因为跑操的音乐有20MB，并且读取方式是一次读取并且解压缩，会阻塞U3D的主线程，把音频的加载改为streaming，流式加载解决问题，正在重构：https://github.com/0FFMIND/FYP/blob/b620ad88bab23c954b6f1b4693e440577328b3d8/Assets/Scripts/1-Scene/MVC/Controller/Dialog/DialogCtlBase.cs
-首先删掉了无用代码，原来DialogCtlBase是God类，也会初始化arrow的行为，因此把arrow移到了单独的ArrowIndicator类里面
+首先删掉了无用代码，原来DialogCtlBase是God类，也会初始化arrow的行为，因此首先把arrow移到了单独的ArrowIndicator类里面，待进一步重构
 
-2025/11/26 - 把之前逐行打字/揭露的过程移动到了新类TypeWriter，进一步把Dialog的God类解耦，之后把Arrow和TypeWriter还有DialogueView移到了DialogRenderer类里面，现在DialogCtl控制事件接收，DialogModel的储存和DialogRenderer的调用
+2025/11/26 - 把之前逐行打字/揭露的过程移动到了新类TypeWriter，进一步把Dialog的God类解耦，之后把Arrow和TypeWriter还有DialogueView移到了DialogRenderer类里面，现在DialogCtl控制事件接收，DialogModel的储存和DialogRenderer的调用，并且移除了很多无用local变量，把每个对话对应的mapping移到派生类了，修复后的代码：https://github.com/0FFMIND/FYP/tree/5f5b96d7e6d590f395233080458973138619673b/Assets/Scripts/1-Scene/MVC/Controller/Dialog/Base
+
+2025/11/27 - 正在重构：https://github.com/0FFMIND/FYP/blob/2707e79decb851b6877228a248f3e73b591f16ab/Assets/Scripts/1-Scene/MVC/Controller/Dialog/TimelineDialogCtl.cs，首先把之前所有的1234这种调用的逻辑统一成一个可复用函数StartDialogue(Scene1DialogueId id, Action onFinished)，并且用枚举的id增强代码的可读性，其次把Close()和CloseAndFinished()合成了一个代码，对话机结束的时候一定会调用finished事件，如果有特殊要求应该是在调用者地方实现
+
+TODO:
 
 TODO: 重构
 https://github.com/0FFMIND/FYP/blob/2707e79decb851b6877228a248f3e73b591f16ab/Assets/Scripts/1-Scene/MVC/Controller/InteractCtl.cs
