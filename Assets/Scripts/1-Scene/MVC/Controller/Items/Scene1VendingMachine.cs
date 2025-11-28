@@ -52,7 +52,7 @@ namespace MVC
             if (coins < price)
             {
                 visitCount = STEP_INSUFFICIENT_COINS;
-                BeginDialogue();
+                ContinueDialogue();
             }
             else
             {
@@ -61,7 +61,7 @@ namespace MVC
                 AudioManager.Instance.PlaySFX("coin");
                 visitCount = STEP_SUCCESS;
                 _used = true;
-                BeginDialogue();
+                ContinueDialogue();
             }
         }
 
@@ -74,7 +74,7 @@ namespace MVC
                 TimelineCtl = dialogCtl;
                 dialogCtl = UICtl;
                 visitCount = STEP_UI_CUTSCENE;
-                BeginDialogue();
+                ContinueDialogue();
             });
         }
 
@@ -91,7 +91,7 @@ namespace MVC
         public void VendCanceled()
         {
             visitCount = STEP_CANCELLED;
-            BeginDialogue();
+            ContinueDialogue();
         }
 
         public int TryVend()
@@ -105,7 +105,7 @@ namespace MVC
             var mgr = InventoryMgr.Instance;
             // 查询当前背包中此硬币的总数
             int coins = mgr.GetCountById(coinItemId);
-            
+
             if (coins == 0)
             {
                 // 若没有硬币

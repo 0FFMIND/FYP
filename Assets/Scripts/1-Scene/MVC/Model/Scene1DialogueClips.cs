@@ -21,28 +21,28 @@ namespace MVC
         RunAwayEnd
     }
     [Serializable]
-    public class DialogueClip
+    public class Scene1DialogueClip : DialogueClipBase
     {
+        [Tooltip("Scene1 专用枚举 ID")]
         public Scene1DialogueId dialogueId;
-        public string textFile;
-        public LineMapping[] mappings;
     }
 
-    public class Scene1DialogueClips : MonoBehaviour
+    public class Scene1DialogueClips : MonoBehaviour, IDialogueClipProvider
     {
-        public List<DialogueClip> dialogMappings;
-
+        public List<Scene1DialogueClip> dialogMappings;
         /// <summary>
-        /// 根据枚举 id 查找对应的 DialogueClip，没有则返回 null
+        /// 通过 int ID 查找 clip（给 TimelineDialogCtl 等通用调用方用）
         /// </summary>
-        public DialogueClip GetClip(Scene1DialogueId id)
+        public DialogueClipBase GetClip(int id)
         {
             if (dialogMappings == null) return null;
 
+            var enumId = (Scene1DialogueId)id;
+
             foreach (var clip in dialogMappings)
             {
-                if (clip != null && clip.dialogueId == id)
-                    return clip;
+                if (clip != null && clip.dialogueId == enumId)
+                    return clip;  // 向上转型为 DialogueClipBase
             }
             return null;
         }

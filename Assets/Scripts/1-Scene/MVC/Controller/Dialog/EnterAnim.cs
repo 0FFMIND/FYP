@@ -4,6 +4,12 @@ using UnityEngine.UI;
 
 namespace MVC
 {
+    /// <summary>
+    /// 负责对话框 / 背景的入场 / 退场动画。
+    /// 支持两种模式：
+    /// 1) CodeTween：通过代码位移 + 透明度渐变实现动画
+    /// 2) AnimatorState：通过 Animator 状态机播放指定 State
+    /// </summary>
     public class EnterAnim : MonoBehaviour
     {
         [System.Serializable]
@@ -15,7 +21,11 @@ namespace MVC
             public float offsetY = 0f;
             public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         }
-
+        /// <summary>
+        /// 动画驱动模式：
+        /// CodeTween：脚本控制 RectTransform / 透明度
+        /// AnimatorState：调用 Animator 的 State 播放
+        /// </summary>
         public enum Mode
         {
             CodeTween,
@@ -68,7 +78,59 @@ namespace MVC
             }
         }
 
-        public IEnumerator PlayEnterCode(DialogueView view, bool isBG)
+        /// <summary>
+        /// 并行启动一组动画协程，并在所有协程结束后再继续往下执行。
+        /// 传入为 null 的协程会被忽略。
+        /// 用于替代外部手写 StartCoroutine + WaitUntil 的样板代码。
+        /// </summary>
+        public IEnumerator RunAllAndWait(params IEnumerator[] animations)
+        {
+            if (animations == null || animations.Length == 0)
+            {
+                yield break;
+            }
+
+            int running = 0;
+
+            // 包一层，动画结束时递减计数
+            IEnumerator RunSingle(IEnumerator anim)
+            {
+                try
+                {
+                    if (anim != null)
+                    {
+                        yield return anim;
+                    }
+                }
+                finally
+                {
+                    running--;
+                }
+            }
+
+            // 启动所有非空动画
+            foreach (var anim in animations)
+            {
+                if (anim == null) continue;
+                running++;
+                StartCoroutine(RunSingle(anim));
+            }
+
+            // 如果全是 null，直接返回
+            if (running == 0)
+            {
+                yield break;
+            }
+
+            // 等待全部完成
+            yield return new WaitUntil(() => running == 0);
+        }
+
+        /// <summary>
+        /// 以「代码 Tween」的方式播放单个 DialogueView 的入场动画（上浮 + 透明度渐显）。
+        /// 调用方通常应当：yield return PlayScriptedEnterAnim(...)
+        /// </summary>
+        public IEnumerator PlayScriptedEnterAnim(DialogueView view, bool isBG)
         {
             if (mode != Mode.CodeTween)
             {
@@ -143,7 +205,7 @@ namespace MVC
             target.SetActive(false);
         }
 
-        public IEnumerator PlayExitCode(DialogueView view, bool isBG)
+        public IEnumerator PlayScriptedExitAnim(DialogueView view, bool isBG)
         {
             if (mode != Mode.CodeTween)
                 yield break;

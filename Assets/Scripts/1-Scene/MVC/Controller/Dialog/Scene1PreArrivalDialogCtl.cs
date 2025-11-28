@@ -47,7 +47,7 @@ namespace MVC
                 _isEntering = true;
                 RenderViews(currentSprite, null);
                 // 先做文本框上浮
-                yield return enterAnim.PlayEnterCode(dialogueRenderer.dialogueView, false);
+                yield return enterAnim.PlayScriptedEnterAnim(dialogueRenderer.dialogueView, false);
                 _isEntering = false;
             }
             yield return base.TypeLines(currentSprite);

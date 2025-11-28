@@ -64,7 +64,7 @@ namespace MVC
             return best ?? steps[0];
         }
 
-        protected void BeginDialogue()
+        protected void ContinueDialogue()
         {
             _curStep = StepFor(visitCount);
 
@@ -85,12 +85,10 @@ namespace MVC
             {
                 if (hasChoice)
                 {
-                    dialogCtl.hasChoice = true;
                     dialogCtl.choiceModel = _curStep.choiceModel;
                 }
                 else
                 {
-                    dialogCtl.hasChoice = false;
                     dialogCtl.choiceModel.items = null;
                 }
 
@@ -161,7 +159,7 @@ namespace MVC
             // 进入交互状态
             isInteracting = true;
             // 启动对话
-            BeginDialogue();
+            ContinueDialogue();
             return true;
         }
 

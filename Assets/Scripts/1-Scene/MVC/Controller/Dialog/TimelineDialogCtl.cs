@@ -9,16 +9,14 @@ namespace MVC
     {
         [SerializeField]
         EnterAnim enterAnim;
-
-        [SerializeField]
-        private Scene1DialogueClips dialogueClips;
+        // Unity不能直接序列化接口，所以用序列化的MonoBehaviour来间接持有接口引用
+        [SerializeField] private MonoBehaviour clipProviderBehaviour;
+        private IDialogueClipProvider clipProvider;
 
         [SerializeField]
         private GameObject dialogPanel;
-        private Action finished;
 
-        // 是否在本轮结束时进入 Choice 流程（不立即关闭面板）
-        public bool hasChoice = false;
+        private Action finished;
 
         private bool _waitingChoice = false;
 
@@ -39,6 +37,8 @@ namespace MVC
 
         private void Start()
         {
+            // 获取接口引用
+            clipProvider = clipProviderBehaviour as IDialogueClipProvider;
             // 隐藏dialog
             HideDialogue();
         }
@@ -67,24 +67,30 @@ namespace MVC
         {
             this.mappings = mappings;
             finished = onFinished;
-            StartDialogue(new DialogueModel(lines));
+            base.StartDialogue(new DialogueModel(lines));
+        }
+
+        // Scene1 的便利重载：外部可以直接传 enum
+        public void StartClipDialogue(Scene1DialogueId id, Action onFinished)
+        {
+            StartClipDialogue((int)id, onFinished);
         }
 
         /// <summary>
         /// 由 Timeline 调用：通过枚举 ID 从 ScriptableObject 里取文本。
         /// </summary>
-        public void StartDialogue(Scene1DialogueId id, Action onFinished)
+        private void StartClipDialogue(int clipId, Action onFinished)
         {
-            if (dialogueClips == null)
+            if (clipProvider == null)
             {
-                Debug.LogError("[TimelineDialogCtl]: 未绑定 Scene1DialogueClips 组件，请检查场景中的引用");
+                Debug.LogError("[TimelineDialogCtl]: 未绑定 IDialogueClipProvider");
                 return;
             }
-            // 通过枚举 ID 从 clips 里找到对应配置
-            var clip = dialogueClips.GetClip(id);
+
+            DialogueClipBase clip = clipProvider.GetClip(clipId);
             if (clip == null)
             {
-                Debug.LogError($"[TimelineDialogCtl]: 找不到对应的对话配置，dialogueId = {id}。请检查 Scene1DialogueClips 的 dialogMappings 配置");
+                Debug.LogError($"[TimelineDialogCtl]: 找不到对应对话配置 id = {clipId}");
                 return;
             }
 
@@ -101,34 +107,21 @@ namespace MVC
             {
                 _isEntering = true;
                 RenderViews(currentSprite, null);
-                bool donePanel = false,
-                    doneBG = false;
                 dialogPanel.gameObject.SetActive(true);
 
-                // 先做文本框上浮
-                IEnumerator RunPanel()
-                {
-                    yield return enterAnim.PlayEnterCode(dialogueRenderer.dialogueView, false);
-                    donePanel = true;
-                }
-
-                StartCoroutine(RunPanel());
+                // 准备需要播放的动画协程；BG 可以按 skipBG 决定是否为 null
+                var dialogAnim = enterAnim.PlayScriptedEnterAnim(dialogueRenderer.dialogueView, false);
+                IEnumerator bgAnim = null;
                 if (!skipBG)
                 {
-                    IEnumerator RunBG()
-                    {
-                        yield return enterAnim.PlayEnterCode(dialogueRenderer.bgView, true);
-                        doneBG = true;
-                    }
-                    StartCoroutine(RunBG());
+                    bgAnim = enterAnim.PlayScriptedEnterAnim(dialogueRenderer.bgView, true);
                 }
-                else
-                {
-                    doneBG = true;
-                }
-                // 同时开跑
-                yield return new WaitUntil(() => donePanel && doneBG);
+
+                // 在 EnterAnim 里统一并行播放并等待全部完成
+                yield return enterAnim.RunAllAndWait(dialogAnim, bgAnim);
+
                 _isEntering = false;
+                // 如果跳过背景动画（通常是全屏贴图），做个淡入
                 if (skipBG)
                 {
                     TransitionMgr.Instance.FadeIn(0.5f);
@@ -137,34 +130,25 @@ namespace MVC
             yield return base.TypeLines(currentSprite);
         }
 
-        private IEnumerator PlayCloseAndFinished()
+        private IEnumerator EndDialogueWithExitAnimation()
         {
             dialogueRenderer.Hide();
-            // 并行把“对话框 & 背景”做 CodeTween 退场，等两者都结束
-            bool donePanel = false,
-                doneBG = false;
 
-            IEnumerator RunPanel()
-            {
-                if (enterAnim)
-                    yield return enterAnim.PlayExitCode(dialogueRenderer.dialogueView, false);
-                donePanel = true;
-            }
-            IEnumerator RunBG()
-            {
-                if (enterAnim)
-                    yield return enterAnim.PlayExitCode(dialogueRenderer.bgView, true);
-                doneBG = true;
-            }
+            // 对话框和 BG 的退场动画都交给 EnterAnim，并等待两者完成
+            var dialogAnim = enterAnim != null
+                ? enterAnim.PlayScriptedExitAnim(dialogueRenderer.dialogueView, false)
+                : null;
+            var bgAnim = enterAnim != null
+                ? enterAnim.PlayScriptedExitAnim(dialogueRenderer.bgView, true)
+                : null;
 
-            StartCoroutine(RunPanel());
-            StartCoroutine(RunBG());
-            yield return new WaitUntil(() => donePanel && doneBG);
+            yield return enterAnim.RunAllAndWait(dialogAnim, bgAnim);
+
             // 再回调
             finished?.Invoke();
         }
 
-        private void CloseAndFinish()
+        private void EndDialogue()
         {
             if (earlyFinish)
             {
@@ -176,7 +160,7 @@ namespace MVC
             }
             else
             {
-                StartCoroutine(PlayCloseAndFinished());
+                StartCoroutine(EndDialogueWithExitAnimation());
             }
         }
 
@@ -190,9 +174,7 @@ namespace MVC
             // 读完
             if (index == dialogueModel.Lines.Length)
             {
-                if (
-                    hasChoice
-                    && choiceModel.items != null
+                if (choiceModel.items != null
                     && choiceModel.items.Length > 0
                     && choiceCtl != null
                 )
@@ -202,14 +184,14 @@ namespace MVC
                         () =>
                         {
                             _waitingChoice = false;
-                            CloseAndFinish();
+                            EndDialogue();
                         },
                         choiceModel
                     );
                 }
                 else
                 {
-                    CloseAndFinish();
+                    EndDialogue();
                 }
                 // 防止继续往下跑
                 return;

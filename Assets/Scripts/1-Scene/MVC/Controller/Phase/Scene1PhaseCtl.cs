@@ -113,7 +113,7 @@ namespace MVC
             {
                 player.model.SetDisabled(true);
                 // »½ÐÑdialog
-                timelineCtl.StartDialogue(Scene1DialogueId.VendingMachineEnd, () =>
+                timelineCtl.StartClipDialogue(Scene1DialogueId.VendingMachineEnd, () =>
                 {
                     player.model.SetDisabled(false);
                 });

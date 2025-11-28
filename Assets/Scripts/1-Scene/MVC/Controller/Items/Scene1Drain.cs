@@ -28,7 +28,7 @@ namespace MVC
         public void PickCanceled()
         {
             visitCount = 1;
-            BeginDialogue();
+            ContinueDialogue();
         }
 
         public int TryPick()

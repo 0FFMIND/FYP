@@ -6076,9 +6076,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueRenderer: {fileID: 1015094543}
   enterAnim: {fileID: 1734552772830508035}
-  dialogueClips: {fileID: 7387562188456360109}
+  clipProviderBehaviour: {fileID: 0}
   dialogPanel: {fileID: 1622242234}
-  hasChoice: 0
   choiceModel:
     items: []
     choiceHeader: 
@@ -7963,7 +7962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd26acc9663f9c4283665b57e75a052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phase: 6
+  phase: 0
   director: {fileID: 4839773860695319372}
   guideCtl: {fileID: 1823472468}
   timelineCtl: {fileID: 1401251239175435381}
@@ -11528,9 +11527,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueRenderer: {fileID: 1955821183}
   enterAnim: {fileID: 1955821182}
-  dialogueClips: {fileID: 7387562188456360109}
+  clipProviderBehaviour: {fileID: 0}
   dialogPanel: {fileID: 901008674}
-  hasChoice: 0
   choiceModel:
     items: []
     choiceHeader: 
@@ -12751,9 +12749,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueRenderer: {fileID: 1960129108}
   enterAnim: {fileID: 1734552772830508035}
-  dialogueClips: {fileID: 7387562188456360109}
+  clipProviderBehaviour: {fileID: 7387562188456360109}
   dialogPanel: {fileID: 901008674}
-  hasChoice: 0
   choiceModel:
     items: []
     choiceHeader: 
@@ -13085,8 +13082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogMappings:
-  - dialogueId: 0
-    textFile: 1-Scene-1.txt
+  - textFile: 1-Scene-1.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
@@ -13098,8 +13094,8 @@ MonoBehaviour:
       onEnter:
         m_PersistentCalls:
           m_Calls: []
-  - dialogueId: 1
-    textFile: 1-Scene-2.txt
+    dialogueId: 0
+  - textFile: 1-Scene-2.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
@@ -13111,8 +13107,8 @@ MonoBehaviour:
       onEnter:
         m_PersistentCalls:
           m_Calls: []
-  - dialogueId: 2
-    textFile: 1-Scene-5.txt
+    dialogueId: 1
+  - textFile: 1-Scene-5.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
@@ -13124,24 +13120,24 @@ MonoBehaviour:
       onEnter:
         m_PersistentCalls:
           m_Calls: []
-  - dialogueId: 3
-    textFile: 1-Scene-7.txt
+    dialogueId: 2
+  - textFile: 1-Scene-7.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
       onEnter:
         m_PersistentCalls:
           m_Calls: []
-  - dialogueId: 4
-    textFile: 1-Scene-8.txt
+    dialogueId: 3
+  - textFile: 1-Scene-8.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
       onEnter:
         m_PersistentCalls:
           m_Calls: []
-  - dialogueId: 5
-    textFile: 1-Scene-9.txt
+    dialogueId: 4
+  - textFile: 1-Scene-9.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
@@ -13243,8 +13239,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-  - dialogueId: 6
-    textFile: 1-Scene-10.txt
+    dialogueId: 5
+  - textFile: 1-Scene-10.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 30c4cea6472377a498ebeb9bbe4a2cfd, type: 3}
@@ -13273,8 +13269,8 @@ MonoBehaviour:
       onEnter:
         m_PersistentCalls:
           m_Calls: []
-  - dialogueId: 7
-    textFile: 1-Scene-11.txt
+    dialogueId: 6
+  - textFile: 1-Scene-11.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 35be1b6e14adde841b4424acb8eb78e1, type: 3}
@@ -13286,8 +13282,8 @@ MonoBehaviour:
       onEnter:
         m_PersistentCalls:
           m_Calls: []
-  - dialogueId: 8
-    textFile: 1-Scene-12.txt
+    dialogueId: 7
+  - textFile: 1-Scene-12.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: f0a48217910eb49489ae0196a3a06800, type: 3}
@@ -13328,8 +13324,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-  - dialogueId: 9
-    textFile: 1-Scene-13.txt
+    dialogueId: 8
+  - textFile: 1-Scene-13.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
@@ -13356,8 +13352,8 @@ MonoBehaviour:
       onEnter:
         m_PersistentCalls:
           m_Calls: []
-  - dialogueId: 10
-    textFile: 1-Scene-14.txt
+    dialogueId: 9
+  - textFile: 1-Scene-14.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: 6a8393bd484536542ad11493eb958896, type: 3}
@@ -13376,16 +13372,16 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-  - dialogueId: 11
-    textFile: 1-Scene-15.txt
+    dialogueId: 10
+  - textFile: 1-Scene-15.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: a606bc631c88aa14aaa95a94acc7bfbc, type: 3}
       onEnter:
         m_PersistentCalls:
           m_Calls: []
-  - dialogueId: 12
-    textFile: 1-Scene-16.txt
+    dialogueId: 11
+  - textFile: 1-Scene-16.txt
     mappings:
     - lineIndex: 0
       sprite: {fileID: 21300000, guid: b073d02691ba5c849afd505e23adeea2, type: 3}
@@ -13409,6 +13405,7 @@ MonoBehaviour:
               m_StringArgument: heavyPunching
               m_BoolArgument: 0
             m_CallState: 2
+    dialogueId: 12
 --- !u!114 &8088918302841303503
 MonoBehaviour:
   m_ObjectHideFlags: 0

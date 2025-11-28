@@ -99,7 +99,7 @@ namespace MVC
             // 暂停director
             director.Pause();
             // 启动dialog
-            dialogCtl.StartDialogue(Scene1DialogueId.TimelineIntro, ResumeDirector);
+            dialogCtl.StartClipDialogue(Scene1DialogueId.TimelineIntro, ResumeDirector);
         }
 
         public void PlayerSecondMove()
@@ -123,7 +123,7 @@ namespace MVC
             yield return new WaitForSecondsRealtime(1.7f);
             // 暂停director
             director.Pause();
-            dialogCtl.StartDialogue(Scene1DialogueId.TimelineEnd, PlayerSecondMoveEnd);
+            dialogCtl.StartClipDialogue(Scene1DialogueId.TimelineEnd, PlayerSecondMoveEnd);
         }
 
         private void PlayerSecondTurn()
@@ -159,7 +159,7 @@ namespace MVC
             yield return new WaitForSecondsRealtime(1f);
             emoteCtl.Play(EmoteType.Thinking, 1f);
             yield return new WaitForSecondsRealtime(1.7f);
-            dialogCtl.StartDialogue(Scene1DialogueId.SignTutorialEnd, PlayerThirdMoveEnd);
+            dialogCtl.StartClipDialogue(Scene1DialogueId.SignTutorialEnd, PlayerThirdMoveEnd);
         }
 
         private void PlayerThirdMoveEnd()
@@ -186,7 +186,7 @@ namespace MVC
             yield return mover.Jump(0.2f, 0.6f);
             yield return new WaitForSecondsRealtime(0.5f);
             bg.isOn = false;
-            dialogCtl.StartDialogue(Scene1DialogueId.RooftopExploreEnd, () =>
+            dialogCtl.StartClipDialogue(Scene1DialogueId.RooftopExploreEnd, () =>
             {
                 GameObject
                     .FindGameObjectWithTag("Player")
@@ -205,7 +205,7 @@ namespace MVC
             emoteCtl.Play(EmoteType.Warning, 0.6f, true);
             yield return new WaitForSecondsRealtime(1f);
             bg.isOn = false;
-            dialogCtl.StartDialogue(Scene1DialogueId.MeadowExploreIntro, () =>
+            dialogCtl.StartClipDialogue(Scene1DialogueId.MeadowExploreIntro, () =>
             {
                 bg.isOn = true;
                 // 开始播放动画
@@ -239,13 +239,13 @@ namespace MVC
             yield return mover.Jump(0.2f, 0.6f);
             emoteCtl.Play(EmoteType.Warning, 0.6f, true);
             yield return new WaitForSecondsRealtime(1f);
-            dialogCtl.StartDialogue(Scene1DialogueId.MeadowExploreMid, () =>
+            dialogCtl.StartClipDialogue(Scene1DialogueId.MeadowExploreMid, () =>
             {
                 EventBus.Publish(new EJournalStepChanged("endRooftop", 1, StepState.Done));
                 switcher.EnterUI(() =>
                 {
                     AudioManager.Instance.PlayBGM("1-bgm-2", 0f);
-                    UICtl.StartDialogue(Scene1DialogueId.MeadowExploreEnd, () =>
+                    UICtl.StartClipDialogue(Scene1DialogueId.MeadowExploreEnd, () =>
                     {
                         switcher.ExitUI(() =>
                         {
@@ -261,7 +261,7 @@ namespace MVC
             yield return new WaitForSecondsRealtime(0.1f);
             emoteCtl.Play(EmoteType.Warning, 0.6f, true);
             yield return mover.Jump(0.2f, 0.6f);
-            dialogCtl.StartDialogue(Scene1DialogueId.RunAwayIntro, () =>
+            dialogCtl.StartClipDialogue(Scene1DialogueId.RunAwayIntro, () =>
             {
                 StartCoroutine(PlayerEighthMove());
             });
@@ -272,7 +272,7 @@ namespace MVC
             EventBus.Publish(new EJournalStepChanged("endRooftop", 2, StepState.Done));
             cameraCtl.PanToY(-4f, 3f);
             yield return new WaitForSecondsRealtime(2f);
-            dialogSideCtl.StartDialogue(Scene1DialogueId.RunAwayVoiceOver, () =>
+            dialogSideCtl.StartClipDialogue(Scene1DialogueId.RunAwayVoiceOver, () =>
             {
                 StartCoroutine(PlayerNinethMove());
             });
@@ -284,7 +284,7 @@ namespace MVC
             cameraCtl.PanToY(4f, 1f);
             yield return new WaitForSecondsRealtime(1f);
             bg.isOn = false;
-            dialogCtl.StartDialogue(Scene1DialogueId.RunAwayMid, () =>
+            dialogCtl.StartClipDialogue(Scene1DialogueId.RunAwayMid, () =>
             {
                 cameraCtl.FollowPlayer();
                 StartCoroutine(PlayerTenthMove());
@@ -316,7 +316,7 @@ namespace MVC
             switcher.EnterUI(() =>
             {
                 AudioManager.Instance.PlayBGM("1-bgm-4", 0f);
-                UICtl.StartDialogue(Scene1DialogueId.RunAwayEnd, () =>
+                UICtl.StartClipDialogue(Scene1DialogueId.RunAwayEnd, () =>
                 {
                     AudioManager.Instance.StopBGM();
                     // 进入1-Scene-UI
