@@ -13,7 +13,7 @@ namespace Manager
         mixer,
     }
 
-    public class AudioManager : SingletonMB<AudioManager>
+    public class AudioMgr : SingletonMB<AudioMgr>
     {
         private string bgmVolumeParam = "BGMVolume";
         private string mixerVolumeParam = "MixerVolume";

@@ -111,7 +111,7 @@ namespace MVC
                         cnt = 0;
                         if (enableTypingSfx)
                         {
-                            AudioManager.Instance.PlaySFX("typing");
+                            AudioMgr.Instance.PlaySFX("typing");
                         }
                     }
                 }
@@ -119,7 +119,7 @@ namespace MVC
                 {
                     if (enableTypingSfx)
                     {
-                        AudioManager.Instance.PlaySFX("typing");
+                        AudioMgr.Instance.PlaySFX("typing");
                     }
                 }
                 float wait = typeSpeed / typingRate;

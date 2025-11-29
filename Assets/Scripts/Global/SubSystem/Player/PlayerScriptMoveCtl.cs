@@ -11,7 +11,7 @@ namespace MVC
         private PlayerCtl player;
         private Rigidbody2D rb;
         public PlayerAnimCtl anim;
-        private bool _active; // ÊÇ·ñ´¦ÓÚ½Å±¾Çý¶¯ÒÆ¶¯ÖÐ£¨true ±íÊ¾ÕýÔÚ×Ô¶¯ÒÆ¶¯£©
+        private bool _active; // æ˜¯å¦å¤„äºŽè„šæœ¬é©±åŠ¨ç§»åŠ¨ä¸­ï¼ˆtrue è¡¨ç¤ºæ­£åœ¨è‡ªåŠ¨ç§»åŠ¨ï¼‰
         private Vector2 _target;
         private float _speed;
         private bool _hasFaceOverride;
@@ -19,7 +19,7 @@ namespace MVC
         private Action _onArrive;
 
         private Coroutine _jumpCo;
-        private SpriteRenderer[] _renderers; // »º´æËùÓÐäÖÈ¾Æ÷£¨×ÔÉí»ò×ÓÎïÌå£©
+        private SpriteRenderer[] _renderers; // ç¼“å­˜æ‰€æœ‰æ¸²æŸ“å™¨ï¼ˆè‡ªèº«æˆ–å­ç‰©ä½“ï¼‰
 
         public bool IsActive => _active;
 
@@ -57,7 +57,7 @@ namespace MVC
             _active = true;
         }
 
-        // Ç¿ÖÆ¸üÐÂÌùÍ¼
+        // å¼ºåˆ¶æ›´æ–°è´´å›¾
         public void SetSprite(Sprite sprite)
         {
             anim.SetSprite(sprite);
@@ -68,18 +68,18 @@ namespace MVC
             anim.SetLock(shouldLock);
         }
 
-        // ½öÉèÖÃÃæ³¯·½Ïò£¨²»ÒÆ¶¯£©£¬²¢Á¢¼´ÉúÐ§
+        // ä»…è®¾ç½®é¢æœæ–¹å‘ï¼ˆä¸ç§»åŠ¨ï¼‰ï¼Œå¹¶ç«‹å³ç”Ÿæ•ˆ
         public void SetFace(Direction dir)
         {
-            _hasFaceOverride = true; // ´ò¿ª¡°½Å±¾Ç¿ÖÆ³¯Ïò¡±
-            _faceOverride = dir; // ¼ÇÂ¼Ç¿ÖÆ³¯Ïò
-            anim.SetMoving(false); // Ã÷È·¸æÖª¶¯»­»ú£ºµ±Ç°Îª¾²Ö¹£¨±ÜÃâÐÐ×ßÖ¡£©
-            anim.SetDirection(dir); // Á¢¼´Ë¢ÐÂ³¯Ïò£¨±¾Ö¡ÆðÐ§£©
+            _hasFaceOverride = true; // æ‰“å¼€â€œè„šæœ¬å¼ºåˆ¶æœå‘â€
+            _faceOverride = dir; // è®°å½•å¼ºåˆ¶æœå‘
+            anim.SetMoving(false); // æ˜Žç¡®å‘ŠçŸ¥åŠ¨ç”»æœºï¼šå½“å‰ä¸ºé™æ­¢ï¼ˆé¿å…è¡Œèµ°å¸§ï¼‰
+            anim.SetDirection(dir); // ç«‹å³åˆ·æ–°æœå‘ï¼ˆæœ¬å¸§èµ·æ•ˆï¼‰
         }
 
         public Coroutine Jump(float totalTime, float height)
         {
-            AudioManager.Instance.PlaySFX("jump");
+            AudioMgr.Instance.PlaySFX("jump");
             if (_jumpCo != null) StopCoroutine(_jumpCo);
             _jumpCo = StartCoroutine(JumpCo(Mathf.Max(0.0001f, totalTime), height));
             return _jumpCo;
@@ -87,7 +87,7 @@ namespace MVC
 
         private IEnumerator JumpCo(float totalTime, float height)
         {
-            // ±£´æ²¢ÍÑÀëÎïÀí
+            // ä¿å­˜å¹¶è„±ç¦»ç‰©ç†
             bool sim = rb.simulated;
             Vector2 vel = rb.velocity;
             float angVel = rb.angularVelocity;
@@ -110,11 +110,11 @@ namespace MVC
                 }
             }
 
-            // ×öÒ»¸öµÈËÙÉÏ/ÏÂµÄ¡°V¡±ÐÎÌø
+            // åšä¸€ä¸ªç­‰é€Ÿä¸Š/ä¸‹çš„â€œVâ€å½¢è·³
             Vector3 startPos = transform.position;
             float half = totalTime * 0.5f;
 
-            // ÉÏÉý½×¶Î: 0 -> height
+            // ä¸Šå‡é˜¶æ®µ: 0 -> height
             float t = 0f;
             while (t < half)
             {
@@ -124,7 +124,7 @@ namespace MVC
                 yield return null;
             }
 
-            // ÏÂ½µ½×¶Î: height -> 0
+            // ä¸‹é™é˜¶æ®µ: height -> 0
             t = 0f;
             while (t < half)
             {
@@ -134,17 +134,17 @@ namespace MVC
                 yield return null;
             }
 
-            // ¹éÎ»
+            // å½’ä½
             transform.position = startPos;
 
-            // »¹Ô­ sortingOrder
+            // è¿˜åŽŸ sortingOrder
             if (oldOrders != null)
             {
                 for (int i = 0; i < _renderers.Length; i++)
                     if (_renderers[i]) _renderers[i].sortingOrder = oldOrders[i];
             }
 
-            // »Ö¸´ÎïÀí
+            // æ¢å¤ç‰©ç†
             rb.simulated = sim;
             rb.velocity = vel;
             rb.angularVelocity = angVel;
@@ -170,7 +170,7 @@ namespace MVC
                 return;
             }
 
-            // ¶¯»­£ºÐÐ×ß + Ö¸¶¨³¯Ïò£¨¿ÉÓëÎ»ÒÆÏà·´ÊµÏÖ¡°ºóÍË¡±£©
+            // åŠ¨ç”»ï¼šè¡Œèµ° + æŒ‡å®šæœå‘ï¼ˆå¯ä¸Žä½ç§»ç›¸åå®žçŽ°â€œåŽé€€â€ï¼‰
             anim.SetMoving(true);
             var face = _hasFaceOverride ? _faceOverride : VectorToDir(to);
             anim.SetDirection(face);

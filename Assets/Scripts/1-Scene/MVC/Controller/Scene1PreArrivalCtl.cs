@@ -36,10 +36,11 @@ namespace MVC
 
         private IEnumerator Start()
         {
-            if(SettingsMgr.Instance.GetLanguage() == LanguageCode.zh)
+            if (SettingsMgr.Instance.GetLanguage() == LanguageCode.zh)
             {
                 warningView = warningViewCH;
-            }else if(SettingsMgr.Instance.GetLanguage() == LanguageCode.en)
+            }
+            else if (SettingsMgr.Instance.GetLanguage() == LanguageCode.en)
             {
                 warningView = warningViewEN;
             }
@@ -53,7 +54,7 @@ namespace MVC
             // 整体wanringView的淡入淡出
             viewGroup.alpha = 0f;
             // 加载音效
-            AudioManager.Instance.PlaySFX("gear");
+            AudioMgr.Instance.PlaySFX("gear");
             // 播放warning
             yield return StartCoroutine(PlayWarning());
             // 隐藏warningView

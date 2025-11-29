@@ -1,4 +1,0 @@
-interface ICutsceneCommand
-{
-    void Execute();
-}

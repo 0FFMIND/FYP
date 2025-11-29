@@ -57,7 +57,7 @@ namespace MVC
                 {
                     if (!_suppressNextSfx)
                     {
-                        AudioManager.Instance.PlaySFX("buttonClick");
+                        AudioMgr.Instance.PlaySFX("buttonClick");
                     }
                     OnSelected?.Invoke();
                 }

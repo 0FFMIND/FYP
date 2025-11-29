@@ -23,11 +23,11 @@ namespace MVC
 
         private void SetScrollBar()
         {
-            float bgmValue = AudioManager.Instance.GetBGMVolumeNormalized();
+            float bgmValue = AudioMgr.Instance.GetBGMVolumeNormalized();
             bgmScrollBar.SetValueWithoutNotify(bgmValue);
-            float sfxValue = AudioManager.Instance.GetSFXVolumeNormalized();
+            float sfxValue = AudioMgr.Instance.GetSFXVolumeNormalized();
             sfxScrollBar.SetValueWithoutNotify(sfxValue);
-            float mixerValue = AudioManager.Instance.GetMixerVolumeNormalized();
+            float mixerValue = AudioMgr.Instance.GetMixerVolumeNormalized();
             mixerScrollBar.SetValueWithoutNotify(mixerValue);
         }
 
@@ -48,21 +48,21 @@ namespace MVC
         {
             // 当 BGM 音量滑条数值改变时，把最新值写回 AudioManager
             float value = bgmScrollBar.value;
-            AudioManager.Instance.SetBGMVolumeNormalized(value);
+            AudioMgr.Instance.SetBGMVolumeNormalized(value);
         }
 
         public void HandleSFXVolumeChange()
         {
             // 当 SFX 音量滑条数值改变时，把最新值写回 AudioManager
             float value = sfxScrollBar.value;
-            AudioManager.Instance.SetSFXVolumeNormalized(value);
+            AudioMgr.Instance.SetSFXVolumeNormalized(value);
         }
 
         public void HandleMixerVolumeChange()
         {
             // 当 Mixer 音量滑条数值改变时，把最新值写回 AudioManager
             float value = mixerScrollBar.value;
-            AudioManager.Instance.SetMixerVolumeNormalized(value);
+            AudioMgr.Instance.SetMixerVolumeNormalized(value);
         }
     }
 }

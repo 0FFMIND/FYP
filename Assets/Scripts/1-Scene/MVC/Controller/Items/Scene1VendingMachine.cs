@@ -58,7 +58,7 @@ namespace MVC
             {
                 // 投入硬币
                 InventoryMgr.Instance.TryConsumeById(coinItemId, price);
-                AudioManager.Instance.PlaySFX("coin");
+                AudioMgr.Instance.PlaySFX("coin");
                 visitCount = STEP_SUCCESS;
                 _used = true;
                 ContinueDialogue();
@@ -70,7 +70,7 @@ namespace MVC
             // 等 EnterUI 完成后再切 visitCount/开始对话
             switcher.EnterUI(() =>
             {
-                AudioManager.Instance.PlayBGM("1-bgm-2", 0f);
+                AudioMgr.Instance.PlayBGM("1-bgm-2", 0f);
                 TimelineCtl = dialogCtl;
                 dialogCtl = UICtl;
                 visitCount = STEP_UI_CUTSCENE;
@@ -82,7 +82,7 @@ namespace MVC
         {
             switcher.ExitUI(() =>
             {
-                AudioManager.Instance.PlayBGM("1-bgm-1", 0f);
+                AudioMgr.Instance.PlayBGM("1-bgm-1", 0f);
                 dialogCtl = TimelineCtl;
                 ctl?.Done();
             });

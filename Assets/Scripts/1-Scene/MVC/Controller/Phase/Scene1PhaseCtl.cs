@@ -41,7 +41,7 @@ namespace MVC
         private Vector3 initPos;
 
         [SerializeField]
-        private PlayerMoveSignal mover;
+        private PlayerScene1CutsceneCtl cutsceneCtl;
 
         private PlayerCtl player;
 
@@ -65,7 +65,7 @@ namespace MVC
 
         private void Start()
         {
-            AudioManager.Instance.PlayBGM("1-bgm-1", 1);
+            AudioMgr.Instance.PlayBGM("1-bgm-1", 1);
 
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtl>();
             player.model.SetDisabled(true);
@@ -127,7 +127,7 @@ namespace MVC
         public TimelineDialogCtl TimelineCtl => timelineCtl;
         public GameObject GuideSteps => guideSteps;
         public Vector3 InitPos => initPos;
-        public PlayerMoveSignal Mover => mover;
+        public PlayerScene1CutsceneCtl CutsceneCtl => cutsceneCtl;
         public PlayerCtl Player => player;
         public Scene1Phase CurrentPhase => phase;
     }

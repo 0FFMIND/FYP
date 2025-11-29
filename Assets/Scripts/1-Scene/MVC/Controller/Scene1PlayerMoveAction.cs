@@ -33,7 +33,7 @@ namespace MVC
 
         public void CameraShake()
         {
-            AudioManager.Instance.PlaySFX("Punch");
+            AudioMgr.Instance.PlaySFX("Punch");
             cameraCtl.Shake();
         }
     }

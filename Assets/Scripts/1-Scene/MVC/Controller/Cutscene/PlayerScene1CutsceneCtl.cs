@@ -7,44 +7,13 @@ using Utils;
 
 namespace MVC
 {
-    public class PlayerMoveSignal : MonoBehaviour
+    public class PlayerScene1CutsceneCtl : MonoBehaviour
     {
-        private PlayerScriptMoveCtl mover;
-
-        private PlayerEmoteCtl emoteCtl;
-
         [SerializeField]
-        private PlayableDirector director;
+        private Scene1CutsceneContext ctx;
 
-        [SerializeField]
-        private TimelineDialogCtl dialogCtl;
-
-        [SerializeField]
-        private TimelineDialogCtl dialogSideCtl;
-
-        [SerializeField]
-        private TimelineDialogCtl UICtl;
-
-        [SerializeField]
-        CameraSwitch switcher;
-
-        [SerializeField]
-        private List<Sprite> closeDoor;
-
-        [SerializeField]
-        private GuideDialogCtl guideCtl;
-
-        [SerializeField]
-        private ParallaxBG bg;
-
-        [SerializeField]
-        private CameraCtl cameraCtl;
-
-        [SerializeField]
-        private GameObject door;
-
-        [SerializeField]
-        private GameObject flower;
+        private Scene1CutsceneRunner runner;
+        public List<Sprite> CloseDoorSprites;
 
         [SerializeField]
         private float stepX = 0.40f; // 每次移动的步长（世界坐标X）
@@ -58,35 +27,17 @@ namespace MVC
         [SerializeField]
         private float rightX = -7f; // 最右X
 
-        [SerializeField]
-        private float finalX = -10.69f; // 最终停在这里
-
         private void Start()
         {
-            mover = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScriptMoveCtl>();
-            emoteCtl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEmoteCtl>();
+            runner = new Scene1CutsceneRunner();
         }
 
         public void CloseDoor()
         {
-            StartCoroutine(PlayerCloseDoor());
+            var closeDoorCmd = new Scene1CloseDoor().Build();
+            StartCoroutine(runner.Run(ctx, closeDoorCmd));
         }
-
-        private IEnumerator PlayerCloseDoor()
-        {
-            mover.SetLock(true);
-            AudioManager.Instance.PlaySFX("dooropen");
-            mover.SetSprite(closeDoor[0]);
-            yield return new WaitForSecondsRealtime(0.15f);
-            mover.SetSprite(closeDoor[1]);
-            yield return new WaitForSecondsRealtime(0.15f);
-            mover.SetSprite(closeDoor[0]);
-            yield return new WaitForSecondsRealtime(0.15f);
-            mover.SetSprite(closeDoor[2]);
-            yield return new WaitForSecondsRealtime(0.15f);
-            mover.SetLock(false);
-        }
-
+        
         public void MoveBack()
         {
             Vector3 pos = mover.gameObject.transform.position;
@@ -244,7 +195,7 @@ namespace MVC
                 EventBus.Publish(new EJournalStepChanged("endRooftop", 1, StepState.Done));
                 switcher.EnterUI(() =>
                 {
-                    AudioManager.Instance.PlayBGM("1-bgm-2", 0f);
+                    AudioMgr.Instance.PlayBGM("1-bgm-2", 0f);
                     UICtl.StartClipDialogue(Scene1DialogueId.MeadowExploreEnd, () =>
                     {
                         switcher.ExitUI(() =>
@@ -280,7 +231,7 @@ namespace MVC
 
         public IEnumerator PlayerNinethMove()
         {
-            AudioManager.Instance.PlaySFX("keyTurning");
+            AudioMgr.Instance.PlaySFX("keyTurning");
             cameraCtl.PanToY(4f, 1f);
             yield return new WaitForSecondsRealtime(1f);
             bg.isOn = false;
@@ -312,13 +263,13 @@ namespace MVC
             target = new Vector3(mover.transform.position.x, 2.13f, mover.transform.position.z);
             mover.StartMove(target, 6f, Direction.Up, null);
             yield return new WaitForSecondsRealtime(1f);
-            AudioManager.Instance.PlaySFX("dooropen");
+            AudioMgr.Instance.PlaySFX("dooropen");
             switcher.EnterUI(() =>
             {
-                AudioManager.Instance.PlayBGM("1-bgm-4", 0f);
+                AudioMgr.Instance.PlayBGM("1-bgm-4", 0f);
                 UICtl.StartClipDialogue(Scene1DialogueId.RunAwayEnd, () =>
                 {
-                    AudioManager.Instance.StopBGM();
+                    AudioMgr.Instance.StopBGM();
                     // 进入1-Scene-UI
                     EventBus.Publish(
                         new ESceneFade(
@@ -348,7 +299,7 @@ namespace MVC
                 yield return new WaitForSecondsRealtime(0.5f);
                 mover.SetFace(Direction.Up);
                 yield return new WaitForSecondsRealtime(0.05f);
-                AudioManager.Instance.PlaySFX("warning");
+                AudioMgr.Instance.PlaySFX("warning");
                 emoteCtl.Play(EmoteType.Error, 0.6f, true);
                 yield return new WaitForSecondsRealtime(1f);
 

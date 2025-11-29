@@ -129,13 +129,11 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/11/27 - 正在重构：https://github.com/0FFMIND/FYP/blob/2707e79decb851b6877228a248f3e73b591f16ab/Assets/Scripts/1-Scene/MVC/Controller/Dialog/TimelineDialogCtl.cs，首先把之前所有的1234这种调用的逻辑统一成一个可复用函数StartDialogue(Scene1DialogueId id, Action onFinished)，并且用枚举的id增强代码的可读性，其次把Close()和CloseAndFinished()合成了一个代码，对话机结束的时候一定会调用finished事件，如果有特殊要求应该是在调用者地方实现
 
-TODO:
+2025/11/28 - 继续修改TimelineDialogCtl，之前的枚举是Scene1DialogueId但是考虑到拓展，用了基类DialogueClipBase，一定会有mapping和text，拓展类加上各个不同场景的枚举id，现在方法签名StartDialogue(int clipId, Action onFinished)，让它更通用了，其次把EnterAnim的函数名改为易懂的，PlayEnterCode -> PlayScriptedEnterAnim,PlayExitCode->PlayScriptedExitAnim，也修改了TimelineDialogCtl的函数名，EnterAnim有更好的策略模式，但是不影响，它只用来播放我的panel入场和退场动画，也不需要之后的拓展，不需要细致重构
 
-TODO: 重构
-https://github.com/0FFMIND/FYP/blob/2707e79decb851b6877228a248f3e73b591f16ab/Assets/Scripts/1-Scene/MVC/Controller/InteractCtl.cs
 
-TODO: 重构
-https://github.com/0FFMIND/FYP/blob/2707e79decb851b6877228a248f3e73b591f16ab/Assets/Scripts/1-Scene/MVC/Controller/Dialog/TimelineDialogCtl.cs
+
+
 
 TODO: 重构
 
@@ -145,13 +143,15 @@ https://github.com/0FFMIND/FYP/blob/7c3ae58bbc6c53a396f874b1477fcf99a3d0b169/Ass
 
 【Chapter1的问题】
 
-TODO: 解决对话机回调问题
+TODO: 我觉得打√只存在于这个物体的所有交互都做完，当前打√的逻辑只是说明这个物体被至少交互过一次，不然给玩家的指引不够明显
 
 TODO: 需要修复动画waitforrealtime的问题
 
 TODO: 动画离开的时候需要最后关一下门，门变黑，再走进去
 
+TODO: 写drain行为
 
+TODO: 修复重进scene的问题
 
 这里可以插入图片
 

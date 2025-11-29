@@ -27,7 +27,7 @@ namespace MVC
 
         public Scene1UIGuideCtl guidectl;
         public bool showGuide = false;
-        
+
         // 折叠动画时长
         [Min(0.0001f)]
         [SerializeField]
@@ -65,7 +65,7 @@ namespace MVC
                     // 订阅选中事件
                     t.toggleView.OnSelected += () =>
                     {
-                        AudioManager.Instance.PlaySFX("buttonClick");
+                        AudioMgr.Instance.PlaySFX("buttonClick");
                         ShowPage(captured);
                         _mainIndex = captured;
                     };
@@ -142,7 +142,7 @@ namespace MVC
         // 入场动画
         private IEnumerator EnterPauseMenu(string stateName, float waitSeconds)
         {
-            AudioManager.Instance.PlaySFX("menuOpen");
+            AudioMgr.Instance.PlaySFX("menuOpen");
             yield return PlayAnimState(stateName, waitSeconds);
             yield return new WaitForSecondsRealtime(0.1f);
             ShowPage(_mainIndex);

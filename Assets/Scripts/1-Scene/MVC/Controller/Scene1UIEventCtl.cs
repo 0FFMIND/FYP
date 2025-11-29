@@ -10,7 +10,7 @@ namespace MVC
     {
         public void playSFX(string s)
         {
-            AudioManager.Instance.PlaySFX(s);
+            AudioMgr.Instance.PlaySFX(s);
         }
     }
 }

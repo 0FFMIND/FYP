@@ -55,7 +55,7 @@ namespace MVC
 
         public void PlayDefaultBGM()
         {
-            AudioManager.Instance.PlayBGM("1-bgm");
+            AudioMgr.Instance.PlayBGM("1-bgm");
         }
 
         public void ArrowRed()
@@ -70,7 +70,7 @@ namespace MVC
             if (index == dialogueModel.Lines.Length)
             {
                 EventBus.Publish(new EJournalStepChanged("reachRooftop", 0, StepState.Done));
-                AudioManager.Instance.StopBGM(0.5f);
+                AudioMgr.Instance.StopBGM(0.5f);
                 // 进入1-Scene-Main
                 EventBus.Publish(
                     new ESceneFade(
