@@ -45,7 +45,7 @@ namespace MVC
             }
             ctl.Player.model.SetDisabled(true);
             // 开始播放动画
-            ctl.StartCoroutine(ctl.Mover.PlayerFourthMove());
+            ctl.CutsceneCtl.RooftopExploreCompleted();
         }
 
         public void OnJournalChanged(EJournalStatusChanged e)

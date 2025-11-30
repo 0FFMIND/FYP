@@ -13,7 +13,6 @@ namespace MVC
         private Scene1CutsceneContext ctx;
 
         private Scene1CutsceneRunner runner;
-        public List<Sprite> CloseDoorSprites;
 
         [SerializeField]
         private float stepX = 0.40f; // 每次移动的步长（世界坐标X）
@@ -37,286 +36,200 @@ namespace MVC
             var closeDoorCmd = new Scene1CloseDoor().Build();
             StartCoroutine(runner.Run(ctx, closeDoorCmd));
         }
-        
+
         public void MoveBack()
         {
-            Vector3 pos = mover.gameObject.transform.position;
-            pos.y -= 0.6f;
-            mover.StartMove(pos, 1.5f, Direction.Up, null);
+            var moveBackCmd = new OffsetMoveCommand(0f, -0.6f, 1.5f, Direction.Up);
+            StartCoroutine(runner.Run(ctx, moveBackCmd));
         }
 
-        public void FirstDialog()
+        public void TimelineIntroDialog()
         {
             // 暂停director
-            director.Pause();
+            ctx.Director.Pause();
             // 启动dialog
-            dialogCtl.StartClipDialogue(Scene1DialogueId.TimelineIntro, ResumeDirector);
-        }
-
-        public void PlayerSecondMove()
-        {
-            StartCoroutine(SecondMoveThenChat());
-        }
-
-        private IEnumerator SecondMoveThenChat()
-        {
-            mover.SetFace(Direction.Down);
-            yield return new WaitForSecondsRealtime(0.4f);
-            PlayerSecondTurn();
-            yield return new WaitForSecondsRealtime(1f);
-            mover.SetFace(Direction.Right);
-            yield return new WaitForSecondsRealtime(1f);
-            mover.SetFace(Direction.Left);
-            yield return new WaitForSecondsRealtime(1f);
-            mover.SetFace(Direction.Down);
-            yield return new WaitForSecondsRealtime(1f);
-            emoteCtl.Play(EmoteType.Thinking, 1f);
-            yield return new WaitForSecondsRealtime(1.7f);
-            // 暂停director
-            director.Pause();
-            dialogCtl.StartClipDialogue(Scene1DialogueId.TimelineEnd, PlayerSecondMoveEnd);
-        }
-
-        private void PlayerSecondTurn()
-        {
-            Vector3 pos = mover.gameObject.transform.position;
-            pos.y -= 0.7f;
-            mover.StartMove(pos, 1.6f, Direction.Down, null);
-        }
-
-        private void PlayerSecondMoveEnd()
-        {
-            // 停止Timeline过场动画
-            director.Stop();
-            // 改变当前scene1状态机状态
-            EventBus.Publish(new EScene1ArrivalPhaseChange(Scene1Phase.SignTutorial));
-        }
-
-        public IEnumerator PlayerThirdMove()
-        {
-            yield return new WaitForSecondsRealtime(0.5f);
-            if (mover.anim.currentDir != Direction.Up)
+            ctx.DialogCtl.StartClipDialogue(Scene1DialogueId.TimelineIntro, () =>
             {
-                mover.SetFace(Direction.Up);
-                yield return new WaitForSecondsRealtime(0.5f);
-            }
-            else
-            {
-                yield return new WaitForSecondsRealtime(0.5f);
-            }
-            yield return mover.Jump(0.2f, 0.6f);
-            yield return new WaitForSecondsRealtime(0.5f);
-            MoveBack(1.2f, 2f);
-            yield return new WaitForSecondsRealtime(1f);
-            emoteCtl.Play(EmoteType.Thinking, 1f);
-            yield return new WaitForSecondsRealtime(1.7f);
-            dialogCtl.StartClipDialogue(Scene1DialogueId.SignTutorialEnd, PlayerThirdMoveEnd);
-        }
-
-        private void PlayerThirdMoveEnd()
-        {
-            if (guideCtl != null)
-            {
-                guideCtl.StartDialogue(
-                    "1-Scene-6.txt",
-                    () =>
-                    {
-                        // 改变当前scene1状态机状态
-                        EventBus.Publish(
-                            new EScene1ArrivalPhaseChange(Scene1Phase.AwaitMenuToggle)
-                        );
-                        PauseMgr.Instance.SetShowGuide(true);
-                    }
-                );
-            }
-        }
-
-        public IEnumerator PlayerFourthMove()
-        {
-            yield return new WaitForSecondsRealtime(0.5f);
-            yield return mover.Jump(0.2f, 0.6f);
-            yield return new WaitForSecondsRealtime(0.5f);
-            bg.isOn = false;
-            dialogCtl.StartClipDialogue(Scene1DialogueId.RooftopExploreEnd, () =>
-            {
-                GameObject
-                    .FindGameObjectWithTag("Player")
-                    .GetComponent<PlayerCtl>()
-                    .model.SetDisabled(false);
-                EventBus.Publish(new EJournalStatusChanged("endRooftop", JournalStatus.Active));
-                EventBus.Publish(new EScene1ArrivalPhaseChange(Scene1Phase.MeadowExplore));
-                bg.isOn = true;
+                // 恢复director
+                ctx.Director.Resume();
             });
         }
 
-        public IEnumerator PlayerFifthMove()
+        public void LookAroundThenTalk()
         {
-            emoteCtl.Stop();
-            yield return mover.Jump(0.2f, 0.6f);
-            emoteCtl.Play(EmoteType.Warning, 0.6f, true);
-            yield return new WaitForSecondsRealtime(1f);
-            bg.isOn = false;
-            dialogCtl.StartClipDialogue(Scene1DialogueId.MeadowExploreIntro, () =>
-            {
-                bg.isOn = true;
-                // 开始播放动画
-                StartCoroutine(PlayerSixthMove());
-            });
+            var lookAroundCmd = new Scene1LookAroundThenTalk().Build();
+            StartCoroutine(runner.Run(ctx, lookAroundCmd));
         }
 
-        public IEnumerator PlayerSixthMove()
+        public void MoveBackFromSignThenTalk()
         {
-            var t = mover.transform;
-            float x = t.position.x;
-
-            // 情况1：当前在右边界之外 ⇒ 不去 rightX，直接去 leftX → finalX
-            if (x < rightX - stepX)
-            {
-                yield return StepMoveToX(rightX, false);
-            }
-
-            // 2) 再向左到最左
-            yield return StepMoveToX(leftX, true);
-
-            var target = new Vector3(
-                mover.transform.position.x + stepX,
-                mover.transform.position.y,
-                mover.transform.position.z
-            );
-            mover.StartMove(target, 2.3f, Direction.Right, null);
-            yield return new WaitForSecondsRealtime(0.5f);
-            mover.SetFace(Direction.Up);
-            yield return new WaitForSecondsRealtime(0.1f);
-            yield return mover.Jump(0.2f, 0.6f);
-            emoteCtl.Play(EmoteType.Warning, 0.6f, true);
-            yield return new WaitForSecondsRealtime(1f);
-            dialogCtl.StartClipDialogue(Scene1DialogueId.MeadowExploreMid, () =>
-            {
-                EventBus.Publish(new EJournalStepChanged("endRooftop", 1, StepState.Done));
-                switcher.EnterUI(() =>
-                {
-                    AudioMgr.Instance.PlayBGM("1-bgm-2", 0f);
-                    UICtl.StartClipDialogue(Scene1DialogueId.MeadowExploreEnd, () =>
-                    {
-                        switcher.ExitUI(() =>
-                        {
-                            StartCoroutine(PlayerSeventhMove());
-                        });
-                    });
-                });
-            });
+            var moveBackFromSignCmd = new Scene1MoveBackFromSignThenTalk().Build();
+            StartCoroutine(runner.Run(ctx, moveBackFromSignCmd));
         }
 
-        public IEnumerator PlayerSeventhMove()
+        public void RooftopExploreCompleted()
         {
-            yield return new WaitForSecondsRealtime(0.1f);
-            emoteCtl.Play(EmoteType.Warning, 0.6f, true);
-            yield return mover.Jump(0.2f, 0.6f);
-            dialogCtl.StartClipDialogue(Scene1DialogueId.RunAwayIntro, () =>
-            {
-                StartCoroutine(PlayerEighthMove());
-            });
+            var rooftopExploreCompletedCmd = new Scene1RooftopExploreCompleted().Build();
+            StartCoroutine(runner.Run(ctx, rooftopExploreCompletedCmd));
         }
 
-        public IEnumerator PlayerEighthMove()
-        {
-            EventBus.Publish(new EJournalStepChanged("endRooftop", 2, StepState.Done));
-            cameraCtl.PanToY(-4f, 3f);
-            yield return new WaitForSecondsRealtime(2f);
-            dialogSideCtl.StartClipDialogue(Scene1DialogueId.RunAwayVoiceOver, () =>
-            {
-                StartCoroutine(PlayerNinethMove());
-            });
-        }
+        // public IEnumerator PlayerFifthMove()
+        // {
+        //     emoteCtl.Stop();
+        //     yield return mover.Jump(0.2f, 0.6f);
+        //     emoteCtl.Play(EmoteType.Warning, 0.6f, true);
+        //     yield return new WaitForSecondsRealtime(1f);
+        //     bg.isOn = false;
+        //     dialogCtl.StartClipDialogue(Scene1DialogueId.MeadowExploreIntro, () =>
+        //     {
+        //         bg.isOn = true;
+        //         // 开始播放动画
+        //         StartCoroutine(PlayerSixthMove());
+        //     });
+        // }
 
-        public IEnumerator PlayerNinethMove()
-        {
-            AudioMgr.Instance.PlaySFX("keyTurning");
-            cameraCtl.PanToY(4f, 1f);
-            yield return new WaitForSecondsRealtime(1f);
-            bg.isOn = false;
-            dialogCtl.StartClipDialogue(Scene1DialogueId.RunAwayMid, () =>
-            {
-                cameraCtl.FollowPlayer();
-                StartCoroutine(PlayerTenthMove());
-                bg.isOn = true;
-            });
-        }
+        // public IEnumerator PlayerSixthMove()
+        // {
+        //     var t = mover.transform;
+        //     float x = t.position.x;
 
-        public IEnumerator PlayerTenthMove()
-        {
-            flower.SetActive(false);
-            door.SetActive(false);
-            mover.SetFace(Direction.Down);
-            cameraCtl.ZoomOrthoBy(0.7f, 0.2f);
-            yield return new WaitForSecondsRealtime(0.5f);
-            var target = new Vector3(mover.transform.position.x, 0.4f, mover.transform.position.z);
-            mover.StartMove(target, 6f, Direction.Down, null);
-            yield return new WaitForSecondsRealtime(0.85f);
-            mover.SetFace(Direction.Right);
-            yield return new WaitForSecondsRealtime(0.15f);
-            target = new Vector3(6.88f, mover.transform.position.y, mover.transform.position.z);
-            mover.StartMove(target, 6f, Direction.Right, null);
-            yield return new WaitForSecondsRealtime(3.5f);
-            mover.SetFace(Direction.Up);
-            yield return new WaitForSecondsRealtime(0.2f);
-            target = new Vector3(mover.transform.position.x, 2.13f, mover.transform.position.z);
-            mover.StartMove(target, 6f, Direction.Up, null);
-            yield return new WaitForSecondsRealtime(1f);
-            AudioMgr.Instance.PlaySFX("dooropen");
-            switcher.EnterUI(() =>
-            {
-                AudioMgr.Instance.PlayBGM("1-bgm-4", 0f);
-                UICtl.StartClipDialogue(Scene1DialogueId.RunAwayEnd, () =>
-                {
-                    AudioMgr.Instance.StopBGM();
-                    // 进入1-Scene-UI
-                    EventBus.Publish(
-                        new ESceneFade(
-                            toScene: "Title-Scene",
-                            fadeOutDuration: 0.5f,
-                            fadeInDuration: 1f
-                        )
-                    );
-                });
-            });
-        }
+        //     // 情况1：当前在右边界之外 ⇒ 不去 rightX，直接去 leftX → finalX
+        //     if (x < rightX - stepX)
+        //     {
+        //         yield return StepMoveToX(rightX, false);
+        //     }
 
-        // 按固定步长把玩家在水平线上推进到 targetX；自动设置朝向并等待每步动画完成
-        private IEnumerator StepMoveToX(float targetX, bool isLeft)
-        {
-            var current = mover.transform.position.x;
-            while (Mathf.Abs(targetX - current) > stepX)
-            {
-                var target = new Vector3(
-                    isLeft
-                        ? mover.transform.position.x - stepX
-                        : mover.transform.position.x + stepX,
-                    mover.transform.position.y,
-                    mover.transform.position.z
-                );
-                mover.StartMove(target, 2.3f, isLeft ? Direction.Left : Direction.Right, null);
-                yield return new WaitForSecondsRealtime(0.5f);
-                mover.SetFace(Direction.Up);
-                yield return new WaitForSecondsRealtime(0.05f);
-                AudioMgr.Instance.PlaySFX("warning");
-                emoteCtl.Play(EmoteType.Error, 0.6f, true);
-                yield return new WaitForSecondsRealtime(1f);
+        //     // 2) 再向左到最左
+        //     yield return StepMoveToX(leftX, true);
 
-                current = mover.transform.position.x;
-            }
-        }
+        //     var target = new Vector3(
+        //         mover.transform.position.x + stepX,
+        //         mover.transform.position.y,
+        //         mover.transform.position.z
+        //     );
+        //     mover.StartMove(target, 2.3f, Direction.Right, null);
+        //     yield return new WaitForSecondsRealtime(0.5f);
+        //     mover.SetFace(Direction.Up);
+        //     yield return new WaitForSecondsRealtime(0.1f);
+        //     yield return mover.Jump(0.2f, 0.6f);
+        //     emoteCtl.Play(EmoteType.Warning, 0.6f, true);
+        //     yield return new WaitForSecondsRealtime(1f);
+        //     dialogCtl.StartClipDialogue(Scene1DialogueId.MeadowExploreMid, () =>
+        //     {
+        //         EventBus.Publish(new EJournalStepChanged("endRooftop", 1, StepState.Done));
+        //         switcher.EnterUI(() =>
+        //         {
+        //             AudioMgr.Instance.PlayBGM("1-bgm-2", 0f);
+        //             UICtl.StartClipDialogue(Scene1DialogueId.MeadowExploreEnd, () =>
+        //             {
+        //                 switcher.ExitUI(() =>
+        //                 {
+        //                     StartCoroutine(PlayerSeventhMove());
+        //                 });
+        //             });
+        //         });
+        //     });
+        // }
 
-        public void MoveBack(float y, float time)
-        {
-            Vector3 pos = mover.gameObject.transform.position;
-            pos.y -= y;
-            mover.StartMove(pos, time, Direction.Up, null);
-        }
+        // public IEnumerator PlayerSeventhMove()
+        // {
+        //     yield return new WaitForSecondsRealtime(0.1f);
+        //     emoteCtl.Play(EmoteType.Warning, 0.6f, true);
+        //     yield return mover.Jump(0.2f, 0.6f);
+        //     dialogCtl.StartClipDialogue(Scene1DialogueId.RunAwayIntro, () =>
+        //     {
+        //         StartCoroutine(PlayerEighthMove());
+        //     });
+        // }
 
-        private void ResumeDirector()
-        {
-            director.Resume();
-        }
+        // public IEnumerator PlayerEighthMove()
+        // {
+        //     EventBus.Publish(new EJournalStepChanged("endRooftop", 2, StepState.Done));
+        //     cameraCtl.PanToY(-4f, 3f);
+        //     yield return new WaitForSecondsRealtime(2f);
+        //     dialogSideCtl.StartClipDialogue(Scene1DialogueId.RunAwayVoiceOver, () =>
+        //     {
+        //         StartCoroutine(PlayerNinethMove());
+        //     });
+        // }
+
+        // public IEnumerator PlayerNinethMove()
+        // {
+        //     AudioMgr.Instance.PlaySFX("keyTurning");
+        //     cameraCtl.PanToY(4f, 1f);
+        //     yield return new WaitForSecondsRealtime(1f);
+        //     bg.isOn = false;
+        //     dialogCtl.StartClipDialogue(Scene1DialogueId.RunAwayMid, () =>
+        //     {
+        //         cameraCtl.FollowPlayer();
+        //         StartCoroutine(PlayerTenthMove());
+        //         bg.isOn = true;
+        //     });
+        // }
+
+        // public IEnumerator PlayerTenthMove()
+        // {
+        //     flower.SetActive(false);
+        //     door.SetActive(false);
+        //     mover.SetFace(Direction.Down);
+        //     cameraCtl.ZoomOrthoBy(0.7f, 0.2f);
+        //     yield return new WaitForSecondsRealtime(0.5f);
+        //     var target = new Vector3(mover.transform.position.x, 0.4f, mover.transform.position.z);
+        //     mover.StartMove(target, 6f, Direction.Down, null);
+        //     yield return new WaitForSecondsRealtime(0.85f);
+        //     mover.SetFace(Direction.Right);
+        //     yield return new WaitForSecondsRealtime(0.15f);
+        //     target = new Vector3(6.88f, mover.transform.position.y, mover.transform.position.z);
+        //     mover.StartMove(target, 6f, Direction.Right, null);
+        //     yield return new WaitForSecondsRealtime(3.5f);
+        //     mover.SetFace(Direction.Up);
+        //     yield return new WaitForSecondsRealtime(0.2f);
+        //     target = new Vector3(mover.transform.position.x, 2.13f, mover.transform.position.z);
+        //     mover.StartMove(target, 6f, Direction.Up, null);
+        //     yield return new WaitForSecondsRealtime(1f);
+        //     AudioMgr.Instance.PlaySFX("dooropen");
+        //     switcher.EnterUI(() =>
+        //     {
+        //         AudioMgr.Instance.PlayBGM("1-bgm-4", 0f);
+        //         UICtl.StartClipDialogue(Scene1DialogueId.RunAwayEnd, () =>
+        //         {
+        //             AudioMgr.Instance.StopBGM();
+        //             // 进入1-Scene-UI
+        //             EventBus.Publish(
+        //                 new ESceneFade(
+        //                     toScene: "Title-Scene",
+        //                     fadeOutDuration: 0.5f,
+        //                     fadeInDuration: 1f
+        //                 )
+        //             );
+        //         });
+        //     });
+        // }
+
+        // // 按固定步长把玩家在水平线上推进到 targetX；自动设置朝向并等待每步动画完成
+        // private IEnumerator StepMoveToX(float targetX, bool isLeft)
+        // {
+        //     var current = mover.transform.position.x;
+        //     while (Mathf.Abs(targetX - current) > stepX)
+        //     {
+        //         var target = new Vector3(
+        //             isLeft
+        //                 ? mover.transform.position.x - stepX
+        //                 : mover.transform.position.x + stepX,
+        //             mover.transform.position.y,
+        //             mover.transform.position.z
+        //         );
+        //         mover.StartMove(target, 2.3f, isLeft ? Direction.Left : Direction.Right, null);
+        //         yield return new WaitForSecondsRealtime(0.5f);
+        //         mover.SetFace(Direction.Up);
+        //         yield return new WaitForSecondsRealtime(0.05f);
+        //         AudioMgr.Instance.PlaySFX("warning");
+        //         emoteCtl.Play(EmoteType.Error, 0.6f, true);
+        //         yield return new WaitForSecondsRealtime(1f);
+
+        //         current = mover.transform.position.x;
+        //     }
+        // }
+
     }
 }

@@ -131,7 +131,7 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/11/28 - 继续修改TimelineDialogCtl，之前的枚举是Scene1DialogueId但是考虑到拓展，用了基类DialogueClipBase，一定会有mapping和text，拓展类加上各个不同场景的枚举id，现在方法签名StartDialogue(int clipId, Action onFinished)，让它更通用了，其次把EnterAnim的函数名改为易懂的，PlayEnterCode -> PlayScriptedEnterAnim,PlayExitCode->PlayScriptedExitAnim，也修改了TimelineDialogCtl的函数名，EnterAnim有更好的策略模式，但是不影响，它只用来播放我的panel入场和退场动画，也不需要之后的拓展，不需要细致重构
 
-
+2025/11/29 - 正在重构https://github.com/0FFMIND/FYP/blob/7c3ae58bbc6c53a396f874b1477fcf99a3d0b169/Assets/Scripts/1-Scene/Timeline/Scripts/PlayerMoveSignal.cs，首先修改了名字为PlayerScene1CutsceneCtl，让它的目的清晰，其次，这个ctl会调用一系列的过场动画协程并播放，每次播放的一个行为是继承command接口，创建了IScene1CutsceneCommand，之后本次动画作为一个xxAction持有一系列command，然后build出来供runner依次调用
 
 
 

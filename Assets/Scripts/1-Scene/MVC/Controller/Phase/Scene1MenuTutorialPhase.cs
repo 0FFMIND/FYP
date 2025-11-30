@@ -12,7 +12,7 @@ namespace MVC
             // 禁止玩家移动
             ctl.Player.model.SetDisabled(true);
             // 开始播放动画
-            ctl.StartCoroutine(ctl.Mover.PlayerThirdMove());
+            ctl.CutsceneCtl.MoveBackFromSignThenTalk();
         }
 
         public void OnJournalChanged(EJournalStatusChanged e) { }

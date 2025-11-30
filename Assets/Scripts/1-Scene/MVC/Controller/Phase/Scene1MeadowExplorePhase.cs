@@ -29,7 +29,7 @@ namespace MVC
             // 禁止玩家移动
             ctl.Player.model.SetDisabled(true);
             // 开始播放动画
-            ctl.StartCoroutine(ctl.Mover.PlayerFifthMove());
+            // ctl.StartCoroutine(ctl.CutsceneCtl.PlayerFifthMove());
         }
 
         public void OnJournalChanged(EJournalStatusChanged e) { }

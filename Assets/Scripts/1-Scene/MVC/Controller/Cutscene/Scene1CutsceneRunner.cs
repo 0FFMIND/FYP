@@ -15,5 +15,10 @@ namespace MVC
             foreach (var c in cmds)
                 yield return c.Execute(ctx);
         }
+        // 运行单个命令
+        public IEnumerator Run(Scene1CutsceneContext ctx, IScene1CutsceneCommand cmd)
+        {
+            return cmd.Execute(ctx);
+        }
     }
 }
