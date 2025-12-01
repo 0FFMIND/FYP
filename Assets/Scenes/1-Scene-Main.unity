@@ -7962,13 +7962,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd26acc9663f9c4283665b57e75a052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phase: 0
+  phase: 1
   director: {fileID: 4839773860695319372}
   guideCtl: {fileID: 1823472468}
   timelineCtl: {fileID: 1401251239175435381}
   guideSteps: {fileID: 254704491}
   initPos: {x: 6.89, y: 2, z: 1}
-  mover: {fileID: 8088918302841303503}
+  cutsceneCtl: {fileID: 8088918302841303503}
 --- !u!1 &1355577324
 GameObject:
   m_ObjectHideFlags: 0
@@ -12676,8 +12676,8 @@ MonoBehaviour:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 8088918302841303503}
-          m_TargetAssemblyTypeName: MVC.PlayerMoveSignal, Assembly-CSharp
-          m_MethodName: FirstDialog
+          m_TargetAssemblyTypeName: MVC.PlayerScene1CutsceneCtl, Assembly-CSharp
+          m_MethodName: TimelineIntroDialog
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -12704,8 +12704,8 @@ MonoBehaviour:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 8088918302841303503}
-          m_TargetAssemblyTypeName: MVC.PlayerMoveSignal, Assembly-CSharp
-          m_MethodName: PlayerSecondMove
+          m_TargetAssemblyTypeName: MVC.PlayerScene1CutsceneCtl, Assembly-CSharp
+          m_MethodName: LookAroundThenTalk
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -12988,6 +12988,7 @@ GameObject:
   - component: {fileID: 3508050515699453372}
   - component: {fileID: 907609238795216792}
   - component: {fileID: 8088918302841303503}
+  - component: {fileID: 8088918302841303504}
   m_Layer: 0
   m_Name: SignalReceiver
   m_TagString: Untagged
@@ -13418,25 +13419,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8381a1ad536d0a42a22301441940ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  director: {fileID: 4839773860695319372}
-  dialogCtl: {fileID: 1401251239175435381}
-  dialogSideCtl: {fileID: 1015094539}
-  UICtl: {fileID: 1955821181}
-  switcher: {fileID: 1277239970}
-  closeDoor:
-  - {fileID: -382266346, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
-  - {fileID: -600001288, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
-  - {fileID: 382234946, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
-  guideCtl: {fileID: 1823472468}
-  bg: {fileID: 1144513236}
-  cameraCtl: {fileID: 790518763}
-  door: {fileID: 1606627499}
-  flower: {fileID: 1935421851}
+  ctx: {fileID: 8088918302841303504}
   stepX: 1
   stepTime: 0.25
   leftX: -11.9
   rightX: -6.5
-  finalX: -10
+--- !u!114 &8088918302841303504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4847998667315705309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99622b8b30f062f42abd7de28daff86c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mover: {fileID: 2111873699}
+  EmoteCtl: {fileID: 2111873700}
+  Director: {fileID: 4839773860695319372}
+  DialogCtl: {fileID: 1401251239175435381}
+  DialogSideCtl: {fileID: 1015094539}
+  UICtl: {fileID: 1955821181}
+  Switcher: {fileID: 1277239970}
+  GuideCtl: {fileID: 1823472468}
+  BG: {fileID: 1144513236}
+  Camera: {fileID: 790518763}
+  Door: {fileID: 1606627499}
+  Flower: {fileID: 1935421851}
+  CloseDoorSprites:
+  - {fileID: -382266346, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
+  - {fileID: -600001288, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
+  - {fileID: 382234946, guid: 90c70b23fecfd6b4d8e39769288901b5, type: 3}
 --- !u!114 &8580292825026335958
 MonoBehaviour:
   m_ObjectHideFlags: 0

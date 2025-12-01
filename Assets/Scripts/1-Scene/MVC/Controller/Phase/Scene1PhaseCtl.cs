@@ -20,11 +20,11 @@ namespace MVC
 
     public class Scene1PhaseCtl : MonoBehaviour
     {
-        [Header("×´Ì¬»ú")]
+        [Header("çŠ¶æ€æœº")]
         [SerializeField]
         private Scene1Phase phase = Scene1Phase.Timeline;
 
-        [Header("ÒÀÀµÒıÓÃ")]
+        [Header("ä¾èµ–å¼•ç”¨")]
         [SerializeField]
         private PlayableDirector director;
 
@@ -41,7 +41,7 @@ namespace MVC
         private Vector3 initPos;
 
         [SerializeField]
-        private PlayerScene1CutsceneCtl cutsceneCtl;
+        private Scene1CutsceneCtl cutsceneCtl;
 
         private PlayerCtl player;
 
@@ -50,7 +50,7 @@ namespace MVC
 
         private void Awake()
         {
-            // ÕâÀï new ¸÷¸ö½×¶Î Handler£¬°ÑÒÀÀµ´«½øÈ¥
+            // è¿™é‡Œ new å„ä¸ªé˜¶æ®µ Handlerï¼ŒæŠŠä¾èµ–ä¼ è¿›å»
             handlers = new Dictionary<Scene1Phase, IScene1PhaseHandler>
             {
                 { Scene1Phase.None, new Scene1NonePhase(this) },
@@ -75,9 +75,9 @@ namespace MVC
 
         private void OnEnable()
         {
-            EventBus.Subscribe<EScene1ArrivalPhaseChange>(OnExternalPhaseChange);
-            EventBus.Subscribe<EJournalStatusChanged>(OnJournalChanged);
-            EventBus.Subscribe<EPauseChanged>(OnPauseChanged);
+            EventBus.Subscribe<EScene1ArrivalPhaseChange>(OnExternalPhaseChange, false);
+            EventBus.Subscribe<EJournalStatusChanged>(OnJournalChanged, false);
+            EventBus.Subscribe<EPauseChanged>(OnPauseChanged, false);
         }
 
         private void OnDisable()
@@ -112,7 +112,7 @@ namespace MVC
             if (e.Key == "vendingMachine" && e.NewStatus == JournalStatus.Completed)
             {
                 player.model.SetDisabled(true);
-                // »½ĞÑdialog
+                // å”¤é†’dialog
                 timelineCtl.StartClipDialogue(Scene1DialogueId.VendingMachineEnd, () =>
                 {
                     player.model.SetDisabled(false);
@@ -121,13 +121,13 @@ namespace MVC
             currentHandler?.OnJournalChanged(e);
         }
 
-        // ===== ¸ø Handler ÓÃµÄÖ»¶Á·ÃÎÊÆ÷ =====
+        // ===== ç»™ Handler ç”¨çš„åªè¯»è®¿é—®å™¨ =====
         public PlayableDirector Director => director;
         public GuideDialogCtl GuideCtl => guideCtl;
         public TimelineDialogCtl TimelineCtl => timelineCtl;
         public GameObject GuideSteps => guideSteps;
         public Vector3 InitPos => initPos;
-        public PlayerScene1CutsceneCtl CutsceneCtl => cutsceneCtl;
+        public Scene1CutsceneCtl CutsceneCtl => cutsceneCtl;
         public PlayerCtl Player => player;
         public Scene1Phase CurrentPhase => phase;
     }

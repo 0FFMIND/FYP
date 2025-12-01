@@ -35,6 +35,17 @@ namespace MVC
             StartDialogue(new DialogueModel(text));
         }
 
+        public bool IsActive()
+        {
+            return base.dialogueRenderer.gameObject.activeSelf;
+        }
+
+        public void Close()
+        {
+            index++;
+            StartCoroutine(PlayClosed());
+        }
+
         protected override IEnumerator TypeLines(Sprite currentSprite = null)
         {
             // 如果是第一句

@@ -8,10 +8,11 @@ namespace MVC
 
         public Scene1MenuTutorialPhase(Scene1PhaseCtl ctl) => this.ctl = ctl;
 
-        public void Enter() {
-            // ½ûÖ¹Íæ¼ÒÒÆ¶¯
+        public void Enter()
+        {
+            // ç¦æ­¢ç©å®¶ç§»åŠ¨
             ctl.Player.model.SetDisabled(true);
-            // ¿ªÊ¼²¥·Å¶¯»­
+            // å¼€å§‹æ’­æ”¾åŠ¨ç”»
             ctl.CutsceneCtl.MoveBackFromSignThenTalk();
         }
 

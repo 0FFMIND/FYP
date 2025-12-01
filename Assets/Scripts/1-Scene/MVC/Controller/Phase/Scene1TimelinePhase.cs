@@ -11,11 +11,11 @@ namespace MVC
 
         public void Enter()
         {
-            // 设置人物位置
+            // 璁剧疆浜虹墿浣嶇疆
             var player = GameObject.FindGameObjectWithTag("Player");
             EventBus.Publish(new EJournalStepChanged("reachRooftop", 0, StepState.Done));
             player.transform.position = ctl.InitPos;
-            // 启动timeline
+            // 鍚姩timeline
             if (ctl.Director != null)
             {
                 ctl.Director.time = 0;

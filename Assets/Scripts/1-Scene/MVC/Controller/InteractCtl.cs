@@ -18,9 +18,9 @@ namespace MVC
         [Header("标记")]
         [SerializeField]
         public bool isImportant = false; // 重要交互（主线/关键）
-
+        public bool shouldOverride = false; // 重要交互（主线/关键）
         [NonSerialized]
-        public bool isTalked = false; // 是否已完整聊过（运行时置位）
+        public bool isCompleted = false; // 是否已完整聊过（运行时置位）
 
         [SerializeField]
         protected InteractDialogCtl interactCtl;
@@ -38,7 +38,7 @@ namespace MVC
 
         // 提供只读访问，供 PlayerInteractCtl 判定
         public bool IsImportant => isImportant;
-        public bool IsTalked => isTalked;
+        public bool IsTalked => isCompleted;
 
         // 根据当前访问次数 vc，挑选“起始阈值 visit ≤ vc 且最大”的步骤
         private InteractModel StepFor(int vc)
@@ -193,7 +193,10 @@ namespace MVC
             // 访问次数 +1
             visitCount++;
             // 本对象标记为已聊完
-            isTalked = true;
+            if (!shouldOverride)
+            {
+                isCompleted = true;
+            }
             // 广播结束事件（PlayerInteractCtl 等会解除吞键/高亮等）
             EventBus.Publish(new EInteractEnd());
             // 释放玩家引用

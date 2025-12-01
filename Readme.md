@@ -133,25 +133,21 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/11/29 - 正在重构https://github.com/0FFMIND/FYP/blob/7c3ae58bbc6c53a396f874b1477fcf99a3d0b169/Assets/Scripts/1-Scene/Timeline/Scripts/PlayerMoveSignal.cs，首先修改了名字为PlayerScene1CutsceneCtl，让它的目的清晰，其次，这个ctl会调用一系列的过场动画协程并播放，每次播放的一个行为是继承command接口，创建了IScene1CutsceneCommand，之后本次动画作为一个xxAction持有一系列command，然后build出来供runner依次调用
 
+2025/11/30 - 继续重构command和过场动画控制器，用waitCommand统一控制了等待时间，并将内部实现从 `WaitForSecondsRealtime` 统一切换为 `WaitForSeconds`，之前realTime的问题是一旦玩家切出去窗口一会儿再回来，用了`WaitForSecondsRealtime` 的过场协程已经“自己走完一大截”，但是 依赖Update更新的一些比方说人物移动，不会runin background，于是过场动画乱套
+
+2025/12/1 - 修复了玩家反馈的bug，重入Scene1会出现问题，是因为在EventBus没有关掉粘性重放，并且稍微修改了一下交互提示，之前提示的√只是说明这个物体被至少交互过一次，现在打√的逻辑修改为这个物体的所有交互都做完（没有新事件），让指引明显，并且把离开关门的动画优化了，动画离开的最后一下门变黑，再走进去
 
 
-TODO: 重构
-
-https://github.com/0FFMIND/FYP/blob/7c3ae58bbc6c53a396f874b1477fcf99a3d0b169/Assets/Scripts/1-Scene/Timeline/Scripts/PlayerMoveSignal.cs
 
 
 
 【Chapter1的问题】
 
-TODO: 我觉得打√只存在于这个物体的所有交互都做完，当前打√的逻辑只是说明这个物体被至少交互过一次，不然给玩家的指引不够明显
-
-TODO: 需要修复动画waitforrealtime的问题
-
-TODO: 动画离开的时候需要最后关一下门，门变黑，再走进去
-
 TODO: 写drain行为
 
-TODO: 修复重进scene的问题
+TODO: StepMove的动画有点奇怪，因为是hardCode的步长边界检查也没有做到很好
+
+
 
 这里可以插入图片
 
@@ -165,7 +161,7 @@ TODO: 修复重进scene的问题
 
 【设计Chapter2的问题】：
 
-TODO: Chapter1的末尾
+TODO: Chapter1的末尾，可以加入已自动保存，然后可以在选关界面重玩Chapter1了，
 
 TODO：加入第二章后选章的时候可以加入我的STORY.md里面的内容，加入概要
 

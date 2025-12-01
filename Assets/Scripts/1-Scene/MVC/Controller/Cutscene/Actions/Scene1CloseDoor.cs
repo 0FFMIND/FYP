@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Manager;
 
 namespace MVC
 {
@@ -12,7 +13,7 @@ namespace MVC
         public IEnumerable<IScene1CutsceneCommand> Build()
         {
             yield return new LockPlayerCommand(true);
-            yield return new PlaySFXCommand("dooropen");
+            AudioMgr.Instance.PlaySFX("dooropen");
 
             yield return new SetPlayerCloseDoorSpriteCommand(0);
             yield return new WaitCommand(0.15f);

@@ -31,9 +31,9 @@ namespace MVC
                     () =>
                     {
                         signTutorialStage = SignTutorialStage.AwaitSignInteract;
-                        // Íæ¼Ò¿ÉÒÔÒÆ¶¯
+                        // ç©å®¶å¯ä»¥ç§»åŠ¨
                         ctl.Player.model.SetDisabled(false);
-                        // ³¡¾°ÖĞ³öÏÖÒıµ¼½ÅÓ¡
+                        // åœºæ™¯ä¸­å‡ºç°å¼•å¯¼è„šå°
                         ctl.GuideSteps.SetActive(true);
                     }
                 );
@@ -66,22 +66,22 @@ namespace MVC
 
         private IEnumerator InteractSign()
         {
-            // ½ûÖ¹Íæ¼ÒÒÆ¶¯
+            // ç¦æ­¢ç©å®¶ç§»åŠ¨
             ctl.Player.model.SetDisabled(true);
-            // ²¥·ÅÈËÎïË¼¿¼
+            // æ’­æ”¾äººç‰©æ€è€ƒ
             var emoteCtl = ctl.Player.gameObject.GetComponent<PlayerEmoteCtl>();
             emoteCtl.Play(EmoteType.Thinking, 1f);
             yield return new WaitForSecondsRealtime(1.5f);
-            // ²¥·Åguide
+            // æ’­æ”¾guide
             ctl.GuideCtl.StartDialogue(
                 "1-Scene-4.txt",
                 () =>
                 {
-                    // ¹Ø±ÕÒıµ¼½ÅÓ¡
+                    // å…³é—­å¼•å¯¼è„šå°
                     ctl.GuideSteps.SetActive(false);
-                    // ÒÆ¶¯ÈËÎï
+                    // ç§»åŠ¨äººç‰©
                     ctl.Player.model.SetDisabled(false);
-                    // ÖØĞÂÏÔÊ¾½»»¥Í¼±ê
+                    // é‡æ–°æ˜¾ç¤ºäº¤äº’å›¾æ ‡
                     ctl.Player.gameObject.GetComponent<PlayerInteractCtl>().Refresh();
                 }
             );

@@ -61,6 +61,7 @@ namespace MVC
                 AudioMgr.Instance.PlaySFX("coin");
                 visitCount = STEP_SUCCESS;
                 _used = true;
+                isCompleted = true;
                 ContinueDialogue();
             }
         }

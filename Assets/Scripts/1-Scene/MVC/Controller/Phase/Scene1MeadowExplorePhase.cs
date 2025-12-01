@@ -26,10 +26,10 @@ namespace MVC
 
         private void EnterInteractMeadow()
         {
-            // ½ûÖ¹Íæ¼ÒÒÆ¶¯
+            // ç¦æ­¢ç©å®¶ç§»åŠ¨
             ctl.Player.model.SetDisabled(true);
-            // ¿ªÊ¼²¥·Å¶¯»­
-            // ctl.StartCoroutine(ctl.CutsceneCtl.PlayerFifthMove());
+            // å¼€å§‹æ’­æ”¾åŠ¨ç”»
+            ctl.CutsceneCtl.MeadowExplore();
         }
 
         public void OnJournalChanged(EJournalStatusChanged e) { }

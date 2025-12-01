@@ -35,7 +35,7 @@ namespace MVC
         [SerializeField]
         private bool earlyFinish = false;
 
-        private void Start()
+        private void Awake()
         {
             // 获取接口引用
             clipProvider = clipProviderBehaviour as IDialogueClipProvider;

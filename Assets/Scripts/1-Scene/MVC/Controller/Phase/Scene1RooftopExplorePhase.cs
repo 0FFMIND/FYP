@@ -21,6 +21,10 @@ namespace MVC
         public void Enter()
         {
             rooftopExploreStage = RooftopExploreStage.StartRooftopExplore;
+            if (ctl.GuideCtl.IsActive())
+            {
+                ctl.GuideCtl.Close();
+            }
             ctl.Player.model.SetDisabled(true);
             ctl.TimelineCtl.StartClipDialogue(Scene1DialogueId.RooftopExploreIntro, () =>
             {
@@ -29,7 +33,7 @@ namespace MVC
                 var it = JournalMgr.Instance?.Model?.Find("exploreRooftop");
                 if (it != null && it.status == JournalStatus.Completed)
                 {
-                    // ÒÑÍê³ÉÔòÖ±½ÓÍÆ½øµ½ ExploreCompleted
+                    // å·²å®Œæˆåˆ™ç›´æ¥æ¨è¿›åˆ° ExploreCompleted
                     rooftopExploreStage = RooftopExploreStage.Done;
                     EnterExploreCompleted();
                     return;
@@ -44,7 +48,7 @@ namespace MVC
                 return;
             }
             ctl.Player.model.SetDisabled(true);
-            // ¿ªÊ¼²¥·Å¶¯»­
+            // å¼€å§‹æ’­æ”¾åŠ¨ç”»
             ctl.CutsceneCtl.RooftopExploreCompleted();
         }
 
@@ -57,7 +61,7 @@ namespace MVC
             )
             {
                 rooftopExploreStage = RooftopExploreStage.Done;
-                // ½øÈëµ½ÏÂÒ»×´Ì¬
+                // è¿›å…¥åˆ°ä¸‹ä¸€çŠ¶æ€
                 EnterExploreCompleted();
             }
         }
