@@ -102,6 +102,13 @@ namespace Manager
             if (!_clipCache.TryGetValue(name, out var clip))
             {
                 clip = Resources.Load<AudioClip>(bgmPath + name);
+                if (clip == null)
+                {
+                    Debug.LogWarning($"[AudioMgr]: PlayBGM未找到BGM资源: {bgmPath}{name}");
+                    // 不缓存null，直接返回
+                    _clipCache.Remove(name);
+                    return;
+                }
                 _clipCache[name] = clip;
             }
             // 开启携程

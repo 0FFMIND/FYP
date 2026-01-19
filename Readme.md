@@ -1,5 +1,9 @@
 使用过的软件：GPTo5 Audacity(变调/调整音量) Procreate
 
+【BGM引用】
+
+Title - https://pixabay.com/music/lullabies-music-box-waltz-163673/
+
 2025/5/6 - 用了DialogueModel存从文本.txt里面读到的话，中间一个方法LoadDialogue会通过LocalizationManager(用一个static存的当前语言)定位到具体路径/文本.txt
 
 2025/5/13 - 写了DialogueCtl
@@ -137,7 +141,9 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2025/12/1 - 修复了玩家反馈的bug，重入Scene1会出现问题，是因为在EventBus没有关掉粘性重放，并且稍微修改了一下交互提示，之前提示的√只是说明这个物体被至少交互过一次，现在打√的逻辑修改为这个物体的所有交互都做完（没有新事件），让指引明显，并且把离开关门的动画优化了，动画离开的最后一下门变黑，再走进去
 
+2025/1/18 - 注册了一个新的steam账号，付了100刀的游戏槽位，正在等待税务审批（感觉要10天以上了）
 
+2025/1/19 - 把新的开头界面画好了，做了简单的动画，加了BGM
 
 
 

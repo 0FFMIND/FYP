@@ -5,7 +5,7 @@ namespace MVC
     public class Scene1Drain : InteractCtl
     {
         [SerializeField]
-        private ChoiceCtl gameCtl;
+        private ChoiceCtl gameChoiceCtl;
 
         [SerializeField]
         private ChoiceModel model;
@@ -16,15 +16,22 @@ namespace MVC
         {
             // 切换不同的文本
             visitCount = TryPick();
+            if (visitCount == 0)
+            {
+                return base.BeginInteract(player, false);
+            }
             return base.BeginInteract(player, shouldEndInteract);
         }
 
         public void StartDrainGame(InteractCtl ctl)
         {
-            ctl?.Done();
-            gameCtl.ShowWithClosed(() => { }, model);
+            gameChoiceCtl.ShowWithClosed(() => { }, model);
         }
-
+        public void PickSuccess()
+        {
+            visitCount = 1;
+            ContinueDialogue();
+        }
         public void PickCanceled()
         {
             visitCount = 1;
