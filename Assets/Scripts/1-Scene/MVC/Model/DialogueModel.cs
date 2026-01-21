@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using Manager;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MVC
@@ -14,12 +15,15 @@ namespace MVC
         // 翻译后的对话内容
         public string[] Lines { get; private set; }
 
-        // 从文件读取构造文本
-        public DialogueModel(string fileName)
+        // 从文件读取构造文本，接收可选的 folder 参数
+        public DialogueModel(string fileName, string folder = null)
         {
             // 拿到当前场景名
             string sceneName = SceneManager.GetActiveScene().name;
-            string path = LocalizationMgr.Instance.GetDialoguePath(sceneName, fileName);
+            string finalName = string.IsNullOrEmpty(folder)
+                ? fileName
+                : Path.Combine(folder, fileName);
+            string path = LocalizationMgr.Instance.GetDialoguePath(sceneName, finalName);
             // 先把文件的每一行都当作一个 key 读进来
             _keys = File.ReadAllLines(path);
             LoadDialogue(_keys);

@@ -40,6 +40,11 @@ namespace MVC
         public int screenHeight = 1080;
         public FullScreenMode screenMode = FullScreenMode.FullScreenWindow;
 
+        // 章节完成状态
+        public bool chapter1Completed = false;
+        public bool chapter1HiddenCompleted = false;
+        public bool chapter2Completed = false;
+
         // 用dictionary方便查找
         public Dictionary<InputAction, KeyCode> keyBindings = new()
         {
@@ -70,6 +75,9 @@ namespace MVC
                 screenHeight = screenHeight,
                 screenWidth = screenWidth,
                 screenMode = screenMode,
+                chapter1Completed = chapter1Completed,
+                chapter2Completed = chapter2Completed,
+                chapter1HiddenCompleted = chapter1HiddenCompleted,
                 keyBindings = new Dictionary<InputAction, KeyCode>(keyBindings),
                 inventoryData = new InventorySaveData
                 {

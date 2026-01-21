@@ -283,6 +283,51 @@ namespace Manager
             }
         }
 
+        public void SetChapterCompleted(bool completed)
+        {
+            if (_data.chapter1Completed == completed)
+            {
+                return;
+            }
+            _data.chapter1Completed = completed;
+            Save();
+        }
+
+        public void SetChapter1HiddenCompleted(bool completed)
+        {
+            if (_data.chapter1HiddenCompleted == completed)
+            {
+                return;
+            }
+            _data.chapter1HiddenCompleted = completed;
+            Save();
+        }
+
+        public void SetChapter2Completed(bool completed)
+        {
+            if (_data.chapter2Completed == completed)
+            {
+                return;
+            }
+            _data.chapter2Completed = completed;
+            Save();
+        }
+
+        public bool GetChapter1HiddenCompleted()
+        {
+            return _data.chapter1HiddenCompleted;
+        }
+
+        public bool GetChapter1Completed()
+        {
+            return _data.chapter1Completed;
+        }
+
+        public bool GetChapter2Completed()
+        {
+            return _data.chapter2Completed;
+        }
+
         public JournalSaveData GetJournalSnapshot()
         {
             return _data.journalData;

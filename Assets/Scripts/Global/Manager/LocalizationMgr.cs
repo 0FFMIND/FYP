@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using MVC;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -80,7 +81,7 @@ namespace Manager
             );
         }
 
-        public string GetText(string key)
+        public string GetText(string key, bool trim = true)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -98,9 +99,10 @@ namespace Manager
                 // 载入全局UI的string.json
                 lastSceneName = sceneName;
             }
-
-            key = key.Trim();
-
+            if (trim)
+            {
+                key = key.Trim();
+            }
             if (table != null && table.TryGetValue(key, out var values))
             {
                 // 找到 key，取对应语言栏位
@@ -112,6 +114,33 @@ namespace Manager
             return key;
         }
 
+        private static string EscapeForLog(string s)
+        {
+            if (s == null) return "<null>";
+
+            var sb = new StringBuilder(s.Length + 32);
+            sb.Append('"');
+            foreach (char c in s)
+            {
+                switch (c)
+                {
+                    case '\\': sb.Append(@"\\"); break;
+                    case '\n': sb.Append(@"\n"); break;
+                    case '\r': sb.Append(@"\r"); break;
+                    case '\t': sb.Append(@"\t"); break;
+                    case '\0': sb.Append(@"\0"); break;
+                    default:
+                        // 其他控制字符也显式输出
+                        if (char.IsControl(c))
+                            sb.Append(@"\u").Append(((int)c).ToString("X4"));
+                        else
+                            sb.Append(c);
+                        break;
+                }
+            }
+            sb.Append('"');
+            return sb.ToString();
+        }
         private string UnescapeCommon(string s)
         {
             if (string.IsNullOrEmpty(s))
