@@ -37,7 +37,7 @@
     },
     {
         "zh": "移动速度",
-        "en": "Walk Speed"
+        "en": "Move Speed"
     },
     {
         "zh": "疾跑速度",
@@ -258,5 +258,29 @@
     {
         "zh": "退出游戏",
         "en": "Exit Game"
+    },
+    {
+        "zh": "返回标题",
+        "en": "Back"
+    },
+    {
+        "zh": "第一章",
+        "en": "Chapter 1"
+    },
+    {
+        "zh": "本章概要",
+        "en": "Chapter Overview"
+    },
+    {
+        "zh": "游玩本章",
+        "en": "Launch"
+    },
+    {
+        "zh": "章节选择",
+        "en": "Chapter Selection"
+    },
+    {
+        "zh": "第二章",
+        "en": "Chapter 2"
     }
 ]

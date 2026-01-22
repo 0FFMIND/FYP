@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using Utils;
 
 namespace MVC
 {
@@ -17,6 +16,7 @@ namespace MVC
             ChapterTextBuilderBase builder = chapterIndex switch
             {
                 1 => new Chapter1TextBuilder(folder),
+                2 => new Chapter2TextBuilder(folder),
                 _ => null
             };
             // 生成最终文本并赋值到 TMP

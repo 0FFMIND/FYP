@@ -37,11 +37,6 @@ namespace MVC
         // 读取对话文本
         private void LoadDialogue(string[] keys)
         {
-            // 只 print key（包含特殊字符可视化）
-            for (int i = 0; i < keys.Length; i++)
-            {
-                Debug.Log($"[TextModel] key[{i}] len={keys[i]?.Length ?? 0} => {EscapeForLog(keys[i])}");
-            }
             // 把每个 key 传给 LocalizationMgr，返回当前语言对应的文本
             Lines = keys.Select(k =>
                 {

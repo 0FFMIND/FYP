@@ -149,13 +149,19 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2026/1/21 - 搭好了选关界面的文本显示，并且做好了中英文切换
 
+2026/1/22 - 搭好了选关时动态绑定launch button的onclick事件，将Chapter1的存档事件稍微修改了一下，接入了chapter1Completed，chapter1HiddenCompleted检查，并且还原了drain的行为，在pauseMenu处加了回到标题界面的功能
 
 
 
+TODO: backtotitle还没写，还加了一个过度界面
+
+
+
+【Title-Scene的问题】
+
+TODO: 设置那里切换四个子菜单没对齐，英文的move speed那栏文字覆盖了UI
 
 【Chapter1的问题】
-
-TODO: 复原drain行为
 
 TODO: StepMove的动画有点奇怪，因为是hardCode的步长边界检查也没有做到很好
 

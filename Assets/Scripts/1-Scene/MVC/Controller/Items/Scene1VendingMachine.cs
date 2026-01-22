@@ -81,6 +81,7 @@ namespace MVC
 
         public void EndVendCutScene(InteractCtl ctl)
         {
+            SettingsMgr.Instance.SetChapter1HiddenCompleted(true);
             switcher.ExitUI(() =>
             {
                 AudioMgr.Instance.PlayBGM("1-bgm-1", 0f);

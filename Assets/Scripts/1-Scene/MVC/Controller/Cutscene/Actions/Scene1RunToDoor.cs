@@ -76,8 +76,9 @@ namespace MVC
                     AudioMgr.Instance.PlayBGM("1-bgm-4", 0f);
                     ctx.UICtl.StartClipDialogue(Scene1DialogueId.RunAwayEnd, () =>
                     {
+                        SettingsMgr.Instance.SetChapter1Completed(true);
                         AudioMgr.Instance.StopBGM();
-                        // 进入1-Scene-UI
+                        // 切换到过度场景
                         EventBus.Publish(
                             new ESceneFade(
                                 toScene: "Title-Scene",

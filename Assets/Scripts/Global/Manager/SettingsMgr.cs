@@ -283,7 +283,7 @@ namespace Manager
             }
         }
 
-        public void SetChapterCompleted(bool completed)
+        public void SetChapter1Completed(bool completed)
         {
             if (_data.chapter1Completed == completed)
             {
@@ -411,7 +411,7 @@ namespace Manager
         }
 
         // 一键清空进度（Inventory + Journal）
-        public void ClearProgress()
+        public void ClearChapter1Progress()
         {
             // 顺序无所谓，这里避免重复落盘：都传 false，最后统一 Save 或至少 Broadcast
             ClearInventory(false);

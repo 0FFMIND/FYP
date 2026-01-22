@@ -1,7 +1,7 @@
 [
     {
         "zh": "！搞定",
-        "en": "done!"
+        "en": "Done!"
     },
     {
         "zh": "刚刚在墙角拿了块扁石头，正好能卡在铁门的门轴下面",
@@ -60,16 +60,16 @@
         "en": "Since I’m already here, I might as well take a look around first."
     },
     {
-        "zh": "现在你可以按下WASD和方向键来移动人物",
-        "en": "You can now move the character with WASD and the arrow keys."
+        "zh": "现在你可以按下<color=#FFC600>WASD</color>和<color=#FFC600>方向键</color>来移动人物",
+        "en": "Now you can press <color=#FFC600>WASD</color> and the <color=#FFC600>arrow keys</color> to move your character."
     },
     {
-        "zh": "在移动的过程中按下右Shift键可以快速移动",
-        "en": "While moving, press Right Shift to move faster."
+        "zh": "在移动的过程中按下<color=#FFC600>左Shift键</color>可以快速移动",
+        "en": "While moving, press <color=#FFC600>Left Shift</color> to move faster."
     },
     {
-        "zh": "顺着地上的脚印移动到身后的告示牌上吧",
-        "en": "Follow the footprints on the ground to the notice board behind you."
+        "zh": "顺着地上的脚印移动到身后的<color=#FFC600>告示牌</color>上吧",
+        "en": "Follow the footprints on the ground to the <color=#FFC600>notice board</color> behind you."
     },
     {
         "zh": "靠近可交互的物体时，人物上方将显示交互图标",
@@ -229,7 +229,7 @@
     },
     {
         "zh": "我靠着售货机，长长地舒了一口气",
-        "en": "I lean against the vending machine and let out a long breath."
+        "en": "I lean against the vending machine and let out a long, deep breath."
     },
     {
         "zh": "世界仿佛在这一刻被按下了静音键，只剩下心跳逐渐平复的节奏",
@@ -265,23 +265,23 @@
     },
     {
         "zh": "总觉得……刚才好像错过了什么地方，再去<color=#FFC600>日记</color>里确认一下吧",
-        "en": "I have a feeling I missed something just now—better check the <color=#FFC600>Journal</color> again"
+        "en": "I have a feeling I missed something just now—better check the <color=#FFC600>Journal</color> again."
     },
     {
         "zh": "看上去无人打理的长椅，椅脚以及周围的地面都长出了青苔",
-        "en": "A bench that appears untended, with moss growing on its legs and on the surrounding ground"
+        "en": "A bench that appears untended, with moss growing on its legs and on the surrounding ground."
     },
     {
         "zh": "一扇紧闭的老旧铁门，门锁看上去十分牢固",
-        "en": "A tightly shut old iron door; the lock looks very secure"
+        "en": "A tightly shut old iron door; the lock looks very secure."
     },
     {
         "zh": "一个繁茂的花圃，以鲜黄色花朵为主",
-        "en": "A lush flowerbed dominated by bright yellow blossoms"
+        "en": "A lush flowerbed dominated by bright yellow blossoms."
     },
     {
         "zh": "一个边角有些磨坏但看起来十分结实的铁制公告栏，靠近有消毒水的气味",
-        "en": "An iron notice board with worn corners but looking very sturdy; up close there’s a smell of disinfectant"
+        "en": "An iron notice board with worn corners but looking very sturdy; up close there’s a smell of disinfectant."
     },
     {
         "zh": "上面的字迹被淡淡的青苔遮住，但依旧可以辨认：",
@@ -289,19 +289,19 @@
     },
     {
         "zh": "为保安全，请勿倚靠或攀爬防护栏",
-        "en": "For safety, please do not lean on or climb the guardrail"
+        "en": "For safety, please do not lean on or climb the guardrail."
     },
     {
         "zh": "一个保洁用的拖把，上面留有没有干透的水痕，旁边放着半瓶除草剂",
-        "en": "A cleaning mop with still-damp streaks on it, and next to it a half-full bottle of herbicide"
+        "en": "A cleaning mop with still-damp streaks on it, and next to it a half-full bottle of herbicide."
     },
     {
         "zh": "除草剂的瓶身冰凉，瓶口散发着一股格外刺鼻的化学药剂味",
-        "en": "The herbicide’s bottle is cold to the touch, and the opening gives off an especially acrid chemical odor"
+        "en": "The herbicide’s bottle is cold to the touch, and the opening gives off an especially acrid chemical odor."
     },
     {
         "zh": "从这湿拖把就能看出来，保洁阿姨早上指定是来打扫过了",
-        "en": "From this wet mop you can tell the cleaning lady definitely came by to clean this morning"
+        "en": "From this wet mop you can tell the cleaning lady definitely came by to clean this morning."
     },
     {
         "zh": "可这空气里，霉味跟一股刺鼻的药水味混在一块儿，也太难顶了",
@@ -309,27 +309,27 @@
     },
     {
         "zh": "阿姨这是下了猛料啊，杀毒效果先不说，杀伤力是够强的",
-        "en": "She really went heavy on the stuff—never mind the disinfecting effect, the potency is plenty"
+        "en": "She really went heavy on the stuff—never mind the disinfecting effect, the potency is plenty."
     },
     {
         "zh": "随处可见的碎石头",
-        "en": "Bits of gravel everywhere"
+        "en": "Bits of gravel everywhere."
     },
     {
         "zh": "碎石下有微光闪烁",
-        "en": "A faint glimmer flickers beneath the gravel"
+        "en": "A faint glimmer flickers beneath the gravel."
     },
     {
         "zh": "你伸手拨开碎石，经过翻找，从泥土中拾起了一枚银色的硬币",
-        "en": "You reach out to clear the gravel and, after searching, pick up a silver coin from the soil"
+        "en": "You reach out to clear the gravel and, after searching, pick up a silver coin from the soil."
     },
     {
         "zh": "你再次翻找了这些碎石，但没有任何新的发现",
-        "en": "You search through the gravel again, but find nothing new"
+        "en": "You search through the gravel again, but find nothing new."
     },
     {
         "zh": "什么都没有发现",
-        "en": "You find nothing"
+        "en": "You find nothing."
     },
     {
         "zh": "果然，天上不会掉两次馅饼",
@@ -337,15 +337,15 @@
     },
     {
         "zh": "一片自然形成的草甸，各种不知名的草肆意生长在一起",
-        "en": "A naturally formed meadow, with all kinds of unknown grasses growing unchecked together"
+        "en": "A naturally formed meadow, with all kinds of unknown grasses growing unchecked together."
     },
     {
         "zh": "空气里混杂着消毒水的化学气味、湿拖把散发的霉旧气息，以及泥土本身的味道",
-        "en": "The air is a mix of the chemical smell of disinfectant, the musty staleness from the wet mop, and the scent of the earth itself"
+        "en": "The air is a mix of the chemical smell of disinfectant, the musty staleness from the wet mop, and the scent of the earth itself."
     },
     {
         "zh": "细看之下，不少植株都呈现不自然的萎蔫状态",
-        "en": "On closer look, many plants show an unnatural wilted state"
+        "en": "On closer look, many plants show an unnatural wilted state."
     },
     {
         "zh": "这是什么生态灾难现场吗",
@@ -353,7 +353,7 @@
     },
     {
         "zh": "说是草甸，结果土壤里全是化学药剂的味道和霉味",
-        "en": "Call it a meadow, yet the soil reeks of chemicals and mildew"
+        "en": "Call it a meadow, yet the soil reeks of chemicals and mildew."
     },
     {
         "zh": "哇？这个告示牌……",
@@ -369,7 +369,7 @@
     },
     {
         "zh": "虽然可能是我多心了，但这种糟糕的感觉真让人不舒服",
-        "en": "Although I might be overthinking it, this awful feeling is really uncomfortable"
+        "en": "Although I might be overthinking it, this awful feeling is really uncomfortable."
     },
     {
         "zh": "真希望这是我的错觉……",
@@ -377,7 +377,7 @@
     },
     {
         "zh": "既然上来了，还是把在意的地方都好好看看吧",
-        "en": "Since I’m up here, I should carefully check all the places I’m concerned about"
+        "en": "Since I’m up here, I should carefully check all the places I’m concerned about."
     },
     {
         "zh": "告示牌是检查完了……接下来该检查哪里来着？",
@@ -385,7 +385,7 @@
     },
     {
         "zh": "在游戏中，你需要通过完成<color=#FFC600>日记</color>中的事项来推进剧情",
-        "en": "In the game, you need to advance the story by completing the items in the <color=#FFC600>Journal</color>"
+        "en": "In the game, you need to advance the story by completing the items in the <color=#FFC600>Journal</color>."
     },
     {
         "zh": "在日记界面中，你可以通过条目的<color=#FFC600>颜色</color>辨别任务状态：",
@@ -393,19 +393,23 @@
     },
     {
         "zh": "<color=#FFC600>灰色</color>代表未完成",
-        "en": "<color=#FFC600>Gray</color> represents not completed"
+        "en": "<color=#FFC600>Gray</color> represents not completed."
     },
     {
         "zh": "<color=#FFC600>白色</color>代表已完成",
-        "en": "<color=#FFC600>White</color> represents completed"
+        "en": "<color=#FFC600>White</color> represents completed."
     },
     {
         "zh": "当你清空当前日记中的所有<color=#FFC600>灰色</color>条目时，会触发关键剧情",
-        "en": "When you clear all the <color=#FFC600>gray</color> entries in the current journal, a key plot will be triggered"
+        "en": "When you clear all the <color=#FFC600>gray</color> entries in the current journal, a key plot will be triggered."
     },
     {
         "zh": "现在请按下<color=#FFC600>ESC</color>键，打开系统的主菜单查阅日记",
-        "en": "Now please press the <color=#FFC600>ESC</color> key to open the system main menu and check the journal"
+        "en": "Now please press the <color=#FFC600>ESC</color> key to open the system main menu and check the journal."
+    },
+    {
+        "zh": "请按下<color=#FFC600>ESC</color>键，打开系统的主菜单查阅日记",
+        "en": "Press the <color=#FFC600>ESC</color> key to open the system main menu and check the journal."
     },
     {
         "zh": "接下来，好好探索天台吧！",
@@ -413,27 +417,27 @@
     },
     {
         "zh": "需要留意的地方应该记在日记里面了",
-        "en": "The places that need attention should be recorded in the journal"
+        "en": "The places that need attention should be recorded in the journal."
     },
     {
         "zh": "我记得日记里提到了几个关键点：左边的草甸、右边的盆栽，以及保洁工具和除草剂的组合",
-        "en": "I remember the journal mentioned a few key points: the meadow on the left, the potted plants on the right, and the combination of cleaning tools and herbicide"
+        "en": "I remember the journal mentioned a few key points: the meadow on the left, the potted plants on the right, and the combination of cleaning tools and herbicide."
     },
     {
         "zh": "重点看看这些地方吧，说不定就能搞清楚心中那种糟糕的感觉是什么了",
-        "en": "Focus on these places; maybe I can figure out what that awful feeling inside is"
+        "en": "Focus on these places; maybe I can figure out what that awful feeling inside is."
     },
     {
         "zh": "终于凑齐三枚硬币了",
-        "en": "Finally gathered three coins"
+        "en": "Finally gathered three coins."
     },
     {
         "zh": "现在去售货机那里看看吧",
-        "en": "Now go take a look at the vending machine"
+        "en": "Now go take a look at the vending machine."
     },
     {
         "zh": "应该可以买矿泉水了",
-        "en": "I should be able to buy mineral water now"
+        "en": "I should be able to buy mineral water now."
     },
     {
         "zh": "一扇虚掩着的老旧铁门，门轴上卡着一块显眼的扁石头",
@@ -473,31 +477,31 @@
     },
     {
         "zh": "那发霉的湿拖把、告示牌上少了一大片的青苔，空气里还有这么浓的除草剂味道",
-        "en": "That moldy wet mop, the big patch of moss missing from the notice board, and the strong smell of herbicide lingering in the air"
+        "en": "That moldy wet mop, the big patch of moss missing from the notice board, and the strong smell of herbicide lingering in the air."
     },
     {
         "zh": "难怪总觉得不对劲",
-        "en": "No wonder something felt off"
+        "en": "No wonder something felt off."
     },
     {
         "zh": "——这下全都解释得通了",
-        "en": "—Now it all makes perfect sense"
+        "en": "—Now everything makes sense."
     },
     {
         "zh": "哪有什么灵异事件，分明是阿姨早上来除过草了",
-        "en": "There was no haunting at all; the auntie clearly came by this morning to weed"
+        "en": "There was no haunting at all; the auntie clearly came by this morning to weed."
     },
     {
         "zh": "我简直能想象出那个画面",
-        "en": "I can practically picture it"
+        "en": "I can practically picture it."
     },
     {
         "zh": "阿姨直接把除草剂倒在那根发霉的旧拖把上，把它当大刷子用",
-        "en": "She poured the herbicide onto that moldy old mop and used it like a giant brush"
+        "en": "She poured the herbicide onto that moldy old mop and used it like a giant brush."
     },
     {
         "zh": "然后就左一下右一下地，对着长满青苔的墙面和地面使劲刷刮",
-        "en": "Then scrubbed hard left and right across the mossy walls and floor"
+        "en": "Then scrubbed hard left and right across the mossy walls and floor."
     },
     {
         "zh": "不过被她这么一清理，我倒想起来了——",
@@ -505,35 +509,35 @@
     },
     {
         "zh": "刚才在草甸旁边走的时候，就觉得那片土特别眼熟",
-        "en": "When I walked by the meadow just now, that patch of soil looked really familiar"
+        "en": "When I walked by the meadow just now, that patch of soil looked really familiar."
     },
     {
         "zh": "哈哈，一不小心就让我想起来了",
-        "en": "Haha, and without meaning to, it made me remember"
+        "en": "Haha, and without meaning to, it made me remember."
     },
     {
         "zh": "上上周的周三，我趁体育课自由活动的时间溜上来过",
-        "en": "Two Wednesdays ago, I slipped up here during free time in PE class"
+        "en": "Two Wednesdays ago, I slipped up here during free time in PE class."
     },
     {
         "zh": "那天早上路过校门口的花店，老板正把过季的铃兰种球往垃圾袋里倒，圆溜溜的种球滚了一地",
-        "en": "That morning, I passed the flower shop at the school gate; the owner was dumping out-of-season lily-of-the-valley bulbs into a trash bag, and the round bulbs rolled all over the sidewalk"
+        "en": "That morning, I passed the flower shop at the school gate; the owner was dumping out-of-season lily-of-the-valley bulbs into a trash bag, and the round bulbs rolled all over the sidewalk."
     },
     {
         "zh": "我这手欠的，实在是没忍住，就捡了一颗最饱满的",
-        "en": "I couldn’t help myself—my itchy hands picked up the plumpest one"
+        "en": "I couldn’t help myself—my itchy hands picked up the plumpest one."
     },
     {
         "zh": "听店员在旁边嘀咕，说这些种球存放太久，都失去活性了",
-        "en": "I heard the clerk muttering that the bulbs had been stored too long and had lost their vitality"
+        "en": "I heard the clerk muttering that the bulbs had been stored too long and had lost their vitality."
     },
     {
         "zh": "他越是这么说，我越是想试试",
-        "en": "The more he said that, the more I wanted to try"
+        "en": "The more he said that, the more I wanted to try."
     },
     {
         "zh": "说实在的，我对养花种草完全不懂，完全是瞎猫碰上死耗子，胡乱往草甸里一埋",
-        "en": "Honestly, I know nothing about gardening; it was pure dumb luck—I just shoved it randomly into the meadow"
+        "en": "Honestly, I know nothing about gardening; it was pure dumb luck—I just shoved it randomly into the meadow."
     },
     {
         "zh": "想着这么多天过去，说不定真有奇迹发生呢……",
@@ -553,7 +557,7 @@
     },
     {
         "zh": "等等",
-        "en": "Wait"
+        "en": "Wait!"
     },
     {
         "zh": "阿姨今天清除了青苔，肯定也除了草甸里的杂草…",
@@ -569,7 +573,7 @@
     },
     {
         "zh": "不行，我得赶快去<color=#FFC600>草甸</color>的地方确认一下",
-        "en": "No, I have to hurry and check the <color=#FFC600>meadow</color>"
+        "en": "No, I have to hurry and check the <color=#FFC600>meadow</color>."
     },
     {
         "zh": "到了到了，就是这里！",
@@ -581,7 +585,7 @@
     },
     {
         "zh": "我得赶紧把土翻开看看，要是种球状态不好就马上移栽到别的地方",
-        "en": "I need to quickly turn the soil and look—if the bulb isn’t doing well, I’ll transplant it right away"
+        "en": "I need to quickly turn the soil and look—if the bulb isn’t doing well, I’ll transplant it right away."
     },
     {
         "zh": "……",
@@ -589,19 +593,19 @@
     },
     {
         "zh": "……等等",
-        "en": "…Wait"
+        "en": "…Wait."
     },
     {
         "zh": "我上上周把它埋在哪里来着",
-        "en": "Where exactly did I bury it two Wednesdays ago"
+        "en": "Where exactly did I bury it two weeks ago?"
     },
     {
         "zh": "……完了，完全想不起来了",
-        "en": "…Crap, I can’t remember at all"
+        "en": "…Crap, I can’t remember at all."
     },
     {
         "zh": "这得找到什么时候去啊，只能硬着头皮一块一块翻了",
-        "en": "How long will this take to find—guess I’ll have to grit my teeth and flip the soil chunk by chunk"
+        "en": "How long will this take to find—guess I’ll have to grit my teeth and flip the soil chunk by chunk."
     },
     {
         "zh": "！找到了",
@@ -609,15 +613,15 @@
     },
     {
         "zh": "就是这块土，草皮比旁边薄了很多",
-        "en": "It’s this patch; the turf is much thinner than the rest"
+        "en": "It’s this patch; the turf is much thinner than the rest."
     },
     {
         "zh": "……我完全记起来了",
-        "en": "…I remember everything now"
+        "en": "…I remember everything now."
     },
     {
         "zh": "上次来的时候顺手把这里的草拔掉了，才空出地方来种我的种球的",
-        "en": "Last time I came, I yanked out the grass here, which made space to plant my bulb"
+        "en": "Last time I came, I yanked out the grass here, which made space to plant my bulb."
     },
     {
         "zh": "（我俯下身来，确认铃兰种球的状态）",
@@ -625,7 +629,7 @@
     },
     {
         "zh": "视线落回那方泥土，我的呼吸不由得一滞",
-        "en": "My gaze falls back onto that bit of soil, and my breath catches"
+        "en": "My gaze falls back onto that bit of soil, and my breath catches."
     },
     {
         "zh": "它居然……破土了",
@@ -637,43 +641,43 @@
     },
     {
         "zh": "在斜照过来的光线下，呈现出一种半透明的质感",
-        "en": "In the slanting light, they show a translucent texture"
+        "en": "In the slanting light, they show a translucent texture."
     },
     {
         "zh": "叶脉如同最精细的工笔画，清晰地在其中延展",
-        "en": "The veins stretch inside like the finest brushwork"
+        "en": "The veins stretch inside like the finest brushwork."
     },
     {
         "zh": "它们通透得仿佛能过滤尘世的喧嚣，将周围所有的嘈杂都净化成一种寂静的喜悦",
-        "en": "They’re so clear it’s as if they filter out the world’s clamor, turning all the noise around into a quiet joy"
+        "en": "They’re so clear it’s as if they filter out the world’s clamor, turning all the noise around into a quiet joy."
     },
     {
         "zh": "我不禁感叹",
-        "en": "I can’t help but sigh"
+        "en": "I can’t help but marvel."
     },
     {
         "zh": "生命真是神奇",
-        "en": "Life is truly miraculous"
+        "en": "Life is truly miraculous."
     },
     {
         "zh": "这孱弱的新绿，竟能在土壤里找到出路",
-        "en": "This fragile new green still found a way through the soil"
+        "en": "This fragile new green still found a way through the soil."
     },
     {
         "zh": "只是遵循着最原始的本能，安静地完成破土的仪式",
-        "en": "Simply following its oldest instinct, quietly completing the rite of emergence"
+        "en": "Simply following its oldest instinct, quietly completing the rite of emergence."
     },
     {
         "zh": "我也就在这一刻，忽然明白",
-        "en": "And at that very moment, I suddenly understood"
+        "en": "And at that very moment, I suddenly understood."
     },
     {
         "zh": "我见证的不只是一株植物的破土",
-        "en": "What I witnessed wasn’t just a plant breaking ground"
+        "en": "What I witnessed wasn’t just a plant breaking ground."
     },
     {
         "zh": "更是一个微小而确凿的奇迹",
-        "en": "It was a tiny yet undeniable miracle"
+        "en": "It was a tiny yet undeniable miracle."
     },
     {
         "zh": "…",
@@ -701,79 +705,79 @@
     },
     {
         "zh": "我去！我把跑操忘得一干二净",
-        "en": "Oh no! I completely forgot about the morning run"
+        "en": "Oh no! I completely forgot about the morning run."
     },
     {
         "zh": "而且这周还是班主任亲自查勤",
-        "en": "And this week the homeroom teacher is checking attendance in person"
+        "en": "And this week the homeroom teacher is checking attendance in person."
     },
     {
         "zh": "就因为上周领导视察，队伍出发时倒是整整齐齐",
-        "en": "Because during last week’s leadership inspection, the lineup looked tidy at the start"
+        "en": "Because during last week’s leadership inspection, the lineup looked tidy at the start."
     },
     {
         "zh": "有人跑到一半鞋带就恰到好处地散了，蹲下去就再没跟上来",
-        "en": "But halfway through, someone’s shoelace oh-so-conveniently came undone, they squatted down and never caught up"
+        "en": "But halfway through, someone’s shoelace oh-so-conveniently came undone, they squatted down and never caught up."
     },
     {
         "zh": "还有几个在领导眼皮子底下递眼神，趁着拐弯，一个接一个猫着腰闪进了教学楼楼梯间",
-        "en": "A few others traded looks right under the leaders’ noses and, at the turn, slipped one by one into the stairwell of the teaching building"
+        "en": "A few others traded looks right under the leaders’ noses and, at the turn, slipped one by one into the stairwell of the teaching building."
     },
     {
         "zh": "跑一圈回来队伍的人数直接少了一半",
-        "en": "By the time we got back, the team had half the people"
+        "en": "By the time we got back, the team had half the people."
     },
     {
         "zh": "气得领导训话了一个小时……接下来一个月严抓纪律",
-        "en": "The leaders were so mad they lectured us for an hour… and discipline will be strict for the next month"
+        "en": "The leaders were so mad they lectured us for an hour… and discipline will be strict for the next month."
     },
     {
         "zh": "要是全班都站得整整齐齐，就我的位置空着",
-        "en": "If the whole class is standing in perfect rows with only my spot empty"
+        "en": "If the whole class is standing in perfect rows with only my spot empty."
     },
     {
         "zh": "……这不是纯纯往枪口上撞吗",
-        "en": "…That’s basically sticking my head in the lion’s mouth"
+        "en": "…That’s basically sticking my head in the lion’s mouth."
     },
     {
         "zh": "……班主任那边可不是好糊弄的",
-        "en": "…the homeroom teacher isn’t easy to fool"
+        "en": "…the homeroom teacher isn’t easy to fool."
     },
     {
         "zh": "我得赶紧下去，现在过去说不定还能混进队伍里",
-        "en": "I’ve got to get downstairs—if I go now, maybe I can still blend into the lineup"
+        "en": "I’ve got to get downstairs—if I go now, maybe I can still blend into the lineup."
     },
     {
         "zh": "小陈啊，我今天上来看看天台的定期维修情况，上周你报修的防护栏应该被修好了",
-        "en": "Chen, I came up today to check the rooftop’s regular maintenance. The guardrail you reported last week should have been fixed"
+        "en": "Chen, I came up today to check the rooftop’s regular maintenance. The guardrail you reported last week should have been fixed."
     },
     {
         "zh": "虽然平时没有人来，但是有些安全隐患还是要定期检查",
-        "en": "Even though people rarely come up here, we still need to check for safety hazards regularly"
+        "en": "Even though people rarely come up here, we still need to check for safety hazards regularly."
     },
     {
         "zh": "上周来的工人除了修理护栏，他还反馈天台上的金属被青苔锈蚀严重，需要定期清理",
-        "en": "Besides fixing the guardrail, the worker last week also reported that the rooftop metal was badly corroded by moss and needs routine cleaning"
+        "en": "Besides fixing the guardrail, the worker last week also reported that the rooftop metal was badly corroded by moss and needs routine cleaning."
     },
     {
         "zh": "让主任您费心了，还专门跑一趟",
-        "en": "Thank you for the trouble, Director, for making a special trip"
+        "en": "Thank you for the trouble, Director, for making a special trip."
     },
     {
         "zh": "护栏已经修好了，至于青苔，还是您考虑得周到，一直惦记着这事",
-        "en": "The guardrail has been repaired, and as for the moss, you were thoughtful to keep it in mind—we’ve been aware of it"
+        "en": "The guardrail has been repaired, and as for the moss, you were thoughtful to keep it in mind—we’ve been aware of it."
     },
     {
         "zh": "请您放心，今天一早我特意安排了李阿姨上来，都清理干净了",
-        "en": "Please rest assured, I specifically arranged for Auntie Li to come up early this morning; it’s all been cleaned"
+        "en": "Please rest assured, I specifically arranged for Auntie Li to come up early this morning; it’s all been cleaned."
     },
     {
         "zh": "……我去，是刚刚楼梯口遇见的教导主任，他已经在开门了",
-        "en": "…Oh no, it’s the Academic Affairs Director I just ran into at the stairwell—he’s already unlocking the door"
+        "en": "…Oh no, it’s the Academic Affairs Director I just ran into at the stairwell—he’s already unlocking the door."
     },
     {
         "zh": "***，麻绳专挑细处断，噩运只找苦命人",
-        "en": "D***, the rope always snaps at its thinnest; misfortune picks on the miserable"
+        "en": "D***, the rope always snaps at its thinnest; misfortune picks on the miserable."
     },
     {
         "zh": "快跑啊",
@@ -781,23 +785,23 @@
     },
     {
         "zh": "我急匆匆地打开门，正要一步跨下楼梯",
-        "en": "I yank the door open and am about to take the first step down the stairs"
+        "en": "I yank the door open and am about to take the first step down the stairs."
     },
     {
         "zh": "就在我以为只要跑得够快就能逃过一劫的瞬间",
-        "en": "Just when I thought running fast would let me escape"
+        "en": "Just when I thought running fast would let me escape."
     },
     {
         "zh": "可就在抬脚发力、身体前倾的瞬间——一阵剧痛和冰冷的禁锢感向我袭来",
-        "en": "At the very moment I push off, body leaning forward—a stab of pain and cold restraint clamps down on me"
+        "en": "At the very moment I push off, body leaning forward—a stab of pain and cold restraint clamps down on me."
     },
     {
         "zh": "那块我上来时随手卡住铁门的扁石头",
-        "en": "The flat stone I’d wedged in the iron door when I came up"
+        "en": "The flat stone I’d wedged in the iron door when I came up."
     },
     {
         "zh": "此刻像道冰冷的铁箍，精准地咬住了我的脚踝",
-        "en": "Now bites my ankle like a cold iron hoop, precisely and cruelly"
+        "en": "Now bites my ankle like a cold iron hoop, precisely and cruelly."
     },
     {
         "zh": "糟了！",
@@ -805,15 +809,15 @@
     },
     {
         "zh": "我整个人如同一截被伐倒的木头",
-        "en": "I pitch forward like a felled log"
+        "en": "I pitch forward like a felled log."
     },
     {
         "zh": "完全不受控制地向前、无可挽回地向着陡峭的台阶一路翻滚、撞击着栽了下去",
-        "en": "Completely out of control, tumbling helplessly down the steep stairs, slamming into the edges step after step"
+        "en": "Completely out of control, tumbling helplessly down the steep stairs, slamming into the edges step after step."
     },
     {
         "zh": "当最终摔落在底层地面时，视野瞬间陷入一片漆黑，鲜红色的液体从额际淌下",
-        "en": "When I finally hit the ground floor, my vision goes instantly black, and bright red runs from my brow"
+        "en": "When I finally hit the ground floor, my vision goes instantly black, and bright red runs from my brow."
     },
     {
         "zh": "……",
@@ -825,10 +829,10 @@
     },
     {
         "zh": "那时我怎么会想到",
-        "en": "Who could’ve known then"
+        "en": "I couldn’t have known then."
     },
     {
         "zh": "这不过是一切噩梦的开端",
-        "en": "This was only the beginning of the nightmare"
+        "en": "This was only the beginning of the nightmare."
     }
 ]

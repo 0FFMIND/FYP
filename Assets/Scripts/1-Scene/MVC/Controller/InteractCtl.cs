@@ -185,6 +185,11 @@ namespace MVC
             }
         }
 
+        public void MarkCompleted()
+        {
+            isCompleted = true;
+        }
+
         // 提供给监听方在流程末尾调用
         public void Done()
         {
