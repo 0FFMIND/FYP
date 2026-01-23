@@ -34,7 +34,7 @@ namespace Manager
             canPause = enabled;
         }
 
-        private void TogglePause()
+        public void TogglePause()
         {
             // 如果禁止暂停，直接返回
             if (!canPause)

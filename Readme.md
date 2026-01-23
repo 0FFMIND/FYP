@@ -1,8 +1,14 @@
-使用过的软件：GPTo5 Audacity(变调/调整音量) Procreate
+【软件使用】
+
+声音编辑 - Audacity
+绘画 - Procreate
+游戏开发 - Unity 2022.3.57
 
 【BGM引用】
 
-Title - https://pixabay.com/music/lullabies-music-box-waltz-163673/
+标题界面 - https://pixabay.com/music/lullabies-music-box-waltz-163673/
+
+【开发日志】
 
 2025/5/6 - 用了DialogueModel存从文本.txt里面读到的话，中间一个方法LoadDialogue会通过LocalizationManager(用一个static存的当前语言)定位到具体路径/文本.txt
 
@@ -151,11 +157,13 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2026/1/22 - 搭好了选关时动态绑定launch button的onclick事件，将Chapter1的存档事件稍微修改了一下，接入了chapter1Completed，chapter1HiddenCompleted检查，并且还原了drain的行为，在pauseMenu处加了回到标题界面的功能
 
+2026/1/23 - steam商店页面通过了，填写了审核的文字内容，提交了不同尺寸的商城页，宣传图，修复了切换语言的时候会出问题的bug，是没有清空当前的文本导致的，加了一行dialogueModel = null;，已经将steam商城界面提交审核（说是审3-5天）
+
+
+
 
 
 TODO: backtotitle还没写，还加了一个过度界面
-
-
 
 【Title-Scene的问题】
 

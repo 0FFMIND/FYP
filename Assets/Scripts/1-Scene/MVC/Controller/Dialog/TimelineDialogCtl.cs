@@ -133,7 +133,7 @@ namespace MVC
         private IEnumerator EndDialogueWithExitAnimation()
         {
             dialogueRenderer.Hide();
-
+            dialogueModel = null;
             // 对话框和 BG 的退场动画都交给 EnterAnim，并等待两者完成
             var dialogAnim = enterAnim != null
                 ? enterAnim.PlayScriptedExitAnim(dialogueRenderer.dialogueView, false)
