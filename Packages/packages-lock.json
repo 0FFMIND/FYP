@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.rlabrecque.steamworks.net": {
+      "version": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a503766637901ac354c9d17aa0f5f822406043f1"
+    },
     "com.unity.2d.animation": {
       "version": "9.1.3",
       "depth": 1,

@@ -173,11 +173,13 @@ namespace Manager
         public void SetLanguage(ELanguageSet e)
         {
             var lang = e.Language;
-            if (lang == _data.language)
+            var userOverride = e.UserOverride;
+            if (lang == _data.language && userOverride == _data.languageUserOverride)
             {
                 return;
             }
             _data.language = lang;
+            _data.languageUserOverride = userOverride;
             Save();
         }
 
@@ -311,6 +313,21 @@ namespace Manager
             }
             _data.chapter2Completed = completed;
             Save();
+        }
+
+        public void SetLanguageUserOverride(bool overridden)
+        {
+            if (_data.languageUserOverride == overridden)
+            {
+                return;
+            }
+            _data.languageUserOverride = overridden;
+            Save();
+        }
+
+        public bool GetLanguageUserOverride()
+        {
+            return _data.languageUserOverride;
         }
 
         public bool GetChapter1HiddenCompleted()

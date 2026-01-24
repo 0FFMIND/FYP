@@ -36,6 +36,8 @@ namespace MVC
         public float sprintMultiplier = 2.5f;
         public LanguageCode language = LanguageCode.zh;
 
+        // 玩家是否在游戏内手动选择过语言（用于避免启动时被 Steam 默认语言覆盖）
+        public bool languageUserOverride = false;
         public int screenWidth = 1920;
         public int screenHeight = 1080;
         public FullScreenMode screenMode = FullScreenMode.FullScreenWindow;
@@ -69,6 +71,7 @@ namespace MVC
                 sfxVolume = sfxVolume,
                 mixerVolume = mixerVolume,
                 language = language,
+                languageUserOverride = languageUserOverride,
                 playerSpeed = playerSpeed,
                 sprintMultiplier = sprintMultiplier,
                 typeSpeed = typeSpeed,

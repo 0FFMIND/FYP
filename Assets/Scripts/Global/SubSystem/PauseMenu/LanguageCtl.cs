@@ -64,7 +64,7 @@ namespace MVC
         {
             // 应用当前语言，并通知系统更新
             var code = languages[index];
-            EventBus.Publish(new ELanguageSet(code));
+            EventBus.Publish(new ELanguageSet(code, true));
             UpdateText();
         }
 

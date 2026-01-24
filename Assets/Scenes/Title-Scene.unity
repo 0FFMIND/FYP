@@ -1408,7 +1408,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 4ff8fd8d65875254faa6a1216818ffeb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ecb799b23ededf49aba3d125939d851, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1416,7 +1416,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &369657341
@@ -2728,6 +2728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 821560682}
   - component: {fileID: 821560681}
+  - component: {fileID: 821560683}
   m_Layer: 0
   m_Name: SceneBootstrapper
   m_TagString: Untagged
@@ -2769,6 +2770,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &821560683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821560680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad9cd7e1c08c1847bb76c924361bc91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &890021652
 GameObject:
   m_ObjectHideFlags: 0
@@ -3120,7 +3133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1007097365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3219,6 +3232,7 @@ GameObject:
   - component: {fileID: 1058408577}
   - component: {fileID: 1058408578}
   - component: {fileID: 1058408579}
+  - component: {fileID: 1058408580}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -3302,6 +3316,22 @@ MonoBehaviour:
     maxOffset: 14
   followSpeed: 4
   inputStrength: 1
+--- !u!114 &1058408580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058408575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29345c56d0b64f543ad26c3c0cbdc767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 355527415}
+  enSprite: {fileID: 21300000, guid: 106a7d320b56b2941b8320b7d77b0b97, type: 3}
+  zhSprite: {fileID: 21300000, guid: 4ff8fd8d65875254faa6a1216818ffeb, type: 3}
+  durationSeconds: 1.2
 --- !u!1 &1111970955
 GameObject:
   m_ObjectHideFlags: 0

@@ -159,9 +159,13 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2026/1/23 - steam商店页面通过了，填写了审核的文字内容，提交了不同尺寸的商城页，宣传图，修复了切换语言的时候会出问题的bug，是没有清空当前的文本导致的，加了一行dialogueModel = null;，已经将steam商城界面提交审核（说是审3-5天）
 
+2026/1/24 - 加了一个英文的标题界面，使用ChangeTitleSprite.cs驱动，并且修改了下昨天商城页的图，添加英文标题，给项目下载了https://steamworks.github.io/installation/，先做好了语言接入
 
 
 
+
+
+TODO: 教程：https://blog.csdn.net/qq_41884036/article/details/134667607
 
 TODO: backtotitle还没写，还加了一个过度界面
 

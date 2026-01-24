@@ -132,7 +132,12 @@ namespace Utils
     {
         public readonly LanguageCode Language;
 
-        public ELanguageSet(LanguageCode lang) => Language = lang;
+        public readonly bool UserOverride;
+        public ELanguageSet(LanguageCode lang, bool userOverride)
+        {
+            Language = lang;
+            UserOverride = userOverride;
+        }
     }
 
     public readonly struct ELanguageChanged
