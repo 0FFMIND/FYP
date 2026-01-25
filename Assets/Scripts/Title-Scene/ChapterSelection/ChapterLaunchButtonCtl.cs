@@ -55,7 +55,16 @@ namespace MVC
 
         private void StartChapter2()
         {
-            // Chapter 2 专属行为
+            // 停止当前BGM
+            AudioMgr.Instance.StopBGM();
+            // 进入2-Scene-UI
+            EventBus.Publish(
+                new ESceneFade(
+                    toScene: "2-Scene-UI",
+                    fadeOutDuration: 0.5f,
+                    fadeInDuration: 1f
+                )
+            );
         }
 
         private void StartChapterDefault()

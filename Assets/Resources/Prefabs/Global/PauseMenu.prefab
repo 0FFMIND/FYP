@@ -750,7 +750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4346885327095720824
 RectTransform:
   m_ObjectHideFlags: 0
@@ -955,7 +955,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.5891, y: -78.722984}
+  m_AnchoredPosition: {x: 8.5891, y: -118.49}
   m_SizeDelta: {x: 139.754, y: 41.0866}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2586963097643668995
@@ -1042,7 +1042,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3142815596695468682}
         m_TargetAssemblyTypeName: BackToTitle, Assembly-CSharp
-        m_MethodName: BackTitle
+        m_MethodName: BackTitleAndClosePauseMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5553,7 +5553,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -766.4697, y: 183.49}
+  m_AnchoredPosition: {x: -766.4697, y: 240.2}
   m_SizeDelta: {x: 350.8877, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3930356708335932966
@@ -6239,6 +6239,7 @@ GameObject:
   - component: {fileID: 7931953455781511756}
   - component: {fileID: 5773179021537615611}
   - component: {fileID: 8229173718668104077}
+  - component: {fileID: 3750853921683492169}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -6328,12 +6329,12 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 26.85
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -6363,6 +6364,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3750853921683492169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4466706891174964869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12df7c1c28442354491f52c6483c201a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: "\u786E\u5B9A\u8981\u9000\u51FA\u6E38\u620F\u5E76\u8FD4\u56DE\u6807\u9898\u754C\u9762\u5417\uFF1F\u5F53\u524D\u6E38\u620F\u8FDB\u5EA6\u5C06\u4F1A\u4E22\u5931\\n\\n\u63D0\u793A\uFF1A\u82E5\u60A8\u53EA\u662F\u60F3\u5173\u95ED\u6682\u505C\u83DC\u5355\uFF0C\u518D\u6309\u4E00\u6B21
+    ESC \u5373\u53EF\u8FD4\u56DE\u6E38\u620F"
 --- !u!1 &4565429625355772321
 GameObject:
   m_ObjectHideFlags: 0
@@ -6453,8 +6468,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holeShaderName: Unlit/HoleColor
-  holeCenter01: {x: 0.35, y: 0.55}
-  holeSize01: {x: 0.05, y: 0.03}
+  holeCenter01: {x: 0.35, y: 0.57}
+  holeSize01: {x: 0.05, y: 0.08}
   cornerRadius: 0.048
   featherPx: 0
 --- !u!1 &4606585065197035130

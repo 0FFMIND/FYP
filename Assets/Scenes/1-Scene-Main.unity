@@ -6769,7 +6769,19 @@ MonoBehaviour:
       choicePanel: 0
     onInteractEnd:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 1134754711}
+          m_TargetAssemblyTypeName: MVC.Scene1Stone, Assembly-CSharp
+          m_MethodName: TryPublishJournal
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1134754712}
+            m_ObjectArgumentAssemblyTypeName: MVC.InteractCtl, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - visit: 1
     firstLines:
     - " \u4E00\u4E2A\u4E0D\u8D77\u773C\u7684\u4E0B\u6C34\u9053\u53E3\uFF0C\u5468\u56F4\u6E7F\u6F09\u6F09\u7684"

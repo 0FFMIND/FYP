@@ -42,7 +42,7 @@ namespace Manager
                 return;
             }
             // 如果是标题场景，直接返回
-            if (SceneManager.GetActiveScene().name == "Title-Scene")
+            if (SceneManager.GetActiveScene().name == "Title-Scene" || SceneManager.GetActiveScene().name == "1-Scene-To" || SceneManager.GetActiveScene().name == "2-Scene-UI")
             {
                 return;
             }

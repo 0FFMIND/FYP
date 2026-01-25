@@ -19,6 +19,11 @@ namespace MVC
         [SerializeField]
         bool isDrain;
 
+        public void TryPublishJournal(InteractCtl ctl)
+        {
+            EventBus.Publish(new EJournalStatusChanged("vendingMachine", JournalStatus.Active));
+            ctl?.Done();
+        }
         public void AddCoin(InteractCtl ctl)
         {
             InventoryMgr.Instance.AddById("coin", 1);

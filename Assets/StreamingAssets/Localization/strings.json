@@ -260,10 +260,6 @@
         "en": "Exit Game"
     },
     {
-        "zh": "结束",
-        "en": "End"
-    },
-    {
         "zh": "返回标题",
         "en": "Back"
     },
@@ -286,5 +282,29 @@
     {
         "zh": "第二章",
         "en": "Chapter 2"
+    },
+    {
+        "zh": "确定要退出游戏并返回标题界面吗？当前游戏进度将会丢失\\n\\n提示：若您只是想关闭暂停菜单，再按一次 ESC 即可返回游戏",
+        "en": "Are you sure you want to quit the game and return to the title screen? Your current progress will be lost.\\n\\nTip: If you only want to close the pause menu, press ESC again to resume the game."
+    },
+    {
+        "zh": "结束",
+        "en": "End"
+    },
+    {
+        "zh": "本章正在制作中，暂未开放游玩",
+        "en": "This chapter is currently in development and is not yet available to play."
+    },
+    {
+        "zh": "继续游玩",
+        "en": "Continue"
+    },
+    {
+        "zh": "本章进度已保存\\n建议直接<color=#FFC600>继续游玩</color>，以保持剧情体验的连贯性\\n若选择<color=#FFC600>返回标题</color>，请注意：当前存档系统仍在完善中，部分功能（如日记、背包）在下次游玩时，可能出现数据不同步的情况",
+        "en": "Your progress in this chapter has been saved.\\nWe recommend selecting <color=#FFC600>Continue</color> to keep the story experience smooth and uninterrupted. \\nIf you choose <color=#FFC600>Back</color> to Title, please note that the save system is still being improved, and some features (such as the Diary and Inventory) may not sync correctly the next time you play."
+    },
+    {
+        "zh": "确认",
+        "en": "Confirm"
     }
 ]

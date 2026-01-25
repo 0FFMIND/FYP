@@ -159,15 +159,11 @@ StreamingAsset存的二进制文件，像AudioMixer，放进Resource里面
 
 2026/1/23 - steam商店页面通过了，填写了审核的文字内容，提交了不同尺寸的商城页，宣传图，修复了切换语言的时候会出问题的bug，是没有清空当前的文本导致的，加了一行dialogueModel = null;，已经将steam商城界面提交审核（说是审3-5天）
 
-2026/1/24 - 加了一个英文的标题界面，使用ChangeTitleSprite.cs驱动，并且修改了下昨天商城页的图，添加英文标题，给项目下载了https://steamworks.github.io/installation/，先做好了语言接入
+2026/1/24 - 加了一个英文的标题界面，使用ChangeTitleSprite.cs驱动，并且修改了下昨天商城页的图，添加英文标题，给项目下载了https://steamworks.github.io/installation/，先做好了语言接入，Steam SDK教程：https://blog.csdn.net/qq_41884036/article/details/134667607
+
+2026/1/25 - 把过度页面和Chapter2的占位符写好了，写好了demo的steam页面，修复了pauseMenu结束中英文切换，点击日记教程的偏移，drain第一次遇见加入vendingMechine的Journal，上传游戏等待Demo界面审核（7天内）
 
 
-
-
-
-TODO: 教程：https://blog.csdn.net/qq_41884036/article/details/134667607
-
-TODO: backtotitle还没写，还加了一个过度界面
 
 【Title-Scene的问题】
 
@@ -176,6 +172,10 @@ TODO: 设置那里切换四个子菜单没对齐，英文的move speed那栏文�
 【Chapter1的问题】
 
 TODO: StepMove的动画有点奇怪，因为是hardCode的步长边界检查也没有做到很好
+
+TODO: PausePanel那里的教程偏移没做好
+
+TODO: 最后摔下楼梯文本重复了
 
 
 
@@ -191,29 +191,5 @@ TODO: StepMove的动画有点奇怪，因为是hardCode的步长边界检查也�
 
 【设计Chapter2的问题】：
 
-TODO: Chapter1的末尾，可以加入已自动保存，然后可以在选关界面重玩Chapter1了，
-
-TODO：加入第二章后选章的时候可以加入我的STORY.md里面的内容，加入概要
-
 TODO: 我有一个想法，说话的时候可以出现多个关键词，下面出现[] [] [] [] 很多个关键词框，上面是当前对话的人物，然后丢给当前对话的人物类似辩论环节进行剧情推进
-
-
-
-TODO: 需要在售货机cg出现完后加一个判断的bool或者是什么，然后在选关的时候如果直接从ch2开始，基础的日记，然后判断有没有这个bool，有的话那就加一个售货机的日记
-
-要做什么？
-
-勾取 ->
-
-你将硬币成功地勾近了一点
-
-你发力过猛，硬币从指尖弹开，滚向了远处
-
-成功了！
-
-你小心地将硬币勾到最近处，再稳稳捡起
-
-离开
-
-
 

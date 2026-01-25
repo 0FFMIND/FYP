@@ -81,7 +81,7 @@ namespace MVC
                         // 切换到过度场景
                         EventBus.Publish(
                             new ESceneFade(
-                                toScene: "Title-Scene",
+                                toScene: "1-Scene-To",
                                 fadeOutDuration: 0.5f,
                                 fadeInDuration: 1f
                             )
